@@ -6,16 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
 
+
 // Resources
-use App\Http\Resources\mobile\Collections\AccessoryCollection as ModelCollection;
-use App\Http\Resources\mobile\AccessoryResource as ModelResource;
+use App\Http\Resources\mobile\Collections\QuizCollection as ModelCollection;
+use App\Http\Resources\mobile\QuizResource as ModelResource;
 
 
 // lInterfaces
-use App\Repository\AccessoryRepositoryInterface as ModelInterface;
+use App\Repository\QuizRepositoryInterface as ModelInterface;
 
 
-class AccessoryController extends Controller
+class QuizController extends Controller
 {
     private $Repository;
     public function __construct(ModelInterface $Repository)

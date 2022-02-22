@@ -142,7 +142,38 @@ class McqQuestionController extends Controller
             } 
     }
     
-
+// lang
+public function update_store_language($requested_languages,$modal_id ) {
+    if (is_array($requested_languages) ) {
+        $this->destroyLanguage($this->related_language,$modal_id);
+        foreach ($requested_languages as $key => $language_sigle_row) {
+            $this ->storeLanguage(  $this->handleLanguageData($language_sigle_row,$this->related_language,$modal_id)  );
+        }
+    }
+}
+public function storeLanguage($language_array ) {
+    try {
+        $this->ModelRepositoryLanguage->create( $language_array ) ;
+    } catch (\Exception $e) {
+        return $this -> MakeResponseErrors(  
+            [$e->getMessage()  ] ,
+            'Errors',
+            Response::HTTP_BAD_REQUEST
+        );
+    }
+}
+public function destroyLanguage($relation_coulmn,$id) {
+    try {
+    $this->ModelRepositoryLanguage->deleteByRelation($relation_coulmn,$id) ;
+    } catch (\Exception $e) {
+        return $this -> MakeResponseErrors(  
+            [$e->getMessage()  ] ,
+            'Errors',
+            Response::HTTP_NOT_FOUND
+        );
+    }
+}
+// lang
     // trash
         public function collection_trash(Request $request){
             try {

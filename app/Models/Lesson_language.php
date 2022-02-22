@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Lesson;
+use App\Scopes\AncientScope;
 
 
 class Lesson_language extends Model
@@ -26,5 +27,12 @@ class Lesson_language extends Model
     public function lesson(){
         return $this->belongsTo(Lesson::class,'lesson_id');
     }
-
+    public function scopeRelatedLanguage($query,$id){
+        
+        return $query->where('lesson_id', $id);
+    }
+    protected static function booted()
+    {
+        static::addGlobalScope(new AncientScope);
+    }
 }

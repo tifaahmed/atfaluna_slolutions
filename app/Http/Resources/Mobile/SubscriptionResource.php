@@ -13,6 +13,8 @@ class SubscriptionResource extends JsonResource
      */
     public function toArray($request)
     {
+        $row=$this->subscription_languages()->RelatedLanguage($this->id)->first();
+
         return [
             'id'            => $this->id,
             'month_number'  => $this->month_number,
@@ -24,6 +26,7 @@ class SubscriptionResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'languages'     => $this->subscription_languages,
+            'name'          => $row ? $row->name:'',
 
         ];        
     }

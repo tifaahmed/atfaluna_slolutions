@@ -18,9 +18,9 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
         ]),
     // store
         Route::name('store.')->prefix('/store')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'Store\StoreController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'Store\StoreController@show'                )->name('show'),
-            Route::get('/collection'                ,   'Store\StoreController@collection'          )->name('collection'),
+            Route::get('/'                          ,   'StoreController@all'                 )->name('all'),
+            Route::get('/{id}/show'                 ,   'StoreController@show'                )->name('show'),
+            Route::get('/collection'                ,   'StoreController@collection'          )->name('collection'),
         ]),
     // Avatar
         Route::name('avatar.')->prefix('/avatar')->group( fn ( ) : array => [

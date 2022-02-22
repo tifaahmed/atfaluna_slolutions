@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Package;
+use App\Scopes\AncientScope;
 
 
 class Package_language extends Model
@@ -26,5 +27,12 @@ class Package_language extends Model
     public function package(){
         return $this->belongsTo(Package::class,'package_id');
     }
-
+    public function scopeRelatedLanguage($query,$id){
+        
+        return $query->where('package_id', $id);
+    }
+    protected static function booted()
+    {
+        static::addGlobalScope(new AncientScope);
+    }
 }

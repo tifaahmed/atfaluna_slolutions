@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\True_false_question;
+use App\Scopes\AncientScope;
 
 
 class True_false_question_language extends Model
@@ -25,5 +26,12 @@ class True_false_question_language extends Model
     public function true_false_question(){
         return $this->belongsTo(True_false_question::class,'true_false_questions_id');
     }
-
+    public function scopeRelatedLanguage($query,$id){
+        
+        return $query->where('true_false_questions_id', $id);
+    }
+    protected static function booted()
+    {
+        static::addGlobalScope(new AncientScope);
+    }
 }

@@ -11,8 +11,11 @@ class StoreResource extends JsonResource
 
     public function toArray($request)
     {
+        $row=$this->store_languages()->RelatedLanguage($this->id)->first();
+
         return [
             'id'            => $this->id,
+            'name'          => $row ? $row->name:'',
             'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
             'url'           => $this->url,
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Subscription;
+use App\Scopes\AncientScope;
 
 
 class Subscription_language extends Model
@@ -25,5 +26,12 @@ class Subscription_language extends Model
     public function subscription(){
         return $this->belongsTo(Subscription::class,'subscription_id');
     }
-
+    public function scopeRelatedLanguage($query,$id){
+        
+        return $query->where('subscription_id', $id);
+    }
+    protected static function booted()
+    {
+        static::addGlobalScope(new AncientScope);
+    }
 }

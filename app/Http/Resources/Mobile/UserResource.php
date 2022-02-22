@@ -4,7 +4,7 @@ namespace App\Http\Resources\Mobile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Resources\CountryResource;
+use App\Http\Resources\mobile\CountryResource;
 
 class UserResource extends JsonResource
 {

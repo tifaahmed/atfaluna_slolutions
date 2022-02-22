@@ -80,17 +80,17 @@ Route::group(['middleware' => [ ]], fn ( ) : array => [
         ]),
     // store
         Route::name('store.')->prefix('/store')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'Store\StoreController@all'                 )    ->name('all'),
-            Route::post(''                          ,   'Store\StoreController@store'               )->name('store'),
-            Route::get('/{id}/show'                 ,   'Store\StoreController@show'                )->name('show'),
-            Route::get('/collection'                ,   'Store\StoreController@collection'          )->name('collection'),
-            Route::DELETE('/{id}'                   ,   'Store\StoreController@destroy'             )->name('destroy'),
-            Route::post('/{id}/update'              ,   'Store\StoreController@update'              )->name('update'),
-            Route::post('/{id}/restore'             ,   'Store\StoreController@restore'             )->name('restore'),
+            Route::get('/'                          ,   'StoreController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'StoreController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'StoreController@show'                )->name('show'),
+            Route::get('/collection'                ,   'StoreController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'StoreController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'StoreController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'StoreController@restore'             )->name('restore'),
 
-            Route::DELETE('premanently-delete/{id}' ,   'Store\StoreController@premanently_delete'  )->name('premanently_delete'),
-            Route::get('/collection-trash'          ,   'Store\StoreController@collection_trash'    )->name('collection_trash'),
-            Route::get('/{id}/show-trash'           ,   'Store\StoreController@show_trash'          )->name('show_trash'),
+            Route::DELETE('premanently-delete/{id}' ,   'StoreController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'StoreController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'StoreController@show_trash'          )->name('show_trash'),
         ]),
     // Avatar
         Route::name('avatar.')->prefix('/avatar')->group( fn ( ) : array => [

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Certificate;
+use App\Scopes\AncientScope;
 
 
 class Certificate_language extends Model
@@ -28,5 +29,12 @@ class Certificate_language extends Model
     public function certificate(){
         return $this->belongsTo(Certificate::class,'certificate_id');
     }
-
+    public function scopeRelatedLanguage($query,$id){
+        
+        return $query->where('certificate_id', $id);
+    }
+    protected static function booted()
+    {
+        static::addGlobalScope(new AncientScope);
+    }
 }

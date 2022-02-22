@@ -6,16 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
 
+
 // Resources
-use App\Http\Resources\mobile\Collections\AccessoryCollection as ModelCollection;
-use App\Http\Resources\mobile\AccessoryResource as ModelResource;
+use App\Http\Resources\mobile\Collections\StoreCollection as ModelCollection;
+use App\Http\Resources\mobile\StoreResource as ModelResource;
 
 
 // lInterfaces
-use App\Repository\AccessoryRepositoryInterface as ModelInterface;
+use App\Repository\StoreRepositoryInterface as ModelInterface;
 
 
-class AccessoryController extends Controller
+class StoreController extends Controller
 {
     private $Repository;
     public function __construct(ModelInterface $Repository)

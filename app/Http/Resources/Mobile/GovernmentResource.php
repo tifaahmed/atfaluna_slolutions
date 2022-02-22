@@ -22,7 +22,7 @@ class GovernmentResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            'city'     => $this->City,
+            'country'     => $this->Country,
             'city'     => $this->City,
         ];
 

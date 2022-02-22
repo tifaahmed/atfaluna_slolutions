@@ -15,6 +15,8 @@ class SubjectResource extends JsonResource
      */
     public function toArray($request)
     {
+        $row=$this->subject_languages()->RelatedLanguage($this->id)->first();
+
         return [
             'id'            => $this->id,
             'name'          => $this->name,
@@ -25,6 +27,8 @@ class SubjectResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
             'languages'     => $this->Subject_language,
+            
+            'name'          => $row ? $row->name:'',
 
         ];        
     }
