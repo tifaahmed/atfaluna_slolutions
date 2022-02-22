@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Requests\Api\Basic;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class BasicUpdateApiRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'item'       =>  [ 'required'] ,
+            'info'       =>  [ 'required' ,'unique:basics,info'.$this->id] ,
+        ];
+    }
+}

@@ -1,0 +1,243 @@
+<?php
+
+namespace App\Providers;
+// Repository
+
+    use App\Repository\Eloquent\BaseRepository;
+    use App\Repository\Eloquent\LanguageRepository;
+    use App\Repository\Eloquent\BasicRepository;
+
+    use App\Repository\Eloquent\GovernmentRepository;
+    use App\Repository\Eloquent\CountryRepository;
+    use App\Repository\Eloquent\CityRepository;
+
+    use App\Repository\Eloquent\UserRepository;
+    use App\Repository\Eloquent\UserSubscriptionRepository;
+    use App\Repository\Eloquent\UserPackageRepository;
+
+    use App\Repository\Eloquent\SubUserRepository;
+    use App\Repository\Eloquent\SubUserQuizRepository;
+    use App\Repository\Eloquent\SubUserLessonRepository;
+
+    use App\Repository\Eloquent\AvatarRepository;
+
+    use App\Repository\Eloquent\AgeRepository;
+    use App\Repository\Eloquent\AgeGroupLanguageRepository;
+    use App\Repository\Eloquent\AgeGroupRepository;
+
+    use App\Repository\Eloquent\StoreLanguageRepository;
+    use App\Repository\Eloquent\StoreRepository;
+
+    use App\Repository\Eloquent\TrueFalseQuestionRepository;
+    use App\Repository\Eloquent\TrueFalseQuestionLanguageRepository;
+
+    use App\Repository\Eloquent\SubscriptionRepository;
+    use App\Repository\Eloquent\SubscriptionLanguageRepository;
+
+    use App\Repository\Eloquent\SubjectRepository;
+    use App\Repository\Eloquent\SubjectLanguageRepository;
+
+    use App\Repository\Eloquent\SkillRepository;
+    use App\Repository\Eloquent\SkillLanguageRepository;
+
+    use App\Repository\Eloquent\QuizRepository;
+    use App\Repository\Eloquent\QuizLanguageRepository;
+
+    use App\Repository\Eloquent\PlayTimeRepository;
+
+    use App\Repository\Eloquent\PackageRepository;
+    use App\Repository\Eloquent\PackageLanguageRepository;
+
+    use App\Repository\Eloquent\McqQuestionRepository;
+    use App\Repository\Eloquent\McqQuestionLanguageRepository;
+
+    use App\Repository\Eloquent\McqAnswerRepository;
+    use App\Repository\Eloquent\McqAnswerLanguageRepository;
+
+    use App\Repository\Eloquent\LessonRepository;
+    use App\Repository\Eloquent\LessonTypeRepository;
+    use App\Repository\Eloquent\LessonLanguageRepository;
+
+    use App\Repository\Eloquent\CertificateRepository;
+    use App\Repository\Eloquent\CertificateLanguageRepository;
+
+    use App\Repository\Eloquent\AccessoryRepository;
+    use App\Repository\Eloquent\AccessoryLanguageRepository;
+
+    // Role  Permission
+        use App\Repository\Eloquent\RolePermissionRepository\PermissionRepository;
+        use App\Repository\Eloquent\RolePermissionRepository\RoleRepository;
+        use App\Repository\Eloquent\RolePermissionRepository\ModelHasPermissionRepository;
+        use App\Repository\Eloquent\RolePermissionRepository\ModelHasRoleRepository;
+        use App\Repository\Eloquent\RolePermissionRepository\RoleHasPermissionRepository;
+    // Role  Permission
+
+// Repository
+
+// Interface
+
+    use App\Repository\EloquentRepositoryInterface;
+    use App\Repository\LanguageRepositoryInterface;
+    use App\Repository\BasicRepositoryInterface;
+
+    use App\Repository\GovernmentRepositoryInterface;
+    use App\Repository\CountryRepositoryInterface;
+    use App\Repository\CityRepositoryInterface;
+
+    use App\Repository\StoreLanguageRepositoryInterface;
+    use App\Repository\StoreRepositoryInterface;
+
+    use App\Repository\UserRepositoryInterface;
+    use App\Repository\UserSubscriptionRepositoryInterface;
+    use App\Repository\UserPackageRepositoryInterface;
+
+    use App\Repository\SubUserRepositoryInterface;
+    use App\Repository\SubUserQuizRepositoryInterface;
+    use App\Repository\SubUserLessonRepositoryInterface;
+
+    use App\Repository\AvatarRepositoryInterface;
+
+    use App\Repository\AgeRepositoryInterface;
+    use App\Repository\AgeGroupLanguageRepositoryInterface;
+    use App\Repository\AgeGroupRepositoryInterface;
+
+    use App\Repository\TrueFalseQuestionRepositoryInterface;
+    use App\Repository\TrueFalseQuestionLanguageRepositoryInterface;
+
+    use App\Repository\SubscriptionRepositoryInterface;
+    use App\Repository\SubscriptionLanguageRepositoryInterface;
+
+    use App\Repository\SubjectRepositoryInterface;
+    use App\Repository\SubjectLanguageRepositoryInterface;
+
+    use App\Repository\SkillRepositoryInterface;
+    use App\Repository\SkillLanguageRepositoryInterface;
+
+    use App\Repository\QuizRepositoryInterface;
+    use App\Repository\QuizLanguageRepositoryInterface;
+
+    use App\Repository\PlayTimeRepositoryInterface;
+
+    use App\Repository\PackageRepositoryInterface;
+    use App\Repository\PackageLanguageRepositoryInterface;
+
+    use App\Repository\McqQuestionRepositoryInterface;
+    use App\Repository\McqQuestionLanguageRepositoryInterface;
+
+    use App\Repository\McqAnswerRepositoryInterface;
+    use App\Repository\McqAnswerLanguageRepositoryInterface;
+
+    use App\Repository\LessonRepositoryInterface;
+    use App\Repository\LessonTypeRepositoryInterface;
+    use App\Repository\LessonLanguageRepositoryInterface;
+
+    use App\Repository\CertificateRepositoryInterface;
+    use App\Repository\CertificateLanguageRepositoryInterface;
+
+    use App\Repository\AccessoryRepositoryInterface;
+    use App\Repository\AccessoryLanguageRepositoryInterface;
+    // Role  Permission    use App\Repository\McqAnswerRepositoryInterface;
+
+    use App\Repository\RolePermissionInterface\PermissionRepositoryInterface;
+    use App\Repository\RolePermissionInterface\RoleRepositoryInterface;
+    use App\Repository\RolePermissionInterface\ModelHasPermissionRepositoryInterface;
+    use App\Repository\RolePermissionInterface\ModelHasRoleRepositoryInterface;
+    use App\Repository\RolePermissionInterface\RoleHasPermissionRepositoryInterface;
+    // Role  Permission
+
+// Interface
+
+
+
+use Illuminate\Support\ServiceProvider;
+
+class RepositoryServiceProvider extends ServiceProvider
+{
+    /**
+     * Register services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->bind(EloquentRepositoryInterface::class,BaseRepository::class);
+        $this->app->bind(LanguageRepositoryInterface::class,LanguageRepository::class);
+        $this->app->bind(BasicRepositoryInterface::class,BasicRepository::class);
+
+        $this->app->bind(GovernmentRepositoryInterface::class,GovernmentRepository::class);
+        $this->app->bind(CountryRepositoryInterface::class,CountryRepository::class);
+        $this->app->bind(CityRepositoryInterface::class,CityRepository::class);
+
+        $this->app->bind(StoreLanguageRepositoryInterface::class,StoreLanguageRepository::class);
+        $this->app->bind(StoreRepositoryInterface::class,StoreRepository::class);
+
+        $this->app->bind(UserRepositoryInterface::class,UserRepository::class);
+        $this->app->bind(UserSubscriptionRepositoryInterface::class,UserSubscriptionRepository::class);
+        $this->app->bind(UserPackageRepositoryInterface::class,UserPackageRepository::class);
+
+        $this->app->bind(SubUserRepositoryInterface::class,SubUserRepository::class);
+        $this->app->bind(SubUserQuizRepositoryInterface::class,SubUserQuizRepository::class);
+        $this->app->bind(SubUserLessonRepositoryInterface::class,SubUserLessonRepository::class);
+
+        $this->app->bind(AvatarRepositoryInterface::class,AvatarRepository::class);
+
+        $this->app->bind(AgeRepositoryInterface::class,AgeRepository::class);
+        $this->app->bind(AgeGroupLanguageRepositoryInterface::class,AgeGroupLanguageRepository::class);
+        $this->app->bind(AgeGroupRepositoryInterface::class,AgeGroupRepository::class);
+
+        $this->app->bind(TrueFalseQuestionRepositoryInterface::class,TrueFalseQuestionRepository::class);
+        $this->app->bind(TrueFalseQuestionLanguageRepositoryInterface::class,TrueFalseQuestionLanguageRepository::class);
+
+        $this->app->bind(SubscriptionRepositoryInterface::class,SubscriptionRepository::class);
+        $this->app->bind(SubscriptionLanguageRepositoryInterface::class,SubscriptionLanguageRepository::class);
+
+        $this->app->bind(SubjectRepositoryInterface::class,SubjectRepository::class);
+        $this->app->bind(SubjectLanguageRepositoryInterface::class,SubjectLanguageRepository::class);
+
+        $this->app->bind(SkillRepositoryInterface::class,SkillRepository::class);
+        $this->app->bind(SkillLanguageRepositoryInterface::class,SkillLanguageRepository::class);
+
+        $this->app->bind(QuizRepositoryInterface::class,QuizRepository::class);
+        $this->app->bind(QuizLanguageRepositoryInterface::class,QuizLanguageRepository::class);
+
+        $this->app->bind(PlayTimeRepositoryInterface::class,PlayTimeRepository::class);
+
+        $this->app->bind(PackageRepositoryInterface::class,PackageRepository::class);
+        $this->app->bind(PackageLanguageRepositoryInterface::class,PackageLanguageRepository::class);
+
+        $this->app->bind(McqQuestionRepositoryInterface::class,McqQuestionRepository::class);
+        $this->app->bind(McqQuestionLanguageRepositoryInterface::class,McqQuestionLanguageRepository::class);
+
+        $this->app->bind(McqAnswerRepositoryInterface::class,McqAnswerRepository::class);
+        $this->app->bind(McqAnswerLanguageRepositoryInterface::class,McqAnswerLanguageRepository::class);
+
+        $this->app->bind(LessonRepositoryInterface::class,LessonRepository::class);
+        $this->app->bind(LessonTypeRepositoryInterface::class,LessonTypeRepository::class);
+        $this->app->bind(LessonLanguageRepositoryInterface::class,LessonLanguageRepository::class);
+
+        $this->app->bind(CertificateRepositoryInterface::class,CertificateRepository::class);
+        $this->app->bind(CertificateLanguageRepositoryInterface::class,CertificateLanguageRepository::class);
+
+        $this->app->bind(AccessoryRepositoryInterface::class,AccessoryRepository::class);
+        $this->app->bind(AccessoryLanguageRepositoryInterface::class,AccessoryLanguageRepository::class);
+
+        // Role  Permission
+        $this->app->bind(PermissionRepositoryInterface::class,PermissionRepository::class);
+        $this->app->bind(RoleRepositoryInterface::class,RoleRepository::class);
+        $this->app->bind(ModelHasPermissionRepositoryInterface::class,ModelHasPermissionRepository::class);
+        $this->app->bind(ModelHasRoleRepositoryInterface::class,ModelHasRoleRepository::class);
+        $this->app->bind(RoleHasPermissionRepositoryInterface::class,RoleHasPermissionRepository::class);
+        // Role  Permission
+
+    }
+
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //
+    }
+}
