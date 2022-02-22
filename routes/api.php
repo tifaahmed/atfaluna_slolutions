@@ -1,6 +1,13 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
+Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
+
+    Route::post( '/login' ,   'authController@login'  ) -> name( 'login' ) ,
+    Route::post( '/logout' ,  'authController@logout' )  -> name( 'logout' ) ,
+    Route::post( '/register' ,  'authController@register' )  -> name( 'register' ) ,
+    
+    ]);
 Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
     // user
         Route::name('user.')->prefix('/user')->group( fn ( ) : array => [

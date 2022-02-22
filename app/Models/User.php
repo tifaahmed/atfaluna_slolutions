@@ -36,6 +36,7 @@ class User extends Authenticatable {
         'birthdate',
         'phone',
         'country_id',
+        'token',
     ];
     public function getToken( ) : array { return [
         'token_type'    => 'Bearer'                                     ,

@@ -31,7 +31,8 @@ class UserRegisterApiRequest extends FormRequest
                 'password'  =>  [ 'required' , 'confirmed' ,  'min:6' , 'max:15' ],
                 'password_confirmation'  =>  [ 'required' , 'min:6' , 'max:15' ],
 
-                'avatar'    =>  [ 'sometimes', 'mimes:jpg,jpeg,png' , 'max:5000'] 
+                'avatar'    =>  [ 'sometimes', 'mimes:jpg,jpeg,png' , 'max:5000'] ,
+                'country_id'    =>  [ 'required' , 'integer'] 
         ];
     }
 }

@@ -26,7 +26,7 @@ class PackageController extends Controller
     {
         $this->ModelRepository = $Repository;
         $this->ModelRepositoryLanguage = $RepositoryLanguage;
-        $this->folder_name = 'Package';
+        $this->folder_name = 'package';
         $this->related_language = 'package_id';
 
     }
