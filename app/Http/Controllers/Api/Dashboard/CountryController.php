@@ -46,7 +46,7 @@ class CountryController extends Controller
                 $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
             }
 
-            $modal = $this->ModelRepository->create( Request()->except($file_one)+$all );
+            $modal = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
 
             return $this -> MakeResponseSuccessful( 
                 [ $modal ],
@@ -123,31 +123,63 @@ class CountryController extends Controller
         }
     }
     
-    public function update(modelUpdateRequest $request ,$id) {
+    public function update(modelInsertRequest $request ,$id) {
         try {
             $all = [ ];
             $file_one = 'image';
-            if ($request->hasFile($file_one)) {
+            if ($request->hasFile($file_one)) {            
                 $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
-                $old_modal = $this->ModelRepository->findById($id); 
-                $this->HelperDelete($old_modal->image );
             }
-            $modal = $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
-            return $this -> MakeResponseSuccessful( 
-                    [ $modal],
-                    'Successful'               ,
-                    Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        } 
+            $modal = new ModelResource( $this->ModelRepository->update( $id,Request()->except($file_one)+$all)) ;
+                $modal = $this->ModelRepository->findById($id); 
+                //  languages
+                $this -> update_store_language($request->languages,$modal->id) ;
+                return $this -> MakeResponseSuccessful( 
+                        [ $modal],
+                        'Successful'               ,
+                        Response::HTTP_OK
+                ) ;
+                } catch (\Exception $e) {
+                return $this -> MakeResponseErrors(  
+                    [$e->getMessage()  ] ,
+                    'Errors',
+                    Response::HTTP_NOT_FOUND
+                );
+            } 
     }
     
-
+// lang
+public function update_store_language($requested_languages,$modal_id ) {
+    if (is_array($requested_languages) ) {
+        $this->destroyLanguage($this->related_language,$modal_id);
+        foreach ($requested_languages as $key => $language_sigle_row) {
+            $this ->storeLanguage(  $this->handleLanguageData($language_sigle_row,$this->related_language,$modal_id)  );
+        }
+    }
+}
+public function storeLanguage($language_array ) {
+    try {
+        $this->ModelRepositoryLanguage->create( $language_array ) ;
+    } catch (\Exception $e) {
+        return $this -> MakeResponseErrors(  
+            [$e->getMessage()  ] ,
+            'Errors',
+            Response::HTTP_BAD_REQUEST
+        );
+    }
+}
+public function destroyLanguage($relation_coulmn,$id) {
+    try {
+    $this->ModelRepositoryLanguage->deleteByRelation($relation_coulmn,$id) ;
+    } catch (\Exception $e) {
+        return $this -> MakeResponseErrors(  
+            [$e->getMessage()  ] ,
+            'Errors',
+            Response::HTTP_NOT_FOUND
+        );
+    }
+}
+// lang
     // trash
         public function collection_trash(Request $request){
             try {

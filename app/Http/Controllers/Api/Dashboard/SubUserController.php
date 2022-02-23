@@ -28,7 +28,7 @@ class SubUserController extends Controller
 
     public function store(modelInsertRequest $request) {
         try {
-            $modal = $this->ModelRepository->create( Request()->all() );
+            $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ));
             return $this -> MakeResponseSuccessful( 
                 [ $modal ],
                 'Successful'               ,
@@ -43,7 +43,17 @@ class SubUserController extends Controller
         }
     }
 
-
+    public function all(){
+        try {
+            return new ModelCollection (  $this->ModelRepository->all() )  ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
     public function collection(Request $request){
         try {
             return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
@@ -108,7 +118,7 @@ class SubUserController extends Controller
         try {
 
             
-            $this->ModelRepository->update( $id,Request()->all()) ;
+            $modal = new ModelResource($this->ModelRepository->findById($id)); 
             $modal = $this->ModelRepository->findById($id); 
 
 

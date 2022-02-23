@@ -31,6 +31,7 @@ Route::post( '/register' , [ App\Http\Controllers\Api\authController::class , 'r
 Route::group(['middleware' => [ ]], fn ( ) : array => [
     // user
         Route::name('user.')->prefix('/user')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'UserController@all'        )    ->name('all'),
             Route::post(''                          ,   'UserController@store'               )->name('store'),
             Route::get('/{id}/show'                 ,   'UserController@show'                )->name('show'),
             Route::get('/collection'                ,   'UserController@collection'          )->name('collection'),

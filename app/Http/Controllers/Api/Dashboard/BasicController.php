@@ -12,6 +12,7 @@ use App\Http\Requests\Api\Basic\BasicUpdateApiRequest as modelUpdateRequest;
 
 // Resources
 use App\Http\Resources\Dashboard\Collections\BasicCollection as ModelCollection;
+use App\Http\Resources\Dashboard\BasicResource as ModelResource;
 
 // lInterfaces
 use App\Repository\BasicRepositoryInterface as ModelInterface;
@@ -24,7 +25,17 @@ class BasicController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-
+    public function all(){
+        try {
+            return new ModelCollection (  $this->ModelRepository->all() )  ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
 
     public function collection(Request $request){
         try {
@@ -44,7 +55,7 @@ class BasicController extends Controller
 
             
             $this->ModelRepository->update( $id,Request()->all()) ;
-            $modal = $this->ModelRepository->findById($id); 
+            $modal = new ModelResource($this->ModelRepository->findById($id)); 
 
 
             return $this -> MakeResponseSuccessful( 

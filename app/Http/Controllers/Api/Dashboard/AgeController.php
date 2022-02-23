@@ -26,10 +26,21 @@ class AgeController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-
+    public function all(){
+        try {
+            return new ModelCollection (  $this->ModelRepository->all() )  ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
     public function store(modelInsertRequest $request) {
         try {
-            $modal = $this->ModelRepository->create( Request()->all() );
+            $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ));
+
             return $this -> MakeResponseSuccessful( 
                 [ $modal ],
                 'Successful'               ,
@@ -110,8 +121,8 @@ class AgeController extends Controller
 
             
             $this->ModelRepository->update( $id,Request()->all()) ;
-            $modal = $this->ModelRepository->findById($id); 
-
+            
+            $modal = new ModelResource($this->ModelRepository->findById($id)); 
 
             return $this -> MakeResponseSuccessful( 
                     [ $modal],
