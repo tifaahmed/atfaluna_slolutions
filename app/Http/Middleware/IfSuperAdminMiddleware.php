@@ -17,16 +17,18 @@ class IfSuperAdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-            // if (! Auth::guard( 'sanctum' )->user()->hasRole(['super-admin'])  ) {
-            //    return $next($request);
-            // }else{
-            //     return \Response::json( 
-            //         ['message' => 'Un Authenticated.' ],
-            //         false, 
-            //         Response::HTTP_UNAUTHORIZED 
-            //     );
-            // }
-            return dd($request);
+            if ( Auth::user()->hasRole(['super admin'])  ) {
+               return $next($request);
+            }else{
+                return       
+                Response()->json( 
+                    [
+                        'message' => 'Un Authenticated.' ,
+                        'check' => 'false.' ,
+                        'code'   => Response::HTTP_UNAUTHORIZED           ,
+                    ],
+                );
+            }
 
         
         

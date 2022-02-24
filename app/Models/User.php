@@ -11,6 +11,7 @@ use App\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Role;
+use App\Models\Sub_user;
 use Hash ;
 
 class User extends Authenticatable {
@@ -37,6 +38,8 @@ class User extends Authenticatable {
         'phone',
         'country_id',
         'token',
+        'remember_token',
+        'login_type'
     ];
     public function getToken( ) : array { return [
         'token_type'    => 'Bearer'                                     ,
@@ -50,14 +53,16 @@ class User extends Authenticatable {
         public function country(){
             return $this->belongsTo(Country::class);
         }
-        public function UserPermission()
-        {
+        public function UserPermission(){
             return $this->belongsToMany(Permission::class, 'model_has_permissions', 'model_id', 'permission_id');
         }
-        public function UserRole()
-        {
+        public function UserRole(){
             return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
         }
+        public function sub_user(){
+            return $this->hasMany(Sub_user::class);
+        }
+        
     //relations
 
 

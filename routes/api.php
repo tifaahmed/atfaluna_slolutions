@@ -2,21 +2,43 @@
 use Illuminate\Support\Facades\Route;
 
 Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
-
     Route::post( '/login' ,   'authController@login'  ) -> name( 'login' ) ,
-    Route::post( '/logout' ,  'authController@logout' )  -> name( 'logout' ) ,
+    Route::post( '/login-social' ,   'authController@loginSocial'  ) -> name( 'loginSocial' ) ,
     Route::post( '/register' ,  'authController@register' )  -> name( 'register' ) ,
-    
-    ]);
-Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
+]);
+
+Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
+
+    Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
+        Route::post( '/logout' ,  'authController@logout' )  -> name( 'logout' ) ,
+    ]),
     // user
-        Route::name('user.')->prefix('/user')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'UserController@all'                 )->name('all'),
-            Route::post(''                          ,   'UserController@store'               )->name('store'),
-            Route::get('/{id}/show'                 ,   'UserController@show'                )->name('show'),
-            Route::get('/collection'                ,   'UserController@collection'          )->name('collection'),
-            Route::post('/{id}/update'              ,   'UserController@update'              )->name('update'),
-        ]),     
+    Route::name('user.')->prefix('/user')->group( fn ( ) : array => [
+        Route::get('/'                          ,   'UserController@all'                 )->name('all'),
+        Route::get('/{id}/show'                 ,   'UserController@show'                )->name('show'),
+        Route::get('/collection'                ,   'UserController@collection'          )->name('collection'),
+        Route::post('/{id}/update'              ,   'UserController@update'              )->name('update'),
+
+        Route::post('/store-sub-user'     ,   'UserController@storeSubUser'    )->name('storeSubUser'),
+        Route::post('/delete-sub-user'    ,   'UserController@deleteSubUser'   )->name('deleteSubUser'),
+
+    ]), 
+
+    //Sub_user
+    Route::name('sub-user.')->prefix('/sub-user')->group( fn ( ) : array => [
+        Route::get('/'                          ,   'SubUserController@all'                     )->name('all'),
+        Route::get('/{id}/show'                 ,   'SubUserController@show'                    )->name('show'),
+        Route::get('/collection'                ,   'SubUserController@collection'              )->name('collection'),
+
+        Route::post('/store-accessory'    ,   'SubUserController@storeAccessory'   )->name('storeAccessory'),
+        Route::post('/delete-accessory'    ,   'SubUserController@deleteAccessory'   )->name('deleteAccessory'),
+        
+    ]),
+]);
+
+
+Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
+    
     // language
         Route::name('language.')->prefix('/language')->group( fn ( ) : array => [
             Route::get('/'              ,   'LanguageController@all'        )  ->name('all'),
@@ -141,12 +163,7 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::get('/{id}/show'                 ,   'SubUserQuizController@show'                )->name('show'),
             Route::get('/collection'                ,   'SubUserQuizController@collection'          )->name('collection'),
         ]),
-    //Sub_user
-        Route::name('sub-user.')->prefix('/sub-user')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'SubUserController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'SubUserController@show'                )->name('show'),
-            Route::get('/collection'                ,   'SubUserController@collection'          )->name('collection'),
-        ]),
+
     //Subject
         Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
             Route::get('/'                          ,   'SubjectController@all'                 )->name('all'),
