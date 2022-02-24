@@ -40,7 +40,6 @@ class AgeController extends Controller
     public function store(modelInsertRequest $request) {
         try {
             $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ));
-
             return $this -> MakeResponseSuccessful( 
                 [ $modal ],
                 'Successful'               ,
@@ -118,7 +117,6 @@ class AgeController extends Controller
     
     public function update(modelUpdateRequest $request ,$id) {
         try {
-
             
             $this->ModelRepository->update( $id,Request()->all()) ;
             
@@ -138,7 +136,6 @@ class AgeController extends Controller
         } 
     }
     
-
 
     // trash
         public function collection_trash(Request $request){

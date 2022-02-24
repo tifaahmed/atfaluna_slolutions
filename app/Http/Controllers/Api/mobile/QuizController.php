@@ -8,8 +8,8 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\mobile\Collections\QuizCollection as ModelCollection;
-use App\Http\Resources\mobile\QuizResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\QuizCollection as ModelCollection;
+use App\Http\Resources\Mobile\QuizResource as ModelResource;
 
 
 // lInterfaces

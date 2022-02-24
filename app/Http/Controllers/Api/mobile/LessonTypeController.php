@@ -8,8 +8,8 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\mobile\Collections\LessonTypeCollection as ModelCollection;
-use App\Http\Resources\mobile\LessonTypeResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\LessonTypeCollection as ModelCollection;
+use App\Http\Resources\Mobile\LessonTypeResource as ModelResource;
 
 
 // lInterfaces

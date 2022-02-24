@@ -136,8 +136,8 @@ class PackageController extends Controller
             if ($request->hasFile($file_one)) {            
                 $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
             }
-            $modal = new ModelResource( $this->ModelRepository->update( $id,Request()->except($file_one)+$all)) ;
-                $modal = $this->ModelRepository->findById($id); 
+            $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
+            $modal = new ModelResource( $this->ModelRepository->findById($id) ); 
                 //  languages
                 $this -> update_store_language($request->languages,$modal->id) ;
                 return $this -> MakeResponseSuccessful( 

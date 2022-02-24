@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Resources\Dashboard;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 class CertificateResource extends JsonResource
@@ -17,12 +18,10 @@ class CertificateResource extends JsonResource
             'id'               => $this->id,
             'relation_id'      =>  $this->relation_id,
             'relation_type'    =>  $this->relation_type,
-            'image_one'        =>  $this->image_one,
-            'image_two'        =>  $this->image_two,
+            'image_one'        =>  Storage::disk('public')->exists($this->image_one) ? Storage::url($this->image_one)  : null,
+            'image_two'        =>  Storage::disk('public')->exists($this->image_two) ? Storage::url($this->image_two)  : null,
             'min_point'        =>  $this->min_point,
             'max_point'        =>  $this->max_point,
-            'min_point'        =>  $this->min_point,
-
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

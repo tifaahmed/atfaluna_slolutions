@@ -129,8 +129,8 @@ class AccessoryController extends Controller
             }
 
             $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
-            new ModelResource ( $modal = $this->ModelRepository->findById($id) ); 
-            $modal = new ModelResource( $this->ModelRepository->update( $id,Request()->except($file_one)+$all)) ;
+            $modal = new ModelResource( $this->ModelRepository->findById($id) );
+
 
             //  languages
                 $this -> update_store_language($request->languages,$modal->id) ;

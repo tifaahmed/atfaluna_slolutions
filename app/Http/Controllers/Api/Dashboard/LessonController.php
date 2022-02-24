@@ -26,7 +26,7 @@ class LessonController extends Controller
     {
         $this->ModelRepository = $Repository;
         $this->ModelRepositoryLanguage = $RepositoryLanguage;
-        $this->folder_name = 'Lesson';
+        $this->folder_name = 'lesson';
         $this->related_language = 'lesson_id';
     }
     public function all(){
@@ -71,7 +71,6 @@ class LessonController extends Controller
     public function collection(Request $request){
         try {
             return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
-
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -125,8 +124,8 @@ class LessonController extends Controller
                 $this->HelperDelete($old_modal->image );
             }
 
-            $modal = new ModelResource( $this->ModelRepository->update( $id,Request()->except($file_one)+$all)) ;
-            $modal = $this->ModelRepository->findById($id); 
+            $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
+            $modal = new ModelResource( $this->ModelRepository->findById($id) ); 
 
             //  languages
                 $this -> update_store_language($request->languages,$modal->id) ;

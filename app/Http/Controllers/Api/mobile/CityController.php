@@ -8,8 +8,8 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\mobile\Collections\CityCollection as ModelCollection;
-use App\Http\Resources\mobile\CityResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\CityCollection as ModelCollection;
+use App\Http\Resources\Mobile\CityResource as ModelResource;
 
 
 // lInterfaces

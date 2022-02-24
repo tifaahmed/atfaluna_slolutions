@@ -78,12 +78,13 @@ Route::group(['middleware' => ['auth:api','IfDashboardAllawed']], fn ( ) : array
         ]),   
     // language
         Route::name('language.')->prefix('/language')->group( fn ( ) : array => [
-            Route::get('/'              ,   'LanguageController@all'        )    ->name('all'),
+            Route::get('/'              ,   'LanguageController@all'        )  ->name('all'),
             Route::post(''              ,   'LanguageController@store'      )  ->name('store'),
             Route::get('/{id}/show'     ,   'LanguageController@show'       )  ->name('show'),
             Route::get('/collection'    ,   'LanguageController@collection' )  ->name('collection'),
             Route::DELETE('/{id}'       ,   'LanguageController@destroy'    )  ->name('destroy'),
             Route::post('/{id}/update'  ,   'LanguageController@update'     )  ->name('update'),
+
         ]),
     // store
         Route::name('store.')->prefix('/store')->group( fn ( ) : array => [
@@ -216,7 +217,6 @@ Route::group(['middleware' => ['auth:api','IfDashboardAllawed']], fn ( ) : array
     // Basic
         Route::name('basic.')->prefix('/basic')->group( fn ( ) : array => [
             Route::get('/collection'                ,   'BasicController@collection'          )  ->name('collection'),
-            Route::get('/{id}/show'                 ,   'BasicController@show'                )  ->name('show'),
             Route::post('/{id}/update'              ,   'BasicController@update'              )  ->name('update'),
         ]),
     // certificates

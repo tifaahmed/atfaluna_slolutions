@@ -8,6 +8,7 @@ use Illuminate\Http\Response ;
 
 //AgeGroupController
 // Requests
+use App\Http\Requests\Api\Basic\BasicApiRequest as modelInsertRequest;
 use App\Http\Requests\Api\Basic\BasicUpdateApiRequest as modelUpdateRequest;
 
 // Resources
@@ -25,18 +26,6 @@ class BasicController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-    public function all(){
-        try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-
     public function collection(Request $request){
         try {
             return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;

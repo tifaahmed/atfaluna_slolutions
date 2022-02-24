@@ -8,8 +8,8 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\mobile\Collections\PlayTimeCollection as ModelCollection;
-use App\Http\Resources\mobile\PlayTimeResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\PlayTimeCollection as ModelCollection;
+use App\Http\Resources\Mobile\PlayTimeResource as ModelResource;
 
 
 // lInterfaces

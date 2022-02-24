@@ -24,7 +24,7 @@ class AvatarController extends Controller
     public function __construct(ModelInterface $Repository)
     {
         $this->ModelRepository = $Repository;
-        $this->folder_name = 'Avatar';
+        $this->folder_name = 'avatar';
     }
     public function all(){
         try {
@@ -136,8 +136,8 @@ class AvatarController extends Controller
                 $this->HelperDelete($old_modal->image );
             }
 
-            $modal = new ModelResource( $this->ModelRepository->update( $id,Request()->except($file_one)+$all)) ;
-            $modal = $this->ModelRepository->findById($id); 
+            $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
+            $modal = new ModelResource( $this->ModelRepository->findById($id) ); 
 
 
             // //  languages

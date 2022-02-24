@@ -8,8 +8,8 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\mobile\Collections\GovernmentCollection as ModelCollection;
-use App\Http\Resources\mobile\GovernmentResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\GovernmentCollection as ModelCollection;
+use App\Http\Resources\Mobile\GovernmentResource as ModelResource;
 
 
 // lInterfaces

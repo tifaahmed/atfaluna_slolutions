@@ -9,8 +9,8 @@ use Illuminate\Http\Response ;
 use App\Http\Requests\Api\SubUser\MobileAccessoryApiRequest;
 
 // Resources
-use App\Http\Resources\mobile\Collections\SubUserCollection as ModelCollection;
-use App\Http\Resources\mobile\SubUserResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\SubUserCollection as ModelCollection;
+use App\Http\Resources\Mobile\SubUserResource as ModelResource;
 
 use Auth;
 // lInterfaces
