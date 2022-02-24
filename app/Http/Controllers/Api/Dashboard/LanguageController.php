@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
 
-use App\Http\Requests\Api\Language\LanguageApiRequest as modelRequest;
+use App\Http\Requests\Api\Language\LanguageApiRequest as modelInsertRequest;
+use App\Http\Requests\Api\Language\LanguageUpdateApiRequest as modelUpdateRequest;
+
 
 use App\Repository\LanguageRepositoryInterface as ModelInterface;
 
@@ -33,10 +35,12 @@ class LanguageController extends Controller
         }
     }
 
-    public function store(modelRequest $request ) {
+    public function store(modelInsertRequest $request) {
         try {
+            $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ));
+
             return $this -> MakeResponseSuccessful( 
-                [ $this->ModelRepository->create( Request()->all() ) ],
+                [ $modal ],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
@@ -48,7 +52,6 @@ class LanguageController extends Controller
             );
         }
     }
-
     public function collection(Request $request){
         try {
             return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
@@ -94,12 +97,15 @@ class LanguageController extends Controller
         }
     }
 
-    public function update(modelRequest $request ,$id) {
+    public function update(modelUpdateRequest $request ,$id) {
         try {
-            $this->ModelRepository->update($id,Request()->all());
-            $new_data = $this->ModelRepository->findById($id); 
+            
+            $this->ModelRepository->update( $id,Request()->all()) ;
+            
+            $modal = new ModelResource($this->ModelRepository->findById($id)); 
+
             return $this -> MakeResponseSuccessful( 
-                    [ $new_data],
+                    [ $modal],
                     'Successful'               ,
                     Response::HTTP_OK
             ) ;
@@ -109,6 +115,6 @@ class LanguageController extends Controller
                 'Errors',
                 Response::HTTP_NOT_FOUND
             );
-        } 
+        }  
     }
 }

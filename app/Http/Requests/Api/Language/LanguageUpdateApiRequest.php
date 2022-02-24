@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api\City;
+
+namespace App\Http\Requests\Api\Language;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CityUpdateApiRequest extends FormRequest
+class LanguageUpdateApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,11 +22,13 @@ class CityUpdateApiRequest extends FormRequest
      *
      * @return array
      */
+
     public function rules()
     {
         return [
-            'name'                =>  [ 'required','unique:cities,name,'.$this->id] ,
-            'government_id'       =>  [ 'required','integer'] ,
+        'name'       =>  [ 'required' , 'max:2'     , 'unique:languages,name,'.$this->id      ] ,
+        'full_name'  =>  [ 'required' , 'max:20'    , 'unique:languages,full_name,'.$this->id ] ,
         ];
     }
 }
+
