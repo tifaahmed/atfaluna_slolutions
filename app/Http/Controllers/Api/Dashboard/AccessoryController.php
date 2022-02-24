@@ -50,7 +50,8 @@ class AccessoryController extends Controller
                 $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
             }
 
-            $modal = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
+            $modal =new ModelResource ( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
+
 
             // // languages
             $this -> update_store_language($request->languages,$modal->id) ;
@@ -127,8 +128,9 @@ class AccessoryController extends Controller
                 $this->HelperDelete($old_modal->image );
             }
 
+            $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
+            new ModelResource ( $modal = $this->ModelRepository->findById($id) ); 
             $modal = new ModelResource( $this->ModelRepository->update( $id,Request()->except($file_one)+$all)) ;
-            $modal = $this->ModelRepository->findById($id); 
 
             //  languages
                 $this -> update_store_language($request->languages,$modal->id) ;

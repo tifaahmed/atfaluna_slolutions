@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider {
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**
@@ -21,12 +21,12 @@ class AuthServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot( ) {
-        $this->registerPolicies( );
-
-        // issue access tokens and revoke access tokens, clients, and personal access tokens:
-        Passport::routes();
-
+    public function boot()
+    {
+        $this->registerPolicies();
  
+        if (! $this->app->routesAreCached()) {
+            Passport::routes();
+        }
     }
 }

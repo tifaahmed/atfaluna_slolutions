@@ -22,11 +22,15 @@ class CreateUsersTable extends Migration
             $table -> string        ( 'avatar'   ) -> nullable( )              ;
             $table -> string        ( 'phone'    ) -> nullable( ) -> unique( ) ;
             $table -> string        ( 'password' ) -> nullable( )              ;
-            $table->date('birthdate')-> nullable( ); 
+            $table -> date          ('birthdate'  )-> nullable( ); 
             $table -> boolean       ( 'active'   ) -> default (0)              ;
             $table -> boolean       ( 'online'   ) -> default (0)              ;
             $table->integer('country_id') -> nullable( )->unsigned();
             $table->foreign('country_id')->references('id')->on('countries');
+            $table -> string        ( 'login_type') -> nullable( )              ;
+
+            
+
             $table->softDeletes();
             $table -> timestamps    (            )                             ;
         });

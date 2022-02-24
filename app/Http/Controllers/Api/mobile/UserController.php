@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Api\mobile;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Http\Requests\Api\UserRegisterApiRequest;
-use App\Http\Requests\Api\UserUpdateApiRequest;
+// Requests
+use App\Http\Requests\Api\User\UserUpdateApiRequest  as modelUpdateRequest;
+use App\Http\Requests\Api\User\MobileStoreSubUserApiRequest ;
 
 use Illuminate\Http\Response ;
 
@@ -18,7 +19,7 @@ use App\Repository\CountryRepositoryInterface   as CountryInterface;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-
+use Auth;
 
 class UserController extends Controller
 {
@@ -35,26 +36,6 @@ class UserController extends Controller
     }
 
     
-
-
-
-    public function store(UserRegisterApiRequest $request ) {
-        $all = [ ];
-
-        $file_one = 'avatar';
-        // if ($request->hasFile($file_one)) {            
-            $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
-        // }
-
-        $all += array( 'token' => Hash::make( Str::random(60) )  );
-        $all += array( 'remember_token' => hash('sha256',Str::random(60)) );
-        $all += array( 'password' => Hash::make($request->password) );
-        return $this -> MakeResponseSuccessful( 
-            ['UserModel'  => $this->ModelRepository->create( Request()->except($file_one,'password','password_confirmation')+$all ) ],
-            'Successful',
-            Response::HTTP_OK
-        ) ;
-    }
     public function show($id) {
         return $this -> MakeResponseSuccessful( 
             ['UserModel'  => new ModelResource ( $this->ModelRepository->findById($id) )  ],
@@ -80,7 +61,7 @@ class UserController extends Controller
             Response::HTTP_OK
          ) ;
     }
-    public function update(UserUpdateApiRequest $request ,$id){
+    public function update(modelUpdateRequest $request ,$id){
         try {
 
             $all = [ ];
@@ -117,49 +98,23 @@ class UserController extends Controller
         }     
     }
 
-
+    public function storeSubUser(MobileStoreSubUserApiRequest $request){
+        try {
+            $model = $this->ModelRepository->findById(Auth::user()->id);             
+            $model->sub_user()->create( $request->all() );
+            return $this -> MakeResponseSuccessful( 
+                [ 'Successful' ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
     
-    // trash
-        public function collection_trash(Request $request){
-            try {
-                return new ModelCollection (  $this->ModelRepository->collection_trash( $request->PerPage ? $request->PerPage : 10 ) ) ;
-            } catch (\Exception $e) {
-                return $this -> MakeResponseErrors(  
-                    [$e->getMessage()  ] ,
-                    'Errors',
-                    Response::HTTP_NOT_FOUND
-                );
-            }
-        }
-        public function show_trash($id) {
-            try {
-                return $this -> MakeResponseSuccessful( 
-                    [new ModelResource ( $this->ModelRepository->findTrashedById($id) )  ],
-                    'Successful',
-                    Response::HTTP_OK
-                ) ;
-            } catch (\Exception $e) {
-                return $this -> MakeResponseErrors(  
-                    [$e->getMessage()  ] ,
-                    'Errors',
-                    Response::HTTP_NOT_FOUND
-                );
-            }
-        }
-        public function restore($id) {
-            try {
-                return $this -> MakeResponseSuccessful( 
-                    [ $this->ModelRepository->restorById($id)  ],
-                    'Successful',
-                    Response::HTTP_OK
-                ) ;
-            } catch (\Exception $e) {
-                return $this -> MakeResponseErrors(  
-                    [$e->getMessage()  ] ,
-                    'Errors',
-                    Response::HTTP_NOT_FOUND
-                );
-            }
-        }
     
 }

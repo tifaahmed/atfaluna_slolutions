@@ -17,13 +17,16 @@ class IfDashboardAllawedMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! Auth::guard( 'api' )->user()->hasRole(['admin'])  ) {
-           return $next($request);
+        if (Auth::user()->hasRole(['admin'])  ) {
+            return $next($request);
         }else{
-            return \Response::json( 
-                ['message' => 'Un Authenticated.' ],
-                false, 
-                Response::HTTP_UNAUTHORIZED 
+            return       
+            Response()->json( 
+                [
+                    'message' => 'Un Authenticated.' ,
+                    'check' => 'false.' ,
+                    'code'   => Response::HTTP_UNAUTHORIZED           ,
+                ],
             );
         }
 

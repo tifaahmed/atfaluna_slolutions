@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Http\Requests\Api\UserRegisterApiRequest;
-use App\Http\Requests\Api\UserUpdateApiRequest;
+use App\Http\Requests\Api\User\UserRegisterApiRequest;
+use App\Http\Requests\Api\User\UserUpdateApiRequest;
 
 use Illuminate\Http\Response ;
 
