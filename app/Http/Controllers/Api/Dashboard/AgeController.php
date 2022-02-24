@@ -29,7 +29,7 @@ class AgeController extends Controller
 
     public function store(modelInsertRequest $request) {
         try {
-            $modal = $this->ModelRepository->create( Request()->all() );
+            new ModelResource ($modal = $this->ModelRepository->create( Request()->all() ) );
             return $this -> MakeResponseSuccessful( 
                 [ $modal ],
                 'Successful'               ,

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
+
 use App\Http\Requests\Api\loginApiRequest ;
-use App\Http\Requests\Api\RegisterApiRequest ;
+use App\Http\Requests\Api\User\RegisterApiRequest ;
+
 use App\Models\User ;
 use Illuminate\Http\Response ;
 use Illuminate\Http\Request;
@@ -24,7 +26,7 @@ class authController extends Controller {
             return $this -> MakeResponseErrors( [ 'InvalidCredentials' ] , 'InvalidCredentials' , Response::HTTP_UNAUTHORIZED ) ;
         }
 
-        if ( Auth::attempt(['email' => $user->email, 'password' => $request->password],$request->_token) ){
+        if ( Auth()->attempt(['email' => $user->email, 'password' => $request->password],$request->_token) ){
             return $this -> MakeResponseSuccessful( 
                 [
                     'user'  =>   new UserResource ( Auth::user()   )   , 
@@ -34,8 +36,6 @@ class authController extends Controller {
                 Response::HTTP_OK
             ) ; 
         }
-
-        
     }
 
     public function register( RegisterApiRequest $request ) {
@@ -50,25 +50,22 @@ class authController extends Controller {
             'token' => Hash::make( Str::random(60) )  ,
             // 'remember_token' =>  'token' => Auth::user() -> getToken( ) 
         ]);
-        // $user->save();
-        
-
-        return $this -> MakeResponseSuccessful( 
-            ['user'  => $user ],
-            'Successful'               ,
-            Response::HTTP_OK
-         ) ;
+        if ( Auth::attempt(['email' => $user->email, 'password' => $request->password],$request->token) ){
+            return $this -> MakeResponseSuccessful( 
+                [
+                    'user'  =>   new UserResource ( Auth::user()   )   , 
+                    'Token' => Auth::user() -> getToken( ) 
+                ],  
+                'Successful' ,
+                Response::HTTP_OK
+            ) ; 
+        }
     }
 
 
     public function logout( Request $request ) {
-       // Auth::guard( 'sanctum' ) -> logout( );
         // Auth::guard('sanctum')->logout();
-        // Auth::logout();
-        // $user->token()->revoke()
-        Auth::guard( 'sanctum' )-> user()->currentAccessToken()->delete();
-      
-        // dd( Auth::user()  );
+        Auth::guard('api')->user()->token()->revoke();
         return $this -> MakeResponseSuccessful( 
             ['user'  => null ],
             'Successful' ,

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Http\Requests\Api\UserRegisterApiRequest;
-use App\Http\Requests\Api\UserUpdateApiRequest;
+use App\Http\Requests\Api\User\UserRegisterApiRequest;
+use App\Http\Requests\Api\User\UserUpdateApiRequest;
 
 use Illuminate\Http\Response ;
 
@@ -42,9 +42,9 @@ class UserController extends Controller
         $all = [ ];
 
         $file_one = 'avatar';
-        // if ($request->hasFile($file_one)) {            
+        if ($request->hasFile($file_one)) {            
             $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
-        // }
+        }
 
         $all += array( 'token' => Hash::make( Str::random(60) )  );
         $all += array( 'remember_token' => hash('sha256',Str::random(60)) );

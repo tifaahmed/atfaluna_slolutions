@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -32,7 +32,6 @@ class UserRegisterApiRequest extends FormRequest
                 'password_confirmation'  =>  [ 'required' , 'min:6' , 'max:15' ],
 
                 'avatar'    =>  [ 'sometimes', 'mimes:jpg,jpeg,png' , 'max:5000'] ,
-                'country_id'    =>  [ 'required' , 'integer'] 
         ];
     }
 }
