@@ -24,7 +24,7 @@ class CityApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'                =>  [ 'required','unique:cities,name'.$this->id] ,
+            'name'                =>  [ 'required','unique:cities,name'] ,
             'government_id'       =>  [ 'required','integer'] ,
         ];
     }

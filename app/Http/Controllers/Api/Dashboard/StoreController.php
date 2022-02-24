@@ -29,6 +29,17 @@ class StoreController extends Controller
         $this->folder_name = 'store';
         $this->related_language = 'store_id';
     }
+    public function all(){
+        try {
+            return new ModelCollection (  $this->ModelRepository->all() )  ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
     public function store(modelInsertRequest $request) {
         try {
             $all = [ ];
@@ -37,7 +48,7 @@ class StoreController extends Controller
                 $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
             }
 
-            $modal = $this->ModelRepository->create( Request()->except($file_one)+$all );
+            $modal = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
 
             // // languages
             $this -> update_store_language($request->languages,$modal->id) ;
@@ -113,7 +124,7 @@ class StoreController extends Controller
                 $this->HelperDelete($old_modal->image );
             }
 
-            $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
+            $modal = new ModelResource( $this->ModelRepository->update( $id,Request()->except($file_one)+$all)) ;
             $modal = $this->ModelRepository->findById($id); 
 
             //  languages

@@ -31,6 +31,17 @@ class AccessoryController extends Controller
         $this->folder_name = 'accessory';
         $this->related_language = 'accessory_id';
     }
+    public function all(){
+        try {
+            return new ModelCollection (  $this->ModelRepository->all() )  ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
     public function store(modelInsertRequest $request) {
         try {
             $all = [ ];
@@ -40,6 +51,7 @@ class AccessoryController extends Controller
             }
 
             $modal =new ModelResource ( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
+
 
             // // languages
             $this -> update_store_language($request->languages,$modal->id) ;
@@ -118,6 +130,7 @@ class AccessoryController extends Controller
 
             $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
             new ModelResource ( $modal = $this->ModelRepository->findById($id) ); 
+            $modal = new ModelResource( $this->ModelRepository->update( $id,Request()->except($file_one)+$all)) ;
 
             //  languages
                 $this -> update_store_language($request->languages,$modal->id) ;

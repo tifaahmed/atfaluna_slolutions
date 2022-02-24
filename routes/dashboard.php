@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth:api','IfDashboardAllawed']], fn ( ) : array
         ]),
     // user
         Route::name('user.')->prefix('/user')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'UserController@all'        )    ->name('all'),
             Route::post(''                          ,   'UserController@store'               )->name('store'),
             Route::get('/{id}/show'                 ,   'UserController@show'                )->name('show'),
             Route::get('/collection'                ,   'UserController@collection'          )->name('collection'),

@@ -35,9 +35,17 @@ class UserController extends Controller
     }
 
     
-
-
-
+    public function all(){
+        try {
+            return new ModelCollection (  $this->ModelRepository->all() )  ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
     public function store(UserRegisterApiRequest $request ) {
         $all = [ ];
 
@@ -78,7 +86,7 @@ class UserController extends Controller
             [ 'UserModel'  => $this->ModelRepository->deleteById($id) ],
             'Successful',
             Response::HTTP_OK
-         ) ;
+        ) ;
     }
     public function update(UserUpdateApiRequest $request ,$id){
         try {
@@ -116,7 +124,6 @@ class UserController extends Controller
             );
         }     
     }
-
 
     
     // trash
@@ -161,5 +168,19 @@ class UserController extends Controller
                 );
             }
         }
-    
+        public function premanently_delete($id) {
+            try {
+                return $this -> MakeResponseSuccessful( 
+                    [$this->ModelRepository->PremanentlyDeleteById($id)] ,
+                    'Successful'               ,
+                    Response::HTTP_OK
+                ) ;
+            } catch (\Exception $e) {
+                return $this -> MakeResponseErrors(  
+                    [ $e->getMessage()  ] ,
+                    'Errors',
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+        }
 }

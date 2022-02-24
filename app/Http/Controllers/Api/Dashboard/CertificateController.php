@@ -28,7 +28,17 @@ class CertificateController extends Controller
         $this->related_language = 'certificate_id';
 
     }
-
+    public function all(){
+        try {
+            return new ModelCollection (  $this->ModelRepository->all() )  ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
     public function store(modelInsertRequest $request) {
         try {
             $all = [ ];
@@ -37,7 +47,7 @@ class CertificateController extends Controller
                 $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
             }
 
-            $modal = $this->ModelRepository->create( Request()->except($file_one)+$all );
+            $modal = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
 
             // // languages
             $this -> update_store_language($request->languages,$modal->id) ;
@@ -124,7 +134,7 @@ class CertificateController extends Controller
             if ($request->hasFile($file_one)) {            
                 $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
             }
-                $this->ModelRepository->update( $id, Request()->all() ) ;
+            $modal = new ModelResource( $this->ModelRepository->update( $id,Request()->except($file_one)+$all)) ;
                 $modal = $this->ModelRepository->findById($id); 
                 //  languages
                 $this -> update_store_language($request->languages,$modal->id) ;
