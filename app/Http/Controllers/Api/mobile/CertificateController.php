@@ -8,8 +8,8 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\mobile\Collections\CertificateCollection as ModelCollection;
-use App\Http\Resources\mobile\CertificateResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\CertificateCollection as ModelCollection;
+use App\Http\Resources\Mobile\CertificateResource as ModelResource;
 
 
 // lInterfaces

@@ -55,7 +55,6 @@ class LanguageController extends Controller
     public function collection(Request $request){
         try {
             return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
-
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -117,4 +116,6 @@ class LanguageController extends Controller
             );
         }  
     }
+
+    
 }

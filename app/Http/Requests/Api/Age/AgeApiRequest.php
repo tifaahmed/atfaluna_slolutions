@@ -25,7 +25,7 @@ class AgeApiRequest extends FormRequest
     {
         return [
             'age'                =>  [  'required' ,'integer','unique:ages,age' ] ,
-            'age_group_id'       =>  [ 'required' ,'integer' ] ,
+            'age_group_id'       =>  [ 'required' ,'integer' , 'exists:age_groups,id'] ,
         ];
     }
 }

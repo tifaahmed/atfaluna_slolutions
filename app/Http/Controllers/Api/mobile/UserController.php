@@ -10,8 +10,8 @@ use App\Http\Requests\Api\UserUpdateApiRequest;
 
 use Illuminate\Http\Response ;
 
-use App\Http\Resources\Dashboard\Collections\UserCollection as ModelCollection;
-use App\Http\Resources\Dashboard\UserResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\UserCollection as ModelCollection;
+use App\Http\Resources\Mobile\UserResource as ModelResource;
 
 use App\Repository\UserRepositoryInterface      as ModelInterface;
 use App\Repository\CountryRepositoryInterface   as CountryInterface;

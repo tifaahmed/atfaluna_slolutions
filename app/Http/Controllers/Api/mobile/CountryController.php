@@ -8,8 +8,8 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\mobile\Collections\CountryCollection as ModelCollection;
-use App\Http\Resources\mobile\CountryResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\CountryCollection as ModelCollection;
+use App\Http\Resources\Mobile\CountryResource as ModelResource;
 
 
 // lInterfaces

@@ -9,8 +9,8 @@ use Illuminate\Http\Response ;
 // Requests
 
 // Resources
-use App\Http\Resources\mobile\Collections\AgeGroupCollection as ModelCollection;
-use App\Http\Resources\mobile\AgeGroupResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\AgeGroupCollection as ModelCollection;
+use App\Http\Resources\Mobile\AgeGroupResource as ModelResource;
 
 
 // lInterfaces

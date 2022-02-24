@@ -8,8 +8,8 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\mobile\Collections\TrueFalseQuestionCollection as ModelCollection;
-use App\Http\Resources\mobile\TrueFalseQuestionResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\TrueFalseQuestionCollection as ModelCollection;
+use App\Http\Resources\Mobile\TrueFalseQuestionResource as ModelResource;
 
 
 // lInterfaces

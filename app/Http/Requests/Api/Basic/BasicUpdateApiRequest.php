@@ -25,7 +25,7 @@ class BasicUpdateApiRequest extends FormRequest
     {
         return [
             'item'       =>  [ 'required'] ,
-            'info'       =>  [ 'required' ,'unique:basics,info'.$this->id] ,
+            'info'       =>  [ 'required' ,'unique:basics,info,'.$this->id] ,
         ];
     }
 }

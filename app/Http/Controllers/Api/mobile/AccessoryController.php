@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
 
 // Resources
-use App\Http\Resources\mobile\Collections\AccessoryCollection as ModelCollection;
-use App\Http\Resources\mobile\AccessoryResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\AccessoryCollection as ModelCollection;
+use App\Http\Resources\Mobile\AccessoryResource as ModelResource;
 
 
 // lInterfaces

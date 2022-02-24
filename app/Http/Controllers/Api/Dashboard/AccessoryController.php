@@ -127,8 +127,8 @@ class AccessoryController extends Controller
                 $this->HelperDelete($old_modal->image );
             }
 
-            $modal = new ModelResource( $this->ModelRepository->update( $id,Request()->except($file_one)+$all)) ;
-            $modal = $this->ModelRepository->findById($id); 
+            $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
+            $modal = new ModelResource( $this->ModelRepository->findById($id) );
 
             //  languages
                 $this -> update_store_language($request->languages,$modal->id) ;

@@ -25,7 +25,7 @@ class AgeUpdateApiRequest extends FormRequest
     {
         return [
             'age'                =>  [  'required' ,'integer','unique:ages,age,'.$this->id ] ,
-            'age_group_id'       =>  [ 'required' ,'integer' ,'unsigned'] ,
+            'age_group_id'       =>  [  'required' ,'integer' , 'exists:age_groups,id' ] ,
         ];
     }
 }

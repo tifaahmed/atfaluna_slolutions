@@ -8,8 +8,8 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\mobile\Collections\AgeCollection as ModelCollection;
-use App\Http\Resources\mobile\AgeResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\AgeCollection as ModelCollection;
+use App\Http\Resources\Mobile\AgeResource as ModelResource;
 
 
 // lInterfaces

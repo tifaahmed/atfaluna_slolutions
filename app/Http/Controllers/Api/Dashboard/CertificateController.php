@@ -12,7 +12,7 @@ use App\Http\Requests\Api\Certificate\CertificateApiRequest as modelInsertReques
 
 // Resources
 use App\Http\Resources\Dashboard\Collections\CertificateCollection as ModelCollection;
-use App\Http\Resources\Dashboard\AvatarResource as ModelResource;
+use App\Http\Resources\Dashboard\CertificateResource as ModelResource;
 
 // lInterfaces
 use App\Repository\CertificateRepositoryInterface as ModelInterface;
@@ -24,7 +24,7 @@ class CertificateController extends Controller
     public function __construct(ModelInterface $Repository)
     {
         $this->ModelRepository = $Repository;
-        $this->folder_name = 'Certificate';
+        $this->folder_name = 'certificate';
         $this->related_language = 'certificate_id';
 
     }
@@ -42,12 +42,15 @@ class CertificateController extends Controller
     public function store(modelInsertRequest $request) {
         try {
             $all = [ ];
-            $file_one = 'image';
+            $file_one = 'image_one';
             if ($request->hasFile($file_one)) {            
                 $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
             }
-
-            $modal = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
+            $file_two = 'image_two';
+            if ($request->hasFile($file_two)) {            
+                $all += $this->HelperHandleFile($this->folder_name,$request->file($file_two),$file_two)  ;
+            }
+            $modal = new ModelResource( $this->ModelRepository->create( Request()->except($file_one,$file_two)+$all ) );
 
             // // languages
             $this -> update_store_language($request->languages,$modal->id) ;
@@ -65,7 +68,6 @@ class CertificateController extends Controller
             );
         }
     }
-
 
     public function collection(Request $request){
         try {
@@ -130,13 +132,19 @@ class CertificateController extends Controller
     public function update(modelInsertRequest $request ,$id) {
         try {
             $all = [ ];
-            $file_one = 'image';
+            $file_one = 'image_one';
             if ($request->hasFile($file_one)) {            
                 $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
             }
-            $modal = new ModelResource( $this->ModelRepository->update( $id,Request()->except($file_one)+$all)) ;
-                $modal = $this->ModelRepository->findById($id); 
-                //  languages
+            $file_two = 'image_two';
+            if ($request->hasFile($file_two)) {            
+                $all += $this->HelperHandleFile($this->folder_name,$request->file($file_two),$file_two)  ;
+            }
+            
+            $this->ModelRepository->update( $id,Request()->except($file_one,$file_two)+$all) ;
+            $modal = new ModelResource( $this->ModelRepository->findById($id) ); 
+                
+            //  languages
                 $this -> update_store_language($request->languages,$modal->id) ;
                 return $this -> MakeResponseSuccessful( 
                         [ $modal],
