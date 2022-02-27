@@ -12,6 +12,7 @@ export default class Router   {
                  // 'localization' : 'en'
          };          
    responseType : any = 'json' ;
+   routerPrefix : string = '/api/dashboard/' ;
 
 
 
@@ -26,14 +27,14 @@ export default class Router   {
 
    async AllAxios() : Promise<any>  { 
          return  await  Axios.get( 
-            '/api/'+this.name ,
+            this.routerPrefix+this.name ,
             { headers : this.headers , responseType : this.responseType}
          ) ;
    }
 
    async PaginateAxios(page : number , PerPage :number, relation_id:number = null) : Promise<any>  { 
           return await Axios.get( 
-             '/api/'+this.name+'/collection', 
+            this.routerPrefix+this.name+'/collection', 
                { 
                   headers : this.headers ,responseType : this.responseType ,       
                   params  : { 'page':page , 'PerPage':PerPage ,'relation_id':relation_id }
@@ -42,7 +43,7 @@ export default class Router   {
    }
    async PaginateTrashAxios(page : number , PerPage :number, relation_id:number = null) : Promise<any>  { 
       return await Axios.get( 
-         '/api/'+this.name+'/collection-trash', 
+         this.routerPrefix+'/collection-trash', 
            { 
               headers : this.headers ,responseType : this.responseType ,       
               params  : { 'page':page , 'PerPage':PerPage ,'relation_id':relation_id }
@@ -52,7 +53,7 @@ export default class Router   {
    
    async StoreAxios(formData : any) : Promise<any>  {
        return  await Axios.post( 
-          '/api/'+this.name , 
+         this.routerPrefix+this.name , 
           formData , 
           { headers : this.headers , responseType : this.responseType}
        );
@@ -61,41 +62,41 @@ export default class Router   {
 
     async DeleteAxios(id : number) : Promise<any>  { 
          return  await  Axios.delete( 
-            '/api/'+this.name+'/'+id ,
+            this.routerPrefix+this.name+'/'+id ,
             { headers : this.headers , responseType : this.responseType}
          ) ;
     }
     
     async PremanentlyDeleteAxios(id : number) : Promise<any>  { 
       return  await  Axios.delete( 
-         '/api/'+this.name+'/premanently-delete/'+id ,
+         this.routerPrefix+this.name+'/premanently-delete/'+id ,
          { headers : this.headers , responseType : this.responseType}
       ) ;
    }
  
    async ShowAxios(id : number) : Promise<any>  {
       return await Axios.get( 
-         '/api/'+this.name+'/'+id+'/show', 
+         this.routerPrefix+this.name+'/'+id+'/show', 
          { headers : this.headers , responseType : this.responseType}
       ); 
    } 
    async TrashShowAxios(id : number) : Promise<any>  {
       return await Axios.get( 
-         '/api/'+this.name+'/'+id+'/show-trash', 
+         this.routerPrefix+this.name+'/'+id+'/show-trash', 
          { headers : this.headers , responseType : this.responseType}
       ); 
 } 
    
    async UpdateAxios(id : number ,formData ?: any) : Promise<any>  { 
       return await Axios.post( 
-         '/api/'+this.name+'/'+id+'/update', 
+         this.routerPrefix+this.name+'/'+id+'/update', 
          formData ,
          { headers : this.headers , responseType : this.responseType}
       ) 
    }
    async RstoreRowAxios(id : number) : Promise<any>  {
       return await Axios.post( 
-         '/api/'+this.name+'/'+id+'/restore', 
+         this.routerPrefix+this.name+'/'+id+'/restore', 
          { headers : this.headers , responseType : this.responseType}
       ); 
    }
