@@ -5847,6 +5847,7 @@ var Router = function () {
 
     };
     this.responseType = 'json';
+    this.routerPrefix = '/api/dashboard/';
   }
 
   Router.prototype.IfAuth = function () {
@@ -5876,7 +5877,7 @@ var Router = function () {
           case 0:
             return [4
             /*yield*/
-            , axios_1["default"].get('/api/' + this.name, {
+            , axios_1["default"].get(this.routerPrefix + this.name, {
               headers: this.headers,
               responseType: this.responseType
             })];
@@ -5901,7 +5902,7 @@ var Router = function () {
           case 0:
             return [4
             /*yield*/
-            , axios_1["default"].get('/api/' + this.name + '/collection', {
+            , axios_1["default"].get(this.routerPrefix + this.name + '/collection', {
               headers: this.headers,
               responseType: this.responseType,
               params: {
@@ -5931,7 +5932,7 @@ var Router = function () {
           case 0:
             return [4
             /*yield*/
-            , axios_1["default"].get('/api/' + this.name + '/collection-trash', {
+            , axios_1["default"].get(this.routerPrefix + '/collection-trash', {
               headers: this.headers,
               responseType: this.responseType,
               params: {
@@ -5957,7 +5958,7 @@ var Router = function () {
           case 0:
             return [4
             /*yield*/
-            , axios_1["default"].post('/api/' + this.name, formData, {
+            , axios_1["default"].post(this.routerPrefix + this.name, formData, {
               headers: this.headers,
               responseType: this.responseType
             })];
@@ -5978,7 +5979,7 @@ var Router = function () {
           case 0:
             return [4
             /*yield*/
-            , axios_1["default"]["delete"]('/api/' + this.name + '/' + id, {
+            , axios_1["default"]["delete"](this.routerPrefix + this.name + '/' + id, {
               headers: this.headers,
               responseType: this.responseType
             })];
@@ -5999,7 +6000,7 @@ var Router = function () {
           case 0:
             return [4
             /*yield*/
-            , axios_1["default"]["delete"]('/api/' + this.name + '/premanently-delete/' + id, {
+            , axios_1["default"]["delete"](this.routerPrefix + this.name + '/premanently-delete/' + id, {
               headers: this.headers,
               responseType: this.responseType
             })];
@@ -6020,7 +6021,7 @@ var Router = function () {
           case 0:
             return [4
             /*yield*/
-            , axios_1["default"].get('/api/' + this.name + '/' + id + '/show', {
+            , axios_1["default"].get(this.routerPrefix + this.name + '/' + id + '/show', {
               headers: this.headers,
               responseType: this.responseType
             })];
@@ -6041,7 +6042,7 @@ var Router = function () {
           case 0:
             return [4
             /*yield*/
-            , axios_1["default"].get('/api/' + this.name + '/' + id + '/show-trash', {
+            , axios_1["default"].get(this.routerPrefix + this.name + '/' + id + '/show-trash', {
               headers: this.headers,
               responseType: this.responseType
             })];
@@ -6062,7 +6063,7 @@ var Router = function () {
           case 0:
             return [4
             /*yield*/
-            , axios_1["default"].post('/api/' + this.name + '/' + id + '/update', formData, {
+            , axios_1["default"].post(this.routerPrefix + this.name + '/' + id + '/update', formData, {
               headers: this.headers,
               responseType: this.responseType
             })];
@@ -6083,7 +6084,7 @@ var Router = function () {
           case 0:
             return [4
             /*yield*/
-            , axios_1["default"].post('/api/' + this.name + '/' + id + '/restore', {
+            , axios_1["default"].post(this.routerPrefix + this.name + '/' + id + '/restore', {
               headers: this.headers,
               responseType: this.responseType
             })];
