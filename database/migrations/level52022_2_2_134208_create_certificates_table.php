@@ -15,17 +15,12 @@ class CreateCertificatesTable extends Migration
     {
         Schema::create('certificates', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->integer('relation_id')->cascade(); //[note: 'cascade ,morphs_id (subject_id , age_group_id)']
-            $table->string('relation_type')->cascade(); //[note: 'cascade, morphs_type (subject_model , age_group_model)']
+            $table->integer('certificatable_id'); //[note: 'morphs_id (subject_id , age_group_id)']
+            $table->string('certificatable_type'); //[note: 'morphs_type (subject_model , age_group_model)']
             $table->string('image_one'); //[note: 'not null']
             $table->string('image_two'); //[note: 'not null']
             $table->integer('min_point');
             $table->integer('max_point');
-            //// $table->morphs('taggable');
-            $table->integer('subject_id')->unsigned();
-            $table->foreign('subject_id')->references('id')->on('subjects');
-            $table->integer('sub_users_id')->unsigned();
-            $table->foreign('sub_users_id')->references('id')->on('sub_users');
             $table->timestamps();
             $table->softDeletes();
         });

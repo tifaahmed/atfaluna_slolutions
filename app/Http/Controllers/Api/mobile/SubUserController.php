@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
 
-use App\Http\Requests\Api\SubUser\MobileAccessoryApiRequest;
+// Request
+use App\Http\Requests\Api\SubUser\MobileStoreSubUserApiRequest ;
+// use App\Http\Requests\Api\User\MobileDeleteSubUserApiRequest ;
 
 // Resources
 use App\Http\Resources\mobile\Collections\SubUserCollection as ModelCollection;
@@ -35,8 +37,6 @@ class SubUserController extends Controller
             );
         }
     }
-
-
     public function collection(Request $request){
         // return $request->language;
         try {
@@ -50,9 +50,6 @@ class SubUserController extends Controller
             );
         }
     }
-    
-
-
     public function show($id) {
         try {
             return $this -> MakeResponseSuccessful( 
@@ -69,40 +66,35 @@ class SubUserController extends Controller
         }
     }
     
-    // relation
-        public function storeAccessory(MobileAccessoryApiRequest $request){
-            try {
-                $model = Auth::user()->sub_user()->find($request->sub_user_id); 
-                $model->subUserAccessory()->attach($request->accessory_id);
+    public function store(MobileStoreSubUserApiRequest $request){
+        try {
+            return $this -> MakeResponseSuccessful( 
+                [ Auth::user()->sub_user()->create( $request->all() ) ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
 
-                return $this -> MakeResponseSuccessful( 
-                    [  $model ],
-                    'Successful'               ,
-                    Response::HTTP_OK
-                ) ;
-            } catch (\Exception $e) {
-                return $this -> MakeResponseErrors(  
-                    [$e->getMessage()  ] ,
-                    'Errors',
-                    Response::HTTP_NOT_FOUND
-                );
-            }
+    public function destroy($id){
+        try {
+            return $this -> MakeResponseSuccessful( 
+                [ Auth::user()->sub_user()->find($id)->delete() ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
         }
-        public function  deleteAccessory(MobileAccessoryApiRequest $request){
-            try {
-                $model = Auth::user()->sub_user()->find($request->sub_user_id); 
-                $model->subUserAccessory()->detach($request->accessory_id);
-                return $this -> MakeResponseSuccessful( 
-                    [ 'Successful' ],
-                    'Successful'               ,
-                    Response::HTTP_OK
-                ) ;
-            } catch (\Exception $e) {
-                return $this -> MakeResponseErrors(  
-                    [$e->getMessage()  ] ,
-                    'Errors',
-                    Response::HTTP_NOT_FOUND
-                );
-            }
-        }
+    }
 }

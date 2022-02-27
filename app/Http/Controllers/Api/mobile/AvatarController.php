@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
 
 
+use App\Http\Requests\Api\Avatar\MobileAvatarApiRequest;
+
 // Resources
 use App\Http\Resources\mobile\Collections\AvatarCollection as ModelCollection;
 use App\Http\Resources\mobile\AvatarResource as ModelResource;
@@ -15,6 +17,7 @@ use App\Http\Resources\mobile\AvatarResource as ModelResource;
 // lInterfaces
 use App\Repository\AvatarRepositoryInterface as ModelInterface;
 
+use Auth;
 
 class AvatarController extends Controller
 {
@@ -34,8 +37,6 @@ class AvatarController extends Controller
             );
         }
     }
-
-
     public function collection(Request $request){
         // return $request->language;
         try {
@@ -49,9 +50,6 @@ class AvatarController extends Controller
             );
         }
     }
-    
-
-
     public function show($id) {
         try {
             return $this -> MakeResponseSuccessful( 
@@ -68,5 +66,41 @@ class AvatarController extends Controller
         }
     }
     
+    // relation
+    public function attach(MobileAvatarApiRequest $request){
+        try {
+            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
+            $model->subUserAvatar()->attach($request->avatar_id);
 
+            return $this -> MakeResponseSuccessful( 
+                [new ModelResource ( $this->ModelRepository->findById($request->avatar_id) )  ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
+    public function  detach(MobileAvatarApiRequest $request){
+        try {
+            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
+            $model->subUserAvatar()->detach($request->avatar_id);
+
+            return $this -> MakeResponseSuccessful( 
+                [new ModelResource ( $this->ModelRepository->findById($request->avatar_id) )  ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
 }
