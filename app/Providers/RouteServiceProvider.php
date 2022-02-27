@@ -70,7 +70,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('api/dashboard')
              ->middleware('api')
-             ->namespace('App\Http\Controllers\Api\dashboard')
+             ->namespace('App\Http\Controllers\Api\Dashboard')
              ->group(base_path('routes/dashboard.php'));
     }
     protected function mapApiRoutes()

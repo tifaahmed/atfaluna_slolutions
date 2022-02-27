@@ -11,7 +11,7 @@ class StoreResource extends JsonResource
 
     public function toArray($request)
     {
-        $row=$this->store_languages()->RelatedLanguage($this->id)->first();
+        $row=$this->store_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'            => $this->id,

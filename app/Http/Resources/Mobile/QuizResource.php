@@ -15,7 +15,7 @@ class QuizResource extends JsonResource
      */
     public function toArray($request)
     {
-        $row=$this->quiz_languages()->RelatedLanguage($this->id)->first();
+        $row=$this->quiz_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'            => $this->id,

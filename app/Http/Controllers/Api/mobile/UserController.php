@@ -18,8 +18,7 @@ use App\Repository\UserRepositoryInterface      as ModelInterface;
 use App\Repository\CountryRepositoryInterface   as CountryInterface;
 
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -35,6 +34,17 @@ class UserController extends Controller
         $this->folder_name = 'store';
     }
 
+    public function all(){
+        try {
+            return new ModelCollection (  $this->ModelRepository->all() )  ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
     
     public function show($id) {
         return $this -> MakeResponseSuccessful( 

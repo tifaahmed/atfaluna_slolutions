@@ -27,7 +27,7 @@ Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
 
 // ->middleware('App\Http\Middleware\IfOwnerMiddleware:App\Models\User')
 
-Route::group(['middleware' => ['auth:api','IfDashboardAllawed']], fn ( ) : array => [
+Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
     // auth
         Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
             Route::post( '/logout' ,  'authController@logout' )  -> name( 'logout' ) ,

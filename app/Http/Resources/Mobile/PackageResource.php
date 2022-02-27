@@ -14,7 +14,7 @@ class PackageResource extends JsonResource
      */
     public function toArray($request)
     {
-        $row=$this->package_languages()->RelatedLanguage($this->id)->first();
+        $row=$this->package_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'            => $this->id,
