@@ -34,8 +34,6 @@ class SubscriptionController extends Controller
             );
         }
     }
-
-
     public function collection(Request $request){
         // return $request->language;
         try {
@@ -49,9 +47,6 @@ class SubscriptionController extends Controller
             );
         }
     }
-    
-
-
     public function show($id) {
         try {
             return $this -> MakeResponseSuccessful( 

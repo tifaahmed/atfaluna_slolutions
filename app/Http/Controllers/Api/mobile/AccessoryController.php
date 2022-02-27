@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
 
+use App\Http\Requests\Api\Accessory\MobileAccessoryApiRequest;
+
 // Resources
 use App\Http\Resources\Mobile\Collections\AccessoryCollection as ModelCollection;
 use App\Http\Resources\Mobile\AccessoryResource as ModelResource;
 
-
+use Auth;
 // lInterfaces
 use App\Repository\AccessoryRepositoryInterface as ModelInterface;
 
@@ -33,8 +35,6 @@ class AccessoryController extends Controller
             );
         }
     }
-
-
     public function collection(Request $request){
         // return $request->language;
         try {
@@ -48,9 +48,6 @@ class AccessoryController extends Controller
             );
         }
     }
-    
-
-
     public function show($id) {
         try {
             return $this -> MakeResponseSuccessful( 
@@ -66,6 +63,43 @@ class AccessoryController extends Controller
             );
         }
     }
-    
+
+    // relation
+    public function attach(MobileAccessoryApiRequest $request){
+        try {
+            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
+            $model->subUserAccessory()->attach($request->accessory_id);
+
+            return $this -> MakeResponseSuccessful( 
+                [new ModelResource ( $this->ModelRepository->findById($request->accessory_id) )  ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
+    public function  detach(MobileAccessoryApiRequest $request){
+        try {
+            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
+            $model->subUserAccessory()->detach($request->accessory_id);
+
+            return $this -> MakeResponseSuccessful( 
+                [new ModelResource ( $this->ModelRepository->findById($request->accessory_id) )  ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
 
 }

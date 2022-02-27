@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api\User;
+namespace App\Http\Requests\Api\Accessory;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class MobileStoreSubUserApiRequest extends FormRequest
+class MobileAccessoryApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,13 +25,8 @@ class MobileStoreSubUserApiRequest extends FormRequest
     public function rules()
     {
         return [
-        'gender'=>[
-            'required',
-                Rule::in(['boy', 'girl']),
-            ],
-            'name'       =>  [ 'required' ] ,
-            'age'        =>  [ 'required' ,'integer'] ,
-            'points'     =>  [ 'required','integer' ] ,
+            'accessory_id'       =>  [ 'required' ,'integer' ,'exists:accessories,id'] ,
+            'sub_user_id'        =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,
         ];
     }
 }

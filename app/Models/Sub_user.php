@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\User;
 use App\Models\Accessory;
+use App\Models\Avatar;
+use App\Models\Certificate;
 
 
 class Sub_user extends Model
@@ -30,5 +32,11 @@ class Sub_user extends Model
         }
         public function subUserAccessory(){
             return $this->belongsToMany(Accessory::class, 'sub_user_accessories', 'sub_users_id', 'accessory_id');
+        }
+        public function subUserAvatar(){
+            return $this->belongsToMany(Avatar::class, 'sub_user_avatars', 'sub_users_id', 'avatar_id');
+        }
+        public function subUserCertificate(){
+            return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_users_id', 'certificate_id');
         }
 }
