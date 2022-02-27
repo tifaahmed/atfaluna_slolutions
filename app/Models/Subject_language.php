@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Subject;
-use App\Scopes\AncientScope;
+use Illuminate\Support\Facades\App;
 
 
 class Subject_language extends Model
@@ -28,11 +28,10 @@ class Subject_language extends Model
         return $this->belongsTo(Subject::class,'subject_id');
     }
     public function scopeRelatedLanguage($query,$id){
-        
         return $query->where('subject_id', $id);
     }
-    protected static function booted()
-    {
-        static::addGlobalScope(new AncientScope);
+
+    public function scopeLocalization($query){
+        return $query->where('language', App::getLocale());
     }
 }

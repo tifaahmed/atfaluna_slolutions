@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Quiz;
-use App\Scopes\AncientScope;
+use Illuminate\Support\Facades\App;
 
 
 class Quiz_language extends Model
@@ -27,11 +27,10 @@ class Quiz_language extends Model
         return $this->belongsTo(Quiz::class,'quiz_id');
     }
     public function scopeRelatedLanguage($query,$id){
-        
         return $query->where('quiz_id', $id);
     }
-    protected static function booted()
-    {
-        static::addGlobalScope(new AncientScope);
+
+    public function scopeLocalization($query){
+        return $query->where('language', App::getLocale());
     }
 }

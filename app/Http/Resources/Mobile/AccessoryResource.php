@@ -17,7 +17,7 @@ class AccessoryResource extends JsonResource
     public function toArray($request)
     {
         
-        $row=$this->accessory_languages()->RelatedLanguage($this->id)->first();
+        $row=$this->accessory_languages()->Localization()->RelatedLanguage($this->id)->first();
     
         return [
 

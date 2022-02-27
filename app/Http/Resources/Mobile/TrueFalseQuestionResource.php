@@ -15,7 +15,7 @@ class TrueFalseQuestionResource extends JsonResource
      */
     public function toArray($request)
     {
-        $row=$this->true_false_question_languages()->RelatedLanguage($this->id)->first();
+        $row=$this->true_false_question_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'             => $this->id,
