@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
         Route::post( '/login' ,   'authController@login'  ) -> name( 'login' ) ,
         Route::post( '/login-social' ,   'authController@loginSocial'  ) -> name( 'loginSocial' ) ,
         Route::post( '/register' ,  'authController@register' )  -> name( 'register' ) ,    
-    ]),
+    ]);
 // only auth
     Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
         Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
