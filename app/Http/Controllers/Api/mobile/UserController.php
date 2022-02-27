@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 // Requests
 use App\Http\Requests\Api\User\UserUpdateApiRequest  as modelUpdateRequest;
-use App\Http\Requests\Api\User\MobileStoreSubUserApiRequest ;
 
 use Illuminate\Http\Response ;
 
@@ -108,23 +107,5 @@ class UserController extends Controller
         }     
     }
 
-    public function storeSubUser(MobileStoreSubUserApiRequest $request){
-        try {
-            $model = $this->ModelRepository->findById(Auth::user()->id);             
-            $model->sub_user()->create( $request->all() );
-            return $this -> MakeResponseSuccessful( 
-                [ 'Successful' ],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-    
     
 }
