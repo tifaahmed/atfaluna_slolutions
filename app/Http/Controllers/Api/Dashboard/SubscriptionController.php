@@ -113,11 +113,11 @@ class SubscriptionController extends Controller
 
     public function update(modelInsertRequest $request ,$id) {
         try {
-            $modal = new ModelResource($this->ModelRepository->findById($id)); 
-            $modal = $this->ModelRepository->findById($id); 
 
-            //  languages
-                $this -> update_store_language($request->languages,$modal->id) ;
+            
+            $this->ModelRepository->update( $id,Request()->all()) ;
+            
+            $modal = new ModelResource($this->ModelRepository->findById($id)); 
 
             return $this -> MakeResponseSuccessful( 
                     [ $modal],

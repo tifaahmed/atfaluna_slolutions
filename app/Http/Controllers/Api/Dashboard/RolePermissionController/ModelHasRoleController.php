@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Api\Dashboard\RolePermissionController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Http\Requests\Api\RolePerssionRequest\ModelHasRoleApiRequest ;
+use App\Http\Requests\Api\RolePermissionRequest\ModelHasRoleApiRequest ;
 use Illuminate\Http\Response ;
 
 use App\Models\User;
 // use App\Models\Role;
+use App\Http\Resources\Dashboard\RolePermissionResource\ModelHasRoleResource;
 
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -51,17 +52,17 @@ class ModelHasRoleController extends Controller
             Response::HTTP_OK
         ) ;
     }
+
     public function destroy(ModelHasRoleApiRequest $request) {
         $user = User::findOrFail($request->model_id)->UserRole()->detach($request->role_ids);
         foreach($request->role_ids as $role_single_id){
             $role = Role::findOrFail($role_single_id);
-
-            foreach($role->RolePermission as $role_single_row){
-                $permission_id = $role_single_row->pivot->permission_id    ;
-                $store = User::findOrFail($request->model_id)->UserPermission()->detach($request->permission_id);
-
+            if ($role->RolePermission) {
+                foreach($role->RolePermission as $role_single_row){
+                    $permission_id = $role_single_row->pivot->permission_id    ;
+                    $store = User::findOrFail($request->model_id)->UserPermission()->detach($request->permission_id);
+                }            
             }
-
         }
 
         return $this -> MakeResponseSuccessful( 
