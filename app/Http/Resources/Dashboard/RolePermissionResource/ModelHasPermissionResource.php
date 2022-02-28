@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\dashboard\RolePerssionResource;
+namespace App\Http\Resources\dashboard\RolePermissionResource;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RoleResource extends JsonResource
+class ModelHasPermissionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
