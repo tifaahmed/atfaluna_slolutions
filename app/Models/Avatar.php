@@ -20,4 +20,11 @@ class Avatar extends Model
         'image',//required, max:5000
         'price',//unsignedDecimal
     ];
+
+    public function scopeGender($query,$gender){
+        if($gender){
+            return $query->where('type', $gender);
+        }
+    }
+
 }

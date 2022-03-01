@@ -27,21 +27,23 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/{id}/show'     ,   'SubUserController@show'                    )->name('show'),
                 Route::get('/collection'    ,   'SubUserController@collection'              )->name('collection'),
                 Route::post('/{id}/update'  ,   'SubUserController@update'                  )->name('update'),
-                Route::DELETE('/{id}'                   ,   'SubUserController@destroy'             )->name('destroy'),
+                Route::DELETE('/{id}'       ,   'SubUserController@destroy'                 )->name('destroy'),
 
                 Route::post('/store'        ,   'SubUserController@store'    )->name('store'),
                 Route::DELETE('/{id}'       ,   'SubUserController@destroy'  )->name('destroy'),
             ]),
+
         // Avatar
             Route::name('avatar.')->prefix('/avatar')->group( fn ( ) : array => [
                 Route::get('/'              ,   'AvatarController@all'                 )->name('all'),
                 Route::get('/{id}/show'     ,   'AvatarController@show'                )->name('show'),
                 Route::get('/collection'    ,   'AvatarController@collection'          )->name('collection'),
 
-                Route::post('/attach'       ,   'AvatarController@attach'   )->name('attach'),
-                Route::post('/detach'       ,   'AvatarController@detach'   )->name('detach'),
+                Route::post('/attach'       ,   'AvatarController@attach'              )->name('attach'),
+                Route::post('/detach'       ,   'AvatarController@detach'              )->name('detach'),
             ]),
     ]);
+
 // language and auth
     Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
         // accessory
