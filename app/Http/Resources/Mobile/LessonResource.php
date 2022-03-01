@@ -14,7 +14,7 @@ class LessonResource extends JsonResource
      */
     public function toArray($request)
     {
-        $row=$this->lesson_languages()->RelatedLanguage($this->id)->first();
+        $row=$this->lesson_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'            => $this->id,

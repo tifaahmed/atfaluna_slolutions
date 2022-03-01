@@ -13,7 +13,7 @@ class CertificateResource extends JsonResource
      */
     public function toArray($request)
     {
-        $row=$this->certificate_languages()->RelatedLanguage($this->id)->first();
+        $row=$this->certificate_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'               => $this->id,

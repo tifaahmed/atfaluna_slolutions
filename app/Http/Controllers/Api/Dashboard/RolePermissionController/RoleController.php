@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Api\Dashboard\RolePermissionController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Http\Requests\Api\RolePerssionRequest\RoleApiRequest ;
+use App\Http\Requests\Api\RolePermissionRequest\RoleApiRequest ;
 use Illuminate\Http\Response ;
 
-use App\Http\Resources\Dashboard\Collections\RolePerssionCollection\RoleCollection;
-use App\Http\Resources\Dashboard\RolePerssionResource\RoleResource;
+use App\Http\Resources\Dashboard\Collections\RolePermissionCollection\RoleCollection;
+use App\Http\Resources\Dashboard\RolePermissionResource\RoleResource;
 
 use App\Repository\RolePermissionInterface\RoleRepositoryInterface as ModelInterface;
 
@@ -55,15 +55,24 @@ class RoleController extends Controller
             Response::HTTP_OK
         ) ;
     }
+
     public function destroy(Request $request) {
         return $this -> MakeResponseSuccessful( 
             [ 'Model'  => $this->RoleRepository->deleteById($request->id) ],
             'Successful',
             Response::HTTP_OK
-         ) ;
+            ) ;
     }
     public function collection(Request $request){
-        return new RoleCollection(  $this->RoleRepository->collection($request->PerPage ? $request->PerPage : 10) ) ;
-    }
+        try {
+            return new RoleResource (  $this->RoleRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
 
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
 }

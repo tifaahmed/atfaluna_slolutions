@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Mcq_question;
-use App\Scopes\AncientScope;
+use Illuminate\Support\Facades\App;
 
 
 class Mcq_question_language extends Model
@@ -27,11 +27,10 @@ class Mcq_question_language extends Model
         return $this->belongsTo(Mcq_question::class,'mcq_questions_id');
     }
     public function scopeRelatedLanguage($query,$id){
-        
         return $query->where('mcq_questions_id', $id);
     }
-    protected static function booted()
-    {
-        static::addGlobalScope(new AncientScope);
+
+    public function scopeLocalization($query){
+        return $query->where('language', App::getLocale());
     }
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Age_group;
-use App\Scopes\AncientScope;
+use Illuminate\Support\Facades\App;
 
 
 class Age_group_language extends Model
@@ -26,12 +26,12 @@ class Age_group_language extends Model
     public function age_group(){
         return $this->belongsTo(Age_group::class,'age_group_id');
     }
+
     public function scopeRelatedLanguage($query,$id){
-        
         return $query->where('age_group_id', $id);
     }
-    protected static function booted()
-    {
-        static::addGlobalScope(new AncientScope);
+
+    public function scopeLocalization($query){
+        return $query->where('language', App::getLocale());
     }
 }

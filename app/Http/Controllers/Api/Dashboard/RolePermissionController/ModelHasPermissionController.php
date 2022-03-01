@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Dashboard\RolePermissionController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Http\Requests\Api\RolePerssionRequest\ModelHasPermissionApiRequest ;
+use App\Http\Requests\Api\RolePermissionRequest\ModelHasPermissionApiRequest ;
 use Illuminate\Http\Response ;
 
 use App\Models\User;

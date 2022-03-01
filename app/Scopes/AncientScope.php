@@ -5,7 +5,8 @@ namespace App\Scopes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
-use App;
+use Illuminate\Support\Facades\App;
+
 class AncientScope implements Scope
 {
     /**

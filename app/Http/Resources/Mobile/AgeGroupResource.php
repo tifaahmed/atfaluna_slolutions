@@ -14,7 +14,7 @@ class AgeGroupResource extends JsonResource
      */
     public function toArray($request)
     {
-        $row=$this->age_group_languages()->RelatedLanguage($this->id)->first();
+        $row=$this->age_group_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
 

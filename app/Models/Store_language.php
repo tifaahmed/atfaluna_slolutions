@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Store;
-// use App\Scopes\AncientScope;
-use App;
+use Illuminate\Support\Facades\App;
+
 
 class Store_language extends Model
 {
@@ -28,16 +28,10 @@ class Store_language extends Model
         }
     // relations
     public function scopeRelatedLanguage($query,$id){
-        
-        return $query->where('store_id', $id);
-    }
-    // protected static function booted()
-    // {
-    //     static::addGlobalScope(new AncientScope);
-    // }
-    public function scopeLocalization($query){
-        
-        return $query->where('language', App::getLocale());
-    }
+            return $query->where('store_id', $id);
+        }
 
+        public function scopeLocalization($query){
+            return $query->where('language', App::getLocale());
+        }
 }

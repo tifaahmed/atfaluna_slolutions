@@ -27,7 +27,7 @@ Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
 
 // ->middleware('App\Http\Middleware\IfOwnerMiddleware:App\Models\User')
 
-Route::group(['middleware' => ['auth:api','IfDashboardAllawed']], fn ( ) : array => [
+Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
     // auth
         Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
             Route::post( '/logout' ,  'authController@logout' )  -> name( 'logout' ) ,
@@ -46,25 +46,27 @@ Route::group(['middleware' => ['auth:api','IfDashboardAllawed']], fn ( ) : array
             Route::get('/collection-trash'          ,   'UserController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'UserController@show_trash'          )->name('show_trash'),
         ]),   
-    // role & permissions
-        Route::group(['middleware' => ['IfSuperAdmin']], fn ( ) : array => [
+    // role & permissions  //IfSuperAdmin
+        // Route::group(['middleware' => ['']], fn ( ) : array => [
             // permission
                 Route::name('permission.')->prefix('/permission')->group( fn ( ) : array => [
-                    Route::post(''              ,'PermissionController@store'       )->name('store'),
-                    Route::get('/collection'    , 'PermissionController@collection' )->name('collection'),
-                    Route::DELETE('/{id}'       , 'PermissionController@destroy'    )->name('destroy'),
+                    Route::post(''              ,'RolePermissionController\PermissionController@store'       )->name('store'),
+                    Route::get('/collection'    ,'RolePermissionController\PermissionController@collection' )->name('collection'),
+                    Route::DELETE('/{id}'       ,'RolePermissionController\PermissionController@destroy'    )->name('destroy'),
                 ]),
             // role
                 Route::name('role.')->prefix('/role')->group( fn ( ) : array => [
                     Route::get('/'              ,'RolePermissionController\RoleController@all'              )->name('all'),
                     Route::post(''              ,'RolePermissionController\RoleController@store'            )->name('store'),
                     Route::get('/collection'    ,'RolePermissionController\RoleController@collection'       )->name('collection'),
+                    Route::get('/{id}/show'     ,'RolePermissionController\RoleController@show'             )->name('show'),
                     Route::DELETE('/{id}'       ,'RolePermissionController\RoleController@destroy'          )->name('destroy'),
+
                 ]),
             // role permission user relation
                 Route::name('assignRole.')->prefix('/assignRole')->group( fn ( ) : array => [
-                    Route::post(''                  ,'RolePermissionController\ModelHasRoleController@store'       )->name('store'),
-                    Route::post('/{id}'             ,'RolePermissionController\ModelHasRoleController@destroy'      )->name('destroy'),
+                    Route::post(''                    ,'RolePermissionController\ModelHasRoleController@store'       )->name('store'),
+                    Route::post('/{id}'               ,'RolePermissionController\ModelHasRoleController@destroy'      )->name('destroy'),
                     Route::post('/{id}/destroyAll'  ,'RolePermissionController\ModelHasRoleController@destroyAll'   )->name('destroyAll'),
                 ]),
                 Route::name('assignPermission.')->prefix('/assignPermission')->group( fn ( ) : array => [
@@ -77,7 +79,7 @@ Route::group(['middleware' => ['auth:api','IfDashboardAllawed']], fn ( ) : array
                     Route::post('/{id}'             ,'RolePermissionController\RoleHasPermissionController@destroy')->name('destroy'),
                     Route::post('/{id}/destroyAll'  ,'RolePermissionController\RoleHasPermissionController@destroyAll')->name('destroyAll'),
                 ]),
-        ]),   
+        // ]),   
     // language
         Route::name('language.')->prefix('/language')->group( fn ( ) : array => [
             Route::get('/'              ,   'LanguageController@all'        )  ->name('all'),
