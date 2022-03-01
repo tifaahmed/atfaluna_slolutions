@@ -35,10 +35,24 @@
                         />
 
                         <InputsFactory :Factorylable="'country'"  :FactoryPlaceholder="''"
-                            :FactoryType="'select'" :FactoryName="'country_id'"  
-                            v-model ="RequestData.country_id"  :FactorySelectOptions="CountriesRows"  :FactorySelected="RequestData.country"  :FactorySelectColumnName="'name'" 
-                            :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.country_id )  ) ? ServerReaponse.errors.country_id : null" 
+                            :FactoryType="'select'" :FactoryName="'country_id'"   v-model ="RequestData.country_id"  
+                            :FactorySelectOptions="CountriesRows"  :FactorySelected="RequestData.country"  :FactorySelectColumnName="'name'" 
                         />
+
+                        <InputsFactory :Factorylable="'roles'"  :FactoryPlaceholder="'Search'"
+                            :FactoryType="'multiSelect'" :FactoryName="'UserRoles'"   v-model ="RequestData.UserRoles"  
+                            :FactorySelectOptions="RolesRows"    :FactorySelectColumnName="'name'" 
+                        />
+
+
+
+
+
+
+
+
+
+            
 
                         <InputsFactory :Factorylable="'Password'"  :FactoryPlaceholder=" '**********' "
                             :FactoryType="'password'" :FactoryName="'password'"  v-model ="RequestData.password"
@@ -84,24 +98,28 @@
 <script>
 import UserModel     from 'AdminModels/User';
 import CountryModel     from 'AdminModels/Country';
+import RoleModel        from 'AdminModels/Role';
 
 import Validation     from 'AdminValidations/UserEdit';
 import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue'     ;
 
     export default {
-        components : { InputsFactory } ,
+        components : { InputsFactory} ,
 
         name:"UserEdit",
 
         mounted() {
-            this.GetlCountries();
+            this.GetCountries();
+            this.GetlRoles();
+
             this.show();
         },
         data( ) { return {
             TableName :'User',
             TablePageName :'User.ShowAll',
 
-            CountriesRows :'null',
+            CountriesRows : null ,
+            RolesRows : [] ,
 
             ServerReaponse : {
                 errors : {
@@ -125,7 +143,7 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 password_confirmation   : null,
                 birthdate               : null,
                 country_id              : null,
-                country                 : null
+                UserRoles               : [],
             },
 
         } } ,
@@ -148,6 +166,7 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 if( check ){// if there is error from my file
                      this.ServerReaponse = check; // error from my file
                 }else{ // run the form
+                    console.log(this.RequestData);
                      this.SubmetRowButton(); // succes from file
                 }
             },
@@ -167,21 +186,27 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 })
             },
 
-            async GetlCountries(page){
+            async GetCountries(page){
                 this.CountriesRows  = ( await this.AllCountries() ).data.data;
             },
+            async GetlRoles(page){
+                this.RolesRows  = ( await this.AllRoles() ).data.data[0];
+            },
+            
             // modal
                 AllCountries(){
                     return  (new CountryModel).all()  ;
+                },
+                AllRoles(){
+                    return  (new RoleModel).all()  ;
                 },
                 async show( ) {
                     this.RequestData = ( await (new UserModel).show( this.$route.params.id) ).data.data.UserModel ;
                 },
                 async update(){
                     return (new UserModel).update(this.RequestData.id , this.RequestData)  ;
-                }
+                },
             // modal
-
 
         }
     }

@@ -1,13 +1,10 @@
 <template>
 		<div class="form-group">
-		    <label :for="PropName"> {{PropLable}} : {{ PropSelected ? PropSelected[PropSelectColumnName] : ''}} </label>
+		    <label :for="PropName"> {{PropLable}} </label>
             <select v-model="data"    @change="change( $event.target.value )"  :name="PropName" :id="PropName"  class="form-control" >
+                
                 <option 
-                    style="color:green"
-                    :value="(PropSelected  )? PropSelected.id : '' " 
-                    selected="'true'"
-                    disabled
-                >
+                    v-if="PropSelected" style="color:green" :value="(PropSelected  )? PropSelected.id : 1 "  selected >
                     {{ PropSelected ? PropSelected[PropSelectColumnName] : ''}}
                 </option>
                 <option  
@@ -18,7 +15,7 @@
                     {{item[PropSelectColumnName]}}
                 </option>
             </select>
-
+            {{data}}
 
             <div>
 		        <ul  > 

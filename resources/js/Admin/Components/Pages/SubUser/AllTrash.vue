@@ -22,15 +22,17 @@
                                             :ValueColumn="row[column.name]"   
                                             :typeColumn="column.type" 
                                             :LoopOnColumn="column.LoopOnColumn"
+
                                             @SendRowData ="SendRowData(row)"  
                                         />
                                     </td>
-                                     
                                     <td>
-                                        <TableControllers 
+                                        <TrashedControllers 
                                             :RowId="row.id" 
                                             :CurrentPage="TableRows.meta ? TableRows.meta.current_page: 1" 
                                             @SendRowData="SendRowData(row)"
+                                            @RestoreRowButton="RestoreRowButton"
+                                            @DeleteRowButton="DeleteRowButton"
                                         />
                                     </td>
 
@@ -63,38 +65,39 @@
 </template>
 
 <script>
-import UserModel     from 'AdminModels/User';
+import Model     from 'AdminModels/SubUser';
 
 import pagination           from 'laravel-vue-pagination';
 import ModalIndex           from 'AdminPartialsModal/MainModel.vue'     ;
-import TableControllers     from 'AdminPartials/Components/Controllers/TableControllers.vue'     ;
+import TrashedControllers   from 'AdminPartials/Components/Controllers/TrashedControllers.vue'     ;
 import ColumsIndex          from 'AdminPartials/Components/colums/ColumsIndex.vue'     ;
 
 export default {
-    name:"UserAll",
+    name:"SubUserTrashAll",
     components:{
-        pagination,ModalIndex,TableControllers,ColumsIndex
+        pagination,ModalIndex,TrashedControllers,ColumsIndex
     },
 
     data( ) { return {
-        TableName :'User',
+        TableName :'SubUser',
 
         TableRows  : {},
         Columns :  [
-                { type: 'Router'    ,header : 'id'       , name : 'id'     , value : null  } ,
-                { type: 'String'    ,header : 'name'     , name : 'name'   , value : null  } ,
-                { type: 'Image'     ,header : 'avatar'   , name : 'avatar' , value : null  } ,
-                { type: 'String'    ,header : 'email'    , name : 'email'  , value : null  } ,
-                { type: 'String'    ,header : 'phone'    , name : 'phone'  , value : null  } ,
-                { type: 'Forloop'   ,header : 'roles'    , name : 'UserRoles'    , value : null  , LoopOnColumn :['name']} ,
-                { type: 'Object'    ,header : 'country'  , name : "country"      , value : null  , LoopOnColumn :['name','code']} ,
+                { type: 'Router'    ,header : 'id'      , name : 'id'           , value : null  } ,
 
+                { type: 'String'    ,header : 'name'    , name : 'name'         , value : null  } ,
+                { type: 'String'    ,header : 'age'     , name : 'age'          , value : null  } ,
+                { type: 'String'    ,header : 'gender'  , name : 'gender'       , value : null  } ,
+                { type: 'String'    ,header : 'points'  , name : 'points'       , value : null  } ,
+
+                { type: 'Date'      ,header : 'deleted' , name : 'deleted_at'   , value : null  } ,
             ],
         PerPage  : 10
     } },
 
     mounted() {
         this.initial( this.$route.query.CurrentPage );
+        
     },
 
     methods : {
@@ -104,10 +107,13 @@ export default {
 
         // model 
             Collection(page = 1){
-                return  (new UserModel).collection(page,this.PerPage)  ;
+                return  (new Model).CollectionTrash(page,this.PerPage)  ;
             },
             Delete(id){
-                return (new UserModel).deleteRow(id)  ;
+                return (new Model).premanentlDeleteRow(id)  ;
+            },
+            Rstore(id){
+                return (new Model).RstoreRow(id)  ;
             },
         // model 
 
@@ -116,17 +122,20 @@ export default {
             await this.initial(page);
             this.CloseModal();
         },
-
+        async RestoreRowButton(page,id){
+            let  data = await this.Rstore(id);
+            await this.initial(page);
+        },
         // modal
-        SendRowData(row){
-            this.Columns.forEach(function (SingleRow) {
-                SingleRow.value = row[SingleRow.name] ;
-            });
-        },
-        CloseModal(){
-            var button = document.getElementById("close");
-            button.click();
-        },
+            SendRowData(row){
+                this.Columns.forEach(function (SingleRow) {
+                    SingleRow.value = row[SingleRow.name] ;
+                });
+            },
+            CloseModal(){
+                var button = document.getElementById("close");
+                button.click();
+            },
         // modal
 
 

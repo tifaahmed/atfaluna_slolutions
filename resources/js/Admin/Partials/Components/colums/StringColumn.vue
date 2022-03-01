@@ -1,5 +1,5 @@
 <template>
-        <p v-text="ValueColumn"  /> 
+        <span v-text="ValueColumn"  /> 
 
 </template>
 <script> 

@@ -25,9 +25,9 @@ class SubUserApiRequest extends FormRequest
     public function rules()
     {
         return [
-        'gender'=>[
-            'required',
-                Rule::in(['boy', 'girl']),
+            'gender'=>[
+                'required',
+                    Rule::in(['boy', 'girl']),
             ],
             'name'       =>  [ 'required' ] ,
             'age'        =>  [ 'required' ,'integer'] ,

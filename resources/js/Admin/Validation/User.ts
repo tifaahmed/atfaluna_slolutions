@@ -6,7 +6,7 @@ export default class User   extends Validation {
 	public PasswordArray        : any      = []  ;
 	public PhoneArray        : any      = []  ;
 	public AvatarArray        : any      = []  ;
-	public CountryArray        : any      = []  ;
+	// public CountryArray        : any      = []  ;
 
 	validate(RequestData){
 		this.conditions(RequestData);
@@ -49,7 +49,7 @@ export default class User   extends Validation {
 	    // avatar
 
 		// // country_id 
-		this.required(RequestData.country_id,'country_id',this.CountryArray);
+		// this.required(RequestData.country_id,'country_id',this.CountryArray);
 
 	}
 }

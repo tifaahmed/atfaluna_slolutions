@@ -1,10 +1,9 @@
 import Model    from './Model';
-import Router    from './Routers/Accessory' ;
+import Router    from './Routers/SubUser' ;
 
 
-export default class Accessory extends Model {
+export default class SubUser extends Model {
    
-   languagesformData : string = 'languages' ;
    protected async all() : Promise<any>  {  
       let result : any = '';
       try {
@@ -34,13 +33,6 @@ export default class Accessory extends Model {
    protected async store(RequestData : any) : Promise<any>  {  
       let formData = new FormData();
       await Model.getformData(formData,RequestData) ;
-
-      // languages
-         if (RequestData.languages ) {
-            let data =RequestData.languages;
-            await Model.getObjectFormData(formData,data,this.languagesformData);
-         }   
-      // languages
 
        let result : any = '';
        try {
@@ -80,13 +72,6 @@ export default class Accessory extends Model {
    protected async update ( id  : number ,RequestData ?: any) : Promise< any > {
       let formData = new FormData();
       await Model.getformData(formData,RequestData) ;
-
-      // languages
-         if (RequestData.languages ) {
-            let data =RequestData.languages;
-            await Model.getObjectFormData(formData,data,this.languagesformData);
-         }  
-      // languages
     
       let result : any = '';
       try {

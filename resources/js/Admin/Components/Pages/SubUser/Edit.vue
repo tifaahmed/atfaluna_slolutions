@@ -9,25 +9,29 @@
                     </div>
                     <div class="card-body pt-0">
 
+                            <InputsFactory :Factorylable="'name'"  :FactoryPlaceholder="'name'"
+                                :FactoryType="'string'" :FactoryName="'name'"   v-model ="RequestData.name" 
+                                :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.name )   ) ? ServerReaponse.errors.name : null"
+                            />
+                            <InputsFactory :Factorylable="'age'"  :FactoryPlaceholder="'age'"
+                                :FactoryType="'number'" :FactoryName="'age'"   v-model ="RequestData.age" 
+                                :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.age )   ) ? ServerReaponse.errors.age : null"
+                            />
+                            <InputsFactory :Factorylable="'points'"  :FactoryPlaceholder="'points'"
+                                :FactoryType="'number'" :FactoryName="'points'"   v-model ="RequestData.points" 
+                                :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.points )   ) ? ServerReaponse.errors.points : null"
+                            />
+                            <InputsFactory :Factorylable="'parent'"  :FactoryPlaceholder="''"
+                                :FactoryType="'select'" :FactoryName="'user_id'"  v-model ="RequestData.user_id"  
+                                :FactorySelectOptions="UserRows"    :FactorySelectColumnName="'name'" 
+                                :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.user_id )  ) ? ServerReaponse.errors.user_id : null" 
+                            />
 
-                        <span v-for="( row    , rowkey ) in LanguagesRows " :key="rowkey" >
-                            <!-- (LanguagesRows) loop on ar & en -->
-                            <span v-for="( row_    , rowkey_ ) in Languagescolumn " :key="rowkey_" >
-                                <label >{{row_+' ( ' + row.full_name + ' ) '}}</label>
-                                <input :placeholder="  row_+' ( ' + row.name + ' ) '" class="form-control" 
-                                v-model ="RequestData.languages[rowkey][row_]" />
-                            </span>
-                        </span>
-
-                        <InputsFactory :Factorylable="'image'"  :FactoryPlaceholder="'image'"
-                            :FactoryType="'file'" :FactoryName="'image'"   v-model ="RequestData.image"  
-                            :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.image )   ) ? ServerReaponse.errors.image : null"
-                        />
-
-                        <InputsFactory :Factorylable="'price'"  :FactoryPlaceholder=" 'price' "         
-                            :FactoryType="'number'" :FactoryName="'price'"  v-model ="RequestData.price"  
-                            :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.price )  ) ? ServerReaponse.errors.price : null" 
-                        />
+                            <InputsFactory :Factorylable="'gender'"  :FactoryPlaceholder="'gender'"
+                                :FactoryType="'radio'" :FactoryName="'gender'"   v-model ="RequestData.gender"  
+                                :FactorySelectOptions="['boy','girl']"
+                                :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.gender )   ) ? ServerReaponse.errors.gender : null"
+                            />
 
 
                         <button  @click="FormSubmet()" class="btn btn-primary  ">Submit</button>
@@ -62,40 +66,44 @@
 	</div>
 </template>
 <script>
-import Model     from 'AdminModels/Accessory';
-import LanguageModel     from 'AdminModels/Language';
+import Model     from 'AdminModels/SubUser';
+import UserModel        from 'AdminModels/User';
 
-import validation     from 'AdminValidations/Accessory';
+import validation     from 'AdminValidations/SubUser';
 import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue'     ;
 
     export default {
         components : { InputsFactory } ,
 
-        name:"AccessoryEdit",
+        name:"SubUserEdit",
 
         mounted() {
-            this.GetlLanguages();
+            this.GetUsers();
             this.GetData();
+            
         },
         data( ) { return {
-            TableName :'Accessory',
-            TablePageName :'Accessory.ShowAll',
+            TableName :'SubUser',
+            TablePageName :'SubUser.ShowAll',
 
-            LanguagesRows : null,
-            Languagescolumn : ['name'],
+            UserRows :'null',
 
             ServerReaponse : {
                 errors : {
-                    image :[],
-                    price :[],
+                    name  :[],
+                    age             : null,
+                    points             : null,
+                    user_id             : null,
+                    gender             : null,
                 },
                 message : null,
             },
             RequestData : {
-                    image     : null,                 
-                    price            : null,
-
-                    languages         : { },
+                name               : null,
+                age             : null,
+                points             : null,
+                user_id             : null,
+                gender             : null,
             },
 
         } } ,
@@ -134,20 +142,6 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                      this.SubmetRowButton(); // succes from file
                 }
             },
-            async GetlLanguages(page){
-                this.LanguagesRows  = ( await this.AllLanguages() ).data.data;
-                let languages = this.RequestData.languages;
-                for (var key in this.LanguagesRows) {
-                    languages[key] = [];
-                        Vue.set( languages[key],  'language');
-                        languages[key].language = this.LanguagesRows[key].name;
-                    for (var key_ in this.Languagescolumn) {
-                        Vue.set( languages[key],  this.Languagescolumn[key_]);
-                        languages[key][this.Languagescolumn[key_]] = "";
-                    }
-                }
-                console.log(this.RequestData);
-            },
             async SubmetRowButton(){
                 this.ServerReaponse = null;
                 let data = await this.update()  ; // send update request
@@ -164,10 +158,12 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 })
             },
 
-
+            async GetUsers(page){
+                this.UserRows  = ( await this.AllUsers() ).data.data;
+            },
             // modal
-                AllLanguages(){
-                    return  (new LanguageModel).all()  ;
+                AllUsers(){
+                    return  (new UserModel).all()  ;
                 },
                 async show( ) {
                     return ( await (new Model).show( this.$route.params.id) ).data.data[0] ;

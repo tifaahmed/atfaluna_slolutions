@@ -12,33 +12,38 @@
 
                         <div class="">
                             <InputsFactory :Factorylable="'name'" :FactoryPlaceholder=" 'mohamed' "
-                                :FactoryType="'string'" :FactoryName="'name'" 
-                                v-model ="RequestData.name"  :FactoryErrors="ServerReaponse.errors.name ? ServerReaponse.errors.name : null" />
+                                :FactoryType="'string'" :FactoryName="'name'" v-model ="RequestData.name"  
+                                :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.name )  ) ? ServerReaponse.errors.name : null" 
+                            />
                             <InputsFactory :Factorylable="'Email'"  :FactoryPlaceholder=" '---@---.---' "
                                 :FactoryType="'email'" :FactoryName="'email'"  v-model ="RequestData.email"
-                                :FactoryErrors="ServerReaponse.errors.email ? ServerReaponse.errors.email : null" />
+                                :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.email )  ) ? ServerReaponse.errors.email : null" 
+                            />
                             <InputsFactory :Factorylable="'Phone'"  :FactoryPlaceholder=" '00201---------' "
                                 :FactoryType="'number'" :FactoryName="'phone'"  v-model ="RequestData.phone"
-                                :FactoryErrors="ServerReaponse.errors.phone ? ServerReaponse.errors.phone : null" />
-
+                                :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.phone )  ) ? ServerReaponse.errors.phone : null" 
+                            />
                             <InputsFactory :Factorylable="'Image'"  :FactoryPlaceholder="'Image'"
                                 :FactoryType="'file'" :FactoryName="'avatar'"   v-model ="RequestData.avatar"  
-                                :FactoryErrors="ServerReaponse.errors.avatar ? ServerReaponse.errors.avatar : null" />
+                                :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.avatar )  ) ? ServerReaponse.errors.avatar : null" 
+                                />
                             <InputsFactory :Factorylable="'birthdate'"  :FactoryPlaceholder="'birthdate'"
                                 :FactoryType="'date'" :FactoryName="'birthdate'"  v-model ="RequestData.birthdate"  
                                 :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.birthdate )  ) ? ServerReaponse.errors.birthdate : null" 
                             />
                             <InputsFactory :Factorylable="'country'"  :FactoryPlaceholder="''"
-                                :FactoryType="'select'" :FactoryName="'country_id'"  
-                                v-model ="RequestData.country_id"  :FactorySelectOptions="CountriesRows"  :FactorySelected="RequestData.country"  :FactorySelectColumnName="'name'" 
+                                :FactoryType="'select'" :FactoryName="'country_id'"  v-model ="RequestData.country_id"  
+                                :FactorySelectOptions="CountriesRows"  :FactorySelected="RequestData.country"  :FactorySelectColumnName="'name'" 
                                 :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.country_id )  ) ? ServerReaponse.errors.country_id : null" 
                             />
                             <InputsFactory :Factorylable="'Password'"  :FactoryPlaceholder=" '********' "
                                 :FactoryType="'password'" :FactoryName="'password'"  v-model ="RequestData.password"
-                                :FactoryErrors="ServerReaponse.errors.password ? ServerReaponse.errors.password : null" />
+                                :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.password )  ) ? ServerReaponse.errors.password : null" 
+                            />
                             <InputsFactory :Factorylable="'Password Confirmation'"  :FactoryPlaceholder=" '********' "
                                 :FactoryType="'password'" :FactoryName="'password_confirmation'"  v-model ="RequestData.password_confirmation"
-                                :FactoryErrors="ServerReaponse.errors.password_confirmation ? ServerReaponse.errors.password_confirmation : null" />
+                                :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.password_confirmation )  ) ? ServerReaponse.errors.password_confirmation : null" 
+                            />
 
                             
                         </div>

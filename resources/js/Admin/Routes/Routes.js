@@ -10,6 +10,7 @@ import SubscriptionRoutes   from 'AdminRoutes/SubscriptionRoutes'    ;
 import AccessoryRoutes      from 'AdminRoutes/AccessoryRoutes'    ;
 import AgeGroupRoutes      from 'AdminRoutes/AgeGroupRoutes'    ;
 import CountryRoutes      from 'AdminRoutes/CountryRoutes'    ;
+import SubUserRoutes      from 'AdminRoutes/SubUserRoutes'    ;
 
 
 
@@ -26,7 +27,8 @@ export default
     SubscriptionRoutes,
     AccessoryRoutes,
     AgeGroupRoutes,
-    CountryRoutes
+    CountryRoutes,
+    SubUserRoutes
 ] 
 }
 

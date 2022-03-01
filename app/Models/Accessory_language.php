@@ -29,7 +29,6 @@ class Accessory_language extends Model
     public function scopeRelatedLanguage($query,$id){
         return $query->where('accessory_id', $id);
     }
-
     public function scopeLocalization($query){
         return $query->where('language', App::getLocale());
     }
