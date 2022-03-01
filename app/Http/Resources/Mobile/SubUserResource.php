@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Mobile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Mobile\AvatarResource;
 class SubUserResource extends JsonResource
 {
     /**
@@ -19,7 +20,8 @@ class SubUserResource extends JsonResource
             'age'           => $this->age,
             'gender'        => $this->gender,
             'points'        => $this->points,
-            
+            'avatar'        => new AvatarResource ($this->avatar)  ,
+
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,

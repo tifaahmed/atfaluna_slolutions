@@ -26,9 +26,10 @@ class AvatarController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model  =  $this->ModelRepository->all()   ;
+            return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -40,8 +41,10 @@ class AvatarController extends Controller
     public function collection(Request $request){
         // return $request->language;
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
-
+            $model =  $this->ModelRepository->filterPaginate($request->Gender,$request->PerPage ? $request->PerPage : 10) ;
+            // $model  =  $this->Gender($model,$request->Gender);
+             
+            return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -85,6 +88,7 @@ class AvatarController extends Controller
             );
         }
     }
+    
     public function  detach(MobileAvatarApiRequest $request){
         try {
             $model = Auth::user()->sub_user()->find($request->sub_user_id); 

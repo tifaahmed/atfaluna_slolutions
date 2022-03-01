@@ -84,7 +84,7 @@ class SubUserController extends Controller
 
     public function update(MobileStoreSubUserApiRequest $request ,$id) {
         try {
-             Auth::user()->sub_user()->find($id)->update($request->all());
+        Auth::user()->sub_user()->find($id)->update($request->all());
 
             $modal = new ModelResource($this->ModelRepository->findById($id)); 
 
