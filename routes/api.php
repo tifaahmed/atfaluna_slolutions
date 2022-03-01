@@ -40,7 +40,7 @@ use Illuminate\Support\Facades\Route;
             ]),
     ]);
 // language and auth
-    Route::group(['middleware' => ['LocalizationMiddleware','auth:api']], fn ( ) : array => [
+    Route::group(['middleware' => []], fn ( ) : array => [
         // accessory
             Route::name('accessory.')->prefix('/accessory')->group( fn ( ) : array => [
                 Route::get('/'              ,   'AccessoryController@all'                 )->name('all'),

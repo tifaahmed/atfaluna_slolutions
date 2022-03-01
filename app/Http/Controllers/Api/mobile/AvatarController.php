@@ -17,7 +17,7 @@ use App\Http\Resources\Mobile\AvatarResource as ModelResource;
 // lInterfaces
 use App\Repository\AvatarRepositoryInterface as ModelInterface;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class AvatarController extends Controller
 {
