@@ -23,8 +23,11 @@ use Illuminate\Support\Facades\Route;
         //Sub_user
             Route::name('sub-user.')->prefix('/sub-user')->group( fn ( ) : array => [
                 Route::get('/'              ,   'SubUserController@all'                     )->name('all'),
+                Route::post(''              ,   'SubUserController@store'                   )->name('store'),
                 Route::get('/{id}/show'     ,   'SubUserController@show'                    )->name('show'),
                 Route::get('/collection'    ,   'SubUserController@collection'              )->name('collection'),
+                Route::post('/{id}/update'  ,   'SubUserController@update'                  )->name('update'),
+                Route::DELETE('/{id}'                   ,   'SubUserController@destroy'             )->name('destroy'),
 
                 Route::post('/store'        ,   'SubUserController@store'    )->name('store'),
                 Route::DELETE('/{id}'       ,   'SubUserController@destroy'  )->name('destroy'),
@@ -40,7 +43,7 @@ use Illuminate\Support\Facades\Route;
             ]),
     ]);
 // language and auth
-    Route::group(['middleware' => []], fn ( ) : array => [
+    Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
         // accessory
             Route::name('accessory.')->prefix('/accessory')->group( fn ( ) : array => [
                 Route::get('/'              ,   'AccessoryController@all'                 )->name('all'),
