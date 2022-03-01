@@ -67,11 +67,11 @@ class AccessoryController extends Controller
     // relation
     public function attach(MobileAccessoryApiRequest $request){
         try {
-            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
+            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
             $model->subUserAccessory()->attach($request->accessory_id);
 
             return $this -> MakeResponseSuccessful( 
-                [ 'llll'  ],
+                [new ModelResource ( $this->ModelRepository->findById($request->accessory_id) )  ],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
