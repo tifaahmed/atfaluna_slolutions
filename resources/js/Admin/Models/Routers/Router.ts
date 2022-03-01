@@ -9,7 +9,7 @@ export default class Router   {
          { 
                 'Authorization': jwt.Authorization ,
                  'Content-Type': 'multipart/form-data',
-                 // 'localization' : 'en'
+                 'localization' : 'en'
          };          
    responseType : any = 'json' ;
    routerPrefix : string = '/api/dashboard/' ;
@@ -43,7 +43,7 @@ export default class Router   {
    }
    async PaginateTrashAxios(page : number , PerPage :number, relation_id:number = null) : Promise<any>  { 
       return await Axios.get( 
-         this.routerPrefix+'/collection-trash', 
+         this.routerPrefix+this.name+'/collection-trash', 
            { 
               headers : this.headers ,responseType : this.responseType ,       
               params  : { 'page':page , 'PerPage':PerPage ,'relation_id':relation_id }

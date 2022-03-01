@@ -38,6 +38,7 @@
         "vue-infinite-loading": "^2.4.5",
         "vue-moment": "^4.1.0",
         "vue-moments-ago": "^0.2.0",
+        "vue-multiselect": "^2.1.6",
         "vue-router": "^3.5.2",
         "vue-sidebar-menu": "^4.8.1"
     }

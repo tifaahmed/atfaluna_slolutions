@@ -41,8 +41,6 @@ class ModelHasRoleController extends Controller
 
                 }
             }
-
-
         }
         
         return $this -> MakeResponseSuccessful( 

@@ -25,7 +25,6 @@
                                             @SendRowData ="SendRowData(row)"  
                                         />
                                     </td>
-                                     
                                     <td>
                                         <TableControllers 
                                             :RowId="row.id" 
@@ -63,7 +62,7 @@
 </template>
 
 <script>
-import UserModel     from 'AdminModels/User';
+import Model     from 'AdminModels/SubUser';
 
 import pagination           from 'laravel-vue-pagination';
 import ModalIndex           from 'AdminPartialsModal/MainModel.vue'     ;
@@ -71,24 +70,25 @@ import TableControllers     from 'AdminPartials/Components/Controllers/TableCont
 import ColumsIndex          from 'AdminPartials/Components/colums/ColumsIndex.vue'     ;
 
 export default {
-    name:"UserAll",
+    name:"SubUserAll",
     components:{
         pagination,ModalIndex,TableControllers,ColumsIndex
     },
 
     data( ) { return {
-        TableName :'User',
+        TableName :'SubUser',
 
         TableRows  : {},
         Columns :  [
-                { type: 'Router'    ,header : 'id'       , name : 'id'     , value : null  } ,
-                { type: 'String'    ,header : 'name'     , name : 'name'   , value : null  } ,
-                { type: 'Image'     ,header : 'avatar'   , name : 'avatar' , value : null  } ,
-                { type: 'String'    ,header : 'email'    , name : 'email'  , value : null  } ,
-                { type: 'String'    ,header : 'phone'    , name : 'phone'  , value : null  } ,
-                { type: 'Forloop'   ,header : 'roles'    , name : 'UserRoles'    , value : null  , LoopOnColumn :['name']} ,
-                { type: 'Object'    ,header : 'country'  , name : "country"      , value : null  , LoopOnColumn :['name','code']} ,
+                { type: 'Router'    ,header : 'id'      , name : 'id'           , value : null  } ,
 
+                { type: 'String'    ,header : 'name'    , name : 'name'         , value : null  } ,
+                { type: 'String'    ,header : 'age'     , name : 'age'          , value : null  } ,
+                { type: 'String'    ,header : 'gender'  , name : 'gender'       , value : null  } ,
+                { type: 'String'    ,header : 'points'  , name : 'points'       , value : null  } ,
+
+                { type: 'Date'      ,header : 'created' , name : 'created_at'   , value : null  } ,
+                { type: 'Date'      ,header : 'updated' , name : 'updated_at'   , value : null  } ,
             ],
         PerPage  : 10
     } },
@@ -104,10 +104,10 @@ export default {
 
         // model 
             Collection(page = 1){
-                return  (new UserModel).collection(page,this.PerPage)  ;
+                return  (new Model).collection(page,this.PerPage)  ;
             },
             Delete(id){
-                return (new UserModel).deleteRow(id)  ;
+                return (new Model).deleteRow(id)  ;
             },
         // model 
 
@@ -118,15 +118,15 @@ export default {
         },
 
         // modal
-        SendRowData(row){
-            this.Columns.forEach(function (SingleRow) {
-                SingleRow.value = row[SingleRow.name] ;
-            });
-        },
-        CloseModal(){
-            var button = document.getElementById("close");
-            button.click();
-        },
+            SendRowData(row){
+                this.Columns.forEach(function (SingleRow) {
+                    SingleRow.value = row[SingleRow.name] ;
+                });
+            },
+            CloseModal(){
+                var button = document.getElementById("close");
+                button.click();
+            },
         // modal
 
 

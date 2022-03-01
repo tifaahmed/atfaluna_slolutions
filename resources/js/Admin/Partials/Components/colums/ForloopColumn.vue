@@ -3,9 +3,7 @@
         
         <span  v-for="( valColumn , langkey    )  in ValueColumn" :key="langkey"   >
             <span  v-for="( valLang , langkey    )  in LoopOnColumn" :key="langkey"   >
-                
                 <span v-if="valColumn[valLang] != 'null'">- {{valColumn[valLang]}} </span>
-                     
             </span>
             <br> 
         </span>  

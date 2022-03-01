@@ -23,7 +23,24 @@ class RoleController extends Controller
         $this->RoleRepository = $RoleRepository;
     }
 
+    public function all(){
+        try {
+            $modal =  new RoleCollection (  $this->RoleRepository->all() )  ;
+            return $this -> MakeResponseSuccessful( 
+                [ $modal ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
 
+        
+    }
     public function store( RoleApiRequest $request ) {
         return $this -> MakeResponseSuccessful( 
             ['Model'  => $this->RoleRepository->create( Request()->all() ) ],
@@ -46,7 +63,7 @@ class RoleController extends Controller
          ) ;
     }
     public function collection(Request $request){
-        return RoleResource::collection(  $this->RoleRepository->collection($request->PerPage ? $request->PerPage : 10) ) ;
+        return new RoleCollection(  $this->RoleRepository->collection($request->PerPage ? $request->PerPage : 10) ) ;
     }
 
 }

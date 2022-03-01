@@ -116,11 +116,10 @@ class SubUserController extends Controller
     
     public function update(modelInsertRequest $request ,$id) {
         try {
-
+            
+            $this->ModelRepository->update( $id,Request()->all()) ;
             
             $modal = new ModelResource($this->ModelRepository->findById($id)); 
-            $modal = $this->ModelRepository->findById($id); 
-
 
             return $this -> MakeResponseSuccessful( 
                     [ $modal],
@@ -133,9 +132,8 @@ class SubUserController extends Controller
                 'Errors',
                 Response::HTTP_NOT_FOUND
             );
-        } 
+        }  
     }
-    
 
 
     // trash

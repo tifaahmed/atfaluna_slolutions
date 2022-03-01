@@ -42,8 +42,30 @@
 			 :PropSelectOptions = "FactorySelectOptions"
 			 :PropSelected = "FactorySelected"
 			 :PropSelectColumnName = "FactorySelectColumnName"
-			 
 		/> 
+		<InputMultiSelect
+		 	v-if= "FactoryType === 'multiSelect'"
+		     :PropLable = "Factorylable"
+		     :PropPlaceholder = "FactoryPlaceholder"
+		     :PropType = "FactoryType"
+		     :PropName = "FactoryName"
+		     :PropErrors = "FactoryErrors"
+		     @change      = "change"
+		     v-model      = "data"
+			 :PropSelectOptions = "FactorySelectOptions"
+			 :PropSelectColumnName = "FactorySelectColumnName"
+		/> 
+		<InputRadioCheckBox
+		 	v-if= "FactoryType === 'radio'"
+		     :PropLable = "Factorylable"
+		     :PropType = "FactoryType"
+		     :PropName = "FactoryName"
+		     :PropErrors = "FactoryErrors"
+		     @change      = "change"
+		     v-model      = "data"
+			 :PropSelectOptions = "FactorySelectOptions"
+		/> 
+
 		 
 		<!-- <InputForloop
 		 	v-if= "FactoryType === 'Forloop'"
@@ -67,6 +89,8 @@ import InputFile     	from 'AdminPartials/Components/Inputs/InputFile.vue'     ;
 // import InputForloop     	from 'AdminPartials/Components/Inputs/InputForloop.vue'     ;
 import InputDate     	from 'AdminPartials/Components/Inputs/InputDate.vue'     ;
 import InputSelect     	from 'AdminPartials/Components/Inputs/InputSelect.vue'     ;
+import InputMultiSelect     	from 'AdminPartials/Components/Inputs/InputMultiSelect.vue'     ;
+import InputRadioCheckBox     	from 'AdminPartials/Components/Inputs/InputRadioCheckBox.vue'     ;
 
 export default {
 
@@ -75,7 +99,7 @@ export default {
 
 	} } ,
 	components : {
-	    InputString ,InputFile,InputDate,InputSelect
+	    InputString ,InputFile,InputDate,InputSelect,InputMultiSelect,InputRadioCheckBox
 		// InputForloop
 	} ,
 	props   : {

@@ -27,6 +27,11 @@
 		:ValueColumn= "ValueColumn"
 		:LoopOnColumn =  "LoopOnColumn"
 		/>
+		<ObjectColumn
+		v-else-if= "typeColumn == 'Object'"
+		:ValueColumn= "ValueColumn"
+		:LoopOnColumn =  "LoopOnColumn"
+		/>
 	</span>
 
 </template>
@@ -37,6 +42,7 @@ import ImageColumn     	from 'AdminPartials/Components/colums/ImageColumn.vue'  
 import DateColumn     	from 'AdminPartials/Components/colums/DateColumn.vue'     ;
 import ForloopColumn    from 'AdminPartials/Components/colums/ForloopColumn.vue'     ;
 import LinkColumn     	from 'AdminPartials/Components/colums/LinkColumn.vue'     ;
+import ObjectColumn     	from 'AdminPartials/Components/colums/ObjectColumn.vue'     ;
  
 export default {
 		name:'ColumsIndex',
@@ -44,7 +50,7 @@ export default {
 
     } } ,
     components : {
-        RouterColumn ,StringColumn,ImageColumn,DateColumn,ForloopColumn,LinkColumn
+        RouterColumn ,StringColumn,ImageColumn,DateColumn,ForloopColumn,LinkColumn,ObjectColumn
     } ,
     props   : {ValueColumn :null,LoopOnColumn:null,typeColumn :String} ,
     methods : {

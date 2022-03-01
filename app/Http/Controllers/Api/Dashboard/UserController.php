@@ -19,6 +19,8 @@ use App\Repository\CountryRepositoryInterface   as CountryInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -57,6 +59,7 @@ class UserController extends Controller
         $all += array( 'token' => Hash::make( Str::random(60) )  );
         $all += array( 'remember_token' => hash('sha256',Str::random(60)) );
         $all += array( 'password' => Hash::make($request->password) );
+        
         return $this -> MakeResponseSuccessful( 
             ['UserModel'  => $this->ModelRepository->create( Request()->except($file_one,'password','password_confirmation')+$all ) ],
             'Successful',
@@ -90,7 +93,6 @@ class UserController extends Controller
     }
     public function update(UserUpdateApiRequest $request ,$id){
         try {
-
             $all = [ ];
             $file_one = 'avatar';
             if ($request->hasFile($file_one)) {
@@ -110,6 +112,26 @@ class UserController extends Controller
             
             $this->ModelRepository->update( $id,Request()->except($file_one,$password,'country_id')+$all) ;
             $modal = $this->ModelRepository->findById($id); 
+
+            if($request->UserRoles){
+                $modal->UserRole()->detach();
+                foreach($request->UserRoles as $row){
+                    $modal->assignRole($row['name']);
+                    $role = Role::findOrFail($row['id']);
+                    if($role->RolePermission){
+                        foreach($role->RolePermission as $role_single_row){
+                            $permission_id = $role_single_row->pivot->permission_id    ;
+                            if (! $modal->UserPermission->contains($permission_id) ) {
+                                $permission = Permission::findOrFail($permission_id);
+                                $modal->givePermissionTo($permission->name) ;
+                            } 
+                        }
+                    }
+                }
+            }
+
+
+            
 
             return $this -> MakeResponseSuccessful( 
                 [ $modal],

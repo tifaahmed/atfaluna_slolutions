@@ -13,7 +13,9 @@
                         <div class="">
                             <InputsFactory :Factorylable="'name'" :FactoryPlaceholder=" 'sub admin' "
                                 :FactoryType="'string'" :FactoryName="'name'" 
-                                v-model ="RequestData.name"  :FactoryErrors="ServerReaponse.errors.name ? ServerReaponse.errors.name : null" />
+                                v-model ="RequestData.name"  
+                                :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.name )  ) ? ServerReaponse.errors.name : null" 
+                            />
 
 
 
@@ -102,8 +104,6 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                     await this.SubmetRowButton();
                 }
             },
-
-            
 
 
 
