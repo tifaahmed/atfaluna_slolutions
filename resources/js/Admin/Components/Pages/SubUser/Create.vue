@@ -35,10 +35,18 @@
                                 :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.gender )   ) ? ServerReaponse.errors.gender : null"
                             />
 
+
                             <InputsFactory :Factorylable="'Accessory'"  :FactoryPlaceholder="'Search'"
-                                :FactoryType="'multiSelect'" :FactoryName="'accessory'"   v-model ="RequestData.UserRoles"  
-                                :FactorySelectOptions="AccessoryRows"   :FactorySelectColumnName="['name']" 
+                                :FactoryType="'multiSelectWithLang'" :FactoryName="'accessory'"   v-model ="RequestData.accessory"  
+                                :FactorySelectOptions="AccessoryRows"   
+                                :FactorySelectColumnName="'name'"  
+                                :FactorySelectColumnLang="['name','language']"  
+                                :FactorySelectimage="'image'"  
                             />
+
+
+
+
 
                         </div>
                         <button  @click="FormSubmet()" class="btn btn-primary ">

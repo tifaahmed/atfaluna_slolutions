@@ -31,7 +31,7 @@ class SubUserApiRequest extends FormRequest
             ],
             'name'       =>  [ 'required' ] ,
             'age'        =>  [ 'required' ,'integer'] ,
-            'points'     =>  [ 'required','integer' ] ,
+            'points'     =>  [ 'integer' ] ,
             'user_id'    =>  [ 'required','integer' ] ,
         ];
     }
