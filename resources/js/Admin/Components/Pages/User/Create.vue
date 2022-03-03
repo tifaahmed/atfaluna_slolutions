@@ -36,6 +36,12 @@
                                 :FactorySelectOptions="CountriesRows"  :FactorySelected="RequestData.country"  :FactorySelectColumnName="'name'" 
                                 :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.country_id )  ) ? ServerReaponse.errors.country_id : null" 
                             />
+                            <InputsFactory :Factorylable="'roles'"   v-model ="RequestData.UserRoles"  
+                                :FactoryType="'multiSelectWithLang'" 
+                                :FactoryName="'UserRoles'"  
+                                :FactorySelectOptions="RolesRows"   
+                                :FactorySelectColumnName="'name'"  
+                            />
                             <InputsFactory :Factorylable="'Password'"  :FactoryPlaceholder=" '********' "
                                 :FactoryType="'password'" :FactoryName="'password'"  v-model ="RequestData.password"
                                 :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.password )  ) ? ServerReaponse.errors.password : null" 
@@ -77,6 +83,10 @@
 <script>
 // import Axios from 'axios' ;
 import UserModel     from 'AdminModels/User';
+import CountryModel     from 'AdminModels/Country';
+import RoleModel        from 'AdminModels/Role';
+
+
 import validationUser     from 'AdminValidations/User';
 import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue'     ;
 
@@ -85,10 +95,13 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
         components : { InputsFactory } ,
 
         async mounted() {
+            this.GetCountries();
+            this.GetlRoles();
         },
         data( ) { return {
             TableName :'User',
-            CountriesRows :'null',
+            CountriesRows : [] ,
+            RolesRows : [] ,
 
             ServerReaponse : {
                 errors : {
@@ -138,10 +151,23 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 }
             },
 
-            // model 
-            store(){
-                return (new UserModel).store(this.RequestData)  ;
+            async GetCountries(page){
+                this.CountriesRows  = ( await this.AllCountries() ).data.data;
             },
+            async GetlRoles(page){
+                this.RolesRows  = ( await this.AllRoles() ).data.data;
+            },
+
+            // model 
+                AllCountries(){
+                    return  (new CountryModel).all()  ;
+                },
+                AllRoles(){
+                    return  (new RoleModel).all()  ;
+                },
+                store(){
+                    return (new UserModel).store(this.RequestData)  ;
+                },
             // model 
 
 

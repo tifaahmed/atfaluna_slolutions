@@ -4785,7 +4785,6 @@ var Model = function () {
         if (_typeof(data[i]) === 'object' && data[i] !== null || Array.isArray(data[i])) {
           this.getObjectFormData(formData, data[i], key + '[' + i + ']');
         } else {
-          console.log(key);
           formData.append(key + '[' + i + ']', data[i]);
         }
       }
@@ -18184,6 +18183,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -20927,9 +20934,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var AdminModels_User__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! AdminModels/User */ "./resources/js/Admin/Models/User.ts");
 /* harmony import */ var AdminModels_User__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(AdminModels_User__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var AdminValidations_User__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! AdminValidations/User */ "./resources/js/Admin/Validation/User.ts");
-/* harmony import */ var AdminValidations_User__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(AdminValidations_User__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var AdminPartials_Components_Inputs_InputsFactory_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! AdminPartials/Components/Inputs/InputsFactory.vue */ "./resources/js/Admin/Partials/Components/Inputs/InputsFactory.vue");
+/* harmony import */ var AdminModels_Country__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! AdminModels/Country */ "./resources/js/Admin/Models/Country.ts");
+/* harmony import */ var AdminModels_Country__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(AdminModels_Country__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var AdminModels_Role__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! AdminModels/Role */ "./resources/js/Admin/Models/Role.ts");
+/* harmony import */ var AdminModels_Role__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(AdminModels_Role__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var AdminValidations_User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! AdminValidations/User */ "./resources/js/Admin/Validation/User.ts");
+/* harmony import */ var AdminValidations_User__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(AdminValidations_User__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var AdminPartials_Components_Inputs_InputsFactory_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! AdminPartials/Components/Inputs/InputsFactory.vue */ "./resources/js/Admin/Partials/Components/Inputs/InputsFactory.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -21012,21 +21023,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 // import Axios from 'axios' ;
+
+
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'UserCreate',
   components: {
-    InputsFactory: AdminPartials_Components_Inputs_InputsFactory_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    InputsFactory: AdminPartials_Components_Inputs_InputsFactory_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   mounted: function mounted() {
+    var _this = this;
+
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              _this.GetCountries();
+
+              _this.GetlRoles();
+
+            case 2:
             case "end":
               return _context.stop();
           }
@@ -21037,7 +21063,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       TableName: 'User',
-      CountriesRows: 'null',
+      CountriesRows: [],
+      RolesRows: [],
       ServerReaponse: {
         errors: {
           name: [],
@@ -21072,7 +21099,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.ServerReaponse.message = null;
     },
     FormSubmet: function FormSubmet() {
-      var _this = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var check;
@@ -21081,11 +21108,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return _this.DeleteErrors();
+                return _this2.DeleteErrors();
 
               case 2:
                 _context2.next = 4;
-                return new (AdminValidations_User__WEBPACK_IMPORTED_MODULE_2___default())().validate(_this.RequestData);
+                return new (AdminValidations_User__WEBPACK_IMPORTED_MODULE_4___default())().validate(_this2.RequestData);
 
               case 4:
                 check = _context2.sent;
@@ -21096,13 +21123,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 // if there is error
-                _this.ServerReaponse = check;
+                _this2.ServerReaponse = check;
                 _context2.next = 11;
                 break;
 
               case 9:
                 _context2.next = 11;
-                return _this.SubmetRowButton();
+                return _this2.SubmetRowButton();
 
               case 11:
               case "end":
@@ -21112,41 +21139,91 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
+    GetCountries: function GetCountries(page) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return _this3.AllCountries();
+
+              case 2:
+                _this3.CountriesRows = _context3.sent.data.data;
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    GetlRoles: function GetlRoles(page) {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return _this4.AllRoles();
+
+              case 2:
+                _this4.RolesRows = _context4.sent.data.data;
+
+              case 3:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
     // model 
+    AllCountries: function AllCountries() {
+      return new (AdminModels_Country__WEBPACK_IMPORTED_MODULE_2___default())().all();
+    },
+    AllRoles: function AllRoles() {
+      return new (AdminModels_Role__WEBPACK_IMPORTED_MODULE_3___default())().all();
+    },
     store: function store() {
       return new (AdminModels_User__WEBPACK_IMPORTED_MODULE_1___default())().store(this.RequestData);
     },
     // model 
     SubmetRowButton: function SubmetRowButton() {
-      var _this2 = this;
+      var _this5 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
         var data;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _this2.ServerReaponse = null;
-                _context3.next = 3;
-                return _this2.store();
+                _this5.ServerReaponse = null;
+                _context5.next = 3;
+                return _this5.store();
 
               case 3:
-                data = _context3.sent;
+                data = _context5.sent;
 
                 if (data && data.errors) {
-                  _this2.ServerReaponse = data;
+                  _this5.ServerReaponse = data;
                 } else {
-                  _this2.$router.push({
+                  _this5.$router.push({
                     name: 'User.ShowAll'
                   });
                 }
 
               case 5:
               case "end":
-                return _context3.stop();
+                return _context5.stop();
             }
           }
-        }, _callee3);
+        }, _callee5);
       }))();
     }
   }
@@ -21269,16 +21346,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -21298,7 +21365,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       TableName: 'User',
       TablePageName: 'User.ShowAll',
-      CountriesRows: null,
+      CountriesRows: [],
       RolesRows: [],
       ServerReaponse: {
         errors: {
@@ -21322,7 +21389,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         password_confirmation: null,
         birthdate: null,
         country_id: null,
-        UserRoles: []
+        roleIdes: []
       }
     };
   },
@@ -21358,8 +21425,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.ServerReaponse = check; // error from my file
                 } else {
                   // run the form
-                  console.log(_this.RequestData);
-
                   _this.SubmetRowButton(); // succes from file
 
                 }
@@ -21376,16 +21441,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var data;
+        var list, data;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _this2.ServerReaponse = null;
-                _context2.next = 3;
+                list = [];
+
+                _this2.RequestData.UserRoles.map(function (value, key) {
+                  list[key] = value.id;
+                });
+
+                _this2.RequestData.roleIdes = list;
+                console.log(_this2.RequestData.roleIdes);
+                _context2.next = 7;
                 return _this2.update();
 
-              case 3:
+              case 7:
                 data = _context2.sent;
 
                 // send update request
@@ -21398,7 +21471,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 }
 
-              case 5:
+              case 9:
               case "end":
                 return _context2.stop();
             }
@@ -21463,7 +21536,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this5.AllRoles();
 
               case 2:
-                _this5.RolesRows = _context5.sent.data.data[0];
+                _this5.RolesRows = _context5.sent.data.data;
 
               case 3:
               case "end":
@@ -21989,10 +22062,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/Partials/Components/Inputs/InputMultiSelect.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/Partials/Components/Inputs/InputMultiSelect.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/Partials/Components/Inputs/InputMultiSelectWithLang.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/Partials/Components/Inputs/InputMultiSelectWithLang.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -22001,7 +22074,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 Object(function webpackMissingModule() { var e = new Error("Cannot find module 'vue-multiselect'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
-//
 //
 //
 //
@@ -22078,7 +22150,9 @@ Object(function webpackMissingModule() { var e = new Error("Cannot find module '
     PropErrors: [],
     value: [],
     PropSelectOptions: [],
-    PropSelectColumnName: null
+    PropSelectColumnName: null,
+    PropFactorySelectimage: null,
+    PropSelectColumnLang: []
   },
   watch: {
     value: function value() {
@@ -22087,13 +22161,6 @@ Object(function webpackMissingModule() { var e = new Error("Cannot find module '
     data: function data() {
       this.$emit('input', this.data);
       this.$emit('change', this.data);
-    }
-  },
-  methods: {
-    customLabel: function customLabel(_ref) {
-      var id = _ref.id;
-      // return	"<img src="+image+">";
-      return id;
     }
   }
 });
@@ -22317,8 +22384,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var AdminPartials_Components_Inputs_InputFile_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! AdminPartials/Components/Inputs/InputFile.vue */ "./resources/js/Admin/Partials/Components/Inputs/InputFile.vue");
 /* harmony import */ var AdminPartials_Components_Inputs_InputDate_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! AdminPartials/Components/Inputs/InputDate.vue */ "./resources/js/Admin/Partials/Components/Inputs/InputDate.vue");
 /* harmony import */ var AdminPartials_Components_Inputs_InputSelect_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! AdminPartials/Components/Inputs/InputSelect.vue */ "./resources/js/Admin/Partials/Components/Inputs/InputSelect.vue");
-/* harmony import */ var AdminPartials_Components_Inputs_InputMultiSelect_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! AdminPartials/Components/Inputs/InputMultiSelect.vue */ "./resources/js/Admin/Partials/Components/Inputs/InputMultiSelect.vue");
+/* harmony import */ var AdminPartials_Components_Inputs_InputMultiSelectWithLang_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! AdminPartials/Components/Inputs/InputMultiSelectWithLang.vue */ "./resources/js/Admin/Partials/Components/Inputs/InputMultiSelectWithLang.vue");
 /* harmony import */ var AdminPartials_Components_Inputs_InputRadioCheckBox_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! AdminPartials/Components/Inputs/InputRadioCheckBox.vue */ "./resources/js/Admin/Partials/Components/Inputs/InputRadioCheckBox.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -22408,6 +22491,7 @@ __webpack_require__.r(__webpack_exports__);
  // import InputForloop     	from 'AdminPartials/Components/Inputs/InputForloop.vue'     ;
 
 
+ // import InputMultiSelect     	from 'AdminPartials/Components/Inputs/InputMultiSelect.vue'     ;
 
 
 
@@ -22422,15 +22506,16 @@ __webpack_require__.r(__webpack_exports__);
     InputFile: AdminPartials_Components_Inputs_InputFile_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     InputDate: AdminPartials_Components_Inputs_InputDate_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     InputSelect: AdminPartials_Components_Inputs_InputSelect_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    InputMultiSelect: AdminPartials_Components_Inputs_InputMultiSelect_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    InputMultiSelectWithLang: AdminPartials_Components_Inputs_InputMultiSelectWithLang_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     InputRadioCheckBox: AdminPartials_Components_Inputs_InputRadioCheckBox_vue__WEBPACK_IMPORTED_MODULE_5__["default"] // InputForloop
+    // InputMultiSelect
 
   },
   props: {
     Factorylable: {
       "default": ''
     },
-    // FactoryForloop : 		{ default                       : ''        } ,
+    // FactoryForloop : 		{ default                    : ''        } ,
     FactoryPlaceholder: {
       "default": ''
     },
@@ -22451,6 +22536,12 @@ __webpack_require__.r(__webpack_exports__);
       "default": ''
     },
     FactorySelectColumnName: {
+      "default": ''
+    },
+    FactorySelectColumnLang: {
+      "default": ''
+    },
+    FactorySelectimage: {
       "default": ''
     }
   },
@@ -32678,10 +32769,10 @@ component.options.__file = "resources/js/Admin/Partials/Components/Inputs/InputF
 
 /***/ }),
 
-/***/ "./resources/js/Admin/Partials/Components/Inputs/InputMultiSelect.vue":
-/*!****************************************************************************!*\
-  !*** ./resources/js/Admin/Partials/Components/Inputs/InputMultiSelect.vue ***!
-  \****************************************************************************/
+/***/ "./resources/js/Admin/Partials/Components/Inputs/InputMultiSelectWithLang.vue":
+/*!************************************************************************************!*\
+  !*** ./resources/js/Admin/Partials/Components/Inputs/InputMultiSelectWithLang.vue ***!
+  \************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -32702,9 +32793,9 @@ Object(function webpackMissingModule() { var e = new Error("Cannot find module '
 /* normalize component */
 
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _InputMultiSelect_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _InputMultiSelect_vue_vue_type_template_id_5b453907___WEBPACK_IMPORTED_MODULE_0__.render,
-  _InputMultiSelect_vue_vue_type_template_id_5b453907___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _InputMultiSelectWithLang_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _InputMultiSelectWithLang_vue_vue_type_template_id_ae7af00a___WEBPACK_IMPORTED_MODULE_0__.render,
+  _InputMultiSelectWithLang_vue_vue_type_template_id_ae7af00a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -32714,7 +32805,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/Admin/Partials/Components/Inputs/InputMultiSelect.vue"
+component.options.__file = "resources/js/Admin/Partials/Components/Inputs/InputMultiSelectWithLang.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -34672,10 +34763,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/Admin/Partials/Components/Inputs/InputMultiSelect.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************!*\
-  !*** ./resources/js/Admin/Partials/Components/Inputs/InputMultiSelect.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************/
+/***/ "./resources/js/Admin/Partials/Components/Inputs/InputMultiSelectWithLang.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/Admin/Partials/Components/Inputs/InputMultiSelectWithLang.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -34683,8 +34774,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputMultiSelect_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputMultiSelect.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/Partials/Components/Inputs/InputMultiSelect.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputMultiSelect_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputMultiSelectWithLang_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputMultiSelectWithLang.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/Partials/Components/Inputs/InputMultiSelectWithLang.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputMultiSelectWithLang_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -36128,19 +36219,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/Admin/Partials/Components/Inputs/InputMultiSelect.vue?vue&type=template&id=5b453907&":
-/*!***********************************************************************************************************!*\
-  !*** ./resources/js/Admin/Partials/Components/Inputs/InputMultiSelect.vue?vue&type=template&id=5b453907& ***!
-  \***********************************************************************************************************/
+/***/ "./resources/js/Admin/Partials/Components/Inputs/InputMultiSelectWithLang.vue?vue&type=template&id=ae7af00a&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/Admin/Partials/Components/Inputs/InputMultiSelectWithLang.vue?vue&type=template&id=ae7af00a& ***!
+  \*******************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputMultiSelect_vue_vue_type_template_id_5b453907___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputMultiSelect_vue_vue_type_template_id_5b453907___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputMultiSelectWithLang_vue_vue_type_template_id_ae7af00a___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputMultiSelectWithLang_vue_vue_type_template_id_ae7af00a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputMultiSelect_vue_vue_type_template_id_5b453907___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputMultiSelect.vue?vue&type=template&id=5b453907& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/Partials/Components/Inputs/InputMultiSelect.vue?vue&type=template&id=5b453907&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputMultiSelectWithLang_vue_vue_type_template_id_ae7af00a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputMultiSelectWithLang.vue?vue&type=template&id=ae7af00a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/Partials/Components/Inputs/InputMultiSelectWithLang.vue?vue&type=template&id=ae7af00a&");
 
 
 /***/ }),
@@ -42617,17 +42708,19 @@ var render = function() {
                     attrs: {
                       Factorylable: "Accessory",
                       FactoryPlaceholder: "Search",
-                      FactoryType: "multiSelect",
+                      FactoryType: "multiSelectWithLang",
                       FactoryName: "accessory",
                       FactorySelectOptions: _vm.AccessoryRows,
-                      FactorySelectColumnName: ["name"]
+                      FactorySelectColumnName: "name",
+                      FactorySelectColumnLang: ["name", "language"],
+                      FactorySelectimage: "image"
                     },
                     model: {
-                      value: _vm.RequestData.UserRoles,
+                      value: _vm.RequestData.accessory,
                       callback: function($$v) {
-                        _vm.$set(_vm.RequestData, "UserRoles", $$v)
+                        _vm.$set(_vm.RequestData, "accessory", $$v)
                       },
-                      expression: "RequestData.UserRoles"
+                      expression: "RequestData.accessory"
                     }
                   })
                 ],
@@ -44670,6 +44763,23 @@ var render = function() {
                   _vm._v(" "),
                   _c("InputsFactory", {
                     attrs: {
+                      Factorylable: "roles",
+                      FactoryType: "multiSelectWithLang",
+                      FactoryName: "UserRoles",
+                      FactorySelectOptions: _vm.RolesRows,
+                      FactorySelectColumnName: "name"
+                    },
+                    model: {
+                      value: _vm.RequestData.UserRoles,
+                      callback: function($$v) {
+                        _vm.$set(_vm.RequestData, "UserRoles", $$v)
+                      },
+                      expression: "RequestData.UserRoles"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("InputsFactory", {
+                    attrs: {
                       Factorylable: "Password",
                       FactoryPlaceholder: "********",
                       FactoryType: "password",
@@ -44937,8 +45047,7 @@ var render = function() {
               _c("InputsFactory", {
                 attrs: {
                   Factorylable: "roles",
-                  FactoryPlaceholder: "Search",
-                  FactoryType: "multiSelect",
+                  FactoryType: "multiSelectWithLang",
                   FactoryName: "UserRoles",
                   FactorySelectOptions: _vm.RolesRows,
                   FactorySelectColumnName: "name"
@@ -45567,10 +45676,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/Partials/Components/Inputs/InputMultiSelect.vue?vue&type=template&id=5b453907&":
-/*!**************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/Partials/Components/Inputs/InputMultiSelect.vue?vue&type=template&id=5b453907& ***!
-  \**************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/Partials/Components/Inputs/InputMultiSelectWithLang.vue?vue&type=template&id=ae7af00a&":
+/*!**********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/Partials/Components/Inputs/InputMultiSelectWithLang.vue?vue&type=template&id=ae7af00a& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -45587,109 +45696,178 @@ var render = function() {
     "div",
     { staticClass: "form-group" },
     [
-      _c("label", { attrs: { for: _vm.PropName } }, [
-        _vm._v(" " + _vm._s(_vm.PropLable) + "  ")
-      ]),
+      _c(
+        "label",
+        { staticClass: "typo__label", attrs: { for: _vm.PropName } },
+        [_vm._v(" " + _vm._s(_vm.PropLable) + "  ")]
+      ),
       _vm._v(" "),
-      _c("label", { staticClass: "typo__label" }, [
-        _vm._v("Custom option template")
-      ]),
-      _vm._v(" "),
-      _c("multiselect", {
-        attrs: {
-          label: "id",
-          "track-by": "id",
-          options: _vm.PropSelectOptions,
-          "option-height": 104,
-          "custom-label": _vm.customLabel,
-          multiple: true,
-          taggable: "true"
-        },
-        scopedSlots: _vm._u([
-          {
-            key: "singleLabel",
-            fn: function(props) {
-              return [
-                _c("img", {
-                  staticClass: "option__image",
-                  staticStyle: { width: "50px" },
-                  attrs: { src: props.option.image }
-                }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  { staticClass: "option__desc" },
-                  [
-                    _vm._l(props.option.languages, function(valLang, langkey) {
-                      return _c(
-                        "span",
-                        { key: langkey },
+      _vm.PropSelectOptions != "null"
+        ? _c("multiselect", {
+            attrs: {
+              label: _vm.PropSelectColumnName,
+              "track-by": _vm.PropSelectColumnName,
+              options: _vm.PropSelectOptions,
+              "option-height": 104,
+              multiple: true,
+              taggable: true
+            },
+            scopedSlots: _vm._u(
+              [
+                {
+                  key: "singleLabel",
+                  fn: function(props) {
+                    return [
+                      _c("span", { staticClass: "option__desc" }, [
+                        _c(
+                          "span",
+                          { staticClass: "option__title" },
+                          [
+                            _c("span", [
+                              _vm._v(" ( " + _vm._s(props.option.id) + " ) ")
+                            ]),
+                            _vm._v(" "),
+                            props.option[_vm.PropFactorySelectimage]
+                              ? _c("img", {
+                                  staticClass: "option__image",
+                                  staticStyle: { width: "50px" },
+                                  attrs: {
+                                    src:
+                                      props.option[_vm.PropFactorySelectimage]
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm._l(props.option.languages, function(
+                              valLang,
+                              langkey
+                            ) {
+                              return _c(
+                                "span",
+                                { key: langkey },
+                                [
+                                  _vm._l(_vm.PropSelectColumnLang, function(
+                                    valColumn,
+                                    columnkey
+                                  ) {
+                                    return _c("span", { key: columnkey }, [
+                                      valLang[valColumn] != "null"
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "- " +
+                                                _vm._s(valLang[valColumn]) +
+                                                " "
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ])
+                                  }),
+                                  _vm._v(" "),
+                                  _c("br")
+                                ],
+                                2
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]
+                  }
+                },
+                {
+                  key: "option",
+                  fn: function(props) {
+                    return [
+                      _c(
+                        "div",
+                        { staticClass: "option__desc" },
                         [
-                          _vm._l(_vm.PropSelectColumnName, function(
-                            valLang,
-                            columnkey
-                          ) {
-                            return _c("span", { key: columnkey }, [
-                              _vm.valColumn[valLang] != "null"
-                                ? _c("span", [
-                                    _vm._v(
-                                      "- " +
-                                        _vm._s(_vm.valColumn[valLang]) +
-                                        " "
-                                    )
-                                  ])
-                                : _vm._e()
-                            ])
+                          _c("span", [
+                            _vm._v(" ( " + _vm._s(props.option.id) + " ) ")
+                          ]),
+                          _vm._v(" "),
+                          _c("img", {
+                            staticClass: "option__image",
+                            staticStyle: { width: "50px" },
+                            attrs: {
+                              if: props.option[_vm.PropFactorySelectimage],
+                              src: props.option[_vm.PropFactorySelectimage]
+                            }
                           }),
                           _vm._v(" "),
-                          _c("br")
+                          _vm._l(props.option.languages, function(
+                            valLang,
+                            langkey
+                          ) {
+                            return _c(
+                              "span",
+                              {
+                                key: langkey,
+                                staticClass: "option__title",
+                                attrs: { if: props.option.languages }
+                              },
+                              [
+                                _vm._l(_vm.PropSelectColumnLang, function(
+                                  valColumn,
+                                  columnkey
+                                ) {
+                                  return _c("span", { key: columnkey }, [
+                                    valLang[valColumn] != "null"
+                                      ? _c("span", [
+                                          _vm._v(
+                                            "- " +
+                                              _vm._s(valLang[valColumn]) +
+                                              " "
+                                          )
+                                        ])
+                                      : _vm._e()
+                                  ])
+                                }),
+                                _vm._v(" "),
+                                _c("br")
+                              ],
+                              2
+                            )
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              attrs: {
+                                if: props.option[_vm.PropSelectColumnName]
+                              }
+                            },
+                            [
+                              _vm._v(
+                                " ( " +
+                                  _vm._s(
+                                    props.option[_vm.PropSelectColumnName]
+                                  ) +
+                                  " ) "
+                              )
+                            ]
+                          )
                         ],
                         2
                       )
-                    }),
-                    _vm._v(" "),
-                    _c("div"),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "option__title" }, [
-                      _vm._v(_vm._s(props.option.languages[0]["name"]))
-                    ])
-                  ],
-                  2
-                )
-              ]
+                    ]
+                  }
+                }
+              ],
+              null,
+              false,
+              834459847
+            ),
+            model: {
+              value: _vm.data,
+              callback: function($$v) {
+                _vm.data = $$v
+              },
+              expression: "data"
             }
-          },
-          {
-            key: "option",
-            fn: function(props) {
-              return [
-                _c("img", {
-                  staticClass: "option__image",
-                  staticStyle: { width: "50px" },
-                  attrs: { src: props.option.image }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "option__desc" }, [
-                  _c("span", { staticClass: "option__title" }, [
-                    _vm._v(
-                      "\n\t\t\t\t\t\t\t" +
-                        _vm._s(props.option.languages[0]["name"]) +
-                        "\n\t\t\t\t\t\t"
-                    )
-                  ])
-                ])
-              ]
-            }
-          }
-        ]),
-        model: {
-          value: _vm.data,
-          callback: function($$v) {
-            _vm.data = $$v
-          },
-          expression: "data"
-        }
-      }),
+          })
+        : _vm._e(),
       _vm._v(" "),
       _c("pre", { staticClass: "language-json" }, [
         _c("code", [_vm._v(_vm._s(_vm.data))])
@@ -46194,8 +46372,8 @@ var render = function() {
           })
         : _vm._e(),
       _vm._v(" "),
-      _vm.FactoryType === "multiSelect"
-        ? _c("InputMultiSelect", {
+      _vm.FactoryType === "multiSelectWithLang"
+        ? _c("InputMultiSelectWithLang", {
             attrs: {
               PropLable: _vm.Factorylable,
               PropPlaceholder: _vm.FactoryPlaceholder,
@@ -46203,7 +46381,9 @@ var render = function() {
               PropName: _vm.FactoryName,
               PropErrors: _vm.FactoryErrors,
               PropSelectOptions: _vm.FactorySelectOptions,
-              PropSelectColumnName: _vm.FactorySelectColumnName
+              PropSelectColumnName: _vm.FactorySelectColumnName,
+              PropSelectColumnLang: _vm.FactorySelectColumnLang,
+              PropFactorySelectimage: _vm.FactorySelectimage
             },
             on: { change: _vm.change },
             model: {

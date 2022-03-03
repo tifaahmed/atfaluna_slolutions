@@ -25,7 +25,7 @@ class AccessoryApiRequest extends FormRequest
     {
         return [
             'image'      =>  [ 'required' ,'max:5000'] ,
-            'price'      =>  [ 'required' ,'numeric','between:0,9999.99'] ,
+            'price'      =>  [ 'numeric','between:0,9999.99'] ,
         ];
     }
 }

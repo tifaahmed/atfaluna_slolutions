@@ -38,22 +38,12 @@
                             :FactoryType="'select'" :FactoryName="'country_id'"   v-model ="RequestData.country_id"  
                             :FactorySelectOptions="CountriesRows"  :FactorySelected="RequestData.country"  :FactorySelectColumnName="'name'" 
                         />
-
-                        <InputsFactory :Factorylable="'roles'"  :FactoryPlaceholder="'Search'"
-                            :FactoryType="'multiSelect'" :FactoryName="'UserRoles'"   v-model ="RequestData.UserRoles"  
-                            :FactorySelectOptions="RolesRows"    :FactorySelectColumnName="'name'" 
+                        <InputsFactory :Factorylable="'roles'"   v-model ="RequestData.UserRoles"  
+                            :FactoryType="'multiSelectWithLang'" 
+                            :FactoryName="'UserRoles'"  
+                            :FactorySelectOptions="RolesRows"   
+                            :FactorySelectColumnName="'name'"  
                         />
-
-
-
-
-
-
-
-
-
-            
-
                         <InputsFactory :Factorylable="'Password'"  :FactoryPlaceholder=" '**********' "
                             :FactoryType="'password'" :FactoryName="'password'"  v-model ="RequestData.password"
                             :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.password )  ) ? ServerReaponse.errors.password : null" 
@@ -118,7 +108,7 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
             TableName :'User',
             TablePageName :'User.ShowAll',
 
-            CountriesRows : null ,
+            CountriesRows : [] ,
             RolesRows : [] ,
 
             ServerReaponse : {
@@ -143,7 +133,7 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 password_confirmation   : null,
                 birthdate               : null,
                 country_id              : null,
-                UserRoles               : [],
+                roleIdes                : [],
             },
 
         } } ,
@@ -166,12 +156,17 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 if( check ){// if there is error from my file
                      this.ServerReaponse = check; // error from my file
                 }else{ // run the form
-                    console.log(this.RequestData);
                      this.SubmetRowButton(); // succes from file
                 }
             },
             async SubmetRowButton(){
                 this.ServerReaponse = null;
+                var list =[];
+                this.RequestData.UserRoles.map(function(value, key) {
+                    list[key] = value.id;
+                });
+                this.RequestData.roleIdes = list;
+                console.log(this.RequestData.roleIdes)
                 let data = await this.update()  ; // send update request
                 if(data && data.errors){// stay and show error
                     this.ServerReaponse = data ;//error from the server
@@ -190,7 +185,7 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 this.CountriesRows  = ( await this.AllCountries() ).data.data;
             },
             async GetlRoles(page){
-                this.RolesRows  = ( await this.AllRoles() ).data.data[0];
+                this.RolesRows  = ( await this.AllRoles() ).data.data;
             },
             
             // modal

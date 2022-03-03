@@ -43,7 +43,7 @@
 			 :PropSelected = "FactorySelected"
 			 :PropSelectColumnName = "FactorySelectColumnName"
 		/> 
-		<InputMultiSelect
+		<!-- <InputMultiSelect
 		 	v-if= "FactoryType === 'multiSelect'"
 		     :PropLable = "Factorylable"
 		     :PropPlaceholder = "FactoryPlaceholder"
@@ -54,7 +54,23 @@
 		     v-model      = "data"
 			 :PropSelectOptions = "FactorySelectOptions"
 			 :PropSelectColumnName = "FactorySelectColumnName"
+		/>  -->
+		<InputMultiSelectWithLang
+			v-if= "FactoryType === 'multiSelectWithLang'"
+			:PropLable = "Factorylable"
+			:PropPlaceholder = "FactoryPlaceholder"
+			:PropType = "FactoryType"
+			:PropName = "FactoryName"
+			:PropErrors = "FactoryErrors"
+			@change      = "change"
+			v-model      = "data"
+			:PropSelectOptions = "FactorySelectOptions"
+			:PropSelectColumnName = "FactorySelectColumnName"
+			:PropSelectColumnLang = "FactorySelectColumnLang"
+			:PropFactorySelectimage = "FactorySelectimage"
+			
 		/> 
+		
 		<InputRadioCheckBox
 		 	v-if= "FactoryType === 'radio'"
 		     :PropLable = "Factorylable"
@@ -89,7 +105,9 @@ import InputFile     	from 'AdminPartials/Components/Inputs/InputFile.vue'     ;
 // import InputForloop     	from 'AdminPartials/Components/Inputs/InputForloop.vue'     ;
 import InputDate     	from 'AdminPartials/Components/Inputs/InputDate.vue'     ;
 import InputSelect     	from 'AdminPartials/Components/Inputs/InputSelect.vue'     ;
-import InputMultiSelect     	from 'AdminPartials/Components/Inputs/InputMultiSelect.vue'     ;
+// import InputMultiSelect     	from 'AdminPartials/Components/Inputs/InputMultiSelect.vue'     ;
+import InputMultiSelectWithLang     	from 'AdminPartials/Components/Inputs/InputMultiSelectWithLang.vue'     ;
+
 import InputRadioCheckBox     	from 'AdminPartials/Components/Inputs/InputRadioCheckBox.vue'     ;
 
 export default {
@@ -99,12 +117,13 @@ export default {
 
 	} } ,
 	components : {
-	    InputString ,InputFile,InputDate,InputSelect,InputMultiSelect,InputRadioCheckBox
+	    InputString ,InputFile,InputDate,InputSelect,InputMultiSelectWithLang,InputRadioCheckBox
 		// InputForloop
+		// InputMultiSelect
 	} ,
 	props   : {
 		Factorylable : 			{  default                       : ''        } ,
-		// FactoryForloop : 		{ default                       : ''        } ,
+		// FactoryForloop : 		{ default                    : ''        } ,
 		
 		FactoryPlaceholder : 	{  default                       : ''        } ,
 		FactoryType : 			{  default                       : ''        } ,
@@ -114,6 +133,8 @@ export default {
 		FactorySelectOptions:   {  default                       : ''        } ,
 		FactorySelected:   		{  default                       : ''        } ,
 		FactorySelectColumnName:{  default                       : ''        } ,
+		FactorySelectColumnLang:{  default                       : ''        } ,
+		FactorySelectimage:{  default                       : ''        } ,
 		
 	} ,
 	watch   : {

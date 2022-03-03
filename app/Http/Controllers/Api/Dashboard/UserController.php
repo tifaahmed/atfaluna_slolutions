@@ -19,8 +19,7 @@ use App\Repository\CountryRepositoryInterface   as CountryInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+
 
 class UserController extends Controller
 {
@@ -49,6 +48,7 @@ class UserController extends Controller
         }
     }
     public function store(UserRegisterApiRequest $request ) {
+
         $all = [ ];
 
         $file_one = 'avatar';
@@ -59,9 +59,12 @@ class UserController extends Controller
         $all += array( 'token' => Hash::make( Str::random(60) )  );
         $all += array( 'remember_token' => hash('sha256',Str::random(60)) );
         $all += array( 'password' => Hash::make($request->password) );
-        
+        $modal = $this->ModelRepository->create( Request()->except($file_one,'password','password_confirmation')+$all);
+
+        $this->ModelRepository->attachRole($request->roleIdes ,$modal->id);
+
         return $this -> MakeResponseSuccessful( 
-            ['UserModel'  => $this->ModelRepository->create( Request()->except($file_one,'password','password_confirmation')+$all ) ],
+            ['UserModel'  => $modal]  ,
             'Successful',
             Response::HTTP_OK
         ) ;
@@ -110,28 +113,9 @@ class UserController extends Controller
                 $all += array( $country => $request->$country );
             }
             
-            $this->ModelRepository->update( $id,Request()->except($file_one,$password,'country_id')+$all) ;
-            $modal = $this->ModelRepository->findById($id); 
+            $modal = $this->ModelRepository->update( $id,Request()->except($file_one,$password,'country_id')+$all) ;
 
-            if($request->UserRoles){
-                $modal->UserRole()->detach();
-                foreach($request->UserRoles as $row){
-                    $modal->assignRole($row['name']);
-                    $role = Role::findOrFail($row['id']);
-                    if($role->RolePermission){
-                        foreach($role->RolePermission as $role_single_row){
-                            $permission_id = $role_single_row->pivot->permission_id    ;
-                            if (! $modal->UserPermission->contains($permission_id) ) {
-                                $permission = Permission::findOrFail($permission_id);
-                                $modal->givePermissionTo($permission->name) ;
-                            } 
-                        }
-                    }
-                }
-            }
-
-
-            
+            return $this->ModelRepository->attachRole($request->roleIdes ,$id);
 
             return $this -> MakeResponseSuccessful( 
                 [ $modal],
@@ -147,7 +131,7 @@ class UserController extends Controller
         }     
     }
 
-    
+
     // trash
         public function collection_trash(Request $request){
             try {

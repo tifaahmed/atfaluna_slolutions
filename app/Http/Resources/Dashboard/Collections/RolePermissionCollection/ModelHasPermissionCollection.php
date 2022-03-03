@@ -15,7 +15,8 @@ class ModelHasPermissionCollection extends ResourceCollection{
     public function with( $request ) {
         return [
             'message' => 'Successful.' ,
-            'check'   => true          ,
+            'status'   => true          ,
+            'code'   => 200          ,
         ];
     }
 }

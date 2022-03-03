@@ -36,8 +36,6 @@ export default class Model {
 				if ( ( typeof data[i] === 'object' && data[i] !== null ) || Array.isArray(data[i]) ) {
 				 this.getObjectFormData(formData, data[i], key + '[' + i + ']');
 				} else {
-				 console.log(key);
-  
 					formData.append(key + '[' + i + ']', data[i]);
 				}
 			}
