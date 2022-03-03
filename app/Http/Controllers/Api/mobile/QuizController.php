@@ -14,7 +14,8 @@ use App\Http\Resources\Mobile\QuizResource as ModelResource;
 
 // lInterfaces
 use App\Repository\QuizRepositoryInterface as ModelInterface;
-
+use App\Http\Requests\Api\Quiz\MobileQuizApiRequest;
+use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
@@ -51,7 +52,6 @@ class QuizController extends Controller
     }
     
 
-
     public function show($id) {
         try {
             return $this -> MakeResponseSuccessful( 
@@ -67,6 +67,42 @@ class QuizController extends Controller
             );
         }
     }
-    
+    // relation
+    public function attach(MobileQuizApiRequest $request){
+        try {
+            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
+            $model->subUserQuiz()->attach($request->quiz_id,['score'=> $request->score]);
+
+            return $this -> MakeResponseSuccessful( 
+                [new ModelResource ( $this->ModelRepository->findById($request->quiz_id) )  ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
+    public function  detach(MobileQuizApiRequest $request){
+        try {
+            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
+            $model->subUserQuiz()->detach($request->quiz_id);
+
+            return $this -> MakeResponseSuccessful( 
+                [new ModelResource ( $this->ModelRepository->findById($request->quiz_id) )  ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
 
 }

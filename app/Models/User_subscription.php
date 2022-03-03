@@ -20,6 +20,8 @@ class User_subscription extends Model
         'end',//required ,integer
         'child_number',//required ,integer,limit 2
         'user_id',//unsigned
+        'price',//required ,decimal
+
     ];
     // relations
     public function user(){

@@ -8,21 +8,24 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\Mobile\Collections\PlayTimeCollection as ModelCollection;
-use App\Http\Resources\Mobile\PlayTimeResource as ModelResource;
-use App\Http\Requests\Api\PlayTime\PlayTimeApiRequest as modelInsertRequest;
+use App\Http\Resources\Mobile\Collections\UserSubscriptionCollection as ModelCollection;
+use App\Http\Resources\Mobile\UserSubscriptionResource as ModelResource;
 
 
 // lInterfaces
-use App\Repository\PlayTimeRepositoryInterface as ModelInterface;
+use App\Repository\UserSubscriptionRepositoryInterface as ModelInterface;
+use App\Repository\SubscriptionRepositoryInterface as ModelInterfaceSubscription;
 
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
-class PlayTimeController extends Controller
+class UserSubscriptionController extends Controller
 {
     private $Repository;
-    public function __construct(ModelInterface $Repository)
+    public function __construct(ModelInterface $Repository, ModelInterfaceSubscription $RepositorySubscription)
     {
         $this->ModelRepository = $Repository;
+        $this->ModelRepositorySubscription = $RepositorySubscription;
     }
     public function all(){
         try {
@@ -68,9 +71,24 @@ class PlayTimeController extends Controller
             );
         }
     }
-    public function store(modelInsertRequest $request) {
+    public function store(Request $request) {
         try {
-            $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ));
+            $modal =   Auth::user()->userSubscription()->first();
+            if (!$modal) {
+                $subscription =  $this->ModelRepositorySubscription->findById($request->subscription_id) ;            
+                $end =   Carbon::now()->addMonths($subscription->month_number)->format('Y-m-d');
+                $start =   Carbon::now()->format('Y-m-d');
+                
+                $all = [ ];
+                $all += array( 'start' => $start ) ;
+                $all += array( 'end' =>$end ) ;
+                $all += array( 'child_number' =>$subscription->child_number ) ;
+                $all += array( 'price' =>$subscription->price ) ;
+                    
+                $modal   =  new ModelResource( Auth::user()->userSubscription()->create( $all  ) );
+            }
+            
+
             return $this -> MakeResponseSuccessful( 
                 [ $modal ],
                 'Successful'               ,
@@ -84,6 +102,7 @@ class PlayTimeController extends Controller
             );
         }
     } 
+    
     public function destroy($id) {
         try {
             return $this -> MakeResponseSuccessful( 

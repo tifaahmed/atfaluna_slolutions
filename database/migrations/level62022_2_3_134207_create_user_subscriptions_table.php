@@ -16,9 +16,11 @@ class CreateUserSubscriptionsTable extends Migration
         Schema::create('user_subscriptions', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('start'); //[note:'1-1-2022']
-            $table->integer('end'); //[note:'1-2-2010']
-            $table->integer('child_number'); //[note:'2']
+            $table->date('start')->default( date('Y-m-d') ); //[note:'1-1-2022']
+            $table->date('end'); //[note:'1-2-2010']
+            $table->integer('child_number')->default( 1 ); //[note:'2']
+            $table->decimal('price')->default( 0 );; //[note:'2']
+
             $table->timestamps();
             $table->softDeletes();
         });

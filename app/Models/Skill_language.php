@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Skill;
+use Illuminate\Support\Facades\App;
 
 
 class Skill_language extends Model
@@ -26,11 +27,11 @@ class Skill_language extends Model
     public function skill(){
         return $this->belongsTo(Skill::class,'skill_id');
     }
-    // public function scopeRelatedLanguage($query,$id){
-    //     return $query->where('skill_id', $id);
-    // }
+    public function scopeRelatedLanguage($query,$id){
+        return $query->where('skill_id', $id);
+    }
 
-    // public function scopeLocalization($query){
-    //     return $query->where('language', App::getLocale());
-    // }
+    public function scopeLocalization($query){
+        return $query->where('language', App::getLocale());
+    }
 }

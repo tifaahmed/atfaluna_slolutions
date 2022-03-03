@@ -8,21 +8,24 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\Mobile\Collections\PlayTimeCollection as ModelCollection;
-use App\Http\Resources\Mobile\PlayTimeResource as ModelResource;
-use App\Http\Requests\Api\PlayTime\PlayTimeApiRequest as modelInsertRequest;
+use App\Http\Resources\Mobile\Collections\UserPackageCollection as ModelCollection;
+use App\Http\Resources\Mobile\UserPackageResource as ModelResource;
 
 
 // lInterfaces
-use App\Repository\PlayTimeRepositoryInterface as ModelInterface;
+use App\Repository\UserPackageRepositoryInterface as ModelInterface;
+use App\Repository\PackageRepositoryInterface as ModelInterfacePackage;
+
+use Illuminate\Support\Facades\Auth;
 
 
-class PlayTimeController extends Controller
+class UserPackageController extends Controller
 {
     private $Repository;
-    public function __construct(ModelInterface $Repository)
+    public function __construct(ModelInterface $Repository, ModelInterfacePackage $RepositoryPackage)
     {
         $this->ModelRepository = $Repository;
+        $this->ModelRepositoryPackage = $RepositoryPackage;
     }
     public function all(){
         try {
@@ -68,9 +71,15 @@ class PlayTimeController extends Controller
             );
         }
     }
-    public function store(modelInsertRequest $request) {
+    
+
+    
+    public function store(Request $request) {
         try {
-            $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ));
+            $package =  $this->ModelRepositoryPackage->findById($request->package_id) ;
+            $package =  $package->makeHidden(['id','created_at','updated_at','deleted_at'])->toArray();
+            $modal   =  new ModelResource( Auth::user()->userPackage()->create( $package  ) );
+
             return $this -> MakeResponseSuccessful( 
                 [ $modal ],
                 'Successful'               ,
@@ -84,19 +93,6 @@ class PlayTimeController extends Controller
             );
         }
     } 
-    public function destroy($id) {
-        try {
-            return $this -> MakeResponseSuccessful( 
-                [$this->ModelRepository->deleteById($id)] ,
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [ $e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
+
+
 }

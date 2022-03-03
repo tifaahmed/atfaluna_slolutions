@@ -21,7 +21,7 @@ class UserResource extends JsonResource
             'name'           => $this->name,
             'email'          => $this->email,
             'phone'          => $this->phone,
-            'avatar'         => Storage::disk('public')->exists($this->avatar) ? Storage::url($this->avatar)  : null,
+            'avatar'         => Storage::disk('public')->exists($this->avatar) ? asset(Storage::url($this->avatar))  : null,
 
             'birthdate'        => $this->birthdate,
             'country'          => new CountryResource ( $this->country ),

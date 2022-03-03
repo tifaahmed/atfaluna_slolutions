@@ -14,11 +14,14 @@ class PackageResource extends JsonResource
      */
     public function toArray($request)
     {
+        $row=$this->package_languages()->Localization()->RelatedLanguage($this->id)->first();
+
         return [
             'id'            => $this->id,
             'price'         => $this->price,
             'points'        => $this->points,
             'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
+            'name'          => $row ? $row->name:'',
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

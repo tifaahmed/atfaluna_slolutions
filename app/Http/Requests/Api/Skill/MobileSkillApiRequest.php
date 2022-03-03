@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api\Avatar;
+namespace App\Http\Requests\Api\Skill;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class AvatarApiRequest extends FormRequest
+class MobileSkillApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +25,8 @@ class AvatarApiRequest extends FormRequest
     public function rules()
     {
         return [
-        'type'=>[
-            'required',
-                Rule::in(['boy', 'girl']),
-            ],
-            'image'       =>  [ 'required' ,'max:5000'] ,
-            'price'       =>  ['integer'] ,
+            'skill_id'        =>  [ 'required' ,'integer' ,'exists:skills,id'] ,
+            'subject_id'       =>  [ 'required' ,'integer' ,'exists:subjects,id',] ,
         ];
     }
 }

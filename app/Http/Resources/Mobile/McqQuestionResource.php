@@ -18,8 +18,8 @@ class McqQuestionResource extends JsonResource
 
         return [
             'id'                  => $this->id,
-            'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
-            'videos'        => Storage::disk('public')->exists($this->videos) ? Storage::url($this->videos)  : null,
+            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
+            'videos'        => Storage::disk('public')->exists($this->videos) ? asset(Storage::url($this->videos))  : null,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

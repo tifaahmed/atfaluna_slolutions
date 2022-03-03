@@ -12,6 +12,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Role;
 use App\Models\Sub_user;
+use App\Models\User_package;
 use App\Models\User_subscription;
 
 class User extends Authenticatable {
@@ -64,6 +65,9 @@ class User extends Authenticatable {
         }
         public function userSubscription(){
             return $this->hasOne(User_subscription::class);
+        }
+        public function userPackage(){
+            return $this->hasMany(User_package::class);
         }
     //relations
 
