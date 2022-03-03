@@ -18,7 +18,7 @@ class CreateSubUsersTable extends Migration
             $table->string('name'); //[note: 'not null']
             $table->integer('age')->nullable();
             $table->enum('gender',['girl','boy']);
-            $table->integer('points');  
+            $table->integer('points')->default(0); 
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('avatar_id')->unsigned();

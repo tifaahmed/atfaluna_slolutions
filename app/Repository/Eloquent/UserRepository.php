@@ -2,10 +2,11 @@
 
 namespace App\Repository\Eloquent;
 
-use App\Models\User;
+use App\Models\User as ModelName;
 use App\Repository\UserRepositoryInterface;
 use Storage;
-
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
 
@@ -18,31 +19,34 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 	 * BaseRepository  constructor
 	 * @param  Model $model
 	 */
-	public function __construct(User $model)
+	public function __construct(ModelName $model)
 	{
 		$this->model =  $model;
 	}
 
-	// * @param  string $disk
-	// * @param  string $url
-	// @return path of the file
-	public function HelperDelete($disk,$url)  
-    {
-        if (Storage::disk($disk)->exists($url)) {
-            Storage::disk($disk)->delete($url);
+
+    public function attachRole($UserRoles,$id){
+		$result = $this->findById($id); 
+        if($UserRoles){
+            // $result->UserRole()->detach();
+            return  Role::whereIn('id',$UserRoles)->get() ;
+                // $result->assignRole($UserRoles);
+                // $role = Role::findOrFail($row['id']);
+                // if($role->RolePermission){
+                //     foreach($role->RolePermission as $role_single_row){
+                //         $permission_id = $role_single_row->pivot->permission_id    ;
+                //         if (! $result->UserPermission->contains($permission_id) ) {
+                //             $permission = Permission::findOrFail($permission_id);
+                //             $result->givePermissionTo($permission->name) ;
+                //         } 
+                //     }
+                // }
+            
         }
     }
 
 
-	// * @param  string $disk
-	// * @param  string $path
-	// * @param  file $file
-	// @return string
-	public function HelperStorage($disk ,$path , $file  ) : string
-    {
-        $result = Storage::disk($disk)->put($path,$file);
-        return $result;
-    }
+
 
 	
 }

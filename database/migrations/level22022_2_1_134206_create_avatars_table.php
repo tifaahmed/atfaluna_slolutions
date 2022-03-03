@@ -17,7 +17,7 @@ class CreateAvatarsTable extends Migration
             $table->increments('id');//[pk]
             $table->enum('type',['girl','boy']); //[note: 'boys or girls or animals '] 
             $table->string('image');
-            $table->unsignedDecimal('price', 8, 2)->default(1);
+            $table->unsignedDecimal('price', 8, 2)->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

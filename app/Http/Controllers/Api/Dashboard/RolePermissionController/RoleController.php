@@ -25,12 +25,7 @@ class RoleController extends Controller
 
     public function all(){
         try {
-            $modal =  new RoleCollection (  $this->RoleRepository->all() )  ;
-            return $this -> MakeResponseSuccessful( 
-                [ $modal ],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
+            return  new RoleCollection (  $this->RoleRepository->all() )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -43,14 +38,14 @@ class RoleController extends Controller
     }
     public function store( RoleApiRequest $request ) {
         return $this -> MakeResponseSuccessful( 
-            ['Model'  => $this->RoleRepository->create( Request()->all() ) ],
+            [ $this->RoleRepository->create( Request()->all() ) ],
             'Successful',
             Response::HTTP_OK
         ) ;
     }
     public function show($id) {
         return $this -> MakeResponseSuccessful( 
-            ['UserModel'  => new RoleResource ( $this->RoleRepository->findById($id) )  ],
+            [ new RoleResource ( $this->RoleRepository->findById($id) )  ],
             'Successful',
             Response::HTTP_OK
         ) ;
@@ -58,7 +53,7 @@ class RoleController extends Controller
 
     public function destroy(Request $request) {
         return $this -> MakeResponseSuccessful( 
-            [ 'Model'  => $this->RoleRepository->deleteById($request->id) ],
+            [ $this->RoleRepository->deleteById($request->id) ],
             'Successful',
             Response::HTTP_OK
             ) ;

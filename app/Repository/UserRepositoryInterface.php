@@ -5,8 +5,7 @@ namespace App\Repository;
 interface UserRepositoryInterface extends EloquentRepositoryInterface{
 
 
-	public function HelperDelete($disk,$url)  ;
+    public function attachRole($UserRoles,$id);
 
-	public function HelperStorage($disk ,$path , $file  ) : string;
 
 }
