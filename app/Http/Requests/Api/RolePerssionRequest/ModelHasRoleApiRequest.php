@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\RolePerssionRequest;
+namespace App\Http\Requests\Api\RolePermissionRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,7 +25,7 @@ class ModelHasRoleApiRequest extends FormRequest
     {
 
             return [
-                'role_ids'          =>  [ 'required' , 'array'   , 'exists:roles,id' ] ,
+                'role_ids'          =>  [ 'required' , 'array'   , 'exists:roles,id'  ] ,
                 'model_id'          =>  [ 'required' , 'integer' , 'exists:users,id'] ,
                 // 'model_type'        =>  [ 'required' ] ,
             ];

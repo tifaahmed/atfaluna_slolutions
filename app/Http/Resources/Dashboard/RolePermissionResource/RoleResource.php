@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\dashboard\RolePerssionResource;
+namespace App\Http\Resources\dashboard\RolePermissionResource;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 

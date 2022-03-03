@@ -5,11 +5,10 @@ use Illuminate\Support\Facades\Route;
     Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
         Route::post( '/login' ,   'authController@login'  ) -> name( 'login' ) ,
         Route::post( '/login-social' ,   'authController@loginSocial'  ) -> name( 'loginSocial' ) ,
-        Route::post( '/register' ,  'authController@register' )  -> name( 'register' ) ,
+        Route::post( '/register' ,  'authController@register' )  -> name( 'register' ) ,    
     ]);
 // only auth
     Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
-
         Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
             Route::post( '/logout' ,  'authController@logout' )  -> name( 'logout' ) ,
         ]),
@@ -24,24 +23,29 @@ use Illuminate\Support\Facades\Route;
         //Sub_user
             Route::name('sub-user.')->prefix('/sub-user')->group( fn ( ) : array => [
                 Route::get('/'              ,   'SubUserController@all'                     )->name('all'),
+                Route::post(''              ,   'SubUserController@store'                   )->name('store'),
                 Route::get('/{id}/show'     ,   'SubUserController@show'                    )->name('show'),
                 Route::get('/collection'    ,   'SubUserController@collection'              )->name('collection'),
+                Route::post('/{id}/update'  ,   'SubUserController@update'                  )->name('update'),
+                Route::DELETE('/{id}'       ,   'SubUserController@destroy'                 )->name('destroy'),
 
                 Route::post('/store'        ,   'SubUserController@store'    )->name('store'),
                 Route::DELETE('/{id}'       ,   'SubUserController@destroy'  )->name('destroy'),
             ]),
+
         // Avatar
             Route::name('avatar.')->prefix('/avatar')->group( fn ( ) : array => [
                 Route::get('/'              ,   'AvatarController@all'                 )->name('all'),
                 Route::get('/{id}/show'     ,   'AvatarController@show'                )->name('show'),
                 Route::get('/collection'    ,   'AvatarController@collection'          )->name('collection'),
 
-                Route::post('/attach'       ,   'AvatarController@attach'   )->name('attach'),
-                Route::post('/detach'       ,   'AvatarController@detach'   )->name('detach'),
+                Route::post('/attach'       ,   'AvatarController@attach'              )->name('attach'),
+                Route::post('/detach'       ,   'AvatarController@detach'              )->name('detach'),
             ]),
     ]);
+
 // language and auth
-    Route::group(['middleware' => ['LocalizationMiddleware','auth:api']], fn ( ) : array => [
+    Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
         // accessory
             Route::name('accessory.')->prefix('/accessory')->group( fn ( ) : array => [
                 Route::get('/'              ,   'AccessoryController@all'                 )->name('all'),

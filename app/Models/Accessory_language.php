@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Accessory;
-use App;
+use Illuminate\Support\Facades\App;
 
 class Accessory_language extends Model
 {

@@ -14,7 +14,7 @@ class McqAnswerResource extends JsonResource
      */
     public function toArray($request)
     {
-        $row=$this->mcq_answer_languages()->RelatedLanguage($this->id)->first();
+        $row=$this->mcq_answer_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'            => $this->id,

@@ -23,7 +23,11 @@ class AvatarRepository extends BaseRepository implements AvatarRepositoryInterfa
 	}
 
 
-
+	public function filterPaginate($gender,int $itemsNumber)  
+    {
+		$result =   $this->model->Gender($gender);
+		return $this->queryPaginate($result,$itemsNumber);
+    }
 
 	
 }

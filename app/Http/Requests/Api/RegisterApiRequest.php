@@ -11,7 +11,7 @@ class RegisterApiRequest extends FormRequest {
     }
     public function rules( ) {
         return [
-            'name'      =>  [ 'required' , 'unique:users,name' ,'max:50'] ,
+            'name'      =>  [ 'required','max:50'] ,
             'email'     =>  [ 'required' , 'unique:users,email' ,'email'] ,
             'phone'     =>  [ 'required' , 'unique:users,phone' ,'max:15' ] ,
 

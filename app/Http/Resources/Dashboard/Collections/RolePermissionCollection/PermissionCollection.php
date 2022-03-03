@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\Collections\RolePerssionCollection;
+namespace App\Http\Resources\Dashboard\Collections\RolePermissionCollection;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Dashboard\RolePerssionResource\PermissionResource;
+use App\Http\Resources\Dashboard\RolePermissionResource\PermissionResource;
 
 class PermissionCollection extends ResourceCollection{
 

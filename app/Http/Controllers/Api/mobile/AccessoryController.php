@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\mobile;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\Api\Accessory\MobileAccessoryApiRequest;
 
@@ -12,7 +13,6 @@ use App\Http\Requests\Api\Accessory\MobileAccessoryApiRequest;
 use App\Http\Resources\Mobile\Collections\AccessoryCollection as ModelCollection;
 use App\Http\Resources\Mobile\AccessoryResource as ModelResource;
 
-use Auth;
 // lInterfaces
 use App\Repository\AccessoryRepositoryInterface as ModelInterface;
 
@@ -67,7 +67,7 @@ class AccessoryController extends Controller
     // relation
     public function attach(MobileAccessoryApiRequest $request){
         try {
-            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
+            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
             $model->subUserAccessory()->attach($request->accessory_id);
 
             return $this -> MakeResponseSuccessful( 
@@ -83,6 +83,7 @@ class AccessoryController extends Controller
             );
         }
     }
+    
     public function  detach(MobileAccessoryApiRequest $request){
         try {
             $model = Auth::user()->sub_user()->find($request->sub_user_id); 

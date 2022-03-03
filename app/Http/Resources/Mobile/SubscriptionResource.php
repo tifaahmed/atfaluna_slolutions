@@ -13,7 +13,7 @@ class SubscriptionResource extends JsonResource
      */
     public function toArray($request)
     {
-        $row=$this->subscription_languages()->RelatedLanguage($this->id)->first();
+        $row=$this->subscription_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'            => $this->id,

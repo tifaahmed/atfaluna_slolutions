@@ -6,13 +6,13 @@ namespace App\Http\Controllers\Api\Dashboard\RolePermissionController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Http\Requests\Api\RolePerssionRequest\PermissionApiRequest ;
+use App\Http\Requests\Api\RolePermissionRequest\PermissionApiRequest ;
 use Illuminate\Http\Response ;
 
 // use App\Models\Permission;
 
-use App\Http\Resources\Collections\RolePerssionCollection\PermissionCollection;
-use App\Http\Resources\RolePerssionResource\PermissionResource;
+use App\Http\Resources\Dashboard\Collections\RolePermissionCollection\PermissionCollection;
+use App\Http\Resources\RolePermissionResource\PermissionResource;
 
 use App\Repository\RolePermissionInterface\PermissionRepositoryInterface;
 
@@ -44,9 +44,23 @@ class PermissionController extends Controller
             [ 'PermissionModel'  => $this->PermissionRepository->deleteById($request->id) ],
             'Successful',
             Response::HTTP_OK
-         ) ;
+        ) ;
     }
+    // public function collection(Request $request){
+    // return RoleResource::collection(  $this->RoleRepository->collection($request->PerPage ? $request->PerPage : 10) ) ;
+    // }
+
     public function collection(Request $request){
-        return new PermissionCollection(  $this->PermissionRepository->collection($request->PerPage) ) ;
+        try {
+            return new PermissionCollection (  $this->PermissionRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
+
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
     }
+
 }

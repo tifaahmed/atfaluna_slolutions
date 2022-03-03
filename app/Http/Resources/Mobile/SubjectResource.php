@@ -15,7 +15,7 @@ class SubjectResource extends JsonResource
      */
     public function toArray($request)
     {
-        $row=$this->subject_languages()->RelatedLanguage($this->id)->first();
+        $row=$this->subject_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'            => $this->id,

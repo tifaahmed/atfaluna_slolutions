@@ -118,9 +118,9 @@ class SubUserLessonController extends Controller
         try {
 
             
+            $this->ModelRepository->update( $id,Request()->all()) ;
+            
             $modal = new ModelResource($this->ModelRepository->findById($id)); 
-            $modal = $this->ModelRepository->findById($id); 
-
 
             return $this -> MakeResponseSuccessful( 
                     [ $modal],

@@ -119,6 +119,8 @@ class SubUserController extends Controller
             
             $this->ModelRepository->update( $id,Request()->all()) ;
             
+            $this->ModelRepository->update( $id,Request()->all()) ;
+            
             $modal = new ModelResource($this->ModelRepository->findById($id)); 
 
             return $this -> MakeResponseSuccessful( 

@@ -14,7 +14,7 @@ use App\Http\Requests\Api\SubUser\MobileStoreSubUserApiRequest ;
 use App\Http\Resources\Mobile\Collections\SubUserCollection as ModelCollection;
 use App\Http\Resources\Mobile\SubUserResource as ModelResource;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 // lInterfaces
 use App\Repository\SubUserRepositoryInterface as ModelInterface;
 
@@ -82,6 +82,26 @@ class SubUserController extends Controller
         }
     }
 
+    public function update(MobileStoreSubUserApiRequest $request ,$id) {
+        try {
+        Auth::user()->sub_user()->find($id)->update($request->all());
+
+            $modal = new ModelResource($this->ModelRepository->findById($id)); 
+
+            return $this -> MakeResponseSuccessful( 
+                    [ $modal],
+                    'Successful'               ,
+                    Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        } 
+    }
+    
     public function destroy($id){
         try {
             return $this -> MakeResponseSuccessful( 

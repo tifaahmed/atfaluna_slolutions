@@ -8,6 +8,7 @@ use Illuminate\Http\Response ;
 
 //AgeGroupController
 // Requests
+// use App\Http\Requests\Api\LessonType\LessonTypeUpdateApiRequest as modelUpdateRequest;
 use App\Http\Requests\Api\LessonType\LessonTypeApiRequest as modelInsertRequest;
 
 // Resources
@@ -117,9 +118,9 @@ class LessonTypeController extends Controller
         try {
 
             
+            $this->ModelRepository->update( $id,Request()->all()) ;
+            
             $modal = new ModelResource($this->ModelRepository->findById($id)); 
-            $modal = $this->ModelRepository->findById($id); 
-
 
             return $this -> MakeResponseSuccessful( 
                     [ $modal],
@@ -135,7 +136,6 @@ class LessonTypeController extends Controller
         } 
     }
     
-
 
     // trash
         public function collection_trash(Request $request){
