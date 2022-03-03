@@ -19,7 +19,7 @@ class QuizResource extends JsonResource
 
         return [
             'id'            => $this->id,
-            'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
+            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
             'points'         => $this->points,
             
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,

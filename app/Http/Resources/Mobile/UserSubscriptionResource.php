@@ -18,6 +18,7 @@ class UserSubscriptionResource extends JsonResource
             'start'               => $this->start,
             'end'                 => $this->end,
             'child_number'        => $this->child_number,
+            'price'               => $this->price,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

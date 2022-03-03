@@ -14,6 +14,7 @@ class CertificateResource extends JsonResource
      */
     public function toArray($request)
     {
+        $row=$this->certificate_languages()->Localization()->RelatedLanguage($this->id)->first();
         return [
             'id'               => $this->id,
             'relation_id'      =>  $this->relation_id,
@@ -23,6 +24,8 @@ class CertificateResource extends JsonResource
             'min_point'        =>  $this->min_point,
             'max_point'        =>  $this->max_point,
 
+            'name'          => $row ? $row->name:'',
+            
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,

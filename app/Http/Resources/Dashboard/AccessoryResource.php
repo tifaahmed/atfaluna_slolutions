@@ -15,13 +15,16 @@ class AccessoryResource extends JsonResource
      */
     public function toArray($request)
     {
+        $row=$this->accessory_languages()->Localization()->RelatedLanguage($this->id)->first();
+
         return [
 
             'id'            => $this->id,
 
             'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
             'price'         => $this->price,
-            
+            'name'          => $row ? $row->name:'',
+
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
