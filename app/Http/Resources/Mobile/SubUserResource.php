@@ -3,12 +3,12 @@
 namespace App\Http\Resources\Mobile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Mobile\AvatarResource;
-use App\Http\Resources\Mobile\AccessoryResource;
-use App\Http\Resources\Mobile\CertificateResource;
-use App\Http\Resources\Mobile\QuizResource;
-use App\Http\Resources\Mobile\LessonResource;
-use App\Http\Resources\Mobile\SubjectResource;
+use App\Http\Resources\Mobile\Collections\AvatarCollection;
+use App\Http\Resources\Mobile\Collections\AccessoryCollection;
+use App\Http\Resources\Mobile\Collections\CertificateCollection;
+use App\Http\Resources\Mobile\Collections\QuizCollection;
+use App\Http\Resources\Mobile\Collections\LessonCollection;
+use App\Http\Resources\Mobile\Collections\SubjectCollection;
 
 class SubUserResource extends JsonResource
 {
@@ -26,12 +26,13 @@ class SubUserResource extends JsonResource
             'age'           => $this->age,
             'gender'        => $this->gender,
             'points'        => $this->points,
-            'avatar'        => new AvatarResource ($this->avatar)  ,
-            'accessory'     => new AccessoryResource ($this->accessory)  ,
-            'certificate'   => new CertificateResource ($this->certificate)  ,
-            'quiz'          => new QuizResource ($this->quiz)  ,
-            'lesson'        => new LessonResource ($this->lesson)  ,
-            'subject'       => new SubjectResource ($this->subject)  ,
+
+            'accessories'     => new AccessoryCollection ($this->subUserAccessory)  ,
+            'avatars'        => new AvatarCollection ($this->subUserAvatar)  ,
+            'certificate'   => new CertificateCollection ($this->subUserCertificate)  ,
+            'quizs'          => new QuizCollection ($this->subUserQuiz)  ,
+            'lessons'        => new LessonCollection ($this->subUserLesson)  ,
+            'subjects'       => new SubjectCollection ($this->subUserSubject)  ,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

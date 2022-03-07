@@ -73,7 +73,7 @@ class CertificateController extends Controller
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
             foreach ($request->certificate_id as $key => $value) {
-                $model->subUserAccessory()->attach($value);
+                $model->subUserCertificate()->attach($value);
             }
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],

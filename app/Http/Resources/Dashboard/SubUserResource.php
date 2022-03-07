@@ -4,6 +4,12 @@ namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 // use App\Http\Resources\Dashboard\UserResource;
+use App\Http\Resources\Dashboard\Collections\AvatarCollection;
+use App\Http\Resources\Dashboard\Collections\AccessoryCollection;
+use App\Http\Resources\Dashboard\Collections\CertificateCollection;
+use App\Http\Resources\Dashboard\Collections\QuizCollection;
+use App\Http\Resources\Dashboard\Collections\LessonCollection;
+use App\Http\Resources\Dashboard\Collections\SubjectCollection;
 
 class SubUserResource extends JsonResource
 {
@@ -25,6 +31,13 @@ class SubUserResource extends JsonResource
 
             'user_id'       => $this->user_id,
             // 'user'          => new UserResource ( $this->user ),
+
+            'accessories'    => new AccessoryCollection ($this->subUserAccessory)  ,
+            'avatars'        => new AvatarCollection ($this->subUserAvatar)  ,
+            'certificate'    => new CertificateCollection ($this->subUserCertificate)  ,
+            'quizs'          => new QuizCollection ($this->subUserQuiz)  ,
+            'lessons'        => new LessonCollection ($this->subUserLesson)  ,
+            'subjects'       => new SubjectCollection ($this->subUserSubject)  ,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
