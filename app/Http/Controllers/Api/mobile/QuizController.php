@@ -36,7 +36,6 @@ class QuizController extends Controller
         }
     }
 
-
     public function collection(Request $request){
         // return $request->language;
         try {
@@ -71,10 +70,12 @@ class QuizController extends Controller
     public function attach(MobileQuizApiRequest $request){
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            $model->subUserQuiz()->attach($request->quiz_id,['score'=> $request->score]);
+            foreach ($request->quiz_id as $key => $value) {
+                $model->subUserQuiz()->attach($value,['score'=> $request->score]);
+            }    
 
             return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($request->quiz_id) )  ],
+                ['Successful'],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
@@ -85,7 +86,7 @@ class QuizController extends Controller
                 Response::HTTP_NOT_FOUND
             );
         }
-    }
+    } 
     public function  detach(MobileQuizApiRequest $request){
         try {
             $model = Auth::user()->sub_user()->find($request->sub_user_id); 

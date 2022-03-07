@@ -4,6 +4,7 @@ namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Dashboard\Collections\AvatarCollection;
 
 class AvatarResource extends JsonResource
 {
@@ -24,6 +25,8 @@ class AvatarResource extends JsonResource
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
+
+            'avatar'       => new AvatarCollection (  $this->subUserAvatar )  ,
 
         ];        
     }

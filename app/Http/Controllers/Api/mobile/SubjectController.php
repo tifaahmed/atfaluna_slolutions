@@ -36,7 +36,6 @@ class SubjectController extends Controller
         }
     }
 
-
     public function collection(Request $request){
         // return $request->language;
         try {
@@ -51,7 +50,6 @@ class SubjectController extends Controller
         }
     }
     
-
 
     public function show($id) {
         try {
@@ -70,13 +68,23 @@ class SubjectController extends Controller
     }
     
 // relation
+
+        /*
+        
+        impload string=>array
+
+        1.2.2.3
+        [1,2,2,3]
+        
+        */
 public function attach(MobileSubjectApiRequest $request){
     try {
         $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-        $model->subUserSubject()->attach($request->subject_id);
-
+        foreach ($request->subject_id as $key => $value) {
+            $model->subUserSubject()->attach($value);
+        }
         return $this -> MakeResponseSuccessful( 
-            [new ModelResource ( $this->ModelRepository->findById($request->subject_id) )  ],
+            ['Successful'],
             'Successful'               ,
             Response::HTTP_OK
         ) ;
@@ -105,5 +113,5 @@ public function  detach(MobileSubjectApiRequest $request){
             Response::HTTP_NOT_FOUND
         );
     }
-}
+    }
 }

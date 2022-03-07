@@ -68,15 +68,15 @@ class AvatarController extends Controller
             );
         }
     }
-    
     // relation
     public function attach(MobileAvatarApiRequest $request){
         try {
-            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
-            $model->subUserAvatar()->attach($request->avatar_id);
-
+            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
+            foreach ($request->avatar_id as $key => $value) {
+                $model->subUserAvatar()->attach($value);
+            }
             return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($request->avatar_id) )  ],
+                ['Successful'],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
@@ -88,7 +88,6 @@ class AvatarController extends Controller
             );
         }
     }
-    
     public function  detach(MobileAvatarApiRequest $request){
         try {
             $model = Auth::user()->sub_user()->find($request->sub_user_id); 

@@ -69,15 +69,15 @@ class LessonController extends Controller
             );
         }
     }
-    
-        // relation
-        public function attach(MobileLessonApiRequest $request){
+    // relation
+    public function attach(MobileLessonApiRequest $request){
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            $model->subUserLesson()->attach($request->lesson_id,['score'=> $request->score]);
-
+            foreach ($request->lesson_id as $key => $value) {
+                $model->subUserLesson()->attach($value,['score'=> $request->score]);
+            }
             return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($request->lesson_id) )  ],
+                ['Successful'],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
@@ -88,7 +88,7 @@ class LessonController extends Controller
                 Response::HTTP_NOT_FOUND
             );
         }
-        }
+    } 
         public function  detach(MobileLessonApiRequest $request){
         try {
             $model = Auth::user()->sub_user()->find($request->sub_user_id); 

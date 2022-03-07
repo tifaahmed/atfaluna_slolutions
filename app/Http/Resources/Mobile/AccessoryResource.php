@@ -32,6 +32,7 @@ class AccessoryResource extends JsonResource
 
             'languages'     => $this->Accessory_language,
 
+
         ];        
     }
 }

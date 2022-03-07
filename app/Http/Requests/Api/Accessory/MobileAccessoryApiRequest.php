@@ -25,7 +25,7 @@ class MobileAccessoryApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'accessory_id'       =>  [ 'required' ,'integer' ,'exists:accessories,id'] ,
+            'accessory_id'       =>  [ 'required' ,'array' ,'exists:accessories,id'] ,
             'sub_user_id'        =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,
         ];
     }

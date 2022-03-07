@@ -68,15 +68,15 @@ class CertificateController extends Controller
             );
         }
     }
-    
-// relation
+    // relation
     public function attach(MobileCertificateApiRequest $request){
         try {
-            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
-            $model->subUserCertificate()->attach($request->certificate_id);
-
+            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
+            foreach ($request->certificate_id as $key => $value) {
+                $model->subUserAccessory()->attach($value);
+            }
             return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($request->certificate_id) )  ],
+                ['Successful'],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
@@ -87,8 +87,7 @@ class CertificateController extends Controller
                 Response::HTTP_NOT_FOUND
             );
         }
-    }
-    
+    } 
     public function  detach(MobileCertificateApiRequest $request){
         try {
             $model = Auth::user()->sub_user()->find($request->sub_user_id); 

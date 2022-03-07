@@ -25,7 +25,7 @@ class MobileQuizApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'quiz_id'    =>  [ 'required' ,'integer' ,'exists:quizzes,id'] ,
+            'quiz_id'    =>  [ 'required' ,'array' ,'exists:quizzes,id'] ,
             'sub_user_id'       =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,
         ];
     }
