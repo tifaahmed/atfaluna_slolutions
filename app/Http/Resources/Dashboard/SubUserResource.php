@@ -3,7 +3,10 @@
 namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-// use App\Http\Resources\Dashboard\UserResource;
+
+use App\Http\Resources\Dashboard\AvatarResource;
+use App\Http\Resources\Dashboard\UserResource;
+
 use App\Http\Resources\Dashboard\Collections\AvatarCollection;
 use App\Http\Resources\Dashboard\Collections\AccessoryCollection;
 use App\Http\Resources\Dashboard\Collections\CertificateCollection;
@@ -29,9 +32,9 @@ class SubUserResource extends JsonResource
             'gender'        => $this->gender,
             'points'        => $this->points,
 
-            'user_id'       => $this->user_id,
-            // 'user'          => new UserResource ( $this->user ),
-
+            'user'              => new UserResource ( $this->user ),
+            'avatar'            => new AvatarResource (  $this->avatar )  ,
+            
             'accessories'    => new AccessoryCollection ($this->subUserAccessory)  ,
             'avatars'        => new AvatarCollection ($this->subUserAvatar)  ,
             'certificate'    => new CertificateCollection ($this->subUserCertificate)  ,

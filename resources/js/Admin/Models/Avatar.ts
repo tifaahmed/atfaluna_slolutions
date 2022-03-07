@@ -1,22 +1,9 @@
 import Model    from './Model';
-import Router    from './Routers/SubUser' ;
+import Router    from './Routers/Avatar' ;
 
 
-export default class SubUser extends Model {
+export default class Avatar extends Model {
    
-   public async handleData(RequestData) : Promise<any>  {  
-      let formData = new FormData();
-      await Model.getformData(formData,RequestData) ;
-
-      let avatar =RequestData.avatar_ids;
-      await Model.getObjectFormData(formData,avatar,'avatar_ids');
-   
-      let accessory =RequestData.accessory_ids;
-      await Model.getObjectFormData(formData,accessory,'accessory_ids');
-
-      return formData;
-   }
-
    protected async all() : Promise<any>  {  
       let result : any = '';
       try {
@@ -44,7 +31,10 @@ export default class SubUser extends Model {
    }
 
    protected async store(RequestData : any) : Promise<any>  {  
-      let formData = await this.handleData(RequestData);
+      let formData = new FormData();
+      await Model.getformData(formData,RequestData) ;
+
+
 
        let result : any = '';
        try {
@@ -81,11 +71,10 @@ export default class SubUser extends Model {
        return result;
    }
 
-
    protected async update ( id  : number ,RequestData ?: any) : Promise< any > {
-
-      let formData = await this.handleData(RequestData);
-
+      let formData = new FormData();
+      await Model.getformData(formData,RequestData) ;
+    
       let result : any = '';
       try {
          result =  await (new Router).UpdateAxios(id,formData) ;

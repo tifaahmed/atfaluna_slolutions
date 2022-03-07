@@ -37,7 +37,7 @@
 
 
                             <InputsFactory :Factorylable="'Accessory'"  :FactoryPlaceholder="'Search'"
-                                :FactoryType="'multiSelectWithLang'" :FactoryName="'accessory'"   v-model ="RequestData.accessory"  
+                                :FactoryType="'multiSelectWithLang'" :FactoryName="'accessory'"   v-model ="RequestData.accessories"  
                                 :FactorySelectOptions="AccessoryRows"   
                                 :FactorySelectColumnName="'name'"  
                                 :FactorySelectColumnLang="['name','language']"  
@@ -98,8 +98,8 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
             TableName :'SubUser',
             TablePageName :'SubUser.ShowAll',
 
-            UserRows        :'null',
-            AccessoryRows   :'null',
+            UserRows        : null,
+            AccessoryRows   : null,
 
             ServerReaponse : {
                 errors      : {
@@ -117,7 +117,9 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 points          : null,
                 user_id         : null,
                 gender          : null,
-                accessory       : [],
+
+                accessory_ids       : {},
+                accessories         : [],            
             },
         } } ,
         methods : {
@@ -143,7 +145,7 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 }
             },
             async GetAccessory(page){
-                this.AccessoryRows  = ( await this.AllAccessory() ).data.data[0];
+                this.AccessoryRows  = ( await this.AllAccessory() ).data.data;
             },
             async GetUsers(page){
                 this.UserRows  = ( await this.AllUsers() ).data.data;

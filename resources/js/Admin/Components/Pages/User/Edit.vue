@@ -34,16 +34,37 @@
                             :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.birthdate )  ) ? ServerReaponse.errors.birthdate : null" 
                         />
 
-                        <InputsFactory :Factorylable="'country'"  :FactoryPlaceholder="''"
-                            :FactoryType="'select'" :FactoryName="'country_id'"   v-model ="RequestData.country_id"  
-                            :FactorySelectOptions="CountriesRows"  :FactorySelected="RequestData.country"  :FactorySelectColumnName="'name'" 
-                        />
-                        <InputsFactory :Factorylable="'roles'"   v-model ="RequestData.UserRoles"  
-                            :FactoryType="'multiSelectWithLang'" 
-                            :FactoryName="'UserRoles'"  
-                            :FactorySelectOptions="RolesRows"   
+                        <InputsFactory :Factorylable="'country'" 
+                            :FactoryType="'select'" :FactoryName="'country_id'"   v-model ="RequestData.country"  
+                            :FactorySelectOptions="CountriesRows"   
+
                             :FactorySelectColumnName="'name'"  
+                            :FactorySelectColumnOptions="['name','code']"  
+
+                            :FactorySelectForloop="''"  
+                            :FactorySelectForloopColumn="[]" 
+
+                            :FactorySelectimage="''"  
+                            :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.country_id )  ) ? ServerReaponse.errors.country_id : null" 
                         />
+
+
+
+
+                        <InputsFactory :Factorylable="'roles'"  
+                            :FactoryType="'multiSelect'" :FactoryName="'UserRoles'"   v-model ="RequestData.UserRoles"  
+                            :FactorySelectOptions="RolesRows"  
+
+                            :FactorySelectColumnName="'name'"  
+                            :FactorySelectColumnOptions="['name']"  
+
+                            :FactorySelectForloop="''"  
+                            :FactorySelectForloopColumn="[]" 
+
+                            :FactorySelectimage="''"  
+                            :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.role_ids )  ) ? ServerReaponse.errors.role_ids : null" 
+                        />
+
                         <InputsFactory :Factorylable="'Password'"  :FactoryPlaceholder=" '**********' "
                             :FactoryType="'password'" :FactoryName="'password'"  v-model ="RequestData.password"
                             :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.password )  ) ? ServerReaponse.errors.password : null" 
@@ -132,8 +153,12 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 password                : null,
                 password_confirmation   : null,
                 birthdate               : null,
+
                 country_id              : null,
-                roleIdes                : [],
+                country                 : [],
+
+                role_ids                : [],
+                UserRoles               : [],
             },
 
         } } ,
@@ -151,22 +176,28 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 await this.DeleteErrors();                
                 // valedate
                 var check = await (new Validation).validate(this.RequestData);
-
-                
                 if( check ){// if there is error from my file
                      this.ServerReaponse = check; // error from my file
                 }else{ // run the form
-                     this.SubmetRowButton(); // succes from file
+                    // handle data
+                    await this.HandleData();  
+                    // Submet from  
+                    await this.SubmetRowButton(); 
                 }
             },
-            async SubmetRowButton(){
-                this.ServerReaponse = null;
+            HandleData(){
                 var list =[];
                 this.RequestData.UserRoles.map(function(value, key) {
                     list[key] = value.id;
                 });
-                this.RequestData.roleIdes = list;
-                console.log(this.RequestData.roleIdes)
+                this.RequestData.role_ids = list;
+
+                if(this.RequestData.country){
+                    this.RequestData.country_id = this.RequestData.country.id;
+                }
+            },
+            async SubmetRowButton(){
+                this.ServerReaponse = null;
                 let data = await this.update()  ; // send update request
                 if(data && data.errors){// stay and show error
                     this.ServerReaponse = data ;//error from the server

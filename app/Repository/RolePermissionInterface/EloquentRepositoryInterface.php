@@ -22,6 +22,8 @@ interface EloquentRepositoryInterface
 	 */
 	public function collection(int $modelId)  ;
 
+	public function queryPaginate($query,$itemsNumber) ;
+
 		/**
 	 * @param  int  $modelId
 	 * @return  pagination trash

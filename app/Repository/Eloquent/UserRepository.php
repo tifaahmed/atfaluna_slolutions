@@ -25,23 +25,23 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 	}
 
 
-    public function attachRole($UserRoles,$id){
-		$result = $this->findById($id); 
-        if($UserRoles){
-            // $result->UserRole()->detach();
-            return  Role::whereIn('id',$UserRoles)->get() ;
-                // $result->assignRole($UserRoles);
-                // $role = Role::findOrFail($row['id']);
-                // if($role->RolePermission){
-                //     foreach($role->RolePermission as $role_single_row){
-                //         $permission_id = $role_single_row->pivot->permission_id    ;
-                //         if (! $result->UserPermission->contains($permission_id) ) {
-                //             $permission = Permission::findOrFail($permission_id);
-                //             $result->givePermissionTo($permission->name) ;
-                //         } 
-                //     }
-                // }
-            
+    public function attachRole($role_ids,$id){
+        if($role_ids){
+            $result = $this->findById($id); 
+            $result->UserRole()->detach();
+            $result->assignRole($role_ids);
+            // Role::whereIn('id',$role_ids)->get() ;
+            // $role = Role::findOrFail($row['id']);
+            // if($role->RolePermission){
+            //     foreach($role->RolePermission as $role_single_row){
+            //         $permission_id = $role_single_row->pivot->permission_id    ;
+            //         if (! $result->UserPermission->contains($permission_id) ) {
+            //             $permission = Permission::findOrFail($permission_id);
+            //             $result->givePermissionTo($permission->name) ;
+            //         } 
+            //     }
+            // }
+
         }
     }
 

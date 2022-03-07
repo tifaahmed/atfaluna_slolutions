@@ -30,35 +30,10 @@
 		     @change      = "change"
 		     v-model      = "data"
 		 /> 
-		<InputSelect
-		 	v-if= "FactoryType === 'select'"
-		     :PropLable = "Factorylable"
-		     :PropPlaceholder = "FactoryPlaceholder"
-		     :PropType = "FactoryType"
-		     :PropName = "FactoryName"
-		     :PropErrors = "FactoryErrors"
-		     @change      = "change"
-		     v-model      = "data"
-			 :PropSelectOptions = "FactorySelectOptions"
-			 :PropSelected = "FactorySelected"
-			 :PropSelectColumnName = "FactorySelectColumnName"
-		/> 
-		<!-- <InputMultiSelect
-		 	v-if= "FactoryType === 'multiSelect'"
-		     :PropLable = "Factorylable"
-		     :PropPlaceholder = "FactoryPlaceholder"
-		     :PropType = "FactoryType"
-		     :PropName = "FactoryName"
-		     :PropErrors = "FactoryErrors"
-		     @change      = "change"
-		     v-model      = "data"
-			 :PropSelectOptions = "FactorySelectOptions"
-			 :PropSelectColumnName = "FactorySelectColumnName"
-		/>  -->
-		<InputMultiSelectWithLang
-			v-if= "FactoryType === 'multiSelectWithLang'"
+
+		<InputMultiSelect
+			v-if= "FactoryType === 'multiSelect'"
 			:PropLable = "Factorylable"
-			:PropPlaceholder = "FactoryPlaceholder"
 			:PropType = "FactoryType"
 			:PropName = "FactoryName"
 			:PropErrors = "FactoryErrors"
@@ -66,11 +41,29 @@
 			v-model      = "data"
 			:PropSelectOptions = "FactorySelectOptions"
 			:PropSelectColumnName = "FactorySelectColumnName"
-			:PropSelectColumnLang = "FactorySelectColumnLang"
+
+			:PropSelectForloop= "FactorySelectForloop"
+			:PropSelectForloopColumn = "FactorySelectForloopColumn"
+
+			:PropSelectColumnOptions = "FactorySelectColumnOptions"
 			:PropFactorySelectimage = "FactorySelectimage"
-			
 		/> 
-		
+		<InputSelect
+			v-if= "FactoryType === 'select'"
+			:PropLable = "Factorylable"
+			:PropType = "FactoryType"
+			:PropName = "FactoryName"
+			:PropErrors = "FactoryErrors"
+			@change      = "change"
+			v-model      = "data"
+			:PropSelectOptions = "FactorySelectOptions"
+			:PropSelectColumnName = "FactorySelectColumnName"
+			:PropSelectColumnOptions = "FactorySelectColumnOptions"
+			:PropFactorySelectimage = "FactorySelectimage"
+
+			:PropSelectForloop= "FactorySelectForloop"
+			:PropSelectForloopColumn = "FactorySelectForloopColumn"
+		/> 
 		<InputRadioCheckBox
 		 	v-if= "FactoryType === 'radio'"
 		     :PropLable = "Factorylable"
@@ -81,8 +74,6 @@
 		     v-model      = "data"
 			 :PropSelectOptions = "FactorySelectOptions"
 		/> 
-
-		 
 		<!-- <InputForloop
 		 	v-if= "FactoryType === 'Forloop'"
 		     :PropLable = "Factorylable"
@@ -94,6 +85,8 @@
 		     @change      = "change"
 		     v-model      = "data"
 		 /> -->
+
+		 
 	</div>
     
 </template>
@@ -104,9 +97,9 @@ import InputString     from 'AdminPartials/Components/Inputs/InputString.vue'   
 import InputFile     	from 'AdminPartials/Components/Inputs/InputFile.vue'     ;
 // import InputForloop     	from 'AdminPartials/Components/Inputs/InputForloop.vue'     ;
 import InputDate     	from 'AdminPartials/Components/Inputs/InputDate.vue'     ;
+
+import InputMultiSelect     	from 'AdminPartials/Components/Inputs/InputMultiSelect.vue'     ;
 import InputSelect     	from 'AdminPartials/Components/Inputs/InputSelect.vue'     ;
-// import InputMultiSelect     	from 'AdminPartials/Components/Inputs/InputMultiSelect.vue'     ;
-import InputMultiSelectWithLang     	from 'AdminPartials/Components/Inputs/InputMultiSelectWithLang.vue'     ;
 
 import InputRadioCheckBox     	from 'AdminPartials/Components/Inputs/InputRadioCheckBox.vue'     ;
 
@@ -117,7 +110,7 @@ export default {
 
 	} } ,
 	components : {
-	    InputString ,InputFile,InputDate,InputSelect,InputMultiSelectWithLang,InputRadioCheckBox
+	    InputString ,InputFile,InputDate,InputMultiSelect,InputRadioCheckBox,InputSelect
 		// InputForloop
 		// InputMultiSelect
 	} ,
@@ -130,12 +123,15 @@ export default {
 		FactoryName :  			{  default                       : ''        } ,
 		FactoryErrors : 		{  required : false	   } ,
 		value       : 			null,
-		FactorySelectOptions:   {  default                       : ''        } ,
+		FactorySelectOptions:   {  default                       : null        } ,
 		FactorySelected:   		{  default                       : ''        } ,
 		FactorySelectColumnName:{  default                       : ''        } ,
-		FactorySelectColumnLang:{  default                       : ''        } ,
-		FactorySelectimage:{  default                       : ''        } ,
-		
+		FactorySelectimage:		{  default                       : ''        } ,
+		FactorySelectColumnOptions:{  default                       : ''        } ,
+
+		FactorySelectForloop:{  default                       : ''        } ,
+		FactorySelectForloopColumn:{  default                       : ''        } ,
+
 	} ,
 	watch   : {
 		value( ) {

@@ -5,7 +5,7 @@ namespace App\Repository;
 interface UserRepositoryInterface extends EloquentRepositoryInterface{
 
 
-    public function attachRole($UserRoles,$id);
+    public function attachRole($role_ids,$id);
 
 
 }

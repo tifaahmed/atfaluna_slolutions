@@ -29,7 +29,7 @@ class AvatarApiRequest extends FormRequest
             'required',
                 Rule::in(['boy', 'girl']),
             ],
-            'image'       =>  [ 'required' ,'max:5000'] ,
+            'image'      =>  [ 'required' ,'max:5000'] ,
             'price'      =>  [ 'numeric','between:0,9999.99'] ,
         ];
     }

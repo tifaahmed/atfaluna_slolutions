@@ -22,8 +22,23 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 		$this->model =  $model;
 	}
 
-
-
+    public function attachAccessories($accessory_ids,$id)
+	{
+		if($accessory_ids){
+			$result = $this->findById($id); 
+			$result->subUserAccessory()->detach();
+			$result->subUserAccessory()->attach($accessory_ids);
+		}
+	}
+    public function attachAvatars($avatar_ids,$id)
+	{
+		if($avatar_ids){
+			$result = $this->findById($id); 
+			$result->subUserAvatar()->detach();
+			$result->subUserAvatar()->attach($avatar_ids);
+		}
+	}
+	
 
 	
 }
