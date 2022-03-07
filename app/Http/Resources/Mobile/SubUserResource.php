@@ -4,6 +4,12 @@ namespace App\Http\Resources\Mobile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Mobile\AvatarResource;
+use App\Http\Resources\Mobile\AccessoryResource;
+use App\Http\Resources\Mobile\CertificateResource;
+use App\Http\Resources\Mobile\QuizResource;
+use App\Http\Resources\Mobile\LessonResource;
+use App\Http\Resources\Mobile\SubjectResource;
+
 class SubUserResource extends JsonResource
 {
     /**
@@ -21,6 +27,11 @@ class SubUserResource extends JsonResource
             'gender'        => $this->gender,
             'points'        => $this->points,
             'avatar'        => new AvatarResource ($this->avatar)  ,
+            'accessory'     => new AccessoryResource ($this->accessory)  ,
+            'certificate'   => new CertificateResource ($this->certificate)  ,
+            'quiz'          => new QuizResource ($this->quiz)  ,
+            'lesson'        => new LessonResource ($this->lesson)  ,
+            'subject'       => new SubjectResource ($this->subject)  ,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

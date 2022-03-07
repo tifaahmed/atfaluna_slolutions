@@ -18,7 +18,6 @@ use App\Repository\PackageRepositoryInterface as ModelInterfacePackage;
 
 use Illuminate\Support\Facades\Auth;
 
-
 class UserPackageController extends Controller
 {
     private $Repository;
@@ -39,7 +38,6 @@ class UserPackageController extends Controller
         }
     }
 
-
     public function collection(Request $request){
         // return $request->language;
         try {
@@ -54,7 +52,6 @@ class UserPackageController extends Controller
         }
     }
     
-
 
     public function show($id) {
         try {
@@ -71,8 +68,6 @@ class UserPackageController extends Controller
             );
         }
     }
-    
-
     
     public function store(Request $request) {
         try {
@@ -93,6 +88,5 @@ class UserPackageController extends Controller
             );
         }
     } 
-
 
 }

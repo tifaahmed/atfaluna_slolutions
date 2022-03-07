@@ -25,8 +25,8 @@ class MobileLessonApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'lesson_id'         =>  [ 'required' ,'integer' ,'exists:lessons,id'] ,
+            'lesson_id'         =>  [ 'required' ,'array' ,'exists:lessons,id'] ,
             'sub_user_id'       =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,
-        ];
+        ]; 
     }
 }

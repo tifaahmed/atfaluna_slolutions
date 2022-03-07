@@ -27,7 +27,7 @@ class MobilePackageApiRequest extends FormRequest
         return [
             
             'image'                   =>  [  'required' ,'max:5000' ] ,
-            'price'                   =>  [  'required' , 'integer' ] ,
+            'price'                   =>  [ 'numeric','between:0,9999.99'] ,
             'points'                  =>  [  'required' , 'integer' ] ,
 
         ];

@@ -63,15 +63,15 @@ class AccessoryController extends Controller
             );
         }
     }
-
-    // relation
+        // relation
     public function attach(MobileAccessoryApiRequest $request){
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            $model->subUserAccessory()->attach($request->accessory_id);
-
+            foreach ($request->accessory_id as $key => $value) {
+                $model->subUserAccessory()->attach($value);
+            }
             return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($request->accessory_id) )  ],
+                ['Successful'],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
@@ -83,7 +83,6 @@ class AccessoryController extends Controller
             );
         }
     }
-    
     public function  detach(MobileAccessoryApiRequest $request){
         try {
             $model = Auth::user()->sub_user()->find($request->sub_user_id); 

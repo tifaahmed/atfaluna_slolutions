@@ -25,7 +25,7 @@ class MobileSubjectApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'subject_id'        =>  [ 'required' ,'integer' ,'exists:subjects,id'] ,
+            'subject_id'        =>  [ 'required' ,'array' ,'exists:subjects,id'] ,
             'sub_user_id'       =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,
         ];
     }

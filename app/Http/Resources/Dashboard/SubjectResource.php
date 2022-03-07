@@ -4,6 +4,7 @@ namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Dashboard\Collections\SubjectCollection;
 
 class SubjectResource extends JsonResource
 {
@@ -28,6 +29,7 @@ class SubjectResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
             'languages'     => $this->Subject_language,
+            // 'subject'       => new SubjectCollection (  $this->subUserSubject )  ,
 
         ];        
     }

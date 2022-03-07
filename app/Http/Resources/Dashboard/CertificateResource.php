@@ -4,6 +4,8 @@ namespace App\Http\Resources\Dashboard;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Dashboard\Collections\CertificateCollection;
+
 class CertificateResource extends JsonResource
 {
     /**
@@ -31,6 +33,9 @@ class CertificateResource extends JsonResource
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
             'languages'     => $this->Certificate_language,
+
+            'certificate'       => new CertificateCollection (  $this->subUserCertificate )  ,
+
         ];        
     }
 }

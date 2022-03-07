@@ -24,7 +24,6 @@ class UserController extends Controller
     private $ModelRepository;
     private $RepositoryCountry;
 
-
     public function __construct(ModelInterface $ModelRepository , CountryInterface $RepositoryCountry){
         $this->ModelRepository = $ModelRepository;
         $this->RepositoryCountry = $RepositoryCountry;
@@ -68,7 +67,7 @@ class UserController extends Controller
             [ 'UserModel'  => $this->ModelRepository->deleteById($id) ],
             'Successful',
             Response::HTTP_OK
-         ) ;
+        ) ;
     }
     public function update(modelUpdateRequest $request ,$id){
         try {
@@ -107,5 +106,4 @@ class UserController extends Controller
         }     
     }
 
-    
 }

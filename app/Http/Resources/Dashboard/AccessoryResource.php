@@ -4,6 +4,7 @@ namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Dashboard\Collections\AccessoryCollection;
 
 class AccessoryResource extends JsonResource
 {
@@ -19,7 +20,6 @@ class AccessoryResource extends JsonResource
 
         return [
 
-
             
             'id'            => $this->id,
 
@@ -33,6 +33,7 @@ class AccessoryResource extends JsonResource
 
             'languages'     => $this->accessory_languages,
             'name'          => $row ? $row->name:'',
+            'accessory'       => new AccessoryCollection (  $this->subUserAccessory )  ,
 
         ];        
     }
