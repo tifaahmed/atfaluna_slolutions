@@ -25,7 +25,7 @@ class MobileAvatarApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'avatar_id'         =>  [ 'required' ,'integer' ,'exists:avatars,id'] ,
+            'avatar_id'         =>  [ 'required' ,'array' ,'exists:avatars,id'] ,
             'sub_user_id'       =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,
         ];
     }

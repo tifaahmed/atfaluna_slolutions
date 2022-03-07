@@ -15,7 +15,9 @@ use App\Http\Resources\Mobile\LessonResource as ModelResource;
 // lInterfaces
 use App\Repository\LessonRepositoryInterface as ModelInterface;
 
+use App\Http\Requests\Api\Lesson\MobileLessonApiRequest;
 
+use Illuminate\Support\Facades\Auth;
 class LessonController extends Controller
 {
     private $Repository;
@@ -67,6 +69,42 @@ class LessonController extends Controller
             );
         }
     }
-    
+    // relation
+    public function attach(MobileLessonApiRequest $request){
+        try {
+            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
+            foreach ($request->lesson_id as $key => $value) {
+                $model->subUserLesson()->attach($value,['score'=> $request->score]);
+            }
+            return $this -> MakeResponseSuccessful( 
+                ['Successful'],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    } 
+        public function  detach(MobileLessonApiRequest $request){
+        try {
+            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
+            $model->subUserlesson()->detach($request->lesson_id);
 
+            return $this -> MakeResponseSuccessful( 
+                [new ModelResource ( $this->ModelRepository->findById($request->lesson_id) )  ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
 }

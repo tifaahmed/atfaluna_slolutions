@@ -10,7 +10,8 @@ use Illuminate\Http\Response ;
 // Resources
 use App\Http\Resources\Mobile\Collections\SubjectCollection as ModelCollection;
 use App\Http\Resources\Mobile\SubjectResource as ModelResource;
-
+use App\Http\Requests\Api\Subject\MobileSubjectApiRequest;
+use Illuminate\Support\Facades\Auth;
 
 // lInterfaces
 use App\Repository\SubjectRepositoryInterface as ModelInterface;
@@ -35,7 +36,6 @@ class SubjectController extends Controller
         }
     }
 
-
     public function collection(Request $request){
         // return $request->language;
         try {
@@ -50,7 +50,6 @@ class SubjectController extends Controller
         }
     }
     
-
 
     public function show($id) {
         try {
@@ -68,5 +67,51 @@ class SubjectController extends Controller
         }
     }
     
+// relation
 
+        /*
+        
+        impload string=>array
+
+        1.2.2.3
+        [1,2,2,3]
+        
+        */
+public function attach(MobileSubjectApiRequest $request){
+    try {
+        $model =   Auth::user()->sub_user()->find($request->sub_user_id);
+        foreach ($request->subject_id as $key => $value) {
+            $model->subUserSubject()->attach($value);
+        }
+        return $this -> MakeResponseSuccessful( 
+            ['Successful'],
+            'Successful'               ,
+            Response::HTTP_OK
+        ) ;
+    } catch (\Exception $e) {
+        return $this -> MakeResponseErrors(  
+            [$e->getMessage()  ] ,
+            'Errors',
+            Response::HTTP_NOT_FOUND
+        );
+    }
+}
+public function  detach(MobileSubjectApiRequest $request){
+    try {
+        $model = Auth::user()->sub_user()->find($request->sub_user_id); 
+        $model->subUserSubject()->detach($request->subject_id);
+
+        return $this -> MakeResponseSuccessful( 
+            [new ModelResource ( $this->ModelRepository->findById($request->subject_id) )  ],
+            'Successful'               ,
+            Response::HTTP_OK
+        ) ;
+    } catch (\Exception $e) {
+        return $this -> MakeResponseErrors(  
+            [$e->getMessage()  ] ,
+            'Errors',
+            Response::HTTP_NOT_FOUND
+        );
+    }
+    }
 }

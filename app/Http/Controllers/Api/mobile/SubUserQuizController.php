@@ -35,7 +35,6 @@ class SubUserQuizController extends Controller
         }
     }
 
-
     public function collection(Request $request){
         // return $request->language;
         try {
@@ -50,7 +49,6 @@ class SubUserQuizController extends Controller
         }
     }
     
-
 
     public function show($id) {
         try {

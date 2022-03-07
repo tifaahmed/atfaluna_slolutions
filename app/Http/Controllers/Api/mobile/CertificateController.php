@@ -15,6 +15,9 @@ use App\Http\Resources\Mobile\CertificateResource as ModelResource;
 // lInterfaces
 use App\Repository\CertificateRepositoryInterface as ModelInterface;
 
+use App\Http\Requests\Api\Certificate\MobileCertificateApiRequest;
+
+use Illuminate\Support\Facades\Auth;
 
 class CertificateController extends Controller
 {
@@ -23,6 +26,7 @@ class CertificateController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
+
     public function all(){
         try {
             return new ModelCollection (  $this->ModelRepository->all() )  ;
@@ -34,7 +38,6 @@ class CertificateController extends Controller
             );
         }
     }
-
 
     public function collection(Request $request){
         // return $request->language;
@@ -50,8 +53,6 @@ class CertificateController extends Controller
         }
     }
     
-
-
     public function show($id) {
         try {
             return $this -> MakeResponseSuccessful( 
@@ -67,6 +68,42 @@ class CertificateController extends Controller
             );
         }
     }
-    
+    // relation
+    public function attach(MobileCertificateApiRequest $request){
+        try {
+            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
+            foreach ($request->certificate_id as $key => $value) {
+                $model->subUserCertificate()->attach($value);
+            }
+            return $this -> MakeResponseSuccessful( 
+                ['Successful'],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    } 
+    public function  detach(MobileCertificateApiRequest $request){
+        try {
+            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
+            $model->subUserCertificate()->detach($request->certificate_id);
 
+            return $this -> MakeResponseSuccessful( 
+                [new ModelResource ( $this->ModelRepository->findById($request->certificate_id) )  ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
 }

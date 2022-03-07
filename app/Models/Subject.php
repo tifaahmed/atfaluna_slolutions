@@ -34,5 +34,4 @@ class Subject extends Model
         public function certificate(){
             return $this->morphOne(Certificate::class, 'certificatable');
         }
-
 }

@@ -11,7 +11,6 @@ use Illuminate\Http\Response ;
 use App\Http\Resources\Mobile\Collections\PackageCollection as ModelCollection;
 use App\Http\Resources\Mobile\PackageResource as ModelResource;
 
-
 // lInterfaces
 use App\Repository\PackageRepositoryInterface as ModelInterface;
 
@@ -19,9 +18,10 @@ use App\Repository\PackageRepositoryInterface as ModelInterface;
 class PackageController extends Controller
 {
     private $Repository;
-    public function __construct(ModelInterface $Repository)
+    public function __construct(ModelInterface $Repository )
     {
         $this->ModelRepository = $Repository;
+
     }
     public function all(){
         try {
@@ -51,7 +51,6 @@ class PackageController extends Controller
     }
     
 
-
     public function show($id) {
         try {
             return $this -> MakeResponseSuccessful( 
@@ -67,6 +66,7 @@ class PackageController extends Controller
             );
         }
     }
-    
+ 
+
 
 }

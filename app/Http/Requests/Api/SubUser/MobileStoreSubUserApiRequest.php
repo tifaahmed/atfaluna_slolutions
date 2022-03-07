@@ -31,7 +31,7 @@ class MobileStoreSubUserApiRequest extends FormRequest
             ],
             'name'       =>  [ 'required' ] ,
             'age'        =>  [ 'required' ,'integer'] ,
-            'points'     =>  [ 'required','integer' ] ,
+            'points'     =>  [ 'integer' ] ,
             'avatar_id'  =>  [ 'required','integer','exists:avatars,id' ] ,
 
         ];

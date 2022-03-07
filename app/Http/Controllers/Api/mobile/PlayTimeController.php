@@ -10,6 +10,7 @@ use Illuminate\Http\Response ;
 // Resources
 use App\Http\Resources\Mobile\Collections\PlayTimeCollection as ModelCollection;
 use App\Http\Resources\Mobile\PlayTimeResource as ModelResource;
+use App\Http\Requests\Api\PlayTime\PlayTimeApiRequest as modelInsertRequest;
 
 
 // lInterfaces
@@ -67,6 +68,35 @@ class PlayTimeController extends Controller
             );
         }
     }
-    
-
+    public function store(modelInsertRequest $request) {
+        try {
+            $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ));
+            return $this -> MakeResponseSuccessful( 
+                [ $modal ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    } 
+    public function destroy($id) {
+        try {
+            return $this -> MakeResponseSuccessful( 
+                [$this->ModelRepository->deleteById($id)] ,
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [ $e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
 }

@@ -13,13 +13,16 @@ class SubscriptionResource extends JsonResource
      */
     public function toArray($request)
     {
+        $row=$this->subscription_languages()->Localization()->RelatedLanguage($this->id)->first();
+
         return [
             'id'            => $this->id,
             'month_number'  => $this->month_number,
 
             'child_number'  => $this->child_number,
             'price'         => $this->price,
-            
+            'name'          => $row ? $row->name:'',
+
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

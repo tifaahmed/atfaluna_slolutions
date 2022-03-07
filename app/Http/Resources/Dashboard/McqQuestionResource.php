@@ -14,10 +14,13 @@ class McqQuestionResource extends JsonResource
      */
     public function toArray($request)
     {
+        $row=$this->mcq_question_languages()->Localization()->RelatedLanguage($this->id)->first();
+
         return [
             'id'                  => $this->id,
             'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
             'videos'        => Storage::disk('public')->exists($this->videos) ? Storage::url($this->videos)  : null,
+            'name'          => $row ? $row->name:'',
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

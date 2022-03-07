@@ -9,6 +9,9 @@ use App\Models\User;
 use App\Models\Accessory;
 use App\Models\Avatar;
 use App\Models\Certificate;
+use App\Models\Quiz;
+use App\Models\Lesson;
+use App\Models\Subject;
 
 
 class Sub_user extends Model
@@ -43,5 +46,14 @@ class Sub_user extends Model
         }
         public function subUserCertificate(){
             return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_users_id', 'certificate_id');
+        }
+        public function subUserQuiz(){
+            return $this->belongsToMany(Quiz::class, 'sub_user_quizzes', 'sub_users_id', 'quiz_id');
+        }
+        public function subUserLesson(){
+            return $this->belongsToMany(Lesson::class, 'sub_user_lessons', 'sub_users_id', 'lesson_id');
+        }
+        public function subUserSubject(){
+            return $this->belongsToMany(Subject::class, 'sub_user_subjects', 'sub_users_id', 'subject_id');
         }
 }

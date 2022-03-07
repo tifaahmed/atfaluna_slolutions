@@ -51,7 +51,6 @@ class TrueFalseQuestionController extends Controller
     }
     
 
-
     public function show($id) {
         try {
             return $this -> MakeResponseSuccessful( 
