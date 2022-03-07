@@ -2,8 +2,11 @@ import Validation    from './Validation';
 
 export default class Country   extends Validation {
 	public NameArray        : any      = []  ;
-	public ImageArray       : any      = []  ;
-	public CodeArray        : any      = []  ;
+	public AgeArray         : any      = []  ;
+	public UserArray        : any      = []  ;
+	public AvatarArray       : any      = []  ;
+	public GenderArray      : any      = []  ;
+	
 
 	validate(RequestData){
 		this.conditions(RequestData);
@@ -14,12 +17,16 @@ export default class Country   extends Validation {
 	conditions(RequestData){
 
 
-		// name 
-			// this.required(RequestData.name,'name',this.NameArray);
-	    // image 
-			// this.required(RequestData.image,'image',this.ImageArray);
-			// this.FileMoreThan(RequestData.image,'image',this.ImageArray,5000000);
-		 // code 
-			// this.required(RequestData.code,'code',this.CodeArray);
+		// // name 
+			this.required(RequestData.name,'name',this.NameArray);
+		// // age 
+		// 	this.required(RequestData.age,'age',this.AgeArray);
+		// // user_id 
+			// this.required(RequestData.user,'user_id',this.UserArray);
+		// // avatar_id 
+		// 	this.required(RequestData.avatar_id,'avatar_id',this.AvatarArray);
+		// // gender 
+		// 	this.required(RequestData.gender,'gender',this.GenderArray);
+
 	}
 }

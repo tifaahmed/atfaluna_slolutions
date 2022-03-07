@@ -41,6 +41,13 @@ class BaseRepository implements EloquentRepositoryInterface
 	{
 		return $this->model->latest()->with($relations)->paginate($modelId);
 	}
+
+	public function queryPaginate($query,$itemsNumber) 
+	{
+		return $query->latest()->paginate($itemsNumber);
+	}
+
+	
 		/**
 	 * @param  int  $modelId
 	 * @return  pagination trashed

@@ -33,12 +33,7 @@ class AccessoryController extends Controller
     }
     public function all(){
         try {
-            $modal = new ModelCollection (  $this->ModelRepository->all() )  ;
-            return $this -> MakeResponseSuccessful( 
-                [ $modal ],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
+            return $modal = new ModelCollection (  $this->ModelRepository->all() )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

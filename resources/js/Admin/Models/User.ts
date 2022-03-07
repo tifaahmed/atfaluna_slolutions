@@ -3,7 +3,17 @@ import   Router    from './Routers/User' ;
 
 
 export default class User extends Model {
-   arrayName : string = 'UserRoles' ;
+
+   public async handleData(RequestData) : Promise<any>  {  
+      let formData = new FormData();
+      await Model.getformData(formData,RequestData) ;
+
+      let roles =RequestData.role_ids;
+      await Model.getObjectFormData(formData,roles,'role_ids');
+   
+      return formData;
+   }
+
    protected async all() : Promise<any>  {  
       let result : any = '';
       try {
@@ -28,17 +38,14 @@ export default class User extends Model {
       return  result;
    }
    protected async store(RequestData ?: any) : Promise<any>  {  
-      let formData = new FormData();
-      var formData_data   =await Model.getformData(formData,RequestData) ;
-      
-      if (RequestData.UserRoles ) {
-         let data =RequestData.UserRoles;
-         await Model.getObjectFormData(formData,data,this.arrayName);
-      }   
+
        
+      let formData = await this.handleData(RequestData);
+
+
       let result : any = '';
       try {
-         result   = await (new Router).StoreAxios(formData_data) ;
+         result   = await (new Router).StoreAxios(formData) ;
        } catch (error) {
           result = Model.catch(error) ;
        }
@@ -64,17 +71,11 @@ export default class User extends Model {
        return result;
    }
    protected async update ( id  : number ,RequestData ?: any) : Promise< any > {
-      let formData = new FormData();
-      var formData_data   =await Model.getformData(formData,RequestData) ;
-
-      if (RequestData.UserRoles ) {
-         let data =RequestData.UserRoles;
-         await Model.getObjectFormData(formData,data,this.arrayName);
-      }   
+      let formData = await this.handleData(RequestData);
 
        let result : any = '';
       try {
-           result =  await (new Router).UpdateAxios(id,formData_data) ;
+           result =  await (new Router).UpdateAxios(id,formData) ;
         } catch (error) {
           result = Model.catch(error) ;
         }

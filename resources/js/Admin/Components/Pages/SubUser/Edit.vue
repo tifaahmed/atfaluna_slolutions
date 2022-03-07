@@ -21,10 +21,60 @@
                                 :FactoryType="'number'" :FactoryName="'points'"   v-model ="RequestData.points" 
                                 :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.points )   ) ? ServerReaponse.errors.points : null"
                             />
-                            <InputsFactory :Factorylable="'parent'"  :FactoryPlaceholder="''"
-                                :FactoryType="'select'" :FactoryName="'user_id'"  v-model ="RequestData.user_id"  
-                                :FactorySelectOptions="UserRows"    :FactorySelectColumnName="'name'" 
+
+                            <InputsFactory :Factorylable="'parent'" 
+                                :FactoryType="'select'" :FactoryName="'user'"   v-model ="RequestData.user"  
+                                :FactorySelectOptions="UserRows"   
+
+                                :FactorySelectColumnName="'name'"  
+                                :FactorySelectColumnOptions="['name','email']"  
+
+                                :FactorySelectForloop="'UserRoles'"  
+                                :FactorySelectForloopColumn="['name']" 
+
+                                :FactorySelectimage="'avatar'"  
                                 :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.user_id )  ) ? ServerReaponse.errors.user_id : null" 
+                            />
+
+
+                            <InputsFactory :Factorylable="'Accessory'"  
+                                :FactoryType="'multiSelect'" :FactoryName="'accessories'"   v-model ="RequestData.accessories"  
+                                :FactorySelectOptions="AccessoryRows"  
+
+                                :FactorySelectColumnName="'name'"  
+                                :FactorySelectColumnOptions="['price']"  
+
+                                :FactorySelectForloop="'languages'"  
+                                :FactorySelectForloopColumn="['name','language']" 
+
+                                :FactorySelectimage="'image'"  
+                                :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.accessories )  ) ? ServerReaponse.errors.accessories : null" 
+                            />
+                            <InputsFactory :Factorylable="'Avatars'"  
+                                :FactoryType="'multiSelect'" :FactoryName="'avatars'"   v-model ="RequestData.avatars"  
+                                :FactorySelectOptions="AvatarRows"  
+
+                                :FactorySelectColumnName="'id'"  
+                                :FactorySelectColumnOptions="['price','type']"  
+
+                                :FactorySelectForloop="''"  
+                                :FactorySelectForloopColumn="[]" 
+
+                                :FactorySelectimage="'image'"  
+                                :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.avatar_ids )  ) ? ServerReaponse.errors.avatar_ids : null" 
+                            />
+
+                            <InputsFactory :Factorylable="'Avatar'" 
+                                :FactoryType="'select'" :FactoryName="'avatar'"   v-model ="RequestData.avatar"  
+                                :FactorySelectOptions="AvatarRows"   
+                                :FactorySelectColumnName="'image'"  
+                                :FactorySelectColumnOptions="['price','type']"  
+
+                                :FactorySelectForloop="''"  
+                                :FactorySelectForloopColumn="[]" 
+
+                                :FactorySelectimage="'image'"  
+                                :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.avatar_id )  ) ? ServerReaponse.errors.avatar_id : null" 
                             />
 
                             <InputsFactory :Factorylable="'gender'"  :FactoryPlaceholder="'gender'"
@@ -35,10 +85,7 @@
 
 
                         <button  @click="FormSubmet()" class="btn btn-primary  ">Submit</button>
-                        
-
-
-                        
+                
                         <router-link style="color:#fff" 
                             :to = "{ 
                                 name : TableName+'.ShowAll' , 
@@ -51,8 +98,6 @@
                             </i>
                         </button>
                         </router-link>
-
-
 
                         <div class="alert alert-danger " v-if="ServerReaponse && ServerReaponse.message"> {{ServerReaponse.message}}  </div>
                     </div>
@@ -67,7 +112,9 @@
 </template>
 <script>
 import Model     from 'AdminModels/SubUser';
-import UserModel        from 'AdminModels/User';
+import UserModel            from 'AdminModels/User';
+import AccessoryModel        from 'AdminModels/Accessory';
+import AvatarModel        from 'AdminModels/Avatar';
 
 import validation     from 'AdminValidations/SubUser';
 import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue'     ;
@@ -79,6 +126,9 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
 
         mounted() {
             this.GetUsers();
+            this.GetAccessories();
+            this.GetAvatars();
+
             this.GetData();
             
         },
@@ -86,36 +136,48 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
             TableName :'SubUser',
             TablePageName :'SubUser.ShowAll',
 
-            UserRows :'null',
+            UserRows :null,
+            AccessoryRows   :null,
+            AvatarRows   :null,
 
             ServerReaponse : {
                 errors : {
-                    name  :[],
-                    age             : null,
-                    points             : null,
-                    user_id             : null,
-                    gender             : null,
+                    name        :[],
+                    age         : [],
+                    points      : [],
+                    gender      : [],
+                    
+                    user_id     : [],
+                    avatar_id     : [],
+                    avatar_ids     : [],
+                    accessory_ids     : [],
                 },
                 message : null,
             },
             RequestData : {
-                name               : null,
-                age             : null,
-                points             : null,
-                user_id             : null,
-                gender             : null,
+                name             : null,
+                age              : null,
+                points           : null,
+                gender           : null,
+
+                user_id          : null,
+                user             : null,
+
+                avatar_id        : null,
+                avatar           : null,
+
+                avatar_ids       : {},
+                avatars          : [],
+
+                accessory_ids    : {},
+                accessories      : [],
             },
 
         } } ,
         methods : {
 
 
-            DeleteErrors(){
-                for (var key in this.ServerReaponse.errors) {
-                    this.ServerReaponse.errors[key] = [];
-                }
-                this.ServerReaponse.message =null;
-            },
+
             async GetData(){
                 let receivedData = await this.show( ) ;
                 for (var key in receivedData) {
@@ -129,41 +191,104 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 }
             },
 
-            
-            async FormSubmet(){
-                //clear errors
-                await this.DeleteErrors();                
-                // valedate
-                var check = await (new validation).validate(this.RequestData);
-                if( check ){// if there is error from my file
-                     this.ServerReaponse = check; // error from my file
-                }else{ // run the form
 
-                     this.SubmetRowButton(); // succes from file
-                }
-            },
-            async SubmetRowButton(){
-                this.ServerReaponse = null;
-                let data = await this.update()  ; // send update request
-                if(data && data.errors){// stay and show error
+            // before send to server
+                async FormSubmet(){
+                    //clear errors
+                    await this.DeleteErrors();                
+                    // valedate
+                    await this.DetectVueError();  
+                    console.log(this.ServerReaponse.message) ;    
+                    // if (this.ServerReaponse.message == null) {
+                        // handle data
+                        await this.HandleData();  
+                        // Submet from  
+                        await this.SubmetRowButton(); 
+                    // }
+                
+                },
+                DeleteErrors(){
+                    for (var key in this.ServerReaponse.errors) {
+                        this.ServerReaponse.errors[key] = [];
+                    }
+                    this.ServerReaponse.message =null;
+                },
+
+                async DetectVueError(){
+                    var check = await (new validation).validate(this.RequestData);
+                    if( check ){// if there is error from my file
+                        this.ServerReaponse = check; // error from my file
+                    }
+                },
+
+                HandleData(){
+
+                    if(this.RequestData.accessories){
+                        var accessory_list =[];
+                        this.RequestData.accessories.map(function(value, key) {
+                            accessory_list[key] = value.id;
+                        });
+                        this.RequestData.accessory_ids = accessory_list;
+                    }
+                    if(this.RequestData.avatars){
+                        var avatar_list =[];
+                        this.RequestData.avatars.map(function(avatarValue, key) {
+                            avatar_list[key] = avatarValue.id;
+                        });
+                        this.RequestData.avatar_ids = avatar_list;
+                    }
+
+                    if(this.RequestData.user){
+                        this.RequestData.user_id = this.RequestData.user.id;
+                    }
+                    if(this.RequestData.avatar){
+                        this.RequestData.avatar_id = this.RequestData.avatar.id;
+                    }
+                },
+            // before send to server
+
+            // after send to server
+                async SubmetRowButton(){
+                    var data = await this.update()  ; // send update request
+                    if(data && data.errors){// stay and show error
+                        await this.DetectServerError(data)  ;
+                    }else{
+                        await this.ReturnToTablePage();//success from server
+                    }
+                },
+                async DetectServerError(data){
                     this.ServerReaponse = data ;//error from the server
-                }else{//return to the Table
-                    this.ReturnToTablePag();//success from server
-                }
-            },
-            async ReturnToTablePag( ) {
-                return this.$router.push({ 
-                    name: this.TablePageName , 
-                    query: { CurrentPage: this.$route.query.CurrentPage } 
-                })
-            },
+                },
+                async ReturnToTablePage( ) {
+                    return this.$router.push({ 
+                        name: this.TablePageName , 
+                        query: { CurrentPage: this.$route.query.CurrentPage } 
+                    })
+                },
+            // after send to server
 
-            async GetUsers(page){
-                this.UserRows  = ( await this.AllUsers() ).data.data;
-            },
+            // relationship
+                async GetUsers(page){
+                    this.UserRows  = ( await this.AllUsers() ).data.data;
+                },
+                async GetAccessories(page){
+                    this.AccessoryRows  = ( await this.AllAccessory() ).data.data;
+                },
+                async GetAvatars(page){
+                    this.AvatarRows  = ( await this.AllAvatar() ).data.data;
+                    console.log(this.AvatarRows);
+                },
+            // relationship
+
             // modal
                 AllUsers(){
                     return  (new UserModel).all()  ;
+                },
+                AllAccessory(){
+                    return  (new AccessoryModel).all()  ;
+                },
+                AllAvatar(){
+                    return  (new AvatarModel).all()  ;
                 },
                 async show( ) {
                     return ( await (new Model).show( this.$route.params.id) ).data.data[0] ;

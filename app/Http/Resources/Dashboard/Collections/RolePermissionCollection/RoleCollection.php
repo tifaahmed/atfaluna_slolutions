@@ -4,7 +4,7 @@ namespace App\Http\Resources\Dashboard\Collections\RolePermissionCollection;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Dashboard\RolePerssionResource\RoleResource;
+use App\Http\Resources\Dashboard\RolePermissionResource\RoleResource;
 
 class RoleCollection extends ResourceCollection{
 

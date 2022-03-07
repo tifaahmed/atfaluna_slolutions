@@ -115,7 +115,7 @@ class UserController extends Controller
             
             $modal = $this->ModelRepository->update( $id,Request()->except($file_one,$password,'country_id')+$all) ;
 
-            return $this->ModelRepository->attachRole($request->roleIdes ,$id);
+            $this->ModelRepository->attachRole($request->role_ids ,$id);
 
             return $this -> MakeResponseSuccessful( 
                 [ $modal],
@@ -130,7 +130,6 @@ class UserController extends Controller
             );
         }     
     }
-
 
     // trash
         public function collection_trash(Request $request){

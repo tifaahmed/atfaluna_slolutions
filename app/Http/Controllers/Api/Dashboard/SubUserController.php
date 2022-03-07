@@ -116,11 +116,11 @@ class SubUserController extends Controller
     
     public function update(modelInsertRequest $request ,$id) {
         try {
-            
             $this->ModelRepository->update( $id,Request()->all()) ;
-            
-            $this->ModelRepository->update( $id,Request()->all()) ;
-            
+
+            $this->ModelRepository->attachAccessories($request->accessory_ids,$id);
+            $this->ModelRepository->attachAvatars($request->avatar_ids,$id);
+
             $modal = new ModelResource($this->ModelRepository->findById($id)); 
 
             return $this -> MakeResponseSuccessful( 
