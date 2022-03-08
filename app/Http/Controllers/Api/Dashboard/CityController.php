@@ -26,6 +26,7 @@ class CityController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
+
     public function all(){
         try {
             return new ModelCollection (  $this->ModelRepository->all() )  ;
@@ -37,6 +38,7 @@ class CityController extends Controller
             );
         }
     }
+
     public function store(modelInsertRequest $request) {
         try {
             $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ));
