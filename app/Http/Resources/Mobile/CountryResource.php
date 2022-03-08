@@ -4,6 +4,8 @@ namespace App\Http\Resources\Mobile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Dashboard\Collections\GovernmentCollection;
+use App\Http\Resources\Dashboard\Collections\CityCollection;
 
 class CountryResource extends JsonResource
 {
@@ -25,9 +27,8 @@ class CountryResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            'Government'     => $this->Government,
-            'City'           => $this->Government,
-
+            'government'    => new GovernmentCollection ( $this->government ),
+            'city'          => new CityCollection ( $this->city ),
 
         ];
 
