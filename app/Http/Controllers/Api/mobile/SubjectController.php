@@ -80,9 +80,9 @@ class SubjectController extends Controller
 public function attach(MobileSubjectApiRequest $request){
     try {
         $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-        foreach ($request->subject_id as $key => $value) {
-            $model->subUserSubject()->attach($value);
-        }
+        // foreach ($request->subject_ids as $key => $value) {
+            $model->subUserSubject()->sync($request->subject_ids);
+    // } 
         return $this -> MakeResponseSuccessful( 
             ['Successful'],
             'Successful'               ,

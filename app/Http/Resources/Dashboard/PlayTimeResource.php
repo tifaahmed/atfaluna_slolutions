@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Dashboard\SubUserResource;
 
 class PlayTimeResource extends JsonResource
 {
@@ -24,6 +25,8 @@ class PlayTimeResource extends JsonResource
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
+
+            'sub_user'          => new SubUserResource (  $this->sub_user )  ,
 
         ];        
     }

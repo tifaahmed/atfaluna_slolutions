@@ -22,12 +22,14 @@ class TrueFalseQuestionResource extends JsonResource
             'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
             'videos'          => Storage::disk('public')->exists($this->videos) ? Storage::url($this->videos)  : null,
             'answer'         => $this->answer,
-            'name'          => $row ? $row->name:'',
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
+            
             'languages'     => $this->True_false_question_language,
+            'name'          => $row ? $row->name:'',
+
 
         ];        
     }
