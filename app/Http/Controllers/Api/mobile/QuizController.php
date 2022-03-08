@@ -70,9 +70,9 @@ class QuizController extends Controller
     public function attach(MobileQuizApiRequest $request){
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            foreach ($request->quiz_id as $key => $value) {
-                $model->subUserQuiz()->attach($value,['score'=> $request->score]);
-            }    
+            // foreach ($request->quiz_id as $key => $value) {
+                $model->subUserQuiz()->syncWithoutDetaching($request->quiz_ids,['score'=> $request->score]);
+            // }    
 
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
