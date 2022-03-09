@@ -20881,17 +20881,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this2.DetectVueError();
 
               case 4:
-                console.log(_this2.ServerReaponse.message); // if (this.ServerReaponse.message == null) {
-                // handle data
+                console.log(_this2.ServerReaponse.message);
 
-                _context2.next = 7;
+                if (!(_this2.ServerReaponse.message == null)) {
+                  _context2.next = 10;
+                  break;
+                }
+
+                _context2.next = 8;
                 return _this2.HandleData();
 
-              case 7:
-                _context2.next = 9;
+              case 8:
+                _context2.next = 10;
                 return _this2.SubmetRowButton();
 
-              case 9:
+              case 10:
               case "end":
                 return _context2.stop();
             }
