@@ -13,6 +13,8 @@ class SkillResource extends JsonResource
      */
     public function toArray($request)
     {
+        $row=$this->skill_languages()->Localization()->RelatedLanguage($this->id)->first();
+
         return [
             'id'            => $this->id,
             
@@ -20,7 +22,9 @@ class SkillResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            'languages'     => $this->Skill_language,
+            'languages'     => $this->skill_languages,
+            'name'          => $row ? $row->name:'',
+
         ];        
     }
 }
