@@ -379,7 +379,7 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
         ]),
     //Subject
         Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'SubjectController@all'                 )    ->name('all'),
+            Route::get('/'                          ,   'SubjectController@all'                 )->name('all'),
             Route::post(''                          ,   'SubjectController@store'               )->name('store'),
             Route::get('/{id}/show'                 ,   'SubjectController@show'                )->name('show'),
             Route::get('/collection'                ,   'SubjectController@collection'          )->name('collection'),
@@ -391,6 +391,20 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::get('/collection-trash'          ,   'SubjectController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'SubjectController@show_trash'          )->name('show_trash'),
         ]),
+    //Subject
+        Route::name('sub-subject.')->prefix('/sub-subject')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'SubSubjectController@all'                 )->name('all'),
+            Route::post(''                          ,   'SubSubjectController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'SubSubjectController@show'                )->name('show'),
+            Route::get('/collection'                ,   'SubSubjectController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'SubSubjectController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'SubSubjectController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'SubSubjectController@restore'             )->name('restore'),
+        
+            Route::DELETE('premanently-delete/{id}' ,   'SubSubjectController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'SubSubjectController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'SubSubjectController@show_trash'          )->name('show_trash'),
+        ]),    
     //True_false_question
         Route::name('true-false-question.')->prefix('/true-false-question')->group( fn ( ) : array => [
             Route::get('/'                          ,   'TrueFalseQuestionController@all'                 )    ->name('all'),
