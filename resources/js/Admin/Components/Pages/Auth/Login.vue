@@ -58,7 +58,7 @@ window.Form = Form;
         methods: {
             async login () {
 
-                this.form.post('/api/auth/login')
+                this.form.post('/api/dashboard/auth/login')
                 .then(( response ) => { 
                     var attr = document.getElementById("text");
 
