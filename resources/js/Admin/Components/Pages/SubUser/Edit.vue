@@ -199,12 +199,12 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                     // valedate
                     await this.DetectVueError();  
                     console.log(this.ServerReaponse.message) ;    
-                    // if (this.ServerReaponse.message == null) {
+                    if (this.ServerReaponse.message == null) {
                         // handle data
                         await this.HandleData();  
                         // Submet from  
                         await this.SubmetRowButton(); 
-                    // }
+                    }
                 
                 },
                 DeleteErrors(){

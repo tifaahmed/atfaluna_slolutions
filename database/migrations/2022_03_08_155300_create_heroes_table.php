@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubjectsTable extends Migration
+class CreateHeroesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,14 @@ class CreateSubjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subjects', function (Blueprint $table) {
+        Schema::create('heroes', function (Blueprint $table) {
             $table->increments('id');//[pk]
             $table->string('image'); // not null
-            $table->integer('points');//[note: "ex ( 5 - 6)"]
 
-            $table->integer('age_group_id')->unsigned();
-            $table->foreign('age_group_id')->references('id')->on('age_groups');
-
-            
             $table->timestamps();
-            $table->softDeletes();
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -33,6 +28,6 @@ class CreateSubjectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subjects');
+        Schema::dropIfExists('heroes');
     }
 }

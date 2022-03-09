@@ -64,6 +64,9 @@ namespace App\Providers;
     use App\Repository\Eloquent\AccessoryRepository;
     use App\Repository\Eloquent\AccessoryLanguageRepository;
 
+    use App\Repository\Eloquent\SubSubjectRepository;
+    use App\Repository\Eloquent\SubSubjectLanguageRepository;
+
     // Role  Permission
         use App\Repository\Eloquent\RolePermissionRepository\PermissionRepository;
         use App\Repository\Eloquent\RolePermissionRepository\RoleRepository;
@@ -136,7 +139,10 @@ namespace App\Providers;
 
     use App\Repository\AccessoryRepositoryInterface;
     use App\Repository\AccessoryLanguageRepositoryInterface;
-    // Role  Permission    use App\Repository\McqAnswerRepositoryInterface;
+
+    use App\Repository\SubSubjectRepositoryInterface;
+    use App\Repository\SubSubjectLanguageRepositoryInterface;
+    // Role  Permission  
 
     use App\Repository\RolePermissionInterface\PermissionRepositoryInterface;
     use App\Repository\RolePermissionInterface\RoleRepositoryInterface;
@@ -220,6 +226,9 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(AccessoryRepositoryInterface::class,AccessoryRepository::class);
         $this->app->bind(AccessoryLanguageRepositoryInterface::class,AccessoryLanguageRepository::class);
+
+        $this->app->bind(SubSubjectRepositoryInterface::class,SubSubjectRepository::class);
+        $this->app->bind(SubSubjectLanguageRepositoryInterface::class,SubSubjectLanguageRepository::class);
 
         // Role  Permission
         $this->app->bind(PermissionRepositoryInterface::class,PermissionRepository::class);

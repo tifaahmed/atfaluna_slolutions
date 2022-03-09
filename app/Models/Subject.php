@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Age_group;
 use App\Models\Subject_language;
 use App\Models\Certificate;
+use App\Models\Sub_subject;
 
 
 class Subject extends Model
@@ -33,5 +34,7 @@ class Subject extends Model
         public function certificate(){
             return $this->morphOne(Certificate::class, 'certificatable');
         }
-        
+        public function sub_subjects(){
+            return $this->HasMany(Sub_subject::class);
+        }
 }
