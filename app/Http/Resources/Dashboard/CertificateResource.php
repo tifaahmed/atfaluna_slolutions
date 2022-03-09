@@ -4,7 +4,6 @@ namespace App\Http\Resources\Dashboard;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Dashboard\Collections\CertificateCollection;
 
 class CertificateResource extends JsonResource
 {
@@ -34,7 +33,6 @@ class CertificateResource extends JsonResource
 
             'languages'     => $this->Certificate_language,
 
-            'certificate'       => new CertificateCollection (  $this->subUserCertificate )  ,
 
         ];        
     }

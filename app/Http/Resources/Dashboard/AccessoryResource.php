@@ -33,7 +33,6 @@ class AccessoryResource extends JsonResource
 
             'languages'     => $this->accessory_languages,
             'name'          => $row ? $row->name:'',
-            'accessory'       => new AccessoryCollection (  $this->subUserAccessory )  ,
 
         ];        
     }

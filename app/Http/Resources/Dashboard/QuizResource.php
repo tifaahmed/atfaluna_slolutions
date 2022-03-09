@@ -4,7 +4,6 @@ namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Resources\Dashboard\Collections\QuizCollection;
 
 class QuizResource extends JsonResource
 {
@@ -30,7 +29,6 @@ class QuizResource extends JsonResource
 
             'languages'     => $this->Quiz_language,
 
-            'quiz'       => new QuizCollection (  $this->subUserQuiz )  ,
 
         ];        
     }

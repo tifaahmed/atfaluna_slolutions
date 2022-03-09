@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+    <meta charset="UTF-8">
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
         <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -8,27 +11,27 @@
 
 
         <!-- Favicon -->
-        <link rel="icon" href="{{asset('asset_ar/img/brand/favicon.png')}}" type="image/x-icon"/>
+        <link rel="icon" href="{{asset('asset/img/brand/favicon.png')}}" type="image/x-icon"/>
 
         <!-- Icons css -->
-        <link href="{{asset('asset_ar/css/icons.css')}}" rel="stylesheet">
+        <link href="{{asset('asset/css/icons.css')}}" rel="stylesheet">
 
         <!--  Right-sidemenu css -->
-        <link href="{{asset('asset_ar/plugins/sidebar/sidebar.css')}}" rel="stylesheet">
+        <link href="{{asset('asset/plugins/sidebar/sidebar.css')}}" rel="stylesheet">
 
         <!-- Sidemenu css -->
-        <link rel="stylesheet" href="{{asset('asset_ar/css-rtl/closed-sidemenu.css')}}">
+        <link rel="stylesheet" href="{{asset('asset/css/closed-sidemenu.css')}}">
 
 
         <!--- Style css-->
-        <link href="{{asset('asset_ar/css-rtl/style.css')}}" rel="stylesheet">
-        <link href="{{asset('asset_ar/css-rtl/style-dark.css')}}" rel="stylesheet">
+        <link href="{{asset('asset/css/style.css')}}" rel="stylesheet">
+        <link href="{{asset('asset/css/style-dark.css')}}" rel="stylesheet">
 
         <!---Skinmodes css-->
-        <link href="{{asset('asset_ar/css-rtl/skin-modes.css')}}" rel="stylesheet" />
+        <link href="{{asset('asset/css/skin-modes.css')}}" rel="stylesheet" />
 
         <!--- Animations css-->
-        <link href="{{asset('asset_ar/css/animate.css')}}" rel="stylesheet">
+        <link href="{{asset('asset/css/animate.css')}}" rel="stylesheet">
 
     </head>
 
@@ -136,7 +139,7 @@
 
         <!-- Loader -->
         <div id="global-loader">
-            <img src="{{asset('asset_ar/img/loader.svg')}}" class="loader-img" alt="Loader">
+            <img src="{{asset('asset/img/loader.svg')}}" class="loader-img" alt="Loader">
         </div>
         <!-- /Loader -->
 
@@ -151,45 +154,45 @@
 
 
         <!-- JQuery min js -->
-        <script src="{{asset('asset_ar/plugins/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset('asset/plugins/jquery/jquery.min.js')}}"></script>
 
         <!-- Bootstrap Bundle js -->
-        <script src="{{asset('asset_ar/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <script src="{{asset('asset/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
         <!-- Ionicons js -->
-        <script src="{{asset('asset_ar/plugins/ionicons/ionicons.js')}}"></script>
+        <script src="{{asset('asset/plugins/ionicons/ionicons.js')}}"></script>
 
         <!-- Moment js -->
-        <script src="{{asset('asset_ar/plugins/moment/moment.js')}}"></script>
+        <script src="{{asset('asset/plugins/moment/moment.js')}}"></script>
 
         <!-- Eva-icons js -->
-        <script src="{{asset('asset_ar/js/eva-icons.min.js')}}"></script>
+        <script src="{{asset('asset/js/eva-icons.min.js')}}"></script>
 
         
 
         <!-- Sticky js -->
-        <script src="{{asset('asset_ar/js/sticky.js')}}"></script>
-        <script src="{{asset('asset_ar/js/modal-popup.js')}}"></script>
+        <script src="{{asset('asset/js/sticky.js')}}"></script>
+        <script src="{{asset('asset/js/modal-popup.js')}}"></script>
 
         <!-- Rating js-->
 
         <!-- Left-menu js-->
-        <script src="{{asset('asset_ar/plugins/side-menu/sidemenu.js')}}"></script>
+        <script src="{{asset('asset/plugins/side-menu/sidemenu.js')}}"></script>
 
         <!-- Right-sidebar js -->
-        <script src="{{asset('asset_ar/plugins/sidebar/sidebar-rtl.js')}}"></script>
-        <script src="{{asset('asset_ar/plugins/sidebar/sidebar-custom.js')}}"></script>
+        <script src="{{asset('asset/plugins/sidebar/sidebar.js')}}"></script>
+        <script src="{{asset('asset/plugins/sidebar/sidebar-custom.js')}}"></script>
 
         <!-- eva-icons js -->
-        <script src="{{asset('asset_ar/js/eva-icons.min.js')}}"></script>
+        <script src="{{asset('asset/js/eva-icons.min.js')}}"></script>
 
         <!-- custom js -->
-        <script src="{{asset('asset_ar/js/custom.js')}}"></script>
+        <script src="{{asset('asset/js/custom.js')}}"></script>
 
 
 
         <!--Internal  Chat js -->
-        <!-- <script src=" asset('asset_ar/js/chat.js') "></script> -->
+        <!-- <script src=" asset('asset/js/chat.js') "></script> -->
         <!-- <script src="https://js.pusher.com/7.0/pusher.min.js"></script> -->
 
            <!-- <script> -->
