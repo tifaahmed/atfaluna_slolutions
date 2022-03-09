@@ -14,8 +14,8 @@ class CreateLessonlanguagesTable extends Migration
     public function up()
     {
         Schema::create('lesson_languages', function (Blueprint $table) {
-            $table->string('item');//[note: "ex (  arabic or english or italian -...etc) ,'not null'"]
-            $table->string('language');//[note: "ex ( ar-en-it-...etc) , 'not null'"]
+            $table->string('name');//[note: "ex (  arabic or english or italian -...etc) ,'not null'"]
+            $table->string('language',2);//[note: "ex ( ar-en-it-...etc) , 'not null'"]
             $table->integer('lesson_id')->unsigned();
             $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade');
         });

@@ -4,7 +4,7 @@ namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-// use App\Http\Resources\Dashboard\Collections\SubjectCollection;
+use App\Http\Resources\Dashboard\CertificateResource;
 
 class SubjectResource extends JsonResource
 {
@@ -20,16 +20,17 @@ class SubjectResource extends JsonResource
 
         return [
             'id'            => $this->id,
-            'name'          => $this->name,
             'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
             'points'        => $this->points,
-            'name'          => $row ? $row->name:'',
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
-            'languages'     => $this->Subject_language,
-            // 'subject'       => new SubjectCollection (  $this->subUserSubject )  ,
+
+            'languages'     => $this->subject_languages,
+            'name'          => $row ? $row->name:'',
+
+            'certification'  => new CertificateResource (  $this->certificate )  ,
 
         ];        
     }

@@ -4,7 +4,6 @@ namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-// use App\Http\Resources\Dashboard\Collections\LessonCollection;
 use App\Http\Resources\Dashboard\SubjectResource;
 use App\Http\Resources\Dashboard\LessonTypeResource;
 
@@ -31,10 +30,9 @@ class LessonResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            'languages'     => $this->Lesson_language,
-            'name'                  => $row ? $row->name:'',
+            'languages'     => $this->lesson_languages,
+            'name'          => $row ? $row->name:'',
 
-            // 'lessons'       => new LessonCollection (  $this->subUserLesson )  ,
             'subject'       => new SubjectResource (  $this->subject )  ,
             'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
 

@@ -15,7 +15,6 @@ class CreateSubjectsTable extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->string('name'); // not null
             $table->string('image'); // not null
             $table->integer('points');//[note: "ex ( 5 - 6)"]
             $table->integer('age_group_id')->unsigned();

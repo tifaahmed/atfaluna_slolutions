@@ -19,7 +19,6 @@ class Subject extends Model
 
 
     protected $fillable = [
-        'name',//required
         'image',//required , max:5000
         'points',//required integer
         'age_group_id',//unsigned
@@ -34,4 +33,5 @@ class Subject extends Model
         public function certificate(){
             return $this->morphOne(Certificate::class, 'certificatable');
         }
+        
 }

@@ -24,14 +24,12 @@ class CertificateApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'relation_id'       =>  [ 'required' ,'integer'] ,
-            'relation_type'     =>  [ 'required'] ,
+            'certificatable_id' => ['required','exists:'.$this->certificatable_type.',id'],
+            'certificatable_type'=> [ 'required' ] ,
             'image_one'         =>  [ 'required' ,'max:5000'] ,
             'image_two'         =>  [ 'required' ,'max:5000'] ,
             'min_point'         =>  [ 'required' ,'integer'] ,
             'max_point'         =>  [ 'required' ,'integer'] ,
-            'subject_id'        =>  [ 'required' ,'integer'] ,
-            'sub_users_id'      =>  [ 'required' ,'integer'] ,
 
         ];
     }
