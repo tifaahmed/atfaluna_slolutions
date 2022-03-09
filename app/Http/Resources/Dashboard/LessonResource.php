@@ -29,7 +29,8 @@ class LessonResource extends JsonResource
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
-
+            'languages'     => $this->lesson_languages,
+            'name'          => $row ? $row->name:'',
             'subject'       => new SubjectResource (  $this->subject )  ,
             'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
 

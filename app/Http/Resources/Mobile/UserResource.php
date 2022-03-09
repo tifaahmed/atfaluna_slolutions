@@ -5,7 +5,7 @@ namespace App\Http\Resources\Mobile;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Mobile\CountryResource;
-
+use App\Http\Resources\Mobile\Collections\SubUserCollection;
 class UserResource extends JsonResource
 {
     /**
@@ -28,6 +28,7 @@ class UserResource extends JsonResource
 
             'UserRoles'      => $this->UserRole,
             'UserPermissions'=> $this->UserPermission,
+            'sub_user'       => new SubUserCollection ($this->sub_user)  ,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
