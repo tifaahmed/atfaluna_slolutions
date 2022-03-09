@@ -10,7 +10,7 @@ use Illuminate\Http\Response ;
 use App\Http\Requests\Api\SubSubject\SubSubjectApiRequest as modelInsertRequest;
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\SubSubjectCollection as ModelCollection;
+use App\Http\Resources\Dashboard\Collections\SubSubject\SubSubjectCollection as ModelCollection;
 use App\Http\Resources\Dashboard\SubSubject\SubSubjectResource as ModelResource;
 
 
