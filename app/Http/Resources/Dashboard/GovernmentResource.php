@@ -4,6 +4,7 @@ namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use App\Http\Resources\Dashboard\Collections\CityCollection;
 class GovernmentResource extends JsonResource
 {
     /**
@@ -16,14 +17,15 @@ class GovernmentResource extends JsonResource
     {
         return [
             'id'             => $this->id,
-            'name'             => $this->name,
+            'name'           => $this->name,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            'city'     => $this->City,
-            'city'     => $this->City,
+            
+            'country'    =>  $this->country ,
+            'cities'          => new CityCollection ( $this->city ),
         ];
 
     }

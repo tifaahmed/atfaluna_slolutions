@@ -32,12 +32,12 @@ class User extends Authenticatable {
 
     protected $fillable = [
         'name',
-        'email',
-        'password',
-        'avatar',
-        'birthdate',
-        'phone',
-        'country_id',
+        'email', //unique email_verified_atnullable
+        'password', //not null
+        'avatar', //null
+        'birthdate', //null
+        'phone', //unique
+        'country_id', //unsigned
         'token',
         'remember_token',
         'login_type'

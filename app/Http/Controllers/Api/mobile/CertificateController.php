@@ -72,9 +72,9 @@ class CertificateController extends Controller
     public function attach(MobileCertificateApiRequest $request){
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            foreach ($request->certificate_id as $key => $value) {
-                $model->subUserCertificate()->attach($value);
-            }
+            // foreach ($request->certificate_id as $key => $value) {
+                $model->subUserCertificate()->syncWithoutDetaching($request->certificate_ids);
+            // } 
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
                 'Successful'               ,

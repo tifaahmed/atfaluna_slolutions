@@ -67,9 +67,9 @@ class AccessoryController extends Controller
     public function attach(MobileAccessoryApiRequest $request){
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            foreach ($request->accessory_id as $key => $value) {
-                $model->subUserAccessory()->attach($value);
-            }
+            // foreach ($request->accessory_id as $key => $value) {
+                $model->subUserAccessory()->syncWithoutDetaching($request->accessory_ids);
+            // }
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
                 'Successful'               ,

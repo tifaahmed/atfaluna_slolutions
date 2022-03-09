@@ -73,9 +73,9 @@ class LessonController extends Controller
     public function attach(MobileLessonApiRequest $request){
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            foreach ($request->lesson_id as $key => $value) {
-                $model->subUserLesson()->attach($value,['score'=> $request->score]);
-            }
+            // foreach ($request->lesson_id as $key => $value) {
+                $model->subUserLesson()->syncWithoutDetaching($request->lesson_ids,['score'=> $request->score]);
+            // }
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
                 'Successful'               ,
