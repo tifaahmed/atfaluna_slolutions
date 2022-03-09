@@ -5,17 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Sub_user;
 use App\Models\Subject;
-use App\Models\Certificate_language
-;
+use App\Models\Certificate_language;
 
 
 class Certificate extends Model
 {
     use HasFactory,SoftDeletes;
-
-
 
     public $guarded = ['id'];
 
@@ -26,6 +22,7 @@ class Certificate extends Model
         'certificatable_type',// subject age_group
         'image_one',//required
         'image_two',//required
+        
         'min_point',//required integer
         'max_point',//required integer
     ];

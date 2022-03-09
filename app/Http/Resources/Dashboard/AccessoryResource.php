@@ -18,8 +18,6 @@ class AccessoryResource extends JsonResource
         $row=$this->accessory_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
-
-            
             'id'            => $this->id,
 
             'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
@@ -31,8 +29,6 @@ class AccessoryResource extends JsonResource
 
             'languages'     => $this->accessory_languages,
             'name'          => $row ? $row->name:'',
-
-
         ];        
     }
 }

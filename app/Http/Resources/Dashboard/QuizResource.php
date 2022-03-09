@@ -4,7 +4,7 @@ namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Resources\Dashboard\Collections\QuizCollection;
+
 use App\Http\Resources\Dashboard\SubjectResource;
 
 
@@ -30,11 +30,10 @@ class QuizResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            'languages'     => $this->Quiz_language,
+            'languages'     => $this->quiz_languages,
 
-            // 'quiz'          => new QuizCollection (  $this->subUserQuiz )  ,
 
-            'subject'       => new SubjectResource (  $this->subject )  ,
+            'subject'       => new SubjectResource ( $this->subject )  ,
 
         ];        
     }

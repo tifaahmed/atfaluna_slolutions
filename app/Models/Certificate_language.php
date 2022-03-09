@@ -16,7 +16,6 @@ class Certificate_language extends Model
 
     protected $table = 'certificate_languages';
 
-
     protected $fillable = [
         'title_one',//required
         'title_two',//required

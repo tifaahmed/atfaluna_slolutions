@@ -16,14 +16,16 @@ use App\Http\Resources\Dashboard\CertificateResource as ModelResource;
 
 // lInterfaces
 use App\Repository\CertificateRepositoryInterface as ModelInterface;
+use App\Repository\CertificateLanguageRepositoryInterface as ModelInterfaceLanguage;
 
 class CertificateController extends Controller
 {
     private $Repository;
     private $RepositoryLanguage;
-    public function __construct(ModelInterface $Repository)
+    public function __construct(ModelInterface $Repository,ModelInterfaceLanguage $RepositoryLanguage)
     {
         $this->ModelRepository = $Repository;
+        $this->ModelRepositoryLanguage = $RepositoryLanguage;
         $this->folder_name = 'certificate';
         $this->related_language = 'certificate_id';
 
@@ -52,6 +54,7 @@ class CertificateController extends Controller
             }
             $modal = new ModelResource( $this->ModelRepository->create( Request()->except($file_one,$file_two)+$all ) );
 
+                
             // // languages
             $this -> update_store_language($request->languages,$modal->id) ;
 
@@ -165,7 +168,7 @@ class CertificateController extends Controller
     if (is_array($requested_languages) ) {
         $this->destroyLanguage($this->related_language,$modal_id);
         foreach ($requested_languages as $key => $language_sigle_row) {
-            $this ->storeLanguage(  $this->handleLanguageData($language_sigle_row,$this->related_language,$modal_id)  );
+             $this ->storeLanguage(  $this->handleLanguageData($language_sigle_row,$this->related_language,$modal_id)  );
         }
     }
 }
