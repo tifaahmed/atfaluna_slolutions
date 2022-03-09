@@ -24,7 +24,6 @@ class SubjectApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          =>  [ 'required'] ,
             'image'         =>  [ 'required' ,'max:5000'] ,
             'points'        =>  [ 'required' ,'integer'] ,
             'age_group_id'  =>  [ 'required' ,'integer'] ,

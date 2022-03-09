@@ -10,6 +10,7 @@
                     </div>
                     <div class="card-body pt-0">
                         <div class="">
+
                             <span v-for="( row    , rowkey ) in LanguagesRows " :key="rowkey" >
                                 <span v-for="( row_    , rowkey_ ) in Languagescolumn " :key="rowkey_" >
                                     <!-- (LanguagesRows) loop on ar & en -->
@@ -21,23 +22,28 @@
                                 </span>
                             </span>
 
+                            <InputsFactory :Factorylable="'AgeGroup'" 
+                                :FactoryType="'select'" :FactoryName="'age_group_id'"   v-model ="RequestData.age_group"  
+                                :FactorySelectOptions="AgeGroupRows"   
+                                :FactorySelectColumnName="'name'"  
+                                :FactorySelectColumnOptions="['age','name']"  
 
+                                :FactorySelectForloop="'languages'"  
+                                :FactorySelectForloopColumn="['name','language']" 
+
+                                :FactorySelectimage="''"  
+                                :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.age_group_id )  ) ? ServerReaponse.errors.age_group_id : null" 
+                            />
                             <InputsFactory :Factorylable="'image'"  :FactoryPlaceholder="'image'"
                                 :FactoryType="'file'" :FactoryName="'image'"   v-model ="RequestData.image"  
                                 :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.image )   ) ? ServerReaponse.errors.image : null"
                             />
 
+
                              <InputsFactory :Factorylable="'points'"  :FactoryPlaceholder="'points'"
                                 :FactoryType="'number'" :FactoryName="'points'"   v-model ="RequestData.points" 
                                 :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.points )   ) ? ServerReaponse.errors.points : null"
                             />
-
-
-                            <InputsFactory :Factorylable="'price'"  :FactoryPlaceholder=" 'price' "         
-                                :FactoryType="'string'" :FactoryName="'price'"  v-model ="RequestData.price"  
-                                :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.price )  ) ? ServerReaponse.errors.price : null" 
-                            />
-
 
                         </div>
                         <button  @click="FormSubmet()" class="btn btn-primary ">
@@ -70,63 +76,76 @@
 
 
 <script>
-import Model     from 'AdminModels/Accessory';
+import Model                from 'AdminModels/Subject';
+import AgeGroupModel     from 'AdminModels/AgeGroup';
 import LanguageModel     from 'AdminModels/Language';
 
-import validation     from 'AdminValidations/Accessory';
+import validation     from 'AdminValidations/Subject';
 import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue'     ;
 
     export default    {
-        name:'AccessoryCreate',
+        name:'AgeCreate',
         components : { InputsFactory } ,
 
         async mounted() {
+            this.GetAgeGroups();
             this.GetlLanguages();
         },
+
         data( ) { return {
-            TableName :'Accessory',
-            TablePageName :'Accessory.ShowAll',
-            LanguagesRows : null,
+            TableName :'Subject',
+            TablePageName :'Subject.ShowAll',
             Languagescolumn : ['name'],
 
+            AgeGroupRows   : null,
+            LanguagesRows : null,
 
-            ServerReaponse : {
+              ServerReaponse : {
                 errors : {
                     image :[],
-                    price :[],
+                    points :[],
+                    age_group_id :[],
                 },
                 message : null,
             },
             RequestData : {
-                    image     : null,
-                    price            : null,
+                    points          : null,
+                    image           : null, 
 
-                    languages         : { },
+                    languages       : { },
+
+                    age_group_id    : null,
+                    age_group       : null,   
+
             },
 
         } } ,
         methods : {
 
-            DeleteErrors(){
-                for (var key in this.ServerReaponse.errors) {
-                    this.ServerReaponse.errors[key] = [];
-                }
-                this.ServerReaponse.message =null;
-            },
+            // before send to server
+                async FormSubmet(){
+                    //clear errors
+                    await this.DeleteErrors(); 
+                    // handle data
+                    await this.HandleData();  
+                    // valedate
+                    await this.DetectVueError();  
+                    console.log(this.ServerReaponse.message) ;    
+                    if (this.ServerReaponse.message == null) {
 
-            async FormSubmet(){
-                // clear errors
-                await this.DeleteErrors();
-                // valedate
-                var check = await (new validation).validate(this.RequestData);
-                if( check ){ // if there is error
-                    this.ServerReaponse = check;
-                }
-                // valedate
-                else{
-                    await this.SubmetRowButton();// run the form
-                }
-            },
+                        // Submet from  
+                        await this.SubmetRowButton(); 
+                    }
+                
+                },
+                DeleteErrors(){
+                    for (var key in this.ServerReaponse.errors) {
+                        this.ServerReaponse.errors[key] = [];
+                    }
+                    this.ServerReaponse.message =null;
+                },
+
+
 
             async GetlLanguages(page){
                 this.LanguagesRows  = ( await this.AllLanguages() ).data.data;
@@ -144,6 +163,8 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 console.log(this.RequestData);
             },
 
+
+
             // model 
                 AllLanguages(){
                     return  (new LanguageModel).all()  ;
@@ -154,23 +175,60 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 },
             // model 
 
-            async SubmetRowButton(){
-                this.ServerReaponse = null;
-                let data = await this.store()  ;
-                if(data && data.errors){
-                    this.ServerReaponse = data ;
-                }else{
-                    this.ReturnToTablePag();//success from server
-                }
-            },
 
-            async ReturnToTablePag( ) {
-                return this.$router.push({ 
-                    name: this.TablePageName , 
-                    query: { CurrentPage: this.$route.query.CurrentPage } 
-                })
-            },
+                async DetectVueError(){
+                    var check = await (new validation).validate(this.RequestData);
+                    if( check ){// if there is error from my file
+                        this.ServerReaponse = check; // error from my file
+                    }
+                    console.log(this.ServerReaponse);
+                },
 
+                HandleData(){
+                    if(this.RequestData.age_group){
+                        this.RequestData.age_group_id = this.RequestData.age_group.id;
+                    }
+                },
+            // before send to server
+
+            // relationship
+                async GetAgeGroups(){
+                    this.AgeGroupRows  = ( await this.AllAgeGroups() ).data.data;
+                },
+            // relationship
+
+
+
+
+            // after send to server
+                async SubmetRowButton(){
+                    var data = await this.store()  ; // send update request
+                    if(data && data.errors){// stay and show error
+                        await this.DetectServerError(data)  ;
+                    }else{
+                        await this.ReturnToTablePage();//success from server
+                    }
+                },
+                async DetectServerError(data){
+                    this.ServerReaponse = data ;//error from the server
+                },
+                async ReturnToTablePage( ) {
+                    return this.$router.push({ 
+                        name: this.TablePageName , 
+                        query: { CurrentPage: this.$route.query.CurrentPage } 
+                    })
+                },
+            // after send to server
+ 
+
+            // model 
+                AllAgeGroups(){
+                    return  (new AgeGroupModel).all()  ;
+                },
+                store(){
+                    return  (new Model).store(this.RequestData)  ;
+                },
+            // model 
         },
 
     }

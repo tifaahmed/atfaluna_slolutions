@@ -1,10 +1,16 @@
 import Model    from './Model';
-import Router    from './Routers/AgeGroup' ;
+import Router    from './Routers/Age' ;
 
 
-export default class AgeGroup extends Model {
+export default class Age extends Model {
    
-   languagesformData : string = 'languages' ;
+   public async handleData(RequestData) : Promise<any>  {  
+      let formData = new FormData();
+      await Model.getformData(formData,RequestData) ;
+
+      return formData;
+   }
+
    protected async all() : Promise<any>  {  
       let result : any = '';
       try {
@@ -32,15 +38,7 @@ export default class AgeGroup extends Model {
    }
 
    protected async store(RequestData : any) : Promise<any>  {  
-      let formData = new FormData();
-      await Model.getformData(formData,RequestData) ;
-
-      // languages
-         if (RequestData.languages ) {
-            let data =RequestData.languages;
-            await Model.getObjectFormData(formData,data,this.languagesformData);
-         }   
-      // languages
+      let formData = await this.handleData(RequestData);
 
        let result : any = '';
        try {
@@ -77,17 +75,11 @@ export default class AgeGroup extends Model {
        return result;
    }
 
-   protected async update ( id  : number ,RequestData ?: any) : Promise< any > {
-      let formData = new FormData();
-      await Model.getformData(formData,RequestData) ;
 
-      // languages
-         if (RequestData.languages ) {
-            let data =RequestData.languages;
-            await Model.getObjectFormData(formData,data,this.languagesformData);
-         }  
-      // languages
-    
+   protected async update ( id  : number ,RequestData ?: any) : Promise< any > {
+
+      let formData = await this.handleData(RequestData);
+
       let result : any = '';
       try {
          result =  await (new Router).UpdateAxios(id,formData) ;
