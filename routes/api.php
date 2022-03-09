@@ -107,6 +107,20 @@ use Illuminate\Support\Facades\Route;
             Route::post('/attach'                   ,   'SubjectController@attach'              )->name('attach'),
             Route::post('/detach'                   ,   'SubjectController@detach'              )->name('detach'),
         ]),
+    //Sub-subjec
+    Route::name('sub-subject.')->prefix('/sub-subject')->group( fn ( ) : array => [
+        Route::get('/'                          ,   'SubSubjectController@all'                 )->name('all'),
+        Route::post(''                          ,   'SubSubjectController@store'               )->name('store'),
+        Route::get('/{id}/show'                 ,   'SubSubjectController@show'                )->name('show'),
+        Route::get('/collection'                ,   'SubSubjectController@collection'          )->name('collection'),
+        Route::DELETE('/{id}'                   ,   'SubSubjectController@destroy'             )->name('destroy'),
+        Route::post('/{id}/update'              ,   'SubSubjectController@update'              )->name('update'),
+        Route::post('/{id}/restore'             ,   'SubSubjectController@restore'             )->name('restore'),
+    
+        Route::DELETE('premanently-delete/{id}' ,   'SubSubjectController@premanently_delete'  )->name('premanently_delete'),
+        Route::get('/collection-trash'          ,   'SubSubjectController@collection_trash'    )->name('collection_trash'),
+        Route::get('/{id}/show-trash'           ,   'SubSubjectController@show_trash'          )->name('show_trash'),
+    ]),  
         //Package
         Route::name('package.')->prefix('/package')->group( fn ( ) : array => [
             Route::get('/'                          ,   'PackageController@all'                 )->name('all'),

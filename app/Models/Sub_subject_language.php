@@ -16,9 +16,10 @@ class Sub_subject_language extends Model
     protected $table = 'sub_subject_languages';
 
     protected $fillable = [
-        'image',//required , max:5000
-        'name',//required 
-        'subject',//required 
+        'image_one',//  max:5000
+        'image_two',//  max:5000
+        'name',// 
+        'subject',// 
         'language',//required
         'sub_subject_id',//required integer unsigned
     ];

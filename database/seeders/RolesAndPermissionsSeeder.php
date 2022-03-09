@@ -14,10 +14,10 @@ class RolesAndPermissionsSeeder extends Seeder {
         app( )[ PermissionRegistrar::class ] -> forgetCachedPermissions( );
 
 
-        Role::create( [ 'name' => 'sub-admin'   ,'guard_name' => 'api' ] )  ;
-        Role::create( [ 'name' => 'super-admin' ,'guard_name' => 'api' ] )  ;
-        Role::create( [ 'name' => 'admin'       ,'guard_name' => 'api' ] )  ;
-        Role::create( [ 'name' => 'parent'      ,'guard_name' => 'api' ] )  ;
+        Role::create( [ 'name' => 'sub-admin'   ,'guard_name' => 'web' ] )  ;
+        Role::create( [ 'name' => 'super-admin' ,'guard_name' => 'web' ] )  ;
+        Role::create( [ 'name' => 'admin'       ,'guard_name' => 'web' ] )  ;
+        Role::create( [ 'name' => 'parent'      ,'guard_name' => 'web' ] )  ;
 
     }
 

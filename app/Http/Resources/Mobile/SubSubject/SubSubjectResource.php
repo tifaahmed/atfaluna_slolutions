@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Resources\Mobile;
+namespace App\Http\Resources\Mobile\SubSubject;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Resources\Mobile\CertificateResource;
+use App\Http\Resources\Mobile\SubjectResource;
 use App\Http\Resources\Mobile\Collections\SubSubject\SubSubjectLanguagesCollection;
 
-class SubjectResource extends JsonResource
+class SubSubjectResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,24 +17,18 @@ class SubjectResource extends JsonResource
      */
     public function toArray($request)
     {
-        $row=$this->subject_languages()->Localization()->RelatedLanguage($this->id)->first();
+        $row=$this->subSubject_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'            => $this->id,
-            'name'          => $this->name,
-            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
-            'points'        => $this->points,
-            
+            'name'          => $row ? $row->name:'',
+            'subject'       => new SubjectResource (  $this->subject )  ,
+
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
-            'languages'     => $this->Subject_language,
-            
-            'name'          => $row ? $row->name:'',
+            'languages'     => new SubSubjectLanguagesCollection ( $this->subSubject_languages ),
 
-            'sub_subjects'        => new SubSubjectLanguagesCollection  ($this->sub_subjects),
-            'certificate'        =>  new CertificateResource  ($this->certificate),
-            
         ];        
     }
 }

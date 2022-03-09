@@ -21,6 +21,7 @@ class CreateCertificatesTable extends Migration
             $table->string('image_two'); //[note: 'not null']
             $table->integer('min_point');
             $table->integer('max_point');
+
             $table->timestamps();
             $table->softDeletes();
         });

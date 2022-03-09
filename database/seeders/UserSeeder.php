@@ -23,7 +23,6 @@ class UserSeeder extends Seeder
     {
         $admin= User::create( [
             'name' => 'super admin',
-            
             'email' => 'admin@admin.com',
             'phone' => '01000011000',
             'password' => Hash::make('123456'),
@@ -31,5 +30,8 @@ class UserSeeder extends Seeder
             'birthdate' => '2022-02-14 15:30:36',
             'country_id' => 1,
         ]);
+        $admin->assignRole('admin');
+        $admin->assignRole('super-admin');
+
     }
 }
