@@ -12,6 +12,8 @@ import AgeGroupRoutes      from 'AdminRoutes/AgeGroupRoutes'    ;
 import CountryRoutes      from 'AdminRoutes/CountryRoutes'    ;
 import SubUserRoutes      from 'AdminRoutes/SubUserRoutes'    ;
 import AvatarRoutes      from 'AdminRoutes/AvatarRoutes'    ;
+import AgeRoutes        from 'AdminRoutes/AgeRoutes';
+import SubjectRoutes from 'AdminRoutes/SubjectRoutes';
 
 
 
@@ -30,6 +32,8 @@ export default
     AgeGroupRoutes,
     CountryRoutes,
     SubUserRoutes,
+    AgeRoutes,
+    SubjectRoutes,
     AvatarRoutes
 ] 
 }

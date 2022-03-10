@@ -18,7 +18,7 @@ class Lesson_language extends Model
 
 
     protected $fillable = [
-        'item',//required
+        'name',//required
         'language',//required ,limit 2
         'lesson_id',//unsigned cascade
     ];

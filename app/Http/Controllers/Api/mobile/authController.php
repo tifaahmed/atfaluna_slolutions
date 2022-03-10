@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-use App\Http\Resources\Dashboard\UserResource;
+use App\Http\Resources\Mobile\UserResource;
 use Illuminate\Support\Facades\Auth;
 class authController extends Controller {
  

@@ -19,7 +19,6 @@ use App\Repository\SubjectRepositoryInterface as ModelInterface;
 use App\Repository\SubjectLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages
 
 
-
 class SubjectController extends Controller
 {
     private $Repository;
