@@ -24,25 +24,18 @@ class UserResource extends JsonResource
             'avatar'         => Storage::disk('public')->exists($this->avatar) ? asset(Storage::url($this->avatar))  : null,
 
             'birthdate'        => $this->birthdate,
-            'country'          => new CountryResource ( $this->country ),
 
-<<<<<<< HEAD
             // date
                 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
                 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
                 'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-=======
-            'UserRoles'      => $this->UserRole,
-            'UserPermissions'=> $this->UserPermission,
-            'sub_user'       => new SubUserCollection ($this->sub_user)  ,
->>>>>>> b435a8adf30303ebb3e636238093489e06c37dd3
 
             // relations
                 'UserRoles'         => $this->UserRole,
                 'UserPermissions'   => $this->UserPermission,
                 'sub_user'          => $this->sub_user,
+                'country'          => new CountryResource ( $this->country ),
 
         ];
     }
 }
-
