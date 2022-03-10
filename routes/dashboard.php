@@ -391,7 +391,7 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::get('/collection-trash'          ,   'SubjectController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'SubjectController@show_trash'          )->name('show_trash'),
         ]),
-    //Subject
+    //Sub-subjec
         Route::name('sub-subject.')->prefix('/sub-subject')->group( fn ( ) : array => [
             Route::get('/'                          ,   'SubSubjectController@all'                 )->name('all'),
             Route::post(''                          ,   'SubSubjectController@store'               )->name('store'),

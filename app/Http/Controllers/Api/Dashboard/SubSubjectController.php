@@ -142,9 +142,13 @@ class SubSubjectController extends Controller
         public function storeLanguage($language_array ) {
             $all = [ ];
             try {
-                $file_one = 'image';
+                $file_one = 'image_one';
                 if (isset($language_array[$file_one]) && $language_array[$file_one]) {            
                     $all += $this->HelperHandleFile($this->folder_name,$language_array[$file_one],$file_one)  ;
+                }
+                $file_two = 'image_two';
+                if (isset($language_array[$file_two]) && $language_array[$file_two]) {            
+                    $all += $this->HelperHandleFile($this->folder_name,$language_array[$file_two],$file_two)  ;
                 }
                 $all += array( 'name'       => $language_array['name']      );
                 $all += array( 'subject'    => $language_array['subject']   );

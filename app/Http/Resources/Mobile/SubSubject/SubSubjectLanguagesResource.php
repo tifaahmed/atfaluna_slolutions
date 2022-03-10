@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\SubSubject;
+namespace App\Http\Resources\Mobile\SubSubject;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
