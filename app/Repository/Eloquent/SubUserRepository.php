@@ -26,7 +26,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	{
 		if($accessory_ids){
 			$result = $this->findById($id); 
-			$result->subUserAccessory()->detach();
+			// $result->subUserAccessory()->detach();
 			$result->subUserAccessory()->syncWithoutDetaching($accessory_ids);
 		}
 	}
@@ -34,7 +34,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	{
 		if($avatar_ids){
 			$result = $this->findById($id); 
-			$result->subUserAvatar()->detach();
+			// $result->subUserAvatar()->detach();
 			$result->subUserAvatar()->syncWithoutDetaching($avatar_ids);
 	
 		}

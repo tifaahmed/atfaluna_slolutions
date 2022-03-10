@@ -17,6 +17,7 @@ class CreateTrueFalseQuestionsTable extends Migration
             $table->increments('id');//[pk]
             $table->string('image');
             $table->string('videos');
+            $table->string('audio');
             $table->boolean('answer'); //[default:false]
             $table->integer('quiz_id')->unsigned();
             $table->foreign('quiz_id')->references('id')->on('quizzes');

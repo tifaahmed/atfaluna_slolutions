@@ -19,15 +19,15 @@ class True_false_question_language extends Model
     protected $fillable = [
         'title',//required
         'language',//required ,limit 2
-        'true_false_questions_id',//unsigned cascade
+        'true_false_question_id',//unsigned cascade
     ];
     public $timestamps = false;
     //relation
     public function true_false_question(){
-        return $this->belongsTo(True_false_question::class,'true_false_questions_id');
+        return $this->belongsTo(True_false_question::class,'true_false_question_id');
     }
     public function scopeRelatedLanguage($query,$id){
-        return $query->where('true_false_questions_id', $id);
+        return $query->where('true_false_question_id', $id);
     }
 
     public function scopeLocalization($query){
