@@ -19,7 +19,7 @@ class Sub_subject_language extends Model
         'image_one',//  max:5000
         'image_two',//  max:5000
         'name',// 
-        'subject',// 
+        'description',// 
         'language',//required
         'sub_subject_id',//required integer unsigned
     ];
