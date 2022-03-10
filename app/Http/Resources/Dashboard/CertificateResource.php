@@ -25,13 +25,13 @@ class CertificateResource extends JsonResource
             'min_point'        =>  $this->min_point,
             'max_point'        =>  $this->max_point,
 
-            'name'          => $row ? $row->name:'',
             
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
             'languages'     => $this->Certificate_language,
+            'name'          => $row ? $row->name:'',
 
 
         ];        

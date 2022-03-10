@@ -72,8 +72,8 @@ class AvatarController extends Controller
     public function attach(MobileAvatarApiRequest $request){
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            foreach ($request->avatar_id as $key => $value) {
-                $model->subUserAvatar()->attach($value);
+            foreach ($request->avatar_ids as $key => $value) {
+                $model->subUserAvatar()->syncWithoutDetaching($value);
             }
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],

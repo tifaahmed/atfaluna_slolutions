@@ -25,7 +25,7 @@ class MobileCertificateApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'certificate_id'    =>  [ 'required' ,'array' ,'exists:certificates,id'] ,
+            'certificate_ids'    =>  [ 'required' ,'array' ,'exists:certificates,id'] ,
             'sub_user_id'       =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,
         ];
     }

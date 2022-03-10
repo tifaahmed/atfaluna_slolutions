@@ -4,7 +4,7 @@ namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Resources\Dashboard\Collections\SubjectCollection;
+// use App\Http\Resources\Dashboard\Collections\SubjectCollection;
 
 class SubjectResource extends JsonResource
 {

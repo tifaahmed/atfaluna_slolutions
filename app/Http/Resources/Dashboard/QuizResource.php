@@ -5,6 +5,9 @@ namespace App\Http\Resources\Dashboard;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
+use App\Http\Resources\Dashboard\SubjectResource;
+
+
 class QuizResource extends JsonResource
 {
     /**
@@ -20,7 +23,7 @@ class QuizResource extends JsonResource
         return [
             'id'            => $this->id,
             'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
-            'points'         => $this->points,
+            'points'        => $this->points,
             'name'          => $row ? $row->name:'',
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
@@ -29,6 +32,7 @@ class QuizResource extends JsonResource
 
             'languages'     => $this->Quiz_language,
 
+            'subject'       => new SubjectResource (  $this->subject )  ,
 
         ];        
     }
