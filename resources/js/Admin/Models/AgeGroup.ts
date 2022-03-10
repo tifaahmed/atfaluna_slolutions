@@ -5,7 +5,16 @@ import Router    from './Routers/AgeGroup' ;
 export default class AgeGroup extends Model {
    
    languagesformData : string = 'languages' ;
-
+   protected async all() : Promise<any>  {  
+      let result : any = '';
+      try {
+         result   = await (new Router).AllAxios() ;
+      } catch (error) {
+         result = Model.catch(error) ;
+         Model.ErrorNotification(result.data.message) ;
+      }
+      return result;
+   }
    protected async collection(page : number , PerPage :number)  : Promise<Model> {  
       let result : any = '';
       try {

@@ -27,6 +27,12 @@
                                 :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.image )   ) ? ServerReaponse.errors.image : null"
                             />
 
+                             <InputsFactory :Factorylable="'points'"  :FactoryPlaceholder="'points'"
+                                :FactoryType="'number'" :FactoryName="'points'"   v-model ="RequestData.points" 
+                                :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.points )   ) ? ServerReaponse.errors.points : null"
+                            />
+
+
                             <InputsFactory :Factorylable="'price'"  :FactoryPlaceholder=" 'price' "         
                                 :FactoryType="'string'" :FactoryName="'price'"  v-model ="RequestData.price"  
                                 :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.price )  ) ? ServerReaponse.errors.price : null" 

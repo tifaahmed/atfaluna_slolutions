@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class HeroLlanguage extends Model
+class Hero_language extends Model
 {
     use HasFactory;
 }
