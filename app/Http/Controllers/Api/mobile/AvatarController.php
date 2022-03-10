@@ -39,11 +39,8 @@ class AvatarController extends Controller
         }
     }
     public function collection(Request $request){
-        // return $request->language;
         try {
-            $model =  $this->ModelRepository->filterPaginate($request->Gender,$request->PerPage ? $request->PerPage : 10) ;
-            // $model  =  $this->Gender($model,$request->Gender);
-             
+            $model =  $this->ModelRepository->filterPaginate($request->Gender,$request->PerPage ? $request->PerPage : 10) ;             
             return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  

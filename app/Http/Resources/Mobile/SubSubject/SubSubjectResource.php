@@ -5,7 +5,6 @@ namespace App\Http\Resources\Mobile\SubSubject;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Mobile\SubjectResource;
-use App\Http\Resources\Mobile\Collections\SubSubject\SubSubjectLanguagesCollection;
 
 class SubSubjectResource extends JsonResource
 {
@@ -21,14 +20,16 @@ class SubSubjectResource extends JsonResource
 
         return [
             'id'            => $this->id,
-            'name'          => $row ? $row->name:'',
-            'subject'       => new SubjectResource (  $this->subject )  ,
+
+            'name'               => $row ? $row->name:'',
+            'description'        => $row ? $row->description:'',
+
+            'image_one'          =>( $row && $row->image_one && Storage::disk('public')->exists($row->image_one) )? Storage::url($row->image_one)  : null ,
+            'image_two'          =>( $row && $row->image_two && Storage::disk('public')->exists($row->image_two) )? Storage::url($row->image_two)  : null ,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
-            'languages'     => new SubSubjectLanguagesCollection ( $this->subSubject_languages ),
-
         ];        
     }
 }
