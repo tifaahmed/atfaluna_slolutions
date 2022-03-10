@@ -26,14 +26,16 @@ class UserResource extends JsonResource
             'birthdate'        => $this->birthdate,
             'country'          => new CountryResource ( $this->country ),
 
-            'UserRoles'      => $this->UserRole,
-            'UserPermissions'=> $this->UserPermission,
+            // date
+                'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
+                'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+                'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
 
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            // relations
+                'UserRoles'         => $this->UserRole,
+                'UserPermissions'   => $this->UserPermission,
+                'sub_user'          => $this->sub_user,
 
-            
         ];
     }
 }
