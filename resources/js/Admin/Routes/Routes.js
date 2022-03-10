@@ -14,6 +14,7 @@ import SubUserRoutes      from 'AdminRoutes/SubUserRoutes'    ;
 import AvatarRoutes      from 'AdminRoutes/AvatarRoutes'    ;
 import AgeRoutes        from 'AdminRoutes/AgeRoutes';
 import SubjectRoutes from 'AdminRoutes/SubjectRoutes';
+import QuizRoutes from 'AdminRoutes/QuizRoutes';
 
 
 
@@ -34,6 +35,7 @@ export default
     SubUserRoutes,
     AgeRoutes,
     SubjectRoutes,
+    QuizRoutes,
     AvatarRoutes
 ] 
 }

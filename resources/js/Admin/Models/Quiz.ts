@@ -1,8 +1,8 @@
 import Model    from './Model';
-import Router    from './Routers/Subject' ;
+import Router    from './Routers/Quiz' ;
 
 
-export default class Subject extends Model {
+export default class Quiz extends Model {
       languagesformData : string = 'languages' ;
 
    public async handleData(RequestData) : Promise<any>  {  
