@@ -19,15 +19,15 @@ class Mcq_answer_language extends Model
     protected $fillable = [
         'title',//required
         'language',//required ,limit 2
-        'mcq_answers_id',//unsigned cascade
+        'mcq_answer_id',//unsigned cascade
     ];
     public $timestamps = false;
     //relation
     public function mcq_answer(){
-        return $this->belongsTo(Mcq_answer::class,'mcq_answers_id');
+        return $this->belongsTo(Mcq_answer::class,'mcq_answer_id');
     }
     public function scopeRelatedLanguage($query,$id){
-        return $query->where('mcq_answers_id', $id);
+        return $query->where('mcq_answer_id', $id);
     }
 
     public function scopeLocalization($query){
