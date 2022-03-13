@@ -23,7 +23,6 @@
                             </span> 
 
                             
-
                             <InputsFactory :Factorylable="'Subject'" 
                                 :FactoryType="'select'" :FactoryName="'subject_id'"   v-model ="RequestData.subject"  
                                 :FactorySelectOptions="SubjectRows"   
@@ -35,18 +34,6 @@
 
                                 :FactorySelectimage="''"  
                                 :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.subject_id )  ) ? ServerReaponse.errors.subject_id : null" 
-                            />
-
-
-                            <InputsFactory :Factorylable="'image'"  :FactoryPlaceholder="'image'"
-                                :FactoryType="'file'" :FactoryName="'image'"   v-model ="RequestData.image"  
-                                :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.image )   ) ? ServerReaponse.errors.image : null"
-                            />
-
-
-                             <InputsFactory :Factorylable="'points'"  :FactoryPlaceholder="'points'"
-                                :FactoryType="'number'" :FactoryName="'points'"   v-model ="RequestData.points" 
-                                :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.points )   ) ? ServerReaponse.errors.points : null"
                             />
 
                         </div>
@@ -102,7 +89,13 @@ import InputsFactory  from 'AdminPartials/Components/Inputs/InputsFactory.vue'  
 
             LanguagesRows : null,
             LanguagesColumn : [
-                { type: 'string',placeholder:'name',header :'name', name : 'name'},
+                { type: 'string'  ,placeholder:'name',header :'name', name : 'name'},
+                { type: 'string'  ,placeholder:'description',header :'description', name : 'description'},
+                { type: 'file'    ,placeholder:'image one',header :'image_one', name : 'image one'},
+                { type: 'file'    ,placeholder:'image two',header :'image_two', name : 'image two'},
+                { type: 'string'  ,placeholder:'language',header :'language', name : 'language'},
+
+                
             ],
 
             SubjectRows   : null,
@@ -110,17 +103,13 @@ import InputsFactory  from 'AdminPartials/Components/Inputs/InputsFactory.vue'  
 
               ServerReaponse : {
                 errors : {
-                    image :[],
                     subject_id : [],
-                    points :[],
                 },
                 message : null,
             },
             RequestData : {
-                    points          : null,
                     subject_id      : null,
                     subject         : null,
-                    image           : null, 
 
                     languages       : { },
 
