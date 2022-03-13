@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import Model     from 'AdminModels/Quiz';
+import Model     from 'AdminModels/SubSubject';
 
 import pagination           from 'laravel-vue-pagination';
 import ModalIndex           from 'AdminPartialsModal/MainModel.vue'     ;
@@ -70,20 +70,19 @@ import TableControllers     from 'AdminPartials/Components/Controllers/TableCont
 import ColumsIndex          from 'AdminPartials/Components/colums/ColumsIndex.vue'     ;
 
 export default {
-    name:"QuizAll",
+    name:"SubSubjectAll",
     components:{
         pagination,ModalIndex,TableControllers,ColumsIndex
     },
 
     data( ) { return {
-        TableName :'Quiz',
+        TableName :'SubSubject',
 
         TableRows  : {},
         Columns :  [
                 { type: 'Router'    ,header : 'id'      , name : 'id'           , value : null  } ,
 
                 { type: 'Image'    ,header : 'image'    , name : 'image', value : null  } ,
-                { type: 'String'    ,header : 'points'  , name : 'points'       , value : null  } ,
 
                 { type: 'Forloop'   ,header : 'name'    , name : 'languages'    , value : null  , LoopOnColumn :['language','name']} ,
                 
