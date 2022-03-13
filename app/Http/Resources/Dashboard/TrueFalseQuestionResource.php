@@ -32,7 +32,6 @@ class TrueFalseQuestionResource extends JsonResource
             'languages'     => $this->true_false_question_languages,
             'title'          => $row ? $row->title:'',
 
-
         ];        
     }
 }

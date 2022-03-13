@@ -27,8 +27,8 @@ class McqQuestionResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            'languages'     => $this->Mcq_question_language,
-            'name'          => $row ? $row->name:'',
+            'languages'     => $this->mcq_question_languages,
+            'title'          => $row ? $row->title:'',
 
             'quiz'          => new QuizResource (  $this->quiz )  ,
         ];        

@@ -16,17 +16,18 @@ use App\Http\Resources\Dashboard\McqQuestionResource as ModelResource;
 
 // lInterfaces
 use App\Repository\McqQuestionRepositoryInterface as ModelInterface;
+use App\Repository\McqQuestionLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages
 
 class McqQuestionController extends Controller
 {
     private $Repository;
     private $RepositoryLanguage;
-    public function __construct(ModelInterface $Repository)
+    public function __construct(ModelInterface $Repository,ModelInterfaceLanguage $RepositoryLanguage)
     {
         $this->ModelRepository = $Repository;
+        $this->ModelRepositoryLanguage = $RepositoryLanguage;
         $this->folder_name = 'mcqquestion';
         $this->related_language = 'mcq_question_id';
-
     }
     public function all(){
         try {
@@ -46,8 +47,11 @@ class McqQuestionController extends Controller
             if ($request->hasFile($file_one)) {            
                 $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
             }
-
-            $modal = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
+            $file_two = 'videos';
+            if ($request->hasFile($file_two)) {            
+                $all += $this->HelperHandleFile($this->folder_name,$request->file($file_two),$file_two)  ;
+            }
+            $modal = new ModelResource( $this->ModelRepository->create( Request()->except($file_one,$file_two,)+$all ) );
 
             // // languages
             $this -> update_store_language($request->languages,$modal->id) ;
@@ -134,7 +138,11 @@ class McqQuestionController extends Controller
             if ($request->hasFile($file_one)) {            
                 $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
             }
-            $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
+            $file_two = 'videos';
+            if ($request->hasFile($file_two)) {            
+                $all += $this->HelperHandleFile($this->folder_name,$request->file($file_two),$file_two)  ;
+            }
+            $this->ModelRepository->update( $id,Request()->except($file_one,$file_two)+$all) ;
             $modal = new ModelResource( $this->ModelRepository->findById($id) );
                 //  languages
                 $this -> update_store_language($request->languages,$modal->id) ;
