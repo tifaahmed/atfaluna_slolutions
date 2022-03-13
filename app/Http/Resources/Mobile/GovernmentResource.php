@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Mobile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Dashboard\Collections\CityCollection;
+use App\Http\Resources\Mobile\Collections\CityCollection;
 
 class GovernmentResource extends JsonResource
 {

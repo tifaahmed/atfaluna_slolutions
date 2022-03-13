@@ -18,6 +18,7 @@ class Lesson_language extends Model
 
 
     protected $fillable = [
+        'image',//required, max:5000
         'name',//required
         'language',//required ,limit 2
         'lesson_id',//unsigned cascade

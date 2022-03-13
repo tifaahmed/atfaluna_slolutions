@@ -11,18 +11,18 @@
                     <div class="card-body pt-0">
                         <div class="">
                             <span v-for="( row    , rowkey ) in LanguagesRows " :key="rowkey" >
-                                <span v-for="( row_    , rowkey_ ) in Languagescolumn " :key="rowkey_" >
-                                    <!-- (LanguagesRows) loop on ar & en -->
-                                        <label >{{row_+' ( ' + row.full_name + ' ) '}}</label>
-                                        <input :placeholder="  row_+' ( ' + row.name + ' ) '" class="form-control" 
-                                        v-model ="RequestData.languages[rowkey][row_]"  
-                                        />
-                                    <!-- (LanguagesRows) loop on ar & en -->
+                                <!-- (LanguagesRows) loop on ar & en -->
+                                <span v-for="( row_    , rowkey_ ) in LanguagesColumn " :key="rowkey_" >
+                                    <InputsFactory :Factorylable="row_.header+' ( ' + row.full_name + ' ) '" :FactoryPlaceholder="row_.placeholder"         
+                                        :FactoryType="row_.type" :FactoryName="row_.name"  v-model ="RequestData.languages[rowkey][row_.name]"  
+                                        :FactoryErrors="null" 
+                                    />
                                 </span>
-                            </span>
+                                <hr>
+                            </span> 
 
                             <InputsFactory :Factorylable="'age'"  :FactoryPlaceholder=" 'age' "         
-                                :FactoryType="'string'" :FactoryName="'age'"  v-model ="RequestData.age"  
+                                :FactoryType="'number'" :FactoryName="'age'"  v-model ="RequestData.age"  
                                 :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.age )  ) ? ServerReaponse.errors.age : null" 
                             />
 
@@ -74,9 +74,11 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
         data( ) { return {
             TableName :'AgeGroup',
             TablePageName :'AgeGroup.ShowAll',
-            LanguagesRows : null,
-            Languagescolumn : ['name'],
 
+            LanguagesRows : null,
+            LanguagesColumn : [
+                { type: 'string',placeholder:'name',header :'name', name : 'name'},
+            ],
 
             ServerReaponse : {
                 errors : {
@@ -114,20 +116,24 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 }
             },
 
-            async GetlLanguages(page){
-                this.LanguagesRows  = ( await this.AllLanguages() ).data.data;
-                let languages = this.RequestData.languages;
+            async GetlLanguages(){
+                this.LanguagesRows  = ( await this.AllLanguages() ).data.data; // all languages
+                let item_languages = this.RequestData.languages; // item language data
+                let handleLanguages= {}; //handle Languages from item data & all languages
+
                 for (var key in this.LanguagesRows) {
-                    languages[key] = [];
-                        Vue.set( languages[key],  'language');
-                        languages[key].language = this.LanguagesRows[key].name;
-                    for (var key_ in this.Languagescolumn) {
-                        Vue.set( languages[key],  this.Languagescolumn[key_]);
-                        languages[key][this.Languagescolumn[key_]] = null;
+                    handleLanguages[key] = [];
+                        Vue.set( handleLanguages[key],  'language'); // language key
+                        handleLanguages[key].language = this.LanguagesRows[key].name;//fr & en & ar
+                    for (var key_ in this.LanguagesColumn) {
+                        Vue.set( handleLanguages[key],  this.LanguagesColumn[key_].name); // ex (name,image,desc,subject) key
+                        if(  item_languages[key] &&  item_languages[key]['language'] ==  this.LanguagesRows[key].name ){
+                            handleLanguages[key][this.LanguagesColumn[key_].name] = item_languages[key][this.LanguagesColumn[key_].name] ;
+                        }
                     }
                 }
-                this.RequestData.languages = languages;
-                console.log(this.RequestData);
+                this.RequestData.languages = '';
+                this.RequestData.languages = handleLanguages;
             },
 
             // model 

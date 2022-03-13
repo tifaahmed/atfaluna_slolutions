@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Subject;
 use App\Models\Sub_subject_language;
+use App\Models\Lesson;
 
 class Sub_subject extends Model
 {
@@ -25,5 +26,8 @@ class Sub_subject extends Model
     }
     public function subSubject_languages(){
         return $this->HasMany(Sub_subject_language::class);
+    }
+    public function lessons(){
+        return $this->HasMany(Lesson::class);
     }
 }
