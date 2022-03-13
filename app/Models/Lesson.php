@@ -17,9 +17,8 @@ class Lesson extends Model
     protected $table = 'lessons';
 
     protected $fillable = [
-        'image',//required, max:5000
         'url',//required, max:5000
-        'points',//required integer
+        'points',//required integer default(0)
         'sub_subject_id',//unsigned
         'lesson_type_id',//unsigned
     ];

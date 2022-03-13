@@ -3,6 +3,7 @@
 namespace App\Repository\Eloquent;
 
 use App\Models\Sub_subject as ModelName;
+use App\Models\Subject;
 use App\Repository\SubSubjectRepositoryInterface;
 
 class SubSubjectRepository extends BaseRepository implements SubSubjectRepositoryInterface
@@ -23,7 +24,25 @@ class SubSubjectRepository extends BaseRepository implements SubSubjectRepositor
 	}
 
 
-
+	public function filterPaginate($subject_id,int $itemsNumber)  
+    {
+		if($subject_id){
+			$subject = Subject::find($subject_id);
+			$result =$subject->sub_subjects();
+			return $this->queryPaginate($result,$itemsNumber);
+		}else{
+			return $this->collection( $itemsNumber)  ;
+		}
+    }
+	public function filterAll($subject_id)  
+    {
+		if($subject_id){
+			$subject = Subject::find($subject_id);
+			return $subject->sub_subjects()->get();
+		}else{
+			return $this->all()  ;
+		}
+	}
 
 	
 }

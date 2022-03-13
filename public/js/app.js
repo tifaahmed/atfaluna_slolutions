@@ -15134,7 +15134,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       TableName: 'AgeGroup',
       TablePageName: 'AgeGroup.ShowAll',
       LanguagesRows: null,
-      Languagescolumn: ['name'],
+      LanguagesColumn: [{
+        type: 'string',
+        placeholder: 'name',
+        header: 'name',
+        name: 'name'
+      }],
       ServerReaponse: {
         errors: {
           age: []
@@ -15196,11 +15201,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    GetlLanguages: function GetlLanguages(page) {
+    GetlLanguages: function GetlLanguages() {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var languages, key, key_;
+        var item_languages, handleLanguages, key, key_;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -15210,23 +15215,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 _this3.LanguagesRows = _context3.sent.data.data;
-                languages = _this3.RequestData.languages;
+                // all languages
+                item_languages = _this3.RequestData.languages; // item language data
+
+                handleLanguages = {}; //handle Languages from item data & all languages
 
                 for (key in _this3.LanguagesRows) {
-                  languages[key] = [];
-                  Vue.set(languages[key], 'language');
-                  languages[key].language = _this3.LanguagesRows[key].name;
+                  handleLanguages[key] = [];
+                  Vue.set(handleLanguages[key], 'language'); // language key
 
-                  for (key_ in _this3.Languagescolumn) {
-                    Vue.set(languages[key], _this3.Languagescolumn[key_]);
-                    languages[key][_this3.Languagescolumn[key_]] = null;
+                  handleLanguages[key].language = _this3.LanguagesRows[key].name; //fr & en & ar
+
+                  for (key_ in _this3.LanguagesColumn) {
+                    Vue.set(handleLanguages[key], _this3.LanguagesColumn[key_].name); // ex (name,image,desc,subject) key
+
+                    if (item_languages[key] && item_languages[key]['language'] == _this3.LanguagesRows[key].name) {
+                      handleLanguages[key][_this3.LanguagesColumn[key_].name] = item_languages[key][_this3.LanguagesColumn[key_].name];
+                    }
                   }
                 }
 
-                _this3.RequestData.languages = languages;
-                console.log(_this3.RequestData);
+                _this3.RequestData.languages = '';
+                _this3.RequestData.languages = handleLanguages;
 
-              case 7:
+              case 8:
               case "end":
                 return _context3.stop();
             }
@@ -15381,6 +15393,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 
@@ -15391,15 +15406,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   name: "AgeGroupEdit",
   mounted: function mounted() {
-    this.GetlLanguages();
     this.GetData();
+    this.GetlLanguages();
   },
   data: function data() {
     return {
       TableName: 'AgeGroup',
       TablePageName: 'AgeGroup.ShowAll',
       LanguagesRows: null,
-      Languagescolumn: ['name'],
+      LanguagesColumn: [{
+        type: 'string',
+        placeholder: 'name',
+        header: 'name',
+        name: 'name'
+      }],
       ServerReaponse: {
         errors: {
           age: []
@@ -15485,11 +15505,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    GetlLanguages: function GetlLanguages(page) {
+    GetlLanguages: function GetlLanguages() {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var languages, key, key_;
+        var item_languages, handleLanguages, key, key_;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -15499,22 +15519,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 _this3.LanguagesRows = _context3.sent.data.data;
-                languages = _this3.RequestData.languages;
+                // all languages
+                item_languages = _this3.RequestData.languages; // item language data
+
+                handleLanguages = {}; //handle Languages from item data & all languages
 
                 for (key in _this3.LanguagesRows) {
-                  languages[key] = [];
-                  Vue.set(languages[key], 'language');
-                  languages[key].language = _this3.LanguagesRows[key].name;
+                  handleLanguages[key] = [];
+                  Vue.set(handleLanguages[key], 'language'); // language key
 
-                  for (key_ in _this3.Languagescolumn) {
-                    Vue.set(languages[key], _this3.Languagescolumn[key_]);
-                    languages[key][_this3.Languagescolumn[key_]] = "";
+                  handleLanguages[key].language = _this3.LanguagesRows[key].name; //fr & en & ar
+
+                  for (key_ in _this3.LanguagesColumn) {
+                    Vue.set(handleLanguages[key], _this3.LanguagesColumn[key_].name); // ex (name,image,desc,subject) key
+
+                    if (item_languages[key] && item_languages[key]['language'] == _this3.LanguagesRows[key].name) {
+                      handleLanguages[key][_this3.LanguagesColumn[key_].name] = item_languages[key][_this3.LanguagesColumn[key_].name];
+                    }
                   }
                 }
 
-                console.log(_this3.RequestData);
+                _this3.RequestData.languages = '';
+                _this3.RequestData.languages = handleLanguages;
 
-              case 6:
+              case 8:
               case "end":
                 return _context3.stop();
             }
@@ -50766,45 +50794,45 @@ var render = function() {
                     return _c(
                       "span",
                       { key: rowkey },
-                      _vm._l(_vm.Languagescolumn, function(row_, rowkey_) {
-                        return _c("span", { key: rowkey_ }, [
-                          _c("label", [
-                            _vm._v(_vm._s(row_ + " ( " + row.full_name + " ) "))
-                          ]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.RequestData.languages[rowkey][row_],
-                                expression:
-                                  "RequestData.languages[rowkey][row_]"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              placeholder: row_ + " ( " + row.name + " ) "
-                            },
-                            domProps: {
-                              value: _vm.RequestData.languages[rowkey][row_]
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                      [
+                        _vm._l(_vm.LanguagesColumn, function(row_, rowkey_) {
+                          return _c(
+                            "span",
+                            { key: rowkey_ },
+                            [
+                              _c("InputsFactory", {
+                                attrs: {
+                                  Factorylable:
+                                    row_.header + " ( " + row.full_name + " ) ",
+                                  FactoryPlaceholder: row_.placeholder,
+                                  FactoryType: row_.type,
+                                  FactoryName: row_.name,
+                                  FactoryErrors: null
+                                },
+                                model: {
+                                  value:
+                                    _vm.RequestData.languages[rowkey][
+                                      row_.name
+                                    ],
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.RequestData.languages[rowkey],
+                                      row_.name,
+                                      $$v
+                                    )
+                                  },
+                                  expression:
+                                    "RequestData.languages[rowkey][row_.name]"
                                 }
-                                _vm.$set(
-                                  _vm.RequestData.languages[rowkey],
-                                  row_,
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ])
-                      }),
-                      0
+                              })
+                            ],
+                            1
+                          )
+                        }),
+                        _vm._v(" "),
+                        _c("hr")
+                      ],
+                      2
                     )
                   }),
                   _vm._v(" "),
@@ -50812,7 +50840,7 @@ var render = function() {
                     attrs: {
                       Factorylable: "age",
                       FactoryPlaceholder: "age",
-                      FactoryType: "string",
+                      FactoryType: "number",
                       FactoryName: "age",
                       FactoryErrors:
                         _vm.ServerReaponse &&
@@ -50936,42 +50964,43 @@ var render = function() {
                 return _c(
                   "span",
                   { key: rowkey },
-                  _vm._l(_vm.Languagescolumn, function(row_, rowkey_) {
-                    return _c("span", { key: rowkey_ }, [
-                      _c("label", [
-                        _vm._v(_vm._s(row_ + " ( " + row.full_name + " ) "))
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.RequestData.languages[rowkey][row_],
-                            expression: "RequestData.languages[rowkey][row_]"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { placeholder: row_ + " ( " + row.name + " ) " },
-                        domProps: {
-                          value: _vm.RequestData.languages[rowkey][row_]
-                        },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                  [
+                    _vm._l(_vm.LanguagesColumn, function(row_, rowkey_) {
+                      return _c(
+                        "span",
+                        { key: rowkey_ },
+                        [
+                          _c("InputsFactory", {
+                            attrs: {
+                              Factorylable:
+                                row_.header + " ( " + row.full_name + " ) ",
+                              FactoryPlaceholder: row_.placeholder,
+                              FactoryType: row_.type,
+                              FactoryName: row_.name,
+                              FactoryErrors: null
+                            },
+                            model: {
+                              value:
+                                _vm.RequestData.languages[rowkey][row_.name],
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.RequestData.languages[rowkey],
+                                  row_.name,
+                                  $$v
+                                )
+                              },
+                              expression:
+                                "RequestData.languages[rowkey][row_.name]"
                             }
-                            _vm.$set(
-                              _vm.RequestData.languages[rowkey],
-                              row_,
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ])
-                  }),
-                  0
+                          })
+                        ],
+                        1
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c("hr")
+                  ],
+                  2
                 )
               }),
               _vm._v(" "),
@@ -50979,7 +51008,7 @@ var render = function() {
                 attrs: {
                   Factorylable: "age",
                   FactoryPlaceholder: "age",
-                  FactoryType: "string",
+                  FactoryType: "number",
                   FactoryName: "age",
                   FactoryErrors:
                     _vm.ServerReaponse &&
@@ -65977,714 +66006,721 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "main-sidemenu" }, [
-        _c("div", { staticClass: "app-sidebar__user clearfix" }, [
-          _c("div", { staticClass: "dropdown user-pro-body" }, [
-            _c("div", {}, [
-              _c("img", {
-                staticClass: "avatar avatar-xl brround",
-                attrs: { alt: "user-img", src: _vm.User.avatar }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "user-info" }, [
-              _c("h4", { staticClass: "font-weight-semibold mt-3 mb-0" }, [
-                _vm._v("atfaluna")
+      _c(
+        "div",
+        { staticClass: "main-sidemenu", staticStyle: { overflow: "scroll" } },
+        [
+          _c("div", { staticClass: "app-sidebar__user clearfix" }, [
+            _c("div", { staticClass: "dropdown user-pro-body" }, [
+              _c("div", {}, [
+                _c("img", {
+                  staticClass: "avatar avatar-xl brround",
+                  attrs: { alt: "user-img", src: _vm.User.avatar }
+                })
               ]),
               _vm._v(" "),
-              _c("span", { staticClass: "mb-0 text-muted" }, [
-                _vm._v(_vm._s(_vm.User.name) + " ")
+              _c("div", { staticClass: "user-info" }, [
+                _c("h4", { staticClass: "font-weight-semibold mt-3 mb-0" }, [
+                  _vm._v("atfaluna")
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "mb-0 text-muted" }, [
+                  _vm._v(_vm._s(_vm.User.name) + " ")
+                ])
               ])
             ])
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "side-menu" }, [
+            _c(
+              "li",
+              { staticClass: "slide" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "side-menu__item",
+                    attrs: {
+                      "data-toggle": "slide",
+                      to: { name: "User.ShowAll" }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "side-menu__icon",
+                        attrs: { viewBox: "0 0 24 24" }
+                      },
+                      [
+                        _c("path", {
+                          attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
+                            opacity: ".3"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "side-menu__label" }, [
+                      _vm._v("User")
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "side-menu" }, [
+            _c(
+              "li",
+              { staticClass: "slide" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "side-menu__item",
+                    attrs: {
+                      "data-toggle": "slide",
+                      to: { name: "SubUser.ShowAll" }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "side-menu__icon",
+                        attrs: { viewBox: "0 0 24 24" }
+                      },
+                      [
+                        _c("path", {
+                          attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
+                            opacity: ".3"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "side-menu__label" }, [
+                      _vm._v("Children")
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "side-menu" }, [
+            _c(
+              "li",
+              { staticClass: "slide" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "side-menu__item",
+                    attrs: {
+                      "data-toggle": "slide",
+                      to: { name: "Avatar.ShowAll" }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "side-menu__icon",
+                        attrs: { viewBox: "0 0 24 24" }
+                      },
+                      [
+                        _c("path", {
+                          attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
+                            opacity: ".3"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "side-menu__label" }, [
+                      _vm._v("Avatar")
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "side-menu" }, [
+            _c(
+              "li",
+              { staticClass: "slide" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "side-menu__item",
+                    attrs: {
+                      "data-toggle": "slide",
+                      to: { name: "Role.ShowAll" }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "side-menu__icon",
+                        attrs: { viewBox: "0 0 24 24" }
+                      },
+                      [
+                        _c("path", {
+                          attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
+                            opacity: ".3"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "side-menu__label" }, [
+                      _vm._v("Roles")
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "side-menu" }, [
+            _c(
+              "li",
+              { staticClass: "slide" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "side-menu__item",
+                    attrs: {
+                      "data-toggle": "slide",
+                      to: { name: "Language.ShowAll" }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "side-menu__icon",
+                        attrs: { viewBox: "0 0 24 24" }
+                      },
+                      [
+                        _c("path", {
+                          attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
+                            opacity: ".3"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "side-menu__label" }, [
+                      _vm._v("Languages")
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "side-menu" }, [
+            _c(
+              "li",
+              { staticClass: "slide" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "side-menu__item",
+                    attrs: {
+                      "data-toggle": "slide",
+                      to: { name: "Store.ShowAll" }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "side-menu__icon",
+                        attrs: { viewBox: "0 0 24 24" }
+                      },
+                      [
+                        _c("path", {
+                          attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
+                            opacity: ".3"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "side-menu__label" }, [
+                      _vm._v("Stores")
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "side-menu" }, [
+            _c(
+              "li",
+              { staticClass: "slide" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "side-menu__item",
+                    attrs: {
+                      "data-toggle": "slide",
+                      to: { name: "Subscription.ShowAll" }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "side-menu__icon",
+                        attrs: { viewBox: "0 0 24 24" }
+                      },
+                      [
+                        _c("path", {
+                          attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
+                            opacity: ".3"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "side-menu__label" }, [
+                      _vm._v("Subscriptions")
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "side-menu" }, [
+            _c(
+              "li",
+              { staticClass: "slide" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "side-menu__item",
+                    attrs: {
+                      "data-toggle": "slide",
+                      to: { name: "Accessory.ShowAll" }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "side-menu__icon",
+                        attrs: { viewBox: "0 0 24 24" }
+                      },
+                      [
+                        _c("path", {
+                          attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
+                            opacity: ".3"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "side-menu__label" }, [
+                      _vm._v("Accessories")
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "side-menu" }, [
+            _c(
+              "li",
+              { staticClass: "slide" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "side-menu__item",
+                    attrs: {
+                      "data-toggle": "slide",
+                      to: { name: "AgeGroup.ShowAll" }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "side-menu__icon",
+                        attrs: { viewBox: "0 0 24 24" }
+                      },
+                      [
+                        _c("path", {
+                          attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
+                            opacity: ".3"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "side-menu__label" }, [
+                      _vm._v("AgeGroup")
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "side-menu" }, [
+            _c(
+              "li",
+              { staticClass: "slide" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "side-menu__item",
+                    attrs: {
+                      "data-toggle": "slide",
+                      to: { name: "Age.ShowAll" }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "side-menu__icon",
+                        attrs: { viewBox: "0 0 24 24" }
+                      },
+                      [
+                        _c("path", {
+                          attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
+                            opacity: ".3"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "side-menu__label" }, [
+                      _vm._v("Age")
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "side-menu" }, [
+            _c(
+              "li",
+              { staticClass: "slide" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "side-menu__item",
+                    attrs: {
+                      "data-toggle": "slide",
+                      to: { name: "Subject.ShowAll" }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "side-menu__icon",
+                        attrs: { viewBox: "0 0 24 24" }
+                      },
+                      [
+                        _c("path", {
+                          attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
+                            opacity: ".3"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "side-menu__label" }, [
+                      _vm._v("Subject")
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "side-menu" }, [
+            _c(
+              "li",
+              { staticClass: "slide" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "side-menu__item",
+                    attrs: {
+                      "data-toggle": "slide",
+                      to: { name: "Quiz.ShowAll" }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "side-menu__icon",
+                        attrs: { viewBox: "0 0 24 24" }
+                      },
+                      [
+                        _c("path", {
+                          attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
+                            opacity: ".3"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "side-menu__label" }, [
+                      _vm._v("Quiz")
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "side-menu" }, [
+            _c(
+              "li",
+              { staticClass: "slide" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "side-menu__item",
+                    attrs: {
+                      "data-toggle": "slide",
+                      to: { name: "Country.ShowAll" }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "side-menu__icon",
+                        attrs: { viewBox: "0 0 24 24" }
+                      },
+                      [
+                        _c("path", {
+                          attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
+                            opacity: ".3"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "side-menu__label" }, [
+                      _vm._v("Countries")
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
           ])
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "side-menu" }, [
-          _c(
-            "li",
-            { staticClass: "slide" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "side-menu__item",
-                  attrs: {
-                    "data-toggle": "slide",
-                    to: { name: "User.ShowAll" }
-                  }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "side-menu__icon",
-                      attrs: { viewBox: "0 0 24 24" }
-                    },
-                    [
-                      _c("path", {
-                        attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
-                          opacity: ".3"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "side-menu__label" }, [
-                    _vm._v("User")
-                  ])
-                ]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "side-menu" }, [
-          _c(
-            "li",
-            { staticClass: "slide" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "side-menu__item",
-                  attrs: {
-                    "data-toggle": "slide",
-                    to: { name: "SubUser.ShowAll" }
-                  }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "side-menu__icon",
-                      attrs: { viewBox: "0 0 24 24" }
-                    },
-                    [
-                      _c("path", {
-                        attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
-                          opacity: ".3"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "side-menu__label" }, [
-                    _vm._v("Children")
-                  ])
-                ]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "side-menu" }, [
-          _c(
-            "li",
-            { staticClass: "slide" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "side-menu__item",
-                  attrs: {
-                    "data-toggle": "slide",
-                    to: { name: "Avatar.ShowAll" }
-                  }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "side-menu__icon",
-                      attrs: { viewBox: "0 0 24 24" }
-                    },
-                    [
-                      _c("path", {
-                        attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
-                          opacity: ".3"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "side-menu__label" }, [
-                    _vm._v("Avatar")
-                  ])
-                ]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "side-menu" }, [
-          _c(
-            "li",
-            { staticClass: "slide" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "side-menu__item",
-                  attrs: {
-                    "data-toggle": "slide",
-                    to: { name: "Role.ShowAll" }
-                  }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "side-menu__icon",
-                      attrs: { viewBox: "0 0 24 24" }
-                    },
-                    [
-                      _c("path", {
-                        attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
-                          opacity: ".3"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "side-menu__label" }, [
-                    _vm._v("Roles")
-                  ])
-                ]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "side-menu" }, [
-          _c(
-            "li",
-            { staticClass: "slide" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "side-menu__item",
-                  attrs: {
-                    "data-toggle": "slide",
-                    to: { name: "Language.ShowAll" }
-                  }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "side-menu__icon",
-                      attrs: { viewBox: "0 0 24 24" }
-                    },
-                    [
-                      _c("path", {
-                        attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
-                          opacity: ".3"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "side-menu__label" }, [
-                    _vm._v("Languages")
-                  ])
-                ]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "side-menu" }, [
-          _c(
-            "li",
-            { staticClass: "slide" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "side-menu__item",
-                  attrs: {
-                    "data-toggle": "slide",
-                    to: { name: "Store.ShowAll" }
-                  }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "side-menu__icon",
-                      attrs: { viewBox: "0 0 24 24" }
-                    },
-                    [
-                      _c("path", {
-                        attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
-                          opacity: ".3"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "side-menu__label" }, [
-                    _vm._v("Stores")
-                  ])
-                ]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "side-menu" }, [
-          _c(
-            "li",
-            { staticClass: "slide" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "side-menu__item",
-                  attrs: {
-                    "data-toggle": "slide",
-                    to: { name: "Subscription.ShowAll" }
-                  }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "side-menu__icon",
-                      attrs: { viewBox: "0 0 24 24" }
-                    },
-                    [
-                      _c("path", {
-                        attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
-                          opacity: ".3"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "side-menu__label" }, [
-                    _vm._v("Subscriptions")
-                  ])
-                ]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "side-menu" }, [
-          _c(
-            "li",
-            { staticClass: "slide" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "side-menu__item",
-                  attrs: {
-                    "data-toggle": "slide",
-                    to: { name: "Accessory.ShowAll" }
-                  }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "side-menu__icon",
-                      attrs: { viewBox: "0 0 24 24" }
-                    },
-                    [
-                      _c("path", {
-                        attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
-                          opacity: ".3"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "side-menu__label" }, [
-                    _vm._v("Accessories")
-                  ])
-                ]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "side-menu" }, [
-          _c(
-            "li",
-            { staticClass: "slide" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "side-menu__item",
-                  attrs: {
-                    "data-toggle": "slide",
-                    to: { name: "AgeGroup.ShowAll" }
-                  }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "side-menu__icon",
-                      attrs: { viewBox: "0 0 24 24" }
-                    },
-                    [
-                      _c("path", {
-                        attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
-                          opacity: ".3"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "side-menu__label" }, [
-                    _vm._v("AgeGroup")
-                  ])
-                ]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "side-menu" }, [
-          _c(
-            "li",
-            { staticClass: "slide" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "side-menu__item",
-                  attrs: { "data-toggle": "slide", to: { name: "Age.ShowAll" } }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "side-menu__icon",
-                      attrs: { viewBox: "0 0 24 24" }
-                    },
-                    [
-                      _c("path", {
-                        attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
-                          opacity: ".3"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "side-menu__label" }, [
-                    _vm._v("Age")
-                  ])
-                ]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "side-menu" }, [
-          _c(
-            "li",
-            { staticClass: "slide" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "side-menu__item",
-                  attrs: {
-                    "data-toggle": "slide",
-                    to: { name: "Subject.ShowAll" }
-                  }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "side-menu__icon",
-                      attrs: { viewBox: "0 0 24 24" }
-                    },
-                    [
-                      _c("path", {
-                        attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
-                          opacity: ".3"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "side-menu__label" }, [
-                    _vm._v("Subject")
-                  ])
-                ]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "side-menu" }, [
-          _c(
-            "li",
-            { staticClass: "slide" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "side-menu__item",
-                  attrs: {
-                    "data-toggle": "slide",
-                    to: { name: "Quiz.ShowAll" }
-                  }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "side-menu__icon",
-                      attrs: { viewBox: "0 0 24 24" }
-                    },
-                    [
-                      _c("path", {
-                        attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
-                          opacity: ".3"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "side-menu__label" }, [
-                    _vm._v("Quiz")
-                  ])
-                ]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "side-menu" }, [
-          _c(
-            "li",
-            { staticClass: "slide" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "side-menu__item",
-                  attrs: {
-                    "data-toggle": "slide",
-                    to: { name: "Country.ShowAll" }
-                  }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "side-menu__icon",
-                      attrs: { viewBox: "0 0 24 24" }
-                    },
-                    [
-                      _c("path", {
-                        attrs: { d: "M0 0h24v24H0V0z", fill: "none" }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M19 5H5v14h14V5zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z",
-                          opacity: ".3"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "side-menu__label" }, [
-                    _vm._v("Countries")
-                  ])
-                ]
-              )
-            ],
-            1
-          )
-        ])
-      ])
+        ]
+      )
     ])
   ])
 }

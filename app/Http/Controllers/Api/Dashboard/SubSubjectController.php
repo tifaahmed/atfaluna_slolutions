@@ -135,25 +135,23 @@ class SubSubjectController extends Controller
             if (is_array($requested_languages) ) {
                 $this->destroyLanguage($this->related_language,$modal_id);
                 foreach ($requested_languages as $key => $language_sigle_row) {
-                     $this ->storeLanguage(  $this->handleLanguageData($language_sigle_row,$this->related_language,$modal_id)  );
+                    $this ->storeLanguage(  $this->handleLanguageData($language_sigle_row,$this->related_language,$modal_id)  );
                 }
             }
         }
         public function storeLanguage($language_array ) {
             $all = [ ];
             try {
-                $file_one = 'image_one';
-                if (isset($language_array[$file_one]) && $language_array[$file_one]) {            
-                    $all += $this->HelperHandleFile($this->folder_name,$language_array[$file_one],$file_one)  ;
+                foreach ($language_array as $key => $value) {
+                    if ($key == 'image_one' || $key == 'image_two') {
+                        $file = $key;
+                        if (isset($language_array[$file]) && $language_array[$file]) {            
+                            $all += $this->HelperHandleFile($this->folder_name,$language_array[$file],$file)  ;
+                        }
+                    }else{
+                        $all += array( $key => $value );
+                    }
                 }
-                $file_two = 'image_two';
-                if (isset($language_array[$file_two]) && $language_array[$file_two]) {            
-                    $all += $this->HelperHandleFile($this->folder_name,$language_array[$file_two],$file_two)  ;
-                }
-                $all += array( 'name'       => $language_array['name']      );
-                $all += array( 'subject'    => $language_array['subject']   );
-                $all += array( 'language'   => $language_array['language']  );
-                $all += array( 'sub_subject_id'   => $language_array['sub_subject_id']  );
 
                 $this->ModelRepositoryLanguage->create( $all ) ;
 

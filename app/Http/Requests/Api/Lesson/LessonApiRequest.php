@@ -24,12 +24,10 @@ class LessonApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'image'            =>  [ 'required' ,'max:5000'] ,
             'url'              =>  [ 'required' ,'max:5000'] ,
             'points'           =>  [ 'required' ,'integer']  ,
-            'subject_id'       =>  [ 'required' ,'integer']  ,
-            'lesson_type_id'   =>  [ 'required' ,'integer']  ,
-
+            'sub_subject_id'   =>  [ 'required' ,'integer','exists:sub_subjects,id']  ,
+            'lesson_type_id'   =>  [ 'required' ,'integer','exists:lesson_types,id']  ,
         ];
     }
 }

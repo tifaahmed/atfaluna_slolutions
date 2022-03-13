@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Dashboard;
+namespace App\Http\Resources\Mobile\Lesson;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Resources\Dashboard\SubjectResource;
-use App\Http\Resources\Dashboard\LessonTypeResource;
+use App\Http\Resources\Mobile\SubjectResource;
+use App\Http\Resources\Mobile\LessonTypeResource;
+
 
 class LessonResource extends JsonResource
 {
@@ -21,7 +22,8 @@ class LessonResource extends JsonResource
 
         return [
             'id'            => $this->id,
-            'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
+            'name'          => $row ? $row->name:'',
+            'image'          =>( $row && $row->image && Storage::disk('public')->exists($row->image) )? asset(Storage::url($row->image))  : null ,
             'url'           => $this->url,
             'points'        =>  $this->points,
 
@@ -29,10 +31,6 @@ class LessonResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            'languages'     => $this->lesson_languages,
-            'name'          => $row ? $row->name:'',
-            
-            'subject'       => new SubjectResource (  $this->subject )  ,
             'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
 
         ];        

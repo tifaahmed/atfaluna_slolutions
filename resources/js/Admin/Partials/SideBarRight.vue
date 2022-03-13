@@ -10,7 +10,7 @@
                 <a class="logo-icon mobile-logo icon-light active" href="#"><img :src="'/images/logo.png'" class="logo-icon" alt="logo" style="height: 60px;"></a>
                 <a class="logo-icon mobile-logo icon-dark active" href="#"><img :src="'/images/logo.png'" class="logo-icon dark-theme" alt="logo" style="height: 60px;" ></a>
             </div>
-            <div class="main-sidemenu">
+            <div class="main-sidemenu" style="overflow: scroll;">
                 <div class="app-sidebar__user clearfix">
                     <div class="dropdown user-pro-body">
                         <div class="">
