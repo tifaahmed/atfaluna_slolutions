@@ -42,6 +42,7 @@ class LessonController extends Controller
     }
     public function store(modelInsertRequest $request) {
         try {
+
             $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
 
             // // languages
@@ -142,7 +143,7 @@ class LessonController extends Controller
             $all = [ ];
             try {
                 foreach ($language_array as $key => $value) {
-                    if ($key == 'image') {
+                    if ($key == 'image' || $key == 'url') {
                         $file = $key;
                         if (isset($language_array[$file]) && $language_array[$file]) {            
                             $all += $this->HelperHandleFile($this->folder_name,$language_array[$file],$file)  ;

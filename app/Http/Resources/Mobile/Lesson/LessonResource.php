@@ -24,7 +24,8 @@ class LessonResource extends JsonResource
             'id'            => $this->id,
             'name'          => $row ? $row->name:'',
             'image'          =>( $row && $row->image && Storage::disk('public')->exists($row->image) )? asset(Storage::url($row->image))  : null ,
-            'url'           => $this->url,
+            'url'          =>( $row && $row->url && Storage::disk('public')->exists($row->url) )? asset(Storage::url($row->url))  : null ,
+
             'points'        =>  $this->points,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,

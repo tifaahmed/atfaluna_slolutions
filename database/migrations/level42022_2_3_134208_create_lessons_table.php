@@ -15,7 +15,6 @@ class CreateLessonsTable extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->string('url'); //[not null]
             $table->integer('points')->default('0');//[note: "ex ( 5 - 6)"]
             
             $table->integer('sub_subject_id')->unsigned();
