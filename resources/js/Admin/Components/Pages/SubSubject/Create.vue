@@ -1,15 +1,17 @@
 <template>
-	<div class="container-fluid" >
-        <div class="row row-sm">
+    <div class="container-fluid" >
 
+
+        <div class="row row-sm">
             <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
                 <div class="card  box-shadow-0 ">
                     <div class="card-header">
-                        <h4 class="card-title mb-1">Edit {{TableName}} </h4>
+                        <h4 class="card-title mb-1">Create {{TableName}} </h4>
                     </div>
                     <div class="card-body pt-0">
+                        <div class="">
 
-                              <span v-for="( row    , rowkey ) in LanguagesRows " :key="rowkey" >
+                           <span v-for="( row    , rowkey ) in LanguagesRows " :key="rowkey" >
                                 <!-- (LanguagesRows) loop on ar & en -->
                                 <span v-for="( row_    , rowkey_ ) in LanguagesColumn " :key="rowkey_" >
                                     <InputsFactory :Factorylable="row_.header+' ( ' + row.full_name + ' ) '" :FactoryPlaceholder="row_.placeholder"         
@@ -45,57 +47,59 @@
                              <InputsFactory :Factorylable="'points'"  :FactoryPlaceholder="'points'"
                                 :FactoryType="'number'" :FactoryName="'points'"   v-model ="RequestData.points" 
                                 :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.points )   ) ? ServerReaponse.errors.points : null"
-                            /> </div>
+                            />
 
-
-
-                        <button  @click="FormSubmet()" class="btn btn-primary  ">Submit</button>
-                
+                        </div>
+                        <button  @click="FormSubmet()" class="btn btn-primary ">
+                            Submit
+                        </button>
+                        
                         <router-link style="color:#fff" 
                             :to = "{ 
                                 name : TableName+'.ShowAll' , 
                                 query: { CurrentPage: this.$route.query.CurrentPage }  
                             }" 
                         > 
-                        <button type="button" class="btn btn-danger  ">
-                            <i class="fas fa-arrow-left">
-                                    back
-                            </i>
-                        </button>
+                            <button type="button" class="btn btn-danger  ">
+                                <i class="fas fa-arrow-left">
+                                        back
+                                </i>
+                            </button>
                         </router-link>
 
-                        <div class="alert alert-danger " v-if="ServerReaponse && ServerReaponse.message"> {{ServerReaponse.message}}  </div>
+                        <div class="alert alert-danger " v-if="ServerReaponse && ServerReaponse.message"> 
+                            {{ServerReaponse.message}}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
+    </div>
 </template>
+
+
+
 <script>
-import Model     from 'AdminModels/Quiz';
+import Model          from 'AdminModels/SubSubject';
 import SubjectModel   from 'AdminModels/Subject';
-import LanguageModel     from 'AdminModels/Language';
+import LanguageModel  from 'AdminModels/Language';
 
-import validation     from 'AdminValidations/Quiz';
-import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue'     ;
+import validation     from 'AdminValidations/SubSubject';
+import InputsFactory  from 'AdminPartials/Components/Inputs/InputsFactory.vue'     ;
 
-    export default {
+    export default    {
+        name:'SubjectCreate',
         components : { InputsFactory } ,
 
-        name:"QuizEdit",
-
-        mounted() {
-            this.GetlLanguages();
+        async mounted() {
             this.GetSubject();
-            this.GetData();
-            
+            this.GetlLanguages();
         },
+
         data( ) { return {
-            TableName :'Quiz',
-            TablePageName :'Quiz.ShowAll',
-            
+            TableName :'SubSubject',
+            TablePageName :'SubSubject.ShowAll',
+
             LanguagesRows : null,
             LanguagesColumn : [
                 { type: 'string',placeholder:'name',header :'name', name : 'name'},
@@ -104,55 +108,41 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
             SubjectRows   : null,
             LanguagesRows : null,
 
-            ServerReaponse : {
+              ServerReaponse : {
                 errors : {
                     image :[],
+                    subject_id : [],
                     points :[],
-                     subject_id : [],
                 },
                 message : null,
             },
             RequestData : {
                     points          : null,
+                    subject_id      : null,
+                    subject         : null,
                     image           : null, 
 
-                    subject_id :      null,
-                    subject :         null,
-
                     languages       : { },
-                    
+
             },
 
         } } ,
         methods : {
 
-            async GetData(){
-                let receivedData = await this.show( ) ;
-                for (var key in receivedData) {
-                    if(  
-                        ( Array.isArray( receivedData[key] )  && (receivedData[key]).length > 0 ) 
-                        ||  
-                        ( !Array.isArray( receivedData[key] ) &&receivedData[key] != null) 
-                    ) {
-                        this.RequestData[key] = receivedData[key];
-                    }
-                }
-            },
-
-
             // before send to server
                 async FormSubmet(){
                     //clear errors
-                    await this.DeleteErrors();                
+                    await this.DeleteErrors(); 
+                    // handle data
+                    await this.HandleData();  
                     // valedate
                     await this.DetectVueError();  
                     console.log(this.ServerReaponse.message) ;    
-                    // if (this.ServerReaponse.message == null) {
-                        // handle data
-                        await this.HandleData();  
+                    if (this.ServerReaponse.message == null) {
+
                         // Submet from  
                         await this.SubmetRowButton(); 
-                    // }
+                    }
                 
                 },
                 DeleteErrors(){
@@ -161,17 +151,10 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                     }
                     this.ServerReaponse.message =null;
                 },
-                async DetectVueError(){
-                    var check = await (new validation).validate(this.RequestData);
-                    if( check ){// if there is error from my file
-                        this.ServerReaponse = check; // error from my file
-                    }
-                },
-            async GetSubject(){
-                    this.SubjectRows  = ( await this.AllSubject() ).data.data;
-                }, 
 
-           async GetlLanguages(){
+
+
+             async GetlLanguages(){
                 this.LanguagesRows  = ( await this.AllLanguages() ).data.data; // all languages
                 let item_languages = this.RequestData.languages; // item language data
                 let handleLanguages= {}; //handle Languages from item data & all languages
@@ -192,15 +175,45 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
             },
 
 
-                HandleData(){
 
-                   if(this.RequestData.subject){
+            // model 
+                AllLanguages(){
+                    return  (new LanguageModel).all()  ;
+                },
+                
+                store(){
+                    return (new Model).store(this.RequestData)  ;
+                },
+            // model 
+
+
+                async DetectVueError(){
+                    var check = await (new validation).validate(this.RequestData);
+                    if( check ){// if there is error from my file
+                        this.ServerReaponse = check; // error from my file
+                    }
+                    console.log(this.ServerReaponse);
+                },
+
+                HandleData(){
+                    if(this.RequestData.subject){
                         this.RequestData.subject_id = this.RequestData.subject.id;
                     }
                 },
+            // before send to server
 
+            // relationship
+            async GetSubject(page){
+                this.SubjectRows  = ( await this.AllSubject() ).data.data;
+            },
+            // relationship
+
+
+
+
+            // after send to server
                 async SubmetRowButton(){
-                    var data = await this.update()  ; // send update request
+                    var data = await this.store()  ; // send update request
                     if(data && data.errors){// stay and show error
                         await this.DetectServerError(data)  ;
                     }else{
@@ -217,26 +230,17 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                     })
                 },
             // after send to server
+ 
 
-
-            // modal
-                 AllLanguages(){
-                    return  (new LanguageModel).all()  ;
+            // model 
+                 AllSubject(){
+                     return  (new SubjectModel).all()  ;
                 },
-
-                AllSubject(){
-                    return  (new SubjectModel).all()  ;
+                store(){
+                    return  (new Model).store(this.RequestData)  ;
                 },
-                
-                async show( ) {
-                    return ( await (new Model).show( this.$route.params.id) ).data.data[0] ;
-                },
-                update(){
-                    return (new Model).update(this.RequestData.id , this.RequestData)  ;
-                }
-            // modal
+            // model 
+        },
 
-
-        }
     }
 </script>

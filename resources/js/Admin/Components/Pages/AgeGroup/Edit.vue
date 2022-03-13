@@ -11,16 +11,19 @@
 
 
                         <span v-for="( row    , rowkey ) in LanguagesRows " :key="rowkey" >
-                            <!-- (LanguagesRows) loop on ar & en -->
-                            <span v-for="( row_    , rowkey_ ) in Languagescolumn " :key="rowkey_" >
-                                <label >{{row_+' ( ' + row.full_name + ' ) '}}</label>
-                                <input :placeholder="  row_+' ( ' + row.name + ' ) '" class="form-control" 
-                                v-model ="RequestData.languages[rowkey][row_]" />
+                             <!-- (LanguagesRows) loop on ar & en -->
+                            <span v-for="( row_    , rowkey_ ) in LanguagesColumn " :key="rowkey_" >
+                                <InputsFactory :Factorylable="row_.header+' ( ' + row.full_name + ' ) '" :FactoryPlaceholder="row_.placeholder"         
+                                    :FactoryType="row_.type" :FactoryName="row_.name"  v-model ="RequestData.languages[rowkey][row_.name]"  
+                                    :FactoryErrors="null" 
+                                />
                             </span>
-                        </span>
+                            <hr>
+                        </span> 
+
 
                         <InputsFactory :Factorylable="'age'"  :FactoryPlaceholder=" 'age' "         
-                            :FactoryType="'string'" :FactoryName="'age'"  v-model ="RequestData.age"  
+                            :FactoryType="'number'" :FactoryName="'age'"  v-model ="RequestData.age"  
                             :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.age )  ) ? ServerReaponse.errors.age : null" 
                         />
 
@@ -65,15 +68,17 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
         name:"AgeGroupEdit",
 
         mounted() {
-            this.GetlLanguages();
             this.GetData();
+            this.GetlLanguages();
         },
         data( ) { return {
             TableName :'AgeGroup',
             TablePageName :'AgeGroup.ShowAll',
 
             LanguagesRows : null,
-            Languagescolumn : ['name'],
+            LanguagesColumn : [
+                { type: 'string',placeholder:'name',header :'name', name : 'name'},
+            ],
 
             ServerReaponse : {
                 errors : {
@@ -86,7 +91,6 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
 
                     languages         : { },
             },
-
         } } ,
         methods : {
             DeleteErrors(){
@@ -102,13 +106,12 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                         ( Array.isArray( receivedData[key] )  && (receivedData[key]).length > 0 ) 
                         ||  
                         ( !Array.isArray( receivedData[key] ) &&receivedData[key] != null) 
-                    ) {
-                        this.RequestData[key] = receivedData[key];
+                    ){
+                            this.RequestData[key] = receivedData[key];
                     }
                 }
             },
 
-            
             async FormSubmet(){
                 //clear errors
                 await this.DeleteErrors();                
@@ -121,20 +124,28 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                      this.SubmetRowButton(); // succes from file
                 }
             },
-            async GetlLanguages(page){
-                this.LanguagesRows  = ( await this.AllLanguages() ).data.data;
-                let languages = this.RequestData.languages;
+            async GetlLanguages(){
+                this.LanguagesRows  = ( await this.AllLanguages() ).data.data; // all languages
+                let item_languages = this.RequestData.languages; // item language data
+                let handleLanguages= {}; //handle Languages from item data & all languages
+
                 for (var key in this.LanguagesRows) {
-                    languages[key] = [];
-                        Vue.set( languages[key],  'language');
-                        languages[key].language = this.LanguagesRows[key].name;
-                    for (var key_ in this.Languagescolumn) {
-                        Vue.set( languages[key],  this.Languagescolumn[key_]);
-                        languages[key][this.Languagescolumn[key_]] = "";
+                    handleLanguages[key] = [];
+                        Vue.set( handleLanguages[key],  'language'); // language key
+                        handleLanguages[key].language = this.LanguagesRows[key].name;//fr & en & ar
+                    for (var key_ in this.LanguagesColumn) {
+                        Vue.set( handleLanguages[key],  this.LanguagesColumn[key_].name); // ex (name,image,desc,subject) key
+                        if(  item_languages[key] &&  item_languages[key]['language'] ==  this.LanguagesRows[key].name ){
+                            handleLanguages[key][this.LanguagesColumn[key_].name] = item_languages[key][this.LanguagesColumn[key_].name] ;
+                        }
                     }
                 }
-                console.log(this.RequestData);
+                this.RequestData.languages = '';
+                this.RequestData.languages = handleLanguages;
             },
+
+
+
             async SubmetRowButton(){
                 this.ServerReaponse = null;
                 let data = await this.update()  ; // send update request
