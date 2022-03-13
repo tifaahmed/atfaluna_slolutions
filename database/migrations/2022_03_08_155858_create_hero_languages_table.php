@@ -13,7 +13,7 @@ class CreateHeroLanguagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('hero_llanguages', function (Blueprint $table) {
+        Schema::create('hero_languages', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateHeroLanguagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hero_llanguages');
+        Schema::dropIfExists('hero_languages');
     }
 }

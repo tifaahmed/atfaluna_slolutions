@@ -6,6 +6,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Resources\Dashboard\SubjectResource;
+use App\Http\Resources\Dashboard\McqQuestionResource;
+use App\Http\Resources\Dashboard\TrueFalseQuestionResource;
 
 
 class QuizResource extends JsonResource
@@ -33,6 +35,9 @@ class QuizResource extends JsonResource
             'name'          => $row ? $row->name:'',
 
             'subject'       => new SubjectResource ( $this->subject )  ,
+
+            'true_false_questions'        => new TrueFalseQuestionResource ($this->quizTrueOrFalseQuestion)  ,
+            'mcq_questions'               => new McqQuestionResource ($this->quizMcqQuestion)  ,
 
         ];        
     }

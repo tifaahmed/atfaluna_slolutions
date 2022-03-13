@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\Collections;
+namespace App\Http\Resources\Mobile\Collections\Lesson;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Dashboard\LessonResource as ModelResource;
+use App\Http\Resources\Mobile\Lesson\LessonResource as ModelResource;
 
 class LessonCollection  extends ResourceCollection{
 
