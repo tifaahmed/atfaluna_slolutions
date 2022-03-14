@@ -4,14 +4,26 @@ namespace App\Http\Controllers\ControllerTraits;
 
 use Illuminate\Http\JsonResponse ;
 use Storage;
-
+use ZanySoft\Zip\Zip;
+use Str;
 trait FileTrait {
 	// * @param  string $folder_name
 	// * @param  file $file
     // @return url of the file
     public function HelperStorage($folder_name , $file  ) : string
     {
-        return Storage::disk('public')->put($folder_name,$file);
+        if ($file->extension() == 'zip' ) {
+            $random_string = Str::random(10);
+            $location = $folder_name.'/'.$random_string.time();
+            $path = Storage::disk('public')->put($location,$file);
+
+            $zip = Zip::open( 'storage/'.$path );
+            $zip->extract('storage/'.$location);
+
+            return $location;
+        }else{
+            return $path = Storage::disk('public')->put($folder_name,$file);
+        }
     }
 	// * @param  string $url
 	// @return nothing

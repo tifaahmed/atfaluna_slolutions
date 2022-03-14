@@ -18,6 +18,9 @@ use App\Http\Resources\Dashboard\Lesson\LessonResource as ModelResource;
 use App\Repository\LessonRepositoryInterface as ModelInterface;
 use App\Repository\LessonLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages
 
+use Storage;
+use ZanySoft\Zip\Zip;
+
 class LessonController extends Controller
 {
     private $Repository;
@@ -41,7 +44,8 @@ class LessonController extends Controller
         }
     }
     public function store(modelInsertRequest $request) {
-        try {
+        // try {
+
 
             $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
 
@@ -53,13 +57,13 @@ class LessonController extends Controller
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_BAD_REQUEST
-            );
-        }
+        // } catch (\Exception $e) {
+        //     return $this -> MakeResponseErrors(  
+        //         [$e->getMessage()  ] ,
+        //         'Errors',
+        //         Response::HTTP_BAD_REQUEST
+        //     );
+        // }
     }
 
 
@@ -131,14 +135,14 @@ class LessonController extends Controller
     }
     
     // lang
-        public function update_store_language($requested_languages,$modal_id ) {
-            if (is_array($requested_languages) ) {
-                $this->destroyLanguage($this->related_language,$modal_id);
-                foreach ($requested_languages as $key => $language_sigle_row) {
-                    $this ->storeLanguage(  $this->handleLanguageData($language_sigle_row,$this->related_language,$modal_id)  );
-                }
+    public function update_store_language($requested_languages,$modal_id ) {
+        if (is_array($requested_languages) ) {
+            $this->destroyLanguage($this->related_language,$modal_id);
+            foreach ($requested_languages as $key => $language_sigle_row) {
+                $this ->storeLanguage(  $this->handleLanguageData($language_sigle_row,$this->related_language,$modal_id)  );
             }
         }
+    }
         public function storeLanguage($language_array ) {
             $all = [ ];
             try {
@@ -146,7 +150,7 @@ class LessonController extends Controller
                     if ($key == 'image' || $key == 'url') {
                         $file = $key;
                         if (isset($language_array[$file]) && $language_array[$file]) {            
-                            $all += $this->HelperHandleFile($this->folder_name,$language_array[$file],$file)  ;
+                            $all +=  $this->HelperHandleFile($this->folder_name,$language_array[$file],$file)  ;
                         }
                     }else{
                         $all += array( $key => $value );
