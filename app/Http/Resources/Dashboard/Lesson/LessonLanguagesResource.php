@@ -20,8 +20,7 @@ class LessonLanguagesResource extends JsonResource
             'image'             => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
             'name'              => $this->name,
             'language'          => $this->language,
-            'url'           => $this->url,
-
+            'url'               => Storage::disk('public')->exists($this->url) ? Storage::url($this->url)  : null,
         ];        
     }
 }
