@@ -42,8 +42,6 @@
 </template>
 <script>
 import Model     from 'AdminModels/LessonType';
-import SubjectModel   from 'AdminModels/Subject';
-import LanguageModel     from 'AdminModels/Language';
 
 import validation     from 'AdminValidations/LessonType';
 import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue'     ;
@@ -54,8 +52,6 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
         name:"LessonTypeEdit",
 
         mounted() {
-            this.GetlLanguages();
-            this.GetSubject();
             this.GetData();
             
         },
@@ -96,18 +92,16 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
             // before send to server
                 async FormSubmet(){
                     //clear errors
-                    await this.DeleteErrors();                
+                        await this.DeleteErrors();                 
                     // valedate
-                    await this.DetectVueError();  
+                        await this.DetectVueError();  
                     console.log(this.ServerReaponse.message) ;    
-                    // if (this.ServerReaponse.message == null) {
-                        // handle data
-                        await this.HandleData();  
+                    if (this.ServerReaponse.message == null) {
                         // Submet from  
                         await this.SubmetRowButton(); 
-                    // }
-                
+                    }
                 },
+
                 DeleteErrors(){
                     for (var key in this.ServerReaponse.errors) {
                         this.ServerReaponse.errors[key] = [];
@@ -120,7 +114,9 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                         this.ServerReaponse = check; // error from my file
                     }
                 },
-
+            // before send to server
+            
+            // after send to server
                 async SubmetRowButton(){
                     var data = await this.update()  ; // send update request
                     if(data && data.errors){// stay and show error
