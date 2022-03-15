@@ -23,7 +23,23 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 	}
 
 
-
+	// public function attachTrueFalseQuestions($true_false_question_ids,$id)
+	// {
+	// 	if($true_false_question_ids){
+	// 		$result = $this->findById($id); 
+	// 		// $result->subUserAccessory()->detach();
+	// 		$result->subUserAccessory()->syncWithoutDetaching($true_false_question_ids);
+	// 	}
+	// }
+    // public function attachMcqQuestion($mcq_question_ids,$id)
+	// {
+	// 	if($mcq_question_ids){
+	// 		$result = $this->findById($id); 
+	// 		// $result->subUserAvatar()->detach();
+	// 		$result->subUserAvatar()->syncWithoutDetaching($mcq_question_ids);
+	
+	// 	}
+	// }
 
 	
 }

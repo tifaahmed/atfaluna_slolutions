@@ -20,7 +20,7 @@ class Mcq_question extends Model
         'videos',//required, max:5000
         'quiz_id',//unsigned
     ];
-    // relations
+    // relation
     public function quiz(){
         return $this->belongsTo(Quiz::class,'quiz_id');
     }

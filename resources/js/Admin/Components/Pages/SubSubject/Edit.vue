@@ -74,17 +74,17 @@
 
 </template>
 <script>
-import Model     from 'AdminModels/Quiz';
+import Model     from 'AdminModels/SubSubject';
 import SubjectModel   from 'AdminModels/Subject';
 import LanguageModel     from 'AdminModels/Language';
 
-import validation     from 'AdminValidations/Quiz';
+import validation     from 'AdminValidations/SubSubject';
 import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue'     ;
 
     export default {
         components : { InputsFactory } ,
 
-        name:"QuizEdit",
+        name:"SubSubjectEdit",
 
         mounted() {
             this.GetlLanguages();
@@ -93,8 +93,8 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
             
         },
         data( ) { return {
-            TableName :'Quiz',
-            TablePageName :'Quiz.ShowAll',
+            TableName :'SubSubject',
+            TablePageName :'SubSubject.ShowAll',
             
             LanguagesRows : null,
             LanguagesColumn : [

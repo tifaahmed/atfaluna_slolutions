@@ -1,6 +1,6 @@
 import Validation    from './Validation';
 
-export default class Quiz   extends Validation {
+export default class SubSubject   extends Validation {
 	public ImageArray         : any      = []  ;
 	public PointsArray         : any      = []  ;
 	//public AgeGroupArray         : any      = []  ;

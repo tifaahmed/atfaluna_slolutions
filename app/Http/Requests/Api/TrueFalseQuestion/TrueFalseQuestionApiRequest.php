@@ -24,10 +24,11 @@ class TrueFalseQuestionApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'image'      =>  [ 'required' , 'max:5000'] ,
-            'videos'     =>  [ 'required' ,'max:5000'] ,
+            'image'      =>  [  'max:5000'] ,
+            'videos'     =>  [ 'max:5000'] ,
+            'audio'      =>  [ 'max:5000'] ,
             'answer'     =>  [ 'required' ,'boolean' ] ,
-            'quiz_id'    =>  [ 'required' ,'integer' ] ,
+            'quiz_id'    =>  [ 'required' ,'integer','exists:quizzes,id' ] ,
         ];
     }
 }

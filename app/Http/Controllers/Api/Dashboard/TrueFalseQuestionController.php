@@ -47,8 +47,15 @@ class TrueFalseQuestionController extends Controller
             if ($request->hasFile($file_one)) {            
                 $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
             }
-
-            $modal = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
+            $file_two = 'videos';
+            if ($request->hasFile($file_two)) {            
+                $all += $this->HelperHandleFile($this->folder_name,$request->file($file_two),$file_two)  ;
+            }
+            $file_three= 'audio';
+            if ($request->hasFile($file_three)) {            
+                $all += $this->HelperHandleFile($this->folder_name,$request->file($file_three),$file_three)  ;
+            }
+            $modal = new ModelResource( $this->ModelRepository->create( Request()->except($file_one,$file_two,$file_three)+$all ) );
 
             // // languages
             $this -> update_store_language($request->languages,$modal->id) ;
@@ -118,14 +125,19 @@ class TrueFalseQuestionController extends Controller
         try {
             $all = [ ];
     
-            $file_one = 'image';
-            if ($request->hasFile($file_one)) {
+            $file_one = 'image_one';
+            if ($request->hasFile($file_one)) {            
                 $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
-                $old_modal = $this->ModelRepository->findById($id); 
-                $this->HelperDelete($old_modal->image );
             }
-
-            $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
+            $file_two = 'videos';
+            if ($request->hasFile($file_two)) {            
+                $all += $this->HelperHandleFile($this->folder_name,$request->file($file_two),$file_two)  ;
+            }
+            $file_three = 'audio';
+            if ($request->hasFile($file_three)) {            
+                $all += $this->HelperHandleFile($this->folder_name,$request->file($file_three),$file_three)  ;
+            }
+            $this->ModelRepository->update( $id,Request()->except($file_one,$file_two,$file_three)+$all) ;
             $modal = new ModelResource( $this->ModelRepository->findById($id) );
 
             //  languages
