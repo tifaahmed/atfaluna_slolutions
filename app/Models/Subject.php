@@ -9,6 +9,7 @@ use App\Models\Age_group;
 use App\Models\Subject_language;
 use App\Models\Certificate;
 use App\Models\Sub_subject;
+use App\Models\Lesson;
 
 
 class Subject extends Model
@@ -36,5 +37,8 @@ class Subject extends Model
         }
         public function sub_subjects(){
             return $this->HasMany(Sub_subject::class);
+        }
+        public function lesssons(){
+            return $this->hasManyThrough(Lesson::class, Sub_subject::class);
         }
 }

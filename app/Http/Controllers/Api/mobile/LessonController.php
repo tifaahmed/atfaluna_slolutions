@@ -25,9 +25,10 @@ class LessonController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            return $model =  $this->ModelRepository->filterAll($request->sub_user_id,$request->lesson_type_id) ;
+            return new ModelCollection (  $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -39,10 +40,9 @@ class LessonController extends Controller
 
 
     public function collection(Request $request){
-        // return $request->language;
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
-
+            $model = $this->ModelRepository->filterPaginate($request->sub_user_id,$request->lesson_type_id, $request->PerPage ? $request->PerPage : 10);
+            return new ModelCollection ($model)  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
