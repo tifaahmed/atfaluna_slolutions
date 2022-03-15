@@ -1,21 +1,21 @@
-import HomePage   from '../Components/Pages/Quiz/Home'     ;
+import HomePage   from '../Components/Pages/SubSubject/Home'     ;
 
-import AllPage    from '../Components/Pages/Quiz/All'      ;
-import TrashPage  from '../Components/Pages/Quiz/AllTrash' ;
-import TrashShow  from '../Components/Pages/Quiz/TrashShow' ;
-import CreatePage from '../Components/Pages/Quiz/Create'   ;
-import ShowPage   from '../Components/Pages/Quiz/Show'     ;
-import EditPage   from '../Components/Pages/Quiz/Edit'     ;
+import AllPage    from '../Components/Pages/SubSubject/All'      ;
+import TrashPage  from '../Components/Pages/SubSubject/AllTrash' ;
+import TrashShow  from '../Components/Pages/SubSubject/TrashShow' ;
+import CreatePage from '../Components/Pages/SubSubject/Create'   ;
+import ShowPage   from '../Components/Pages/SubSubject/Show'     ;
+import EditPage   from '../Components/Pages/SubSubject/Edit'     ;
 
 
 export default 
     {   path : 'Quiz' ,  component : HomePage , children : [
-            { path: 'ShowAll'       , component : AllPage    , name : 'Quiz.ShowAll'  } ,
-            { path: 'AllTrash'      , component : TrashPage  , name : 'Quiz.AllTrash'  } ,
-            { path: 'Show/:id'      , component : ShowPage   , name : 'Quiz.Show'     } ,
-            { path: 'TrashShow/:id' , component : TrashShow  , name : 'Quiz.TrashShow'     } ,
-            { path: 'Edit/:id'      , component : EditPage   , name : 'Quiz.Edit'     } ,
-            { path: 'Create'        , component : CreatePage , name : 'Quiz.Create'   } ,
+            { path: 'ShowAll'       , component : AllPage    , name : 'SubSubject.ShowAll'  } ,
+            { path: 'AllTrash'      , component : TrashPage  , name : 'SubSubject.AllTrash'  } ,
+            { path: 'Show/:id'      , component : ShowPage   , name : 'SubSubject.Show'     } ,
+            { path: 'TrashShow/:id' , component : TrashShow  , name : 'SubSubject.TrashShow'     } ,
+            { path: 'Edit/:id'      , component : EditPage   , name : 'SubSubject.Edit'     } ,
+            { path: 'Create'        , component : CreatePage , name : 'SubSubject.Create'   } ,
         ] 
     };
  

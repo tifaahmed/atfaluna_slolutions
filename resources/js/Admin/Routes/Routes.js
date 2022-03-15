@@ -16,6 +16,7 @@ import AgeRoutes        from 'AdminRoutes/AgeRoutes';
 import SubjectRoutes from 'AdminRoutes/SubjectRoutes';
 import QuizRoutes from 'AdminRoutes/QuizRoutes';
 import SubSubjectRoutes from 'AdminRoutes/SubSubjectRoutes';
+import LessonTypeRoutes from 'AdminRoutes/LessonTypeRoutes';
 
 
 
@@ -38,7 +39,8 @@ export default
     SubjectRoutes,
     SubSubjectRoutes,
     QuizRoutes,
-    AvatarRoutes
+    AvatarRoutes,
+    LessonTypeRoutes,
 ] 
 }
 

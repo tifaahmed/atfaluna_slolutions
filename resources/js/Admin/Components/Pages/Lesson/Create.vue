@@ -67,11 +67,11 @@
 
 
 <script>
-import Model          from 'AdminModels/SubSubject';
+import Model          from 'AdminModels/Lesson';
 import SubjectModel   from 'AdminModels/Subject';
 import LanguageModel  from 'AdminModels/Language';
 
-import validation     from 'AdminValidations/SubSubject';
+import validation     from 'AdminValidations/Lesson';
 import InputsFactory  from 'AdminPartials/Components/Inputs/InputsFactory.vue'     ;
 
     export default    {
@@ -84,8 +84,8 @@ import InputsFactory  from 'AdminPartials/Components/Inputs/InputsFactory.vue'  
         },
 
         data( ) { return {
-            TableName :'SubSubject',
-            TablePageName :'SubSubject.ShowAll',
+            TableName :'Lesson',
+            TablePageName :'Lesson.ShowAll',
 
             LanguagesRows : null,
             LanguagesColumn : [
