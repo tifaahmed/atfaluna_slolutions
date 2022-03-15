@@ -11,12 +11,15 @@ use Illuminate\Http\Response ;
 use App\Http\Requests\Api\Lesson\LessonApiRequest as modelInsertRequest;
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\LessonCollection as ModelCollection;
-use App\Http\Resources\Dashboard\LessonResource as ModelResource;
+use App\Http\Resources\Dashboard\Collections\Lesson\LessonCollection as ModelCollection;
+use App\Http\Resources\Dashboard\Lesson\LessonResource as ModelResource;
 
 // lInterfaces
 use App\Repository\LessonRepositoryInterface as ModelInterface;
 use App\Repository\LessonLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages
+
+use Storage;
+use ZanySoft\Zip\Zip;
 
 class LessonController extends Controller
 {
@@ -42,14 +45,7 @@ class LessonController extends Controller
     }
     public function store(modelInsertRequest $request) {
         try {
-            $all = [ ];
-            $file_one = 'image';
-            if ($request->hasFile($file_one)) {            
-                $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
-            }
-
-            $modal = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
-
+            $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
             // // languages
             $this -> update_store_language($request->languages,$modal->id) ;
 
@@ -115,16 +111,7 @@ class LessonController extends Controller
     
     public function update(modelInsertRequest $request ,$id) {
         try {
-            $all = [ ];
-    
-            $file_one = 'image';
-            if ($request->hasFile($file_one)) {
-                $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
-                $old_modal = $this->ModelRepository->findById($id); 
-                $this->HelperDelete($old_modal->image );
-            }
-
-            $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
+            $this->ModelRepository->update( $id,Request()->all()) ;
             $modal = new ModelResource( $this->ModelRepository->findById($id) ); 
 
             //  languages
@@ -145,17 +132,29 @@ class LessonController extends Controller
     }
     
     // lang
-        public function update_store_language($requested_languages,$modal_id ) {
-            if (is_array($requested_languages) ) {
-                $this->destroyLanguage($this->related_language,$modal_id);
-                foreach ($requested_languages as $key => $language_sigle_row) {
-                    $this ->storeLanguage(  $this->handleLanguageData($language_sigle_row,$this->related_language,$modal_id)  );
-                }
+    public function update_store_language($requested_languages,$modal_id ) {
+        if (is_array($requested_languages) ) {
+            $this->destroyLanguage($this->related_language,$modal_id);
+            foreach ($requested_languages as $key => $language_sigle_row) {
+                $this ->storeLanguage(  $this->handleLanguageData($language_sigle_row,$this->related_language,$modal_id)  );
             }
         }
+    }
         public function storeLanguage($language_array ) {
+            $all = [ ];
             try {
-                $this->ModelRepositoryLanguage->create( $language_array ) ;
+                foreach ($language_array as $key => $value) {
+                    if ( $key == 'image'|| $key == 'url') {
+                        $file = $key;
+                        if (isset($language_array[$file]) && $language_array[$file]) {            
+                             $all +=  $this->HelperHandleFile($this->folder_name,$language_array[$file],$file)  ;
+                        }
+                    }else{
+                        $all += array( $key => $value );
+                    }
+                }
+                $this->ModelRepositoryLanguage->create( $all ) ;
+
             } catch (\Exception $e) {
                 return $this -> MakeResponseErrors(  
                     [$e->getMessage()  ] ,
@@ -164,6 +163,7 @@ class LessonController extends Controller
                 );
             }
         }
+
         public function destroyLanguage($relation_coulmn,$id) {
             try {
             $this->ModelRepositoryLanguage->deleteByRelation($relation_coulmn,$id) ;

@@ -19,7 +19,7 @@ class CreateSubSubjectLanguagesTable extends Migration
             $table->string('image_one')->nullable(); // not null
             $table->string('image_two')->nullable(); // not null
             $table->string('name')->nullable();//[note: "ex (  arabic or english or italian -...etc)"]
-            $table->string('subject')->nullable();//[note: "ex (  arabic or english or italian -...etc)"]
+            $table->string('description')->nullable();//[note: "ex (  arabic or english or italian -...etc)"]
 
             $table->string('language',2);//[note: "ex ( ar-en-it-...etc)"]
 
