@@ -14,8 +14,8 @@ class CreateAgeGrouplanguagesTable extends Migration
     public function up()
     {
         Schema::create('age_group_languages', function (Blueprint $table) {
-            $table->string('name');//[note: "ex (  arabic or english or italian  -...etc)"]
-            $table->string('language');//[note: "ex ( ar-en-it-...etc)"]
+            $table->string('name')->nullable();//[note: "ex (  arabic or english or italian  -...etc)"]
+            $table->string('language',2);//[note: "ex ( ar-en-it-...etc)"]
             $table->integer('age_group_id')->unsigned();
             $table->foreign('age_group_id')->references('id')->on('age_groups')->onDelete('cascade');
         });

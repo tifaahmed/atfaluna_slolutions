@@ -17,8 +17,8 @@ class CreateMcqAnswersTable extends Migration
             $table->increments('id');//[pk]
             $table->string('image');
             $table->boolean('answer'); //[default:false]
-            $table->integer('mcq_questions_id')->unsigned();
-            $table->foreign('mcq_questions_id')->references('id')->on('mcq_questions');
+            $table->integer('mcq_question_id')->unsigned();
+            $table->foreign('mcq_question_id')->references('id')->on('mcq_questions');
             $table->timestamps();
             $table->softDeletes();
         });

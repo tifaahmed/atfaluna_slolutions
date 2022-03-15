@@ -26,7 +26,7 @@ class McqAnswerApiRequest extends FormRequest
         return [
             'image'                    =>  [  'required' ,'max:5000' ] ,
             'answer'                   =>  [  'required' ] ,
-            'mcq_questions_id'         =>  [  'required' ,'integer' ] ,
+            'mcq_question_id'         =>  [  'required' ,'integer' ] ,
 
         ];
     }

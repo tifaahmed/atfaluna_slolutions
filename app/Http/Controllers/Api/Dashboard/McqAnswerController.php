@@ -16,14 +16,16 @@ use App\Http\Resources\Dashboard\McqAnswerResource as ModelResource;
 
 // lInterfaces
 use App\Repository\McqAnswerRepositoryInterface as ModelInterface;
+use App\Repository\McqAnswerLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages
 
 class McqAnswerController extends Controller
 {
     private $Repository;
     private $RepositoryLanguage;
-    public function __construct(ModelInterface $Repository)
+    public function __construct(ModelInterface $Repository,ModelInterfaceLanguage $RepositoryLanguage)
     {
         $this->ModelRepository = $Repository;
+        $this->ModelRepositoryLanguage = $RepositoryLanguage;
         $this->folder_name = 'mcqanswer';
         $this->related_language = 'mcq_answer_id';
 

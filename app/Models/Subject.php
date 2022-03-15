@@ -11,14 +11,12 @@ use App\Models\Certificate;
 use App\Models\Sub_subject;
 use App\Models\Lesson;
 
-
 class Subject extends Model
 {
     use HasFactory,SoftDeletes;
     public $guarded = ['id'];
 
     protected $table = 'subjects';
-
 
     protected $fillable = [
         'image',//required , max:5000

@@ -17,6 +17,7 @@ class StoreResource extends JsonResource
             'id'            => $this->id,
             'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
             'url'           => $this->url,
+
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,

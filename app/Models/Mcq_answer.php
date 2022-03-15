@@ -18,11 +18,11 @@ class Mcq_answer extends Model
     protected $fillable = [
         'image',//required, max:5000
         'answer',//boolean [default:false]
-        'mcq_questions_id',//unsigned 
+        'mcq_question_id',//unsigned 
     ];
     // relations
     public function mcq_question(){
-        return $this->belongsTo(Mcq_question::class,'mcq_questions_id');
+        return $this->belongsTo(Mcq_question::class,'mcq_question_id');
     }
     //relation
     public function mcq_answer_languages(){

@@ -1,21 +1,20 @@
 import Model    from './Model';
-import Router    from './Routers/Subject' ;
+import Router    from './Routers/SubSubject' ;
 
 
-export default class Subject extends Model {
+export default class SubSubject extends Model {
       languagesformData : string = 'languages' ;
 
    public async handleData(RequestData) : Promise<any>  {  
       let formData = new FormData();
       await Model.getformData(formData,RequestData) ;
       // languages
-      if (RequestData.languages ) {
-         let data =RequestData.languages;
-         await Model.getObjectFormData(formData,data,this.languagesformData);
-      }   
+         if (RequestData.languages ) {
+            let data =RequestData.languages;
+            await Model.getObjectFormData(formData,data,this.languagesformData);
+         }   
       // languages
       return formData;
-      
    }
 
    protected async all() : Promise<any>  {  

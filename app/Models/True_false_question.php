@@ -19,7 +19,9 @@ class True_false_question extends Model
     protected $fillable = [
         'image',//required , max:5000
         'videos',//required , max:5000
+        'audio',//required , max:5000
         'answer',//boolean [default:false]
+
         'quiz_id',//unsigned 
     ];
     //relation

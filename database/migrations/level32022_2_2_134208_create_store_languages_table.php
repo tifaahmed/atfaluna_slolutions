@@ -15,7 +15,7 @@ class CreateStorelanguagesTable extends Migration
     {
         Schema::create('store_languages', function (Blueprint $table) {
             $table->string('name')->nullable();//[note: "ex (  arabic or english or italian  -...etc)"]
-            $table->string('language')->unique();//[note: "ex ( ar-en-it-...etc)"]
+            $table->string('language',2);//[note: "ex ( ar-en-it-...etc)"]
             $table->integer('store_id')->unsigned();
             $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
         });
