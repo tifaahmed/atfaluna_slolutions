@@ -10,29 +10,9 @@
                     <div class="card-body pt-0">
 
 
-                              <span v-for="( row    , rowkey ) in LanguagesRows " :key="rowkey" >
-                                <!-- (LanguagesRows) loop on ar & en -->
-                                <span v-for="( row_    , rowkey_ ) in LanguagesColumn " :key="rowkey_" >
-                                    <InputsFactory :Factorylable="row_.header+' ( ' + row.full_name + ' ) '" :FactoryPlaceholder="row_.placeholder"         
-                                        :FactoryType="row_.type" :FactoryName="row_.name"  v-model ="RequestData.languages[rowkey][row_.name]"  
-                                        :FactoryErrors="null" 
-                                    />
-                                </span>
-                                <hr>
-                            </span> 
-
-                            
-                            <InputsFactory :Factorylable="'Subject'" 
-                                :FactoryType="'select'" :FactoryName="'subject_id'"   v-model ="RequestData.subject"  
-                                :FactorySelectOptions="SubjectRows"   
-                                :FactorySelectColumnName="'image'"  
-                                :FactorySelectColumnOptions="['points']"  
-
-                                :FactorySelectForloop="'languages'"  
-                                :FactorySelectForloopColumn="['name','language']" 
-
-                                :FactorySelectimage="''"  
-                                :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.subject_id )  ) ? ServerReaponse.errors.subject_id : null" 
+                                <InputsFactory :Factorylable="'name'"  :FactoryPlaceholder="'name'"
+                                :FactoryType="'string'" :FactoryName="'name'"   v-model ="RequestData.name" 
+                                :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.name )   ) ? ServerReaponse.errors.name : null"
                             />
 
 
@@ -61,17 +41,17 @@
 
 </template>
 <script>
-import Model     from 'AdminModels/SubSubject';
+import Model     from 'AdminModels/LessonType';
 import SubjectModel   from 'AdminModels/Subject';
 import LanguageModel     from 'AdminModels/Language';
 
-import validation     from 'AdminValidations/SubSubject';
+import validation     from 'AdminValidations/LessonType';
 import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue'     ;
 
     export default {
         components : { InputsFactory } ,
 
-        name:"SubSubjectEdit",
+        name:"LessonTypeEdit",
 
         mounted() {
             this.GetlLanguages();
@@ -80,32 +60,19 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
             
         },
         data( ) { return {
-            TableName :'SubSubject',
-            TablePageName :'SubSubject.ShowAll',
+            TableName :'LessonType',
+            TablePageName :'LessonType.ShowAll',
             
-            LanguagesRows : null,
-            LanguagesColumn : [
-                { type: 'string'  ,placeholder:'name',header :'name', name : 'name'},
-                { type: 'string'  ,placeholder:'description',header :'description', name : 'description'},
-                { type: 'file'    ,placeholder:'image one',header :'image_one', name : 'image one'},
-                { type: 'file'    ,placeholder:'image two',header :'image_two', name : 'image two'},    
-            ],
-
-            SubjectRows   : null,
             
             ServerReaponse : {
                 errors : {
-                    image :[],
-                    points :[],
-                     subject_id : [],
+                    name :[],
                 },
                 message : null,
             },
             RequestData : {
-                  subject_id      : null,
-                    subject         : null,
-
-                    languages       : { },
+                  
+                name: [],
                     
             },
 
@@ -129,13 +96,13 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
             // before send to server
                 async FormSubmet(){
                     //clear errors
-                    await this.DeleteErrors(); 
-                    // handle data
-                    await this.HandleData();  
+                    await this.DeleteErrors();                
                     // valedate
                     await this.DetectVueError();  
                     console.log(this.ServerReaponse.message) ;    
                     // if (this.ServerReaponse.message == null) {
+                        // handle data
+                        await this.HandleData();  
                         // Submet from  
                         await this.SubmetRowButton(); 
                     // }
@@ -151,37 +118,6 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                     var check = await (new validation).validate(this.RequestData);
                     if( check ){// if there is error from my file
                         this.ServerReaponse = check; // error from my file
-                    }
-                },
-            async GetSubject(){
-                    this.SubjectRows  = ( await this.AllSubject() ).data.data;
-                }, 
-
-           async GetlLanguages(){
-                this.LanguagesRows  = ( await this.AllLanguages() ).data.data; // all languages
-                let item_languages = this.RequestData.languages; // item language data
-                let handleLanguages= {}; //handle Languages from item data & all languages
-
-                for (var key in this.LanguagesRows) {
-                    handleLanguages[key] = [];
-                        Vue.set( handleLanguages[key],  'language'); // language key
-                        handleLanguages[key].language = this.LanguagesRows[key].name;//fr & en & ar
-                    for (var key_ in this.LanguagesColumn) {
-                        Vue.set( handleLanguages[key],  this.LanguagesColumn[key_].name); // ex (name,image,desc,subject) key
-                        if(  item_languages[key] &&  item_languages[key]['language'] ==  this.LanguagesRows[key].name ){
-                            handleLanguages[key][this.LanguagesColumn[key_].name] = item_languages[key][this.LanguagesColumn[key_].name] ;
-                        }
-                    }
-                }
-                this.RequestData.languages = '';
-                this.RequestData.languages = handleLanguages;
-            },
-
-
-                HandleData(){
-
-                   if(this.RequestData.subject){
-                        this.RequestData.subject_id = this.RequestData.subject.id;
                     }
                 },
 
@@ -206,14 +142,6 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
 
 
             // modal
-                 AllLanguages(){
-                    return  (new LanguageModel).all()  ;
-                },
-
-                AllSubject(){
-                    return  (new SubjectModel).all()  ;
-                },
-                
                 async show( ) {
                     return ( await (new Model).show( this.$route.params.id) ).data.data[0] ;
                 },
