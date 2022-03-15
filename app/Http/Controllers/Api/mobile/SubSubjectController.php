@@ -23,9 +23,10 @@ class SubSubjectController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model =  $this->ModelRepository->filterAll($request->subject_id) ;
+            return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -36,8 +37,8 @@ class SubSubjectController extends Controller
     }
     public function collection(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
-
+            $model =  $this->ModelRepository->filterPaginate($request->subject_id,$request->PerPage ? $request->PerPage : 10) ;
+            return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

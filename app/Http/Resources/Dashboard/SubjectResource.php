@@ -30,6 +30,8 @@ class SubjectResource extends JsonResource
             'languages'     => $this->subject_languages,
             'name'          => $row ? $row->name:'',
 
+            'age_group'     => $this->age_group,
+
             'certification'  => new CertificateResource (  $this->certificate )  ,
 
         ];        

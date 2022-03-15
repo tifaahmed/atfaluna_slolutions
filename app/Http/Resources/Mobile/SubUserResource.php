@@ -7,7 +7,7 @@ use App\Http\Resources\Mobile\Collections\AvatarCollection;
 use App\Http\Resources\Mobile\Collections\AccessoryCollection;
 use App\Http\Resources\Mobile\Collections\CertificateCollection;
 use App\Http\Resources\Mobile\Collections\QuizCollection;
-use App\Http\Resources\Mobile\Collections\LessonCollection;
+use App\Http\Resources\Mobile\Collections\Lesson\LessonCollection;
 use App\Http\Resources\Mobile\Collections\SubjectCollection;
 
 class SubUserResource extends JsonResource

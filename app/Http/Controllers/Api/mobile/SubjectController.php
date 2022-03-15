@@ -28,8 +28,6 @@ class SubjectController extends Controller
         try {
             $model =  $this->ModelRepository->filterAll($request->sub_user_id) ;
             return new ModelCollection ( $model )  ;
-
-
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -43,7 +41,6 @@ class SubjectController extends Controller
         try {
             $model =  $this->ModelRepository->filterPaginate($request->sub_user_id,$request->PerPage ? $request->PerPage : 10) ;
             return new ModelCollection ( $model )  ;
-
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
