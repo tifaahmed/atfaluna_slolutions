@@ -16,11 +16,18 @@ trait FileTrait {
             $random_string = Str::random(10);
             $location = $folder_name.'/'.$random_string.time();
             $path = Storage::disk('public')->put($location,$file);
+            $zip = Zip::open( public_path('storage').'/'.$path );
+            $zip->extract(public_path('storage').'/'.$location);
 
-            $zip = Zip::open( 'storage/'.$path );
-            $zip->extract('storage/'.$location);
+            if( file_exists( public_path('storage').'/'.$location.'/index.php') ){
+                return $location.'/index.php';
+            }else if( file_exists( public_path('storage').'/'.$location.'/index.html') ){
+                return $location.'/index.html';
+            }else{
+                return $location;
+            }
 
-            return $location;
+           
         }else{
             return $path = Storage::disk('public')->put($folder_name,$file);
         }

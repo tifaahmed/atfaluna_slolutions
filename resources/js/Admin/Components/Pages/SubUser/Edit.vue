@@ -195,17 +195,16 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
             // before send to server
                 async FormSubmet(){
                     //clear errors
-                    await this.DeleteErrors();                
+                    await this.DeleteErrors(); 
+                    // handle data
+                    await this.HandleData();  
                     // valedate
                     await this.DetectVueError();  
                     console.log(this.ServerReaponse.message) ;    
                     if (this.ServerReaponse.message == null) {
-                        // handle data
-                        await this.HandleData();  
                         // Submet from  
                         await this.SubmetRowButton(); 
                     }
-                
                 },
                 DeleteErrors(){
                     for (var key in this.ServerReaponse.errors) {
@@ -222,7 +221,6 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 },
 
                 HandleData(){
-
                     if(this.RequestData.accessories){
                         var accessory_list =[];
                         this.RequestData.accessories.map(function(value, key) {

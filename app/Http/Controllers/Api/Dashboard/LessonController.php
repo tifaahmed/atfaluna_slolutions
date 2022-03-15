@@ -44,11 +44,8 @@ class LessonController extends Controller
         }
     }
     public function store(modelInsertRequest $request) {
-        // try {
-
-
+        try {
             $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
-
             // // languages
             $this -> update_store_language($request->languages,$modal->id) ;
 
@@ -57,13 +54,13 @@ class LessonController extends Controller
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
-        // } catch (\Exception $e) {
-        //     return $this -> MakeResponseErrors(  
-        //         [$e->getMessage()  ] ,
-        //         'Errors',
-        //         Response::HTTP_BAD_REQUEST
-        //     );
-        // }
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_BAD_REQUEST
+            );
+        }
     }
 
 
@@ -147,16 +144,15 @@ class LessonController extends Controller
             $all = [ ];
             try {
                 foreach ($language_array as $key => $value) {
-                    if ($key == 'image' || $key == 'url') {
+                    if ( $key == 'image'|| $key == 'url') {
                         $file = $key;
                         if (isset($language_array[$file]) && $language_array[$file]) {            
-                            $all +=  $this->HelperHandleFile($this->folder_name,$language_array[$file],$file)  ;
+                             $all +=  $this->HelperHandleFile($this->folder_name,$language_array[$file],$file)  ;
                         }
                     }else{
                         $all += array( $key => $value );
                     }
                 }
-
                 $this->ModelRepositoryLanguage->create( $all ) ;
 
             } catch (\Exception $e) {
