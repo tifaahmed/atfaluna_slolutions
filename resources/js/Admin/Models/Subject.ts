@@ -8,7 +8,12 @@ export default class Subject extends Model {
    public async handleData(RequestData) : Promise<any>  {  
       let formData = new FormData();
       await Model.getformData(formData,RequestData) ;
-
+      // languages
+      if (RequestData.languages ) {
+         let data =RequestData.languages;
+         await Model.getObjectFormData(formData,data,this.languagesformData);
+      }   
+   // languages
       return formData;
    }
 

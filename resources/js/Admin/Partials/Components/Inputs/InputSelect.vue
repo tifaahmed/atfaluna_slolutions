@@ -19,12 +19,12 @@
 							<span > ( {{props.option.id}} ) </span>
 							<img v-if="props.option[PropFactorySelectimage]" class="option__image" :src="props.option[PropFactorySelectimage]" style="width:50px">
 							/
-							<span :if="PropSelectColumnOptions" class="option__title" v-for="( val , key ) in PropSelectColumnOptions" :key="key"   >
+							<span :if="PropSelectColumnOptions" class="option__title" v-for="( val , key_first ) in PropSelectColumnOptions" :key="key_first"   >
 								<span v-if="props.option[val] != null">- {{props.option[val]}} </span>
 							</span> 
 							/
-							<span  :if="props.option[PropSelectForloop]" v-for="( valLang , langkey    )  in props.option[PropSelectForloop]" :key="langkey"   >
-								<span  v-for="( valColumn , columnkey    )  in PropSelectForloopColumn" :key="columnkey"   >
+							<span  :if="props.option[PropSelectForloop]" v-for="valLang in props.option[PropSelectForloop]">
+								<span  v-for="valColumn in PropSelectForloopColumn">
 									<span v-if="valLang[valColumn] != null">- {{valLang[valColumn]}} </span>
 								</span>
 							</span> 
@@ -36,12 +36,12 @@
 						<span > ( {{props.option.id}} ) </span>
 						<img v-if="props.option[PropFactorySelectimage]" class="option__image" :src="props.option[PropFactorySelectimage]" style="width:50px">
 						/
-						<span :if="PropSelectColumnOptions" class="option__title" v-for="( val , key ) in PropSelectColumnOptions" :key="key"   >
+						<span :if="PropSelectColumnOptions" class="option__title" v-for="( val , key_second ) in PropSelectColumnOptions" :key="key_second"   >
 							<span v-if="props.option[val] != null">- {{props.option[val]}} </span>
 						</span> 
 						/
-						<span  :if="props.option[PropSelectForloop]" v-for="( valLang , langkey    )  in props.option[PropSelectForloop]" :key="langkey"   >
-							<span  v-for="( valColumn , columnkey    )  in PropSelectForloopColumn" :key="columnkey"   >
+						<span  :if="props.option[PropSelectForloop]" v-for="valLang in props.option[PropSelectForloop]"   >
+							<span  v-for="valColumn in PropSelectForloopColumn"   >
 								<span v-if="valLang[valColumn] != null">- {{valLang[valColumn]}} </span>
 							</span>
 						</span> 
