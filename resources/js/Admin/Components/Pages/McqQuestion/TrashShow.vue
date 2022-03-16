@@ -16,13 +16,14 @@
                                         />
                                     </td>
                                 </tr>
+                                
                             </tbody>
                         </table>
                         <router-link style="color:#fff" 
                             :to = "{ 
-                                name : TableName+'.ShowAll' , 
+                                name : TableName+'.AllTrash' , 
                                 query: { CurrentPage: this.$route.query.CurrentPage }  
-                            }" >                         
+                            }" > 
                             <button type="button" class="btn btn-danger  ">
                                 <i class="fas fa-arrow-left">
                                         back
@@ -40,7 +41,7 @@ import Model     from 'AdminModels/Lesson';
 import ColumsIndex          from 'AdminPartials/Components/colums/ColumsIndex.vue'     ;
 
     export default {
-        name:"SubjectShow",
+        name:"LessonTrashShow",
 
         mounted() {
             this.initial();
@@ -51,16 +52,15 @@ import ColumsIndex          from 'AdminPartials/Components/colums/ColumsIndex.vu
         data( ) { return {
             TableName :'Lesson',
 
+
             Columns :  [
                 { type: 'Router'    ,header : 'id'      , name : 'id'           , value : null  } ,
+                { type: 'Image'    ,header : 'image'    , name : 'image', value : null  } ,
+                { type: 'Forloop'   ,header : 'name'                , name : 'languages'    , value : null  , LoopOnColumn :['language','name']} ,
 
-                { type: 'Image'     ,header : 'image'    , name : 'image', value : null  } ,
-                { type: 'Link'    ,header : 'url'    , name : 'url', value : null  } ,
-                { type: 'String'    ,header : 'points'  , name : 'points'       , value : null  } ,
-                
-                { type: 'Date'      ,header : 'created' , name : 'created_at'   , value : null  } ,
-                { type: 'Date'      ,header : 'updated' , name : 'updated_at'   , value : null  } ,
-            ],        
+                { type: 'Date'      ,header : 'created', name : 'created_at'  , value : null  } ,
+                { type: 'Date'      ,header : 'deleted', name : 'deleted_at'  , value : null  } ,
+            ], 
         } 
         } ,
         methods : {
@@ -71,7 +71,7 @@ import ColumsIndex          from 'AdminPartials/Components/colums/ColumsIndex.vu
             },
             // modal
                 async Show(id) {
-                    return await ( (new Model).show(id) )
+                    return await ( (new Model).TrashShow(id) )
                 },
             // modal
             SendRowData(row){

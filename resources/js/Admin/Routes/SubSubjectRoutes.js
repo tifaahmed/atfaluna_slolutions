@@ -9,7 +9,7 @@ import EditPage   from '../Components/Pages/SubSubject/Edit'     ;
 
 
 export default 
-    {   path : 'Quiz' ,  component : HomePage , children : [
+    {   path : 'SubSubject' ,  component : HomePage , children : [
             { path: 'ShowAll'       , component : AllPage    , name : 'SubSubject.ShowAll'  } ,
             { path: 'AllTrash'      , component : TrashPage  , name : 'SubSubject.AllTrash'  } ,
             { path: 'Show/:id'      , component : ShowPage   , name : 'SubSubject.Show'     } ,

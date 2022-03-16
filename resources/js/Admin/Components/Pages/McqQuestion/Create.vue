@@ -1,7 +1,6 @@
 <template>
     <div class="container-fluid" >
 
-
         <div class="row row-sm">
             <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
                 <div class="card  box-shadow-0 ">
@@ -10,7 +9,6 @@
                     </div>
                     <div class="card-body pt-0">
                     
-
                             <span v-for="( row    , rowkey ) in LanguagesRows " :key="rowkey" >
                                 <!-- (LanguagesRows) loop on ar & en -->
                                 <span v-for="( row_    , rowkey_ ) in LanguagesColumn " :key="rowkey_" >
@@ -48,10 +46,7 @@
                                  :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.lesson_type_id )  ) ? ServerReaponse.errors.lesson_type_id : null"       
                             />
 
-
-
-
-                        
+                 
                         <button  @click="FormSubmet()" class="btn btn-primary ">
                             Submit
                         </button>
@@ -82,17 +77,17 @@
 
 
 <script>
-import Model          from 'AdminModels/Lesson';
+import Model          from 'AdminModels/McqQuestion';
 import SubSubjectModel  from 'AdminModels/Subsubject';
 import LessonTypeModel  from 'AdminModels/LessonType';
 import LanguageModel  from 'AdminModels/Language';
 
 
-import validation     from 'AdminValidations/Lesson';
+import validation     from 'AdminValidations/McqQuestion';
 import InputsFactory  from 'AdminPartials/Components/Inputs/InputsFactory.vue'     ;
 
     export default    {
-        name:'LessonCreate',
+        name:'McqQuestionCreate',
         components : { InputsFactory } ,
 
         async mounted() {
@@ -102,8 +97,8 @@ import InputsFactory  from 'AdminPartials/Components/Inputs/InputsFactory.vue'  
         },
 
         data( ) { return {
-            TableName :'Lesson',
-            TablePageName :'Lesson.ShowAll',
+            TableName :'McqQuestion',
+            TablePageName :'McqQuestion.ShowAll',
 
 
             LanguagesRows : null,

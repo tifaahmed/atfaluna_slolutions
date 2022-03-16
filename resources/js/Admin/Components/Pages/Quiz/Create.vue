@@ -78,7 +78,6 @@
 </template>
 
 
-
 <script>
 import Model          from 'AdminModels/Quiz';
 import SubjectModel   from 'AdminModels/Subject';
@@ -123,7 +122,6 @@ import InputsFactory  from 'AdminPartials/Components/Inputs/InputsFactory.vue'  
                     image           : null, 
 
                     languages       : { },
-
             },
 
         } } ,
@@ -139,11 +137,9 @@ import InputsFactory  from 'AdminPartials/Components/Inputs/InputsFactory.vue'  
                     await this.DetectVueError();  
                     console.log(this.ServerReaponse.message) ;    
                     if (this.ServerReaponse.message == null) {
-
                         // Submet from  
                         await this.SubmetRowButton(); 
-                    }
-                
+                    }    
                 },
                 DeleteErrors(){
                     for (var key in this.ServerReaponse.errors) {
@@ -151,7 +147,6 @@ import InputsFactory  from 'AdminPartials/Components/Inputs/InputsFactory.vue'  
                     }
                     this.ServerReaponse.message =null;
                 },
-
 
 
              async GetlLanguages(){
@@ -173,7 +168,6 @@ import InputsFactory  from 'AdminPartials/Components/Inputs/InputsFactory.vue'  
                 this.RequestData.languages = '';
                 this.RequestData.languages = handleLanguages;
             },
-
 
 
             // model 
@@ -209,8 +203,6 @@ import InputsFactory  from 'AdminPartials/Components/Inputs/InputsFactory.vue'  
             // relationship
 
 
-
-
             // after send to server
                 async SubmetRowButton(){
                     var data = await this.store()  ; // send update request
@@ -230,7 +222,7 @@ import InputsFactory  from 'AdminPartials/Components/Inputs/InputsFactory.vue'  
                     })
                 },
             // after send to server
- 
+
 
             // model 
                  AllSubject(){

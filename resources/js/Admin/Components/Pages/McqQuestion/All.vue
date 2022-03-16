@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import Model     from 'AdminModels/SubSubject';
+import Model     from 'AdminModels/McqQuestion';
 
 import pagination           from 'laravel-vue-pagination';
 import ModalIndex           from 'AdminPartialsModal/MainModel.vue'     ;
@@ -70,23 +70,22 @@ import TableControllers     from 'AdminPartials/Components/Controllers/TableCont
 import ColumsIndex          from 'AdminPartials/Components/colums/ColumsIndex.vue'     ;
 
 export default {
-    name:"SubSubjectAll",
+    name:"McqQuestionAll",
     components:{
         pagination,ModalIndex,TableControllers,ColumsIndex
     },
 
     data( ) { return {
-        TableName :'SubSubject',
+        TableName :'McqQuestion',
 
         TableRows  : {},
         Columns :  [
                 { type: 'Router'    ,header : 'id'      , name : 'id'           , value : null  } ,
 
-
-                { type: 'Forloop'   ,header : 'name'    , name : 'languages'    , value : null  , LoopOnColumn :['language','name']} ,
-                { type: 'Forloop'   ,header : 'image one'    , name : 'languages'    , value : null  , LoopOnColumn :['language','image_one']} ,
-                { type: 'Forloop'   ,header : 'image two'    , name : 'languages'    , value : null  , LoopOnColumn :['language','image_two']} ,
-                
+                { type: 'Image'     ,header : 'image'    , name : 'image', value : null  } ,
+                { type: 'Link'    ,header : 'url'    , name : 'url', value : null  } ,
+                { type: 'String'    ,header : 'points'  , name : 'points'       , value : null  } ,
+                            
 
                 { type: 'Date'      ,header : 'created' , name : 'created_at'   , value : null  } ,
                 { type: 'Date'      ,header : 'updated' , name : 'updated_at'   , value : null  } ,

@@ -84,8 +84,10 @@ export default {
         TableRows  : {},
         Columns :  [
                 { type: 'Router'    ,header : 'id'      , name : 'id'           , value : null  } ,
-                { type: 'Image'    ,header : 'image'    , name : 'image', value : null  } ,
-                //{ type: 'Forloop'   ,header : 'name'                , name : 'languages'    , value : null  , LoopOnColumn :['language','name']} ,
+
+                { type: 'Image'     ,header : 'image'    , name : 'image', value : null  } ,
+                { type: 'Link'    ,header : 'url'    , name : 'url', value : null  } ,
+                { type: 'String'    ,header : 'points'  , name : 'points'       , value : null  } ,
 
                 { type: 'Date'      ,header : 'deleted' , name : 'deleted_at'   , value : null  } ,
             ],
