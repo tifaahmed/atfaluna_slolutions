@@ -79,7 +79,7 @@ import InputsFactory  from 'AdminPartials/Components/Inputs/InputsFactory.vue'  
                     //clear errors
                     await this.DeleteErrors(); 
                     // handle data
-                    await this.HandleData();  
+                  //  await this.HandleData();  
                     // valedate
                     await this.DetectVueError();  
                     console.log(this.ServerReaponse.message) ;    

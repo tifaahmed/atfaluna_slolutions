@@ -9,7 +9,7 @@ import EditPage   from '../Components/Pages/LessonType/Edit'     ;
 
 
 export default 
-    {   path : 'Quiz' ,  component : HomePage , children : [
+    {   path : 'LessonType' ,  component : HomePage , children : [
             { path: 'ShowAll'       , component : AllPage    , name : 'LessonType.ShowAll'  } ,
             { path: 'AllTrash'      , component : TrashPage  , name : 'LessonType.AllTrash'  } ,
             { path: 'Show/:id'      , component : ShowPage   , name : 'LessonType.Show'     } ,
