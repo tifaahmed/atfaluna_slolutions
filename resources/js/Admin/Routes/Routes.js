@@ -17,6 +17,8 @@ import SubjectRoutes from 'AdminRoutes/SubjectRoutes';
 import QuizRoutes from 'AdminRoutes/QuizRoutes';
 import SubSubjectRoutes from 'AdminRoutes/SubSubjectRoutes';
 import LessonTypeRoutes from 'AdminRoutes/LessonTypeRoutes';
+import LessonRoutes from 'AdminRoutes/LessonRoutes';
+import McqQuestionRoutes from 'AdminRoutes/McqQuestionRoutes';
 
 
 
@@ -41,6 +43,8 @@ export default
     QuizRoutes,
     AvatarRoutes,
     LessonTypeRoutes,
+    LessonRoutes,
+    McqQuestionRoutes,
 ] 
 }
 

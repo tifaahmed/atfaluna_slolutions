@@ -22,14 +22,17 @@
                                             :ValueColumn="row[column.name]"   
                                             :typeColumn="column.type" 
                                             :LoopOnColumn="column.LoopOnColumn"
+
                                             @SendRowData ="SendRowData(row)"  
                                         />
                                     </td>
                                     <td>
-                                        <TableControllers 
+                                        <TrashedControllers 
                                             :RowId="row.id" 
                                             :CurrentPage="TableRows.meta ? TableRows.meta.current_page: 1" 
                                             @SendRowData="SendRowData(row)"
+                                            @RestoreRowButton="RestoreRowButton"
+                                            @DeleteRowButton="DeleteRowButton"
                                         />
                                     </td>
 
@@ -62,40 +65,38 @@
 </template>
 
 <script>
-import Model     from 'AdminModels/SubSubject';
+import Model     from 'AdminModels/McqQuestion';
 
 import pagination           from 'laravel-vue-pagination';
 import ModalIndex           from 'AdminPartialsModal/MainModel.vue'     ;
-import TableControllers     from 'AdminPartials/Components/Controllers/TableControllers.vue'     ;
+import TrashedControllers   from 'AdminPartials/Components/Controllers/TrashedControllers.vue'     ;
 import ColumsIndex          from 'AdminPartials/Components/colums/ColumsIndex.vue'     ;
 
 export default {
-    name:"SubSubjectAll",
+    name:"McqQuestionTrashAll",
     components:{
-        pagination,ModalIndex,TableControllers,ColumsIndex
+        pagination,ModalIndex,TrashedControllers,ColumsIndex
     },
 
     data( ) { return {
-        TableName :'SubSubject',
+        TableName :'Lesson',
 
         TableRows  : {},
         Columns :  [
                 { type: 'Router'    ,header : 'id'      , name : 'id'           , value : null  } ,
 
+                { type: 'Image'     ,header : 'image'    , name : 'image', value : null  } ,
+                { type: 'Link'    ,header : 'url'    , name : 'url', value : null  } ,
+                { type: 'String'    ,header : 'points'  , name : 'points'       , value : null  } ,
 
-                { type: 'Forloop'   ,header : 'name'    , name : 'languages'    , value : null  , LoopOnColumn :['language','name']} ,
-                { type: 'Forloop'   ,header : 'image one'    , name : 'languages'    , value : null  , LoopOnColumn :['language','image_one']} ,
-                { type: 'Forloop'   ,header : 'image two'    , name : 'languages'    , value : null  , LoopOnColumn :['language','image_two']} ,
-                
-
-                { type: 'Date'      ,header : 'created' , name : 'created_at'   , value : null  } ,
-                { type: 'Date'      ,header : 'updated' , name : 'updated_at'   , value : null  } ,
+                { type: 'Date'      ,header : 'deleted' , name : 'deleted_at'   , value : null  } ,
             ],
         PerPage  : 10
     } },
 
     mounted() {
         this.initial( this.$route.query.CurrentPage );
+        
     },
 
     methods : {
@@ -105,10 +106,13 @@ export default {
 
         // model 
             Collection(page = 1){
-                return  (new Model).collection(page,this.PerPage)  ;
+                return  (new Model).CollectionTrash(page,this.PerPage)  ;
             },
             Delete(id){
-                return (new Model).deleteRow(id)  ;
+                return (new Model).premanentlDeleteRow(id)  ;
+            },
+            Rstore(id){
+                return (new Model).RstoreRow(id)  ;
             },
         // model 
 
@@ -117,7 +121,10 @@ export default {
             await this.initial(page);
             this.CloseModal();
         },
-
+        async RestoreRowButton(page,id){
+            let  data = await this.Rstore(id);
+            await this.initial(page);
+        },
         // modal
             SendRowData(row){
                 this.Columns.forEach(function (SingleRow) {
