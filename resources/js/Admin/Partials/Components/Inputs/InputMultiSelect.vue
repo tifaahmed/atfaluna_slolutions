@@ -30,7 +30,7 @@
 
 					<span :if="props.option[PropSelectForloop]" >
 						<span   v-for="( valLang , langkey    )  in props.option[PropSelectForloop]" :key="langkey"   >
-							<span  v-for="( valColumn , columnkey    )  in PropSelectForloopColumn" :key="columnkey"   >
+							<span  v-for="valColumn in PropSelectForloopColumn">
 								<span v-if="valLang[valColumn] != null">- {{valLang[valColumn]}} </span>
 							</span>
 							/

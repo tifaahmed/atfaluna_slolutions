@@ -15,14 +15,14 @@ export default class SubSubject   extends Validation {
 
 
 	    // image 
-			this.required(RequestData.image,'image',this.ImageArray);
-	    	this.FileMoreThan(RequestData.image,'image',this.ImageArray,5000000);
+			//this.required(RequestData.image,'image',this.ImageArray);
+	    	//this.FileMoreThan(RequestData.image,'image',this.ImageArray,5000000);
 	    // age_group_id 
 			//this.required(RequestData.age_group_id,'age_group_id',this.AgeGroupArray);
 			//this.IsNumber(RequestData.age_group_id,'age_group_id',this.AgeGroupArray);
 
 		// points
-			this.required(RequestData.points,'points',this.PointsArray);
+			//this.required(RequestData.points,'points',this.PointsArray);
 
 	}
 }

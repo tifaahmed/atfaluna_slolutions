@@ -9,6 +9,7 @@
                     </div>
                     <div class="card-body pt-0">
 
+
                               <span v-for="( row    , rowkey ) in LanguagesRows " :key="rowkey" >
                                 <!-- (LanguagesRows) loop on ar & en -->
                                 <span v-for="( row_    , rowkey_ ) in LanguagesColumn " :key="rowkey_" >
@@ -21,7 +22,6 @@
                             </span> 
 
                             
-
                             <InputsFactory :Factorylable="'Subject'" 
                                 :FactoryType="'select'" :FactoryName="'subject_id'"   v-model ="RequestData.subject"  
                                 :FactorySelectOptions="SubjectRows"   
@@ -36,21 +36,8 @@
                             />
 
 
-                            <InputsFactory :Factorylable="'image'"  :FactoryPlaceholder="'image'"
-                                :FactoryType="'file'" :FactoryName="'image'"   v-model ="RequestData.image"  
-                                :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.image )   ) ? ServerReaponse.errors.image : null"
-                            />
-
-
-                             <InputsFactory :Factorylable="'points'"  :FactoryPlaceholder="'points'"
-                                :FactoryType="'number'" :FactoryName="'points'"   v-model ="RequestData.points" 
-                                :FactoryErrors="(  ServerReaponse && Array.isArray( ServerReaponse.errors.points )   ) ? ServerReaponse.errors.points : null"
-                            /> </div>
-
-
-
                         <button  @click="FormSubmet()" class="btn btn-primary  ">Submit</button>
-                
+
                         <router-link style="color:#fff" 
                             :to = "{ 
                                 name : TableName+'.ShowAll' , 
@@ -70,7 +57,7 @@
             </div>
         </div>
 
-
+	</div>
 
 </template>
 <script>
@@ -98,12 +85,14 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
             
             LanguagesRows : null,
             LanguagesColumn : [
-                { type: 'string',placeholder:'name',header :'name', name : 'name'},
+                { type: 'string'  ,placeholder:'name',header :'name', name : 'name'},
+                { type: 'string'  ,placeholder:'description',header :'description', name : 'description'},
+                { type: 'file'    ,placeholder:'image one',header :'image_one', name : 'image one'},
+                { type: 'file'    ,placeholder:'image two',header :'image_two', name : 'image two'},    
             ],
 
             SubjectRows   : null,
-            LanguagesRows : null,
-
+            
             ServerReaponse : {
                 errors : {
                     image :[],
@@ -113,11 +102,8 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
                 message : null,
             },
             RequestData : {
-                    points          : null,
-                    image           : null, 
-
-                    subject_id :      null,
-                    subject :         null,
+                  subject_id      : null,
+                    subject         : null,
 
                     languages       : { },
                     
@@ -143,13 +129,13 @@ import InputsFactory     from 'AdminPartials/Components/Inputs/InputsFactory.vue
             // before send to server
                 async FormSubmet(){
                     //clear errors
-                    await this.DeleteErrors();                
+                    await this.DeleteErrors(); 
+                    // handle data
+                    await this.HandleData();  
                     // valedate
                     await this.DetectVueError();  
                     console.log(this.ServerReaponse.message) ;    
                     // if (this.ServerReaponse.message == null) {
-                        // handle data
-                        await this.HandleData();  
                         // Submet from  
                         await this.SubmetRowButton(); 
                     // }

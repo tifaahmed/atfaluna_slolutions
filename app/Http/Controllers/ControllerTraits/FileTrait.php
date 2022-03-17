@@ -28,7 +28,7 @@ trait FileTrait {
             $random_string = Str::random(10);
             $location = $folder_name.'/'.$random_string.time();
             $path = Storage::disk('public')->put($location,$file);
-
+          
             $zip = Zip::open( public_path('storage').'/'.$path );
             $zip->extract(public_path('storage').'/'.$location);
 
@@ -36,7 +36,7 @@ trait FileTrait {
                 return $location.'/index.php';
             }else if( file_exists( public_path('storage').'/'.$location.'/index.html') ){
                 return $location.'/index.html';
-                 
+              
             }else{
                 return $location;
             }
@@ -79,10 +79,6 @@ trait FileTrait {
                 $this->HelperDelete($model->$file_key_name);
             }
         }
-        
-        
     }
-
-
 
 }

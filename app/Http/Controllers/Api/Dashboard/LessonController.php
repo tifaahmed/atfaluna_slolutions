@@ -42,8 +42,6 @@ class LessonController extends Controller
         }
     }
 
-
-
     public function collection(Request $request){
         try {
             return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;

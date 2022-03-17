@@ -82,9 +82,10 @@ export default {
         Columns :  [
                 { type: 'Router'    ,header : 'id'      , name : 'id'           , value : null  } ,
 
-                { type: 'Image'    ,header : 'image'    , name : 'image', value : null  } ,
 
                 { type: 'Forloop'   ,header : 'name'    , name : 'languages'    , value : null  , LoopOnColumn :['language','name']} ,
+                { type: 'Forloop'   ,header : 'image one'    , name : 'languages'    , value : null  , LoopOnColumn :['language','image_one']} ,
+                { type: 'Forloop'   ,header : 'image two'    , name : 'languages'    , value : null  , LoopOnColumn :['language','image_two']} ,
                 
 
                 { type: 'Date'      ,header : 'created' , name : 'created_at'   , value : null  } ,
