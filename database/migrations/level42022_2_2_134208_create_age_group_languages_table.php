@@ -14,6 +14,7 @@ class CreateAgeGrouplanguagesTable extends Migration
     public function up()
     {
         Schema::create('age_group_languages', function (Blueprint $table) {
+            $table->increments('id');//[pk]
             $table->string('name')->nullable();//[note: "ex (  arabic or english or italian  -...etc)"]
             $table->string('language',2);//[note: "ex ( ar-en-it-...etc)"]
             $table->integer('age_group_id')->unsigned();

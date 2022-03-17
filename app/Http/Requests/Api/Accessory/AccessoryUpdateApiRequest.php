@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Package;
+namespace App\Http\Requests\Api\Accessory;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Language;
-
-class PackageApiRequest extends FormRequest
+class AccessoryUpdateApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,12 +26,11 @@ class PackageApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
-        $all += [ 'points'           =>  [ 'required' ,'integer'] ]  ;
-        $all += [ 'image'            =>  [ 'required' ,'max:50000'] ]  ;
-        $all += [ 'price'           =>  [ 'required' ,'integer'  ] ] ;
+        $all += [ 'image'           =>  [ 'sometimes' ,'max:50000'] ]  ;
+        $all += [ 'price'           =>  [ 'required' ,'numeric','between:0,9999.99'] ]  ;
         foreach ($Languages as $key => $value) {
-            $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+            $all += [ 'languages.'.$key.'.name'     =>  [ 'required'  ] ] ;
+            $all += [ 'languages.'.$key.'.language' =>  [ 'required'  ,'exists:languages,name'] ] ;
         }
         return $all;
     }

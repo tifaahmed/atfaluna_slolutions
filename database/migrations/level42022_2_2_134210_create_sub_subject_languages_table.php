@@ -15,7 +15,6 @@ class CreateSubSubjectLanguagesTable extends Migration
     {
         Schema::create('sub_subject_languages', function (Blueprint $table) {
             $table->increments('id');//[pk]
-
             $table->string('image_one')->nullable(); // not null
             $table->string('image_two')->nullable(); // not null
             $table->string('name')->nullable();//[note: "ex (  arabic or english or italian -...etc)"]

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Subject;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Language;
 
 class SubjectApiRequest extends FormRequest
 {
@@ -23,11 +24,16 @@ class SubjectApiRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'image'         =>  [ 'required' ,'max:5000'] ,
-            'points'        =>  [ 'required' ,'integer'] ,
-            'age_group_id'  =>  [ 'required' ,'integer'] ,
+        $Languages=Language::get();
 
-        ];
+        $all=[];
+        $all += [ 'image'           =>  [ 'required' ,'max:5000'] ]  ;
+        $all += [ 'points'          =>  [ 'required' ,'integer' ] ]  ;
+        $all += [ 'age_group_id'  =>  [ 'required' ,'integer','exists:age_groups,id'] ] ;
+        foreach ($Languages as $key => $value) {
+            $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+        }
+        return $all;
     }
 }

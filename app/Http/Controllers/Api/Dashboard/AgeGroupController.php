@@ -8,7 +8,7 @@ use Illuminate\Http\Response ;
 
 
 // Requests
-use App\Http\Requests\Api\AgeGroupApiRequest as modelInsertRequest;
+use App\Http\Requests\Api\AgeGroup\AgeGroupApiRequest as modelInsertRequest;
 
 // Resources
 use App\Http\Resources\Dashboard\Collections\AgeGroupCollection as ModelCollection;

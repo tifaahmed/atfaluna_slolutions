@@ -14,6 +14,7 @@ class CreateTrueFalseQuestionlanguagesTable extends Migration
     public function up()
     {
         Schema::create('true_false_question_languages', function (Blueprint $table) {
+            $table->increments('id');//[pk]
             $table->string('title');//[note: "ex (  arabic or english or italian -...etc)"]
             $table->string('language');//[note: "ex ( ar-en-it-...etc)"]
             $table->integer('true_false_question_id')->unsigned();

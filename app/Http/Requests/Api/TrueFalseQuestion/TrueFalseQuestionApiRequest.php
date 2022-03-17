@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\TrueFalseQuestion;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Language;
 
 class TrueFalseQuestionApiRequest extends FormRequest
 {
@@ -23,12 +24,20 @@ class TrueFalseQuestionApiRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'image'      =>  [  'max:5000'] ,
-            'videos'     =>  [ 'max:5000'] ,
-            'audio'      =>  [ 'max:5000'] ,
-            'answer'     =>  [ 'required' ,'boolean' ] ,
-            'quiz_id'    =>  [ 'required' ,'integer','exists:quizzes,id' ] ,
-        ];
+        $Languages=Language::get();
+
+        $all=[];
+        $all += [ 'image'           =>  [ 'required' ,'max:5000'] ]  ;
+        $all += [ 'videos'          =>  [ 'required' ,'max:5000'] ]  ;
+        $all += [ 'audio'           =>  [ 'required' ,'max:5000'] ]  ;
+        $all += [ 'answer'          =>  [ 'required' ,'boolean' ] ]  ;
+        $all += [ 'quiz_id'         =>  [ 'required' ,'integer','exists:quizzes,id'] ]  ;
+
+        foreach ($Languages as $key => $value) {
+            $all += [ 'languages.'.$key.'.title'   =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+        }
+        return $all;
     }
+
 }

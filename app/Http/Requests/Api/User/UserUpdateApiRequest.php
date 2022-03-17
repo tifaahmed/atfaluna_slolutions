@@ -31,7 +31,7 @@ class UserUpdateApiRequest extends FormRequest
                 'password'  =>  [  'sometimes','min:6' , 'max:15' ],
                 'password_confirmation'  =>  [ 'exclude_unless:password,true', 'min:6' , 'max:15' ],
 
-                'avatar'    =>  [ 'sometimes','required' ,  'max:5000'] 
+                'avatar'    =>  [ 'sometimes',  'max:5000'] 
         ];
     }
 }

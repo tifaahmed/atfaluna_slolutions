@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Language;
 
 class SubscriptionApiRequest extends FormRequest
 {
@@ -23,10 +24,17 @@ class SubscriptionApiRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'month_number'      =>  [ 'required','integer'] ,
-            'child_number'      =>  [ 'required','integer'] ,
-            'price'             =>  [ 'required','numeric','between:0,9999.99'] ,
-        ];
+        $Languages=Language::get();
+
+        $all=[];
+        $all += [ 'month_number'           =>  [ 'required' ,'integer'] ]  ;
+        $all += [ 'child_number'           =>  [ 'required' ,'integer'] ]  ;
+        $all += [ 'price'                  =>  [ 'required' ,'numeric','between:0,9999.99'] ]  ;
+
+        foreach ($Languages as $key => $value) {
+            $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+        }
+        return $all;
     }
 }

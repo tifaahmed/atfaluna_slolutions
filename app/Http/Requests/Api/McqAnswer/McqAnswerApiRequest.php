@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\McqAnswer;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Language;
 
 class McqAnswerApiRequest extends FormRequest
 {
@@ -23,11 +24,16 @@ class McqAnswerApiRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'image'                    =>  [  'required' ,'max:5000' ] ,
-            'answer'                   =>  [  'required' ] ,
-            'mcq_question_id'         =>  [  'required' ,'integer' ] ,
+        $Languages=Language::get();
 
-        ];
+        $all=[];
+        $all += [ 'image'           =>  [ 'required' ,'max:50000'] ]  ;
+        $all += [ 'answer'          =>  [ 'required'] ]  ;
+        $all += [ 'mcq_question_id'         =>  [ 'required' ,'integer','exists:mcq_questions,id'] ] ;
+        foreach ($Languages as $key => $value) {
+            $all += [ 'languages.'.$key.'.title'   =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+        }
+        return $all;
     }
 }

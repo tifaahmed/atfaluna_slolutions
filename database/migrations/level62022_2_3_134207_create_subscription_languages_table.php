@@ -14,6 +14,7 @@ class CreateSubscriptionlanguagesTable extends Migration
     public function up()
     {
         Schema::create('subscription_languages', function (Blueprint $table) {
+            $table->increments('id');//[pk]
             $table->string('name');//[note: "ex (  arabic or english or italian -...etc) ,'not null'"]
             $table->string('language');//[note: "ex ( ar-en-it-...etc) ,'not null'"]
             $table->integer('subscription_id')->unsigned();
