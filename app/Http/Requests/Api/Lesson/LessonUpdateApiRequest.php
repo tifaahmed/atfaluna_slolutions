@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\Lesson;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Language;
-class LessonApiRequest extends FormRequest
+class LessonUpdateApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,10 +30,10 @@ class LessonApiRequest extends FormRequest
         $all += [ 'sub_subject_id'   =>  [ 'required' ,'integer','exists:sub_subjects,id'] ]  ;
         $all += [ 'lesson_type_id'   =>  [ 'required' ,'integer','exists:lesson_types,id'] ] ;
         foreach ($Languages as $key => $value) {
-            $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.url'   =>  [ 'required' ,'max:100000'] ] ;
-            $all += [ 'languages.'.$key.'.image'   =>  [ 'required' ,'max:50000'] ] ;
-            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+            $all += [ 'languages.'.$key.'.name'     =>  [ 'required'  ] ] ;
+            $all += [ 'languages.'.$key.'.url'      =>  [ 'sometimes' ,'max:100000'] ] ;
+            $all += [ 'languages.'.$key.'.image'    =>  [ 'sometimes' ,'max:50000'] ] ;
+            $all += [ 'languages.'.$key.'.language' =>  [ 'required'  ,'exists:languages,name'] ] ;
         }
         return $all;
     }

@@ -14,6 +14,7 @@ class CreatePackagelanguagesTable extends Migration
     public function up()
     {
         Schema::create('package_languages', function (Blueprint $table) {
+            $table->increments('id');//[pk]
             $table->string('name');//[note: "ex (  arabic or english or italian  -...etc)"]
             $table->string('language');//[note: "ex ( ar-en-it-...etc)"]
             $table->integer('package_id')->unsigned();

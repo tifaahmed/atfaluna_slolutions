@@ -14,7 +14,7 @@ class CreateHeroLanguagesTable extends Migration
     public function up()
     {
         Schema::create('hero_languages', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');//[pk]
             $table->timestamps();
         });
     }

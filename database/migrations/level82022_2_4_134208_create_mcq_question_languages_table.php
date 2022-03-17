@@ -14,6 +14,7 @@ class CreateMcqQuestionlanguagesTable extends Migration
     public function up()
     {
         Schema::create('mcq_question_languages', function (Blueprint $table) {
+            $table->increments('id');//[pk]
             $table->string('title')->notnull();//[note: "ex (  arabic or english or italian -...etc)"]
             $table->string('language')->notnull();//[note: "ex ( ar-en-it-...etc)"]
             $table->integer('mcq_question_id')->unsigned();

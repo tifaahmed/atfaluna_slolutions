@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Store;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Language;
 
 class StoreUpdateApiRequest extends FormRequest
 {
@@ -23,9 +24,16 @@ class StoreUpdateApiRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'image'     =>  [ 'required' ,'max:5000'] ,
-            'url'       =>  [ 'required' ,'url',  'unique:stores,url,'.$this->id  ] ,
-        ];
+        $Languages=Language::get();
+
+        $all=[];
+        $all += [ 'image'           =>  [ 'sometimes' ,'max:5000'] ]  ;
+        $all += [ 'url'             =>  [ 'sometimes' ,'max:100000' ,'unique:stores,url,'.$this->id] ]  ;
+        foreach ($Languages as $key => $value) {
+            $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+        }
+        return $all;
+
     }
 }

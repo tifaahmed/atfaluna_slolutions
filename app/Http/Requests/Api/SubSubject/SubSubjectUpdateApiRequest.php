@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api\Quiz;
+namespace App\Http\Requests\Api\SubSubject;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Language;
 
-class QuizApiRequest extends FormRequest
+class SubSubjectUpdateApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,14 +27,14 @@ class QuizApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
-        $all += [ 'image'       =>  [ 'required' ,'max:50000'] ] ;
-        $all += [ 'points'       =>  [ 'required' ,'integer'] ]  ;
         $all += [ 'subject_id'   =>  [ 'required' ,'integer','exists:subjects,id'] ] ;
         foreach ($Languages as $key => $value) {
-            $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+            $all += [ 'languages.'.$key.'.name'        =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.description' =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.image_two'   =>  [ 'sometimes' ,'max:50000'] ] ;
+            $all += [ 'languages.'.$key.'.image_one'   =>  [ 'sometimes' ,'max:50000'] ] ;
+            $all += [ 'languages.'.$key.'.language'    =>  [ 'required' ,'exists:languages,name'] ] ;
         }
         return $all;
-
     }
 }

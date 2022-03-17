@@ -5,7 +5,7 @@ namespace App\Http\Requests\Api\Certificate;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Language;
 
-class CertificateApiRequest extends FormRequest
+class CertificateUpdateApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,8 +29,8 @@ class CertificateApiRequest extends FormRequest
         $all=[];
         $all += [ 'certificatable_id'     =>  ['required','exists:'.$this->certificatable_type.',id'] ]  ;
         $all += [ 'certificatable_type'   =>  [ 'required' ] ] ;
-        $all += [ 'image_one'   =>  [ 'required','max:50000' ] ] ;
-        $all += [ 'image_two'   =>  [ 'required' ,'max:50000'] ] ;
+        $all += [ 'image_one'   =>  [ 'sometimes','max:50000' ] ] ;
+        $all += [ 'image_two'   =>  [ 'sometimes' ,'max:50000'] ] ;
         $all += [ 'min_point'   =>  [ 'required' ,'integer'] ] ;
         $all += [ 'max_point'   =>  [ 'required','integer' ] ] ;
 

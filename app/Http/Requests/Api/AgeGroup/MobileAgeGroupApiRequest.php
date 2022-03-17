@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\AgeGroup;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AccessoryApiRequest extends FormRequest
+class MobileAgeGroupApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class AccessoryApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'image'      =>  [ 'required' ,'max:5000'] ,
-            'price'      =>  [ 'numeric','between:0,9999.99'] ,
+            'age'       =>  [ 'required' ,'integer'] ,
+
         ];
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\Avatar;
 
 use Illuminate\Foundation\Http\FormRequest;
-
-class AgeGroupApiRequest extends FormRequest
+use Illuminate\Validation\Rule;
+class AvatarUpdateApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,12 @@ class AgeGroupApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'age'       =>  [ 'required' ,'integer'] ,
-        ];
+            'type'=>[
+                'required',
+                    Rule::in(['boy', 'girl']),
+                ],
+                'image'      =>  [ 'sometimes' ,'max:5000'] ,
+                'price'      =>  [ 'numeric','between:0,9999.99'] ,
+            ];
     }
 }

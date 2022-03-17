@@ -25,7 +25,7 @@ class CountryUpdateApiRequest extends FormRequest
     {
         return [
             'name'       =>  [ 'required' ,'unique:countries,name,'.$this->id] ,
-            'image'      =>  [ 'required' ,'max:5000'] ,
+            'image'      =>  [ 'sometimes' ,'max:5000'] ,
             'code'       =>  [ 'required' ,'unique:countries,code,'.$this->id] ,
         ];
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\AgeGroup;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Language;
 
 class AgeGroupApiRequest extends FormRequest
 {
@@ -23,9 +24,14 @@ class AgeGroupApiRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'age'       =>  [ 'required' ,'integer'] ,
+        $Languages=Language::get();
 
-        ];
+        $all=[];
+        $all += [ 'age'           =>  [ 'required' ,'integer'] ]  ;
+        foreach ($Languages as $key => $value) {
+            $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+        }
+        return $all;
     }
 }

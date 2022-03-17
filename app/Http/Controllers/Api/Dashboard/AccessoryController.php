@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
 
 // Requests
-use App\Http\Requests\Api\AccessoryApiRequest as modelInsertRequest;
+use App\Http\Requests\Api\Accessory\AccessoryApiRequest as modelInsertRequest;
+use App\Http\Requests\Api\Accessory\AccessoryUpdateApiRequest as modelUpdateRequest;
 
 // Resources
 use App\Http\Resources\Dashboard\Collections\AccessoryCollection as ModelCollection;
@@ -117,7 +118,7 @@ class AccessoryController extends Controller
         }
     }
     
-    public function update(modelInsertRequest $request ,$id) {
+    public function update(modelUpdateRequest $request ,$id) {
         try {
             $all = [ ];
     
