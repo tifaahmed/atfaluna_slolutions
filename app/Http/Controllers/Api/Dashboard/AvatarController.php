@@ -9,6 +9,7 @@ use Illuminate\Http\Response ;
 //AgeGroupController
 // Requests
 use App\Http\Requests\Api\Avatar\AvatarApiRequest as modelInsertRequest;
+use App\Http\Requests\Api\Avatar\AvatarUpdateApiRequest as modelUpdateRequest;
 
 // Resources
 use App\Http\Resources\Dashboard\Collections\AvatarCollection as ModelCollection;
@@ -42,16 +43,15 @@ class AvatarController extends Controller
             $all = [ ];
             $file_one = 'image';
             if ($request->hasFile($file_one)) {            
-                $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+                $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+                $all += array( $file_one => $path );
             }
 
-            $modal = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
+            $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
 
-            // // languages
-            // $this -> update_store_language($request->languages,$modal->id) ;
 
             return $this -> MakeResponseSuccessful( 
-                [ $modal ],
+                [ $model ],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
@@ -125,36 +125,30 @@ class AvatarController extends Controller
         }
     }
     
-    public function update(modelInsertRequest $request ,$id) {
+    public function update(modelUpdateRequest $request ,$id) {
         try {
+            $old_model = new ModelResource( $this->ModelRepository->findById($id) );
             $all = [ ];
-    
             $file_one = 'image';
-            if ($request->hasFile($file_one)) {
-                $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
-                $old_modal = $this->ModelRepository->findById($id); 
-                $this->HelperDelete($old_modal->image );
+            if ($request->hasFile($file_one)) {  
+                $this->HelperDelete($old_model->$file_one);           
+                $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+                $all += array( $file_one => $path );
             }
-
             $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
-            $modal = new ModelResource( $this->ModelRepository->findById($id) ); 
-
-
-            // //  languages
-            //     $this -> update_store_language($request->languages,$modal->id) ;
-
-            return $this -> MakeResponseSuccessful( 
-                    [ $modal],
-                    'Successful'               ,
-                    Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        } 
+            $model = new ModelResource( $this->ModelRepository->findById($id) );
+                return $this -> MakeResponseSuccessful( 
+                        [ $model],
+                        'Successful'               ,
+                        Response::HTTP_OK
+                ) ;
+                } catch (\Exception $e) {
+                return $this -> MakeResponseErrors(  
+                    [$e->getMessage()  ] ,
+                    'Errors',
+                    Response::HTTP_NOT_FOUND
+                );
+            } 
     }
     
 

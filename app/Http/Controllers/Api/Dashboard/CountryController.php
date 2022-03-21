@@ -43,13 +43,15 @@ class CountryController extends Controller
             $all = [ ];
             $file_one = 'image';
             if ($request->hasFile($file_one)) {            
-                $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+                $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+                $all += array( $file_one => $path );
             }
 
-            $modal = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
+            $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
+
 
             return $this -> MakeResponseSuccessful( 
-                [ $modal ],
+                [ $model ],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
@@ -125,17 +127,18 @@ class CountryController extends Controller
     
     public function update(modelUpdateRequest $request ,$id) {
         try {
+            $old_model = new ModelResource( $this->ModelRepository->findById($id) );
             $all = [ ];
             $file_one = 'image';
-            if ($request->hasFile($file_one)) {            
-                $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+            if ($request->hasFile($file_one)) {  
+                $this->HelperDelete($old_model->$file_one);           
+                $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+                $all += array( $file_one => $path );
             }
             $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
-            $modal = new ModelResource( $this->ModelRepository->findById($id) );
-                //  languages
-                $this -> update_store_language($request->languages,$modal->id) ;
+            $model = new ModelResource( $this->ModelRepository->findById($id) );
                 return $this -> MakeResponseSuccessful( 
-                        [ $modal],
+                        [ $model],
                         'Successful'               ,
                         Response::HTTP_OK
                 ) ;

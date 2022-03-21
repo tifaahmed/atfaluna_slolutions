@@ -8,6 +8,7 @@ use Illuminate\Http\Response ;
 
 // Requests
 use App\Http\Requests\Api\SubSubject\SubSubjectApiRequest as modelInsertRequest;
+use App\Http\Requests\Api\SubSubject\SubSubjectUpdateApiRequest as modelUpdateRequest;
 
 // Resources
 use App\Http\Resources\Dashboard\Collections\SubSubject\SubSubjectCollection as ModelCollection;
@@ -57,13 +58,12 @@ class SubSubjectController extends Controller
     }
     public function store(modelInsertRequest $request) {
         try {
-            $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
-
+            $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
             // // languages
-            $this -> update_store_language($request->languages,$modal->id) ;
-
+            $this -> store_array_languages($request->languages,$model) ;
+            // return Request()->all();
             return $this -> MakeResponseSuccessful( 
-                [ $modal ],
+                [ $model ],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
@@ -109,15 +109,15 @@ class SubSubjectController extends Controller
         }
     }
     
-    public function update(modelInsertRequest $request ,$id) {
+    public function update(modelUpdateRequest $request ,$id) {
         try {
             $this->ModelRepository->update( $id,Request()->all()) ;
-            $modal = new ModelResource( $this->ModelRepository->findById($id) ); 
-            //  languages
-                $this -> update_store_language($request->languages,$modal->id) ;
+            $model = new ModelResource( $this->ModelRepository->findById($id) ); 
+            //  request languages
+            $this -> update_array_languages($request->languages,$model) ;
 
             return $this -> MakeResponseSuccessful( 
-                    [ $modal],
+                    [ $model],
                     'Successful'               ,
                     Response::HTTP_OK
             ) ;
@@ -131,50 +131,87 @@ class SubSubjectController extends Controller
     }
     
     // lang
-        public function update_store_language($requested_languages,$modal_id ) {
-            if (is_array($requested_languages) ) {
-                $this->destroyLanguage($this->related_language,$modal_id);
-                foreach ($requested_languages as $key => $language_sigle_row) {
-                    $this ->storeLanguage(  $this->handleLanguageData($language_sigle_row,$this->related_language,$modal_id)  );
+
+        // lang create
+            //  requested_languages : from data request (array)
+            //  model : single row of the main table (collection)
+            //  handle languages  & store languages
+            public function store_array_languages($requested_languages,$model) {
+                if (is_array($requested_languages) ) {
+                    foreach ($requested_languages as $key => $language_sigle_row) {
+                        // insert relation_id_name with relation_id to the associative arrsy  ; 
+                        $language_array = $this->handleLanguageData($language_sigle_row,$this->related_language,$model->id);
+                        $this ->storeLanguage(  $language_array  );
+                    }
                 }
             }
-        }
-        public function storeLanguage($language_array ) {
-            $all = [ ];
-            try {
+            //  language_array : single associative array ready to enter table; 
+            //  add new files && create data
+            public function storeLanguage($language_array ) {
+                $all = [ ];
                 foreach ($language_array as $key => $value) {
-                    if ($key == 'image_one' || $key == 'image_two') {
-                        $file = $key;
-                        if (isset($language_array[$file]) && $language_array[$file]) {            
-                            $all += $this->HelperHandleFile($this->folder_name,$language_array[$file],$file)  ;
+                    if ( $key == 'image_one'|| $key == 'image_two') {
+                        if (isset($language_array[$key]) && $language_array[$key]) {    
+                            // store the gevin file or image
+                            // if zip store in folder & axtract (else) just store   
+                            $path =  $this->HelperHandleFile($this->folder_name,$language_array[$key],$key)  ;
+                            $all += array( $key => $path );
                         }
                     }else{
                         $all += array( $key => $value );
                     }
                 }
-
                 $this->ModelRepositoryLanguage->create( $all ) ;
+            }
+        // lang create
 
-            } catch (\Exception $e) {
-                return $this -> MakeResponseErrors(  
-                    [$e->getMessage()  ] ,
-                    'Errors',
-                    Response::HTTP_BAD_REQUEST
-                );
+        // lang update
+            //  requested_languages : from data request (array)
+            //  model : single row of the main table (collection)
+            //  handle languages  & update languages
+            public function update_array_languages($requested_languages,$model) {
+                if (is_array($requested_languages) ) {// for safty
+                    foreach ($requested_languages as $key => $language_sigle_row) {
+                        // handle single array ; 
+                            $language_array = $this->handleLanguageData($language_sigle_row,$this->related_language,$model->id);
+                        // language_array : single array ready to enter table; 
+                        // model : single row of a main table (collection)
+                        // update single row of lang table ; 
+                            $this ->updateLanguage($model,$language_array);
+                    }
+                }
             }
-        }
-        public function destroyLanguage($relation_coulmn,$id) {
-            try {
-            $this->ModelRepositoryLanguage->deleteByRelation($relation_coulmn,$id) ;
-            } catch (\Exception $e) {
-                return $this -> MakeResponseErrors(  
-                    [$e->getMessage()  ] ,
-                    'Errors',
-                    Response::HTTP_NOT_FOUND
-                );
+            //  model : single row of a main table (collection)
+            //  language_array : single associative array ready to enter table; 
+            //  delete old files & add new one && update data
+            public function updateLanguage($model,$language_array ) {
+                // get all row of language table
+                    $language_models  =  $model->subSubject_languages()->get() ;
+                // get single row of language table
+                    $language_model  = $language_models->where('language',$language_array['language'])->first() ;
+                $all = [ ];
+                foreach ($language_array as $key => $value) {
+                    if ( $value && $key == 'image_one' || $key == 'image_two' ) {
+
+                        $this->HelperDelete($language_model->$key); 
+
+                        if (isset($language_array[$key]) && $language_array[$key]) {            
+                            $path =  $this->HelperHandleFile($this->folder_name,$language_array[$key],$key)  ;
+                            $all += array( $key => $path );
+                        }
+                    }else{
+                        $all += array( $key => $value );
+                    }
+                }
+                // for safty
+                if($language_model ){
+                    $this->ModelRepositoryLanguage->update( $language_model->id,$all ) ;
+                }else{
+                    $this->ModelRepositoryLanguage->create( $all ) ;
+                }
+                
             }
-        }
-    // lang
+        // lang update
 
     // trash
     public function collection_trash(Request $request){
