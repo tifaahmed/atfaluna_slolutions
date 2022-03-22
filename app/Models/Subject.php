@@ -10,6 +10,7 @@ use App\Models\Subject_language;
 use App\Models\Certificate;
 use App\Models\Sub_subject;
 use App\Models\Lesson;
+use App\Models\Quiz;
 
 class Subject extends Model
 {
@@ -38,5 +39,8 @@ class Subject extends Model
         }
         public function lesssons(){
             return $this->hasManyThrough(Lesson::class, Sub_subject::class);
+        }
+        public function quizzes(){
+            return $this->HasMany(Quiz::class);
         }
 }

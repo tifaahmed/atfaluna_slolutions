@@ -71,7 +71,7 @@ class QuizController extends Controller
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
             // foreach ($request->quiz_id as $key => $value) {
-                $model->subUserQuiz()->syncWithoutDetaching($request->quiz_ids,['score'=> $request->score]);
+                $model->subUserQuiz()->syncWithoutDetaching($request->quiz_id,['score'=> $request->score]);
             // }    
 
             return $this -> MakeResponseSuccessful( 
