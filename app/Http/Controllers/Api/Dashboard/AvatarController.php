@@ -151,7 +151,6 @@ class AvatarController extends Controller
             } 
     }
     
-
     // trash
         public function collection_trash(Request $request){
             try {
