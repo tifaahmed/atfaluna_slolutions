@@ -9,9 +9,36 @@ use Illuminate\Support\Facades\Route;
     ]);
 // only auth
     Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
-        Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
-            Route::post( '/logout' ,  'authController@logout' )  -> name( 'logout' ) ,
+
+        Route::group(['middleware' => ['IfAuthChild']], fn ( ) : array => [
+            // avatar
+            Route::name('avatar.')->prefix('/avatar')->group( fn ( ) : array => [
+                Route::post('/attach'            ,   'AvatarController@attach'              )->name('attach'),
+                Route::post('/detach'            ,   'AvatarController@detach'              )->name('detach'),
+            ]),
+            // accessory
+                Route::name('accessory.')->prefix('/accessory')->group( fn ( ) : array => [
+                    Route::post('/attach'        ,   'AccessoryController@attach'   )->name('attach'),
+                    Route::post('/detach'        ,   'AccessoryController@detach'   )->name('detach'),
+                ]), 
+            //PlayTime
+                Route::name('play-time.')->prefix('/play-time')->group( fn ( ) : array => [
+                    Route::post('attatch-array'    ,   'PlayTimeController@attatchArray'          )->name('attatchArray'),
+                    Route::post(''               ,   'PlayTimeController@store'               )->name('store'),
+                ]),    
         ]),
+
+        //PlayTime
+        Route::name('play-time.')->prefix('/play-time')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'PlayTimeController@all'                 )->name('all'),
+            Route::get('/{id}/show'                 ,   'PlayTimeController@show'                )->name('show'),
+            Route::get('/collection'                ,   'PlayTimeController@collection'          )->name('collection'),
+        ]),
+
+        //auth
+            Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
+                Route::post( '/logout' ,  'authController@logout' )  -> name( 'logout' ) ,
+            ]),
         // user
             Route::name('user.')->prefix('/user')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'UserController@all'                 )->name('all'),
@@ -38,9 +65,6 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/'              ,   'AvatarController@all'                 )->name('all'),
                 Route::get('/{id}/show'     ,   'AvatarController@show'                )->name('show'),
                 Route::get('/collection'    ,   'AvatarController@collection'          )->name('collection'),
-
-                Route::post('/attach'       ,   'AvatarController@attach'              )->name('attach'),
-                Route::post('/detach'       ,   'AvatarController@detach'              )->name('detach'),
             ]),
         // User_package
             Route::name('user-package.')->prefix('/user-package')->group( fn ( ) : array => [
@@ -57,9 +81,8 @@ use Illuminate\Support\Facades\Route;
             Route::get('/collection'                ,   'UserSubscriptionController@collection'          )->name('collection'),
             Route::post('/store'                    ,   'UserSubscriptionController@store'               )->name('store'),
             Route::DELETE('/{id}'                   ,   'UserSubscriptionController@destroy'             )->name('destroy'),
-
-
         ]),
+
     ]);
 
 // language and auth
@@ -69,9 +92,6 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/'              ,   'AccessoryController@all'                 )->name('all'),
                 Route::get('/{id}/show'     ,   'AccessoryController@show'                )->name('show'),
                 Route::get('/collection'    ,   'AccessoryController@collection'          )->name('collection'),
-
-                Route::post('/attach'       ,   'AccessoryController@attach'   )->name('attach'),
-                Route::post('/detach'       ,   'AccessoryController@detach'   )->name('detach'),
             ]), 
         // certificates
             Route::name('certificate.')->prefix('/certificate')->group( fn ( ) : array => [
@@ -215,14 +235,7 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::get('/collection'                ,   'McqQuestionController@collection'          )->name('collection'),
         ]),
     
-    //PlayTime
-        Route::name('play-time.')->prefix('/play-time')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'PlayTimeController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'PlayTimeController@show'                )->name('show'),
-            Route::get('/collection'                ,   'PlayTimeController@collection'          )->name('collection'),
-            Route::post(''                          ,   'PlayTimeController@store'               )->name('store'),
-            Route::DELETE('/{id}'                   ,   'PlayTimeController@destroy'             )->name('destroy'),
-        ]),
+
     //Sub_user_lesson
     Route::name('sub-user-lesson.')->prefix('/sub-user-lesson')->group( fn ( ) : array => [
         Route::get('/'                          ,   'SubUserLessonController@all'                 )->name('all'),

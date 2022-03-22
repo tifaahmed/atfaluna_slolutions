@@ -56,4 +56,7 @@ class Sub_user extends Model
         public function subUserSubject(){
             return $this->belongsToMany(Subject::class, 'sub_user_subjects', 'sub_users_id', 'subject_id');
         }
+        public function playTime(){
+            return $this->hasMany(Play_time::class);
+        }
 }

@@ -21,7 +21,6 @@ class CreatePlayTimesTable extends Migration
             $table->time('end');//[note: 'time only']
             $table->integer('sub_user_id')->unsigned();
             $table->foreign('sub_user_id')->references('id')->on('sub_users');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

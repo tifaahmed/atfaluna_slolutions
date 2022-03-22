@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Sub_user;
 
 
 class Play_time extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory;
     public $guarded = ['id'];
 
     protected $table = 'play_times';

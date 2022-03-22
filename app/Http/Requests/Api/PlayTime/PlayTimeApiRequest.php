@@ -30,10 +30,9 @@ class PlayTimeApiRequest extends FormRequest
                     Rule::in([1,2,3,4,5,6,7]),
                 ],
             'status'                =>  [  'required' , 'boolean' ] ,
-            'start'                 =>  [  'required' , 'integer' ] ,
-            'end'                   =>  [  'required' , 'integer' ] ,
-            'sub_user_id'           =>  [  'required' , 'integer' ] ,
-
+            'start'                 =>  [  'required' , 'date_format:H:i:s' ] ,
+            'end'                   =>  [  'required' , 'date_format:H:i:s' ] ,
+            'sub_user_id'           =>  [ 'required'  ,'integer'  ,'exists:sub_users,id',] ,
         ];
     }
 }
