@@ -15,7 +15,6 @@ class CreateQuizzesTable extends Migration
     {
         Schema::create('quizzes', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->string('image')->nullable();
             $table->integer('points');//[note: "ex ( 5 - 6)"]
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects');

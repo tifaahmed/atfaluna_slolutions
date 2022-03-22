@@ -27,11 +27,11 @@ class QuizApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
-        $all += [ 'image'       =>  [ 'required' ,'max:50000'] ] ;
         $all += [ 'points'       =>  [ 'required' ,'integer'] ]  ;
         $all += [ 'subject_id'   =>  [ 'required' ,'integer','exists:subjects,id'] ] ;
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.image'   =>  [ 'required' ,'max:50000'] ] ;
             $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
         }
         return $all;

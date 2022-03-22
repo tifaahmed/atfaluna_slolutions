@@ -17,7 +17,6 @@ class Quiz extends Model
     protected $table = 'quizzes';
 
     protected $fillable = [
-        'image',//required, max:5000
         'points',//required integer
         'subject_id',//unsigned
     ];
