@@ -15,6 +15,7 @@ class CreateQuizlanguagesTable extends Migration
     {
         Schema::create('quiz_languages', function (Blueprint $table) {
             $table->increments('id');//[pk]
+            $table->string('image')->nullable();
             $table->string('name');//[note: "ex (  arabic or english or italian -...etc)"]
             $table->string('language');//[note: "ex ( ar-en-it-...etc)"]
             $table->integer('quiz_id')->unsigned();

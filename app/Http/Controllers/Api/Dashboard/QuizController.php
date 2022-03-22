@@ -13,7 +13,7 @@ use App\Http\Requests\Api\Quiz\QuizUpdateApiRequest as modelUpdateRequest;
 
 // Resources
 use App\Http\Resources\Dashboard\Collections\QuizCollection as ModelCollection;
-use App\Http\Resources\Dashboard\QuizResource as ModelResource;
+use App\Http\Resources\Dashboard\Quiz\QuizResource as ModelResource;
 
 // lInterfaces
 use App\Repository\QuizRepositoryInterface as ModelInterface;
@@ -43,15 +43,7 @@ class QuizController extends Controller
     }
     public function store(modelInsertRequest $request) {
         try {
-            $all = [ ];
-            $file_one = 'image';
-            if ($request->hasFile($file_one)) {            
-                $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
-                $all += array( $file_one => $path );
-            }
-
-            $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
-
+            $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
             // // languages
             $this -> store_array_languages($request->languages,$model) ;
 
@@ -117,31 +109,29 @@ class QuizController extends Controller
     
     public function update(modelUpdateRequest $request ,$id) {
         try {
-            $all = [ ];
-            $file_one = 'image';
-            if ($request->hasFile($file_one)) {            
-                $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
-                $all += array( $file_one => $path );
-            }
-            $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
-            $model = new ModelResource( $this->ModelRepository->findById($id) );
+            $this->ModelRepository->update( $id,Request()->all()) ;
+            $model = new ModelResource( $this->ModelRepository->findById($id) ); 
             //  request languages
             $this -> update_array_languages($request->languages,$model) ;
-                return $this -> MakeResponseSuccessful( 
-                        [ $model],
-                        'Successful'               ,
-                        Response::HTTP_OK
-                ) ;
-                } catch (\Exception $e) {
-                return $this -> MakeResponseErrors(  
-                    [$e->getMessage()  ] ,
-                    'Errors',
-                    Response::HTTP_NOT_FOUND
-                );
-            } 
+
+            return $this -> MakeResponseSuccessful( 
+                    [ $model],
+                    'Successful'               ,
+                    Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        } 
     }
     
-    // lang create
+    
+    // lang
+
+        // lang create
             //  requested_languages : from data request (array)
             //  model : single row of the main table (collection)
             //  handle languages  & store languages
@@ -159,7 +149,16 @@ class QuizController extends Controller
             public function storeLanguage($language_array ) {
                 $all = [ ];
                 foreach ($language_array as $key => $value) {
+                    if ( $key == 'image') {
+                        if (isset($language_array[$key]) && $language_array[$key]) {    
+                            // store the gevin file or image
+                            // if zip store in folder & axtract (else) just store   
+                            $path =  $this->HelperHandleFile($this->folder_name,$language_array[$key],$key)  ;
+                            $all += array( $key => $path );
+                        }
+                    }else{
                         $all += array( $key => $value );
+                    }
                 }
                 $this->ModelRepositoryLanguage->create( $all ) ;
             }
@@ -191,7 +190,17 @@ class QuizController extends Controller
                     $language_model  = $language_models->where('language',$language_array['language'])->first() ;
                 $all = [ ];
                 foreach ($language_array as $key => $value) {
+                    if ( $value && $key == 'image'  ) {
+
+                        $this->HelperDelete($language_model->$key); 
+
+                        if (isset($language_array[$key]) && $language_array[$key]) {            
+                            $path =  $this->HelperHandleFile($this->folder_name,$language_array[$key],$key)  ;
+                            $all += array( $key => $path );
+                        }
+                    }else{
                         $all += array( $key => $value );
+                    }
                 }
                 // for safty
                 if($language_model ){
@@ -202,6 +211,10 @@ class QuizController extends Controller
                 
             }
         // lang update
+
+
+
+    // lang
 
         // trash
         public function collection_trash(Request $request){

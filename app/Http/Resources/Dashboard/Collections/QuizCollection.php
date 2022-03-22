@@ -4,7 +4,7 @@ namespace App\Http\Resources\Dashboard\Collections;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Dashboard\QuizResource as ModelResource;
+use App\Http\Resources\Dashboard\Quiz\QuizResource as ModelResource;
 
 class QuizCollection  extends ResourceCollection{
 

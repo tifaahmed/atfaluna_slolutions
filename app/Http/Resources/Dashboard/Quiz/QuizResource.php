@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Resources\Dashboard;
+namespace App\Http\Resources\Dashboard\Quiz;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
 
 use App\Http\Resources\Dashboard\SubjectResource;
 use App\Http\Resources\Dashboard\McqQuestionResource;
@@ -24,7 +23,6 @@ class QuizResource extends JsonResource
 
         return [
             'id'            => $this->id,
-            'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
             'points'        => $this->points,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,

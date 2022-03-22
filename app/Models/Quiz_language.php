@@ -19,6 +19,7 @@ class Quiz_language extends Model
     protected $fillable = [
         'name',//required
         'language',//required ,limit 2
+        'image',//required, max:5000
         'quiz_id',//unsigned cascade
     ];
     public $timestamps = false;
