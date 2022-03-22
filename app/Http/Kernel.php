@@ -63,8 +63,10 @@ class Kernel extends HttpKernel
 
         'IfDashboardAllawed' => \App\Http\Middleware\IfDashboardAllawedMiddleware::class,
         'IfSuperAdmin' => \App\Http\Middleware\IfSuperAdminMiddleware::class,
-        'IfsSubAdmin' => \App\Http\Middleware\IfsSubAdminMiddleware::class,
         'LocalizationMiddleware' => \App\Http\Middleware\LocalizationMiddleware::class,
-        
+        'IfSuperAdmin' => \App\Http\Middleware\IfSuperAdminMiddleware::class,
+        'IfAuthChild' => \App\Http\Middleware\IfAuthChildMiddleware::class,
+
+
     ];
 }

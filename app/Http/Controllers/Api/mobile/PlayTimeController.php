@@ -11,11 +11,10 @@ use Illuminate\Http\Response ;
 use App\Http\Resources\Mobile\Collections\PlayTimeCollection as ModelCollection;
 use App\Http\Resources\Mobile\PlayTimeResource as ModelResource;
 use App\Http\Requests\Api\PlayTime\PlayTimeApiRequest as modelInsertRequest;
-
+use App\Http\Requests\Api\PlayTime\PlayTimeStoreArrayApiRequest as modelInsertArrayRequest;
 
 // lInterfaces
 use App\Repository\PlayTimeRepositoryInterface as ModelInterface;
-
 
 class PlayTimeController extends Controller
 {
@@ -24,9 +23,10 @@ class PlayTimeController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model =  $this->ModelRepository->filterAll($request->sub_user_id) ;
+            return new ModelCollection (  $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -35,12 +35,10 @@ class PlayTimeController extends Controller
             );
         }
     }
-
 
     public function collection(Request $request){
-        // return $request->language;
-        try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
+        return $model =$this->ModelRepository->filterPaginate( $request->sub_user_id,$request->PerPage ? $request->PerPage : 10);        try {
+            return new ModelCollection ( $model )  ;
 
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
@@ -50,8 +48,6 @@ class PlayTimeController extends Controller
             );
         }
     }
-    
-
 
     public function show($id) {
         try {
@@ -68,6 +64,24 @@ class PlayTimeController extends Controller
             );
         }
     }
+    public function attatchArray(modelInsertArrayRequest $request) {
+
+        // try {
+                  return $this->ModelRepository->attatchByArray( $request->all() ) ;
+            // }
+            // return $this -> MakeResponseSuccessful( 
+            //     [ 'Successful' ],
+            //     'Successful'               ,
+            //     Response::HTTP_OK
+            // ) ;
+        // } catch (\Exception $e) {
+        //     return $this -> MakeResponseErrors(  
+        //         [$e->getMessage()  ] ,
+        //         'Errors',
+        //         Response::HTTP_BAD_REQUEST
+        //     );
+        // }
+    } 
     public function store(modelInsertRequest $request) {
         try {
             $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ));
@@ -84,19 +98,4 @@ class PlayTimeController extends Controller
             );
         }
     } 
-    public function destroy($id) {
-        try {
-            return $this -> MakeResponseSuccessful( 
-                [$this->ModelRepository->deleteById($id)] ,
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [ $e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
 }
