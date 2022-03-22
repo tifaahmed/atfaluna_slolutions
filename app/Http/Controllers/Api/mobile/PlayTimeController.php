@@ -66,21 +66,21 @@ class PlayTimeController extends Controller
     }
     public function attatchArray(modelInsertArrayRequest $request) {
 
-        // try {
-                  return $this->ModelRepository->attatchByArray( $request->all() ) ;
-            // }
-            // return $this -> MakeResponseSuccessful( 
-            //     [ 'Successful' ],
-            //     'Successful'               ,
-            //     Response::HTTP_OK
-            // ) ;
-        // } catch (\Exception $e) {
-        //     return $this -> MakeResponseErrors(  
-        //         [$e->getMessage()  ] ,
-        //         'Errors',
-        //         Response::HTTP_BAD_REQUEST
-        //     );
-        // }
+        try {
+            $this->ModelRepository->attatchByArray( $request->all() ) ;
+            
+            return $this -> MakeResponseSuccessful( 
+                [ 'Successful' ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_BAD_REQUEST
+            );
+        }
     } 
     public function store(modelInsertRequest $request) {
         try {

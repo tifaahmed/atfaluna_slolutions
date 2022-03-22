@@ -23,17 +23,15 @@ use Illuminate\Support\Facades\Route;
                 ]), 
             //PlayTime
                 Route::name('play-time.')->prefix('/play-time')->group( fn ( ) : array => [
+                    Route::get('/'                          ,   'PlayTimeController@all'                 )->name('all'),
+                    Route::get('/{id}/show'                 ,   'PlayTimeController@show'                )->name('show'),
+                    Route::get('/collection'                ,   'PlayTimeController@collection'          )->name('collection'),
+                
                     Route::post('attatch-array'    ,   'PlayTimeController@attatchArray'          )->name('attatchArray'),
                     Route::post(''               ,   'PlayTimeController@store'               )->name('store'),
                 ]),    
         ]),
 
-        //PlayTime
-        Route::name('play-time.')->prefix('/play-time')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'PlayTimeController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'PlayTimeController@show'                )->name('show'),
-            Route::get('/collection'                ,   'PlayTimeController@collection'          )->name('collection'),
-        ]),
 
         //auth
             Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
