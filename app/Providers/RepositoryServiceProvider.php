@@ -67,6 +67,11 @@ namespace App\Providers;
     use App\Repository\Eloquent\SubSubjectRepository;
     use App\Repository\Eloquent\SubSubjectLanguageRepository;
 
+    use App\Repository\Eloquent\HeroRepository;
+    use App\Repository\Eloquent\HeroLanguageRepository;
+    use App\Repository\Eloquent\HeroLessonRepository;
+
+
     // Role  Permission
         use App\Repository\Eloquent\RolePermissionRepository\PermissionRepository;
         use App\Repository\Eloquent\RolePermissionRepository\RoleRepository;
@@ -142,6 +147,11 @@ namespace App\Providers;
 
     use App\Repository\SubSubjectRepositoryInterface;
     use App\Repository\SubSubjectLanguageRepositoryInterface;
+
+    use App\Repository\HeroRepositoryInterface;
+    use App\Repository\HeroLanguageRepositoryInterface;
+
+    use App\Repository\HeroLessonRepositoryInterface;
     // Role  Permission  
 
     use App\Repository\RolePermissionInterface\PermissionRepositoryInterface;
@@ -229,6 +239,12 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(SubSubjectRepositoryInterface::class,SubSubjectRepository::class);
         $this->app->bind(SubSubjectLanguageRepositoryInterface::class,SubSubjectLanguageRepository::class);
+
+        $this->app->bind(HeroRepositoryInterface::class,HeroRepository::class);
+        $this->app->bind(HeroLanguageRepositoryInterface::class,HeroLanguageRepository::class);
+
+        $this->app->bind(HeroLessonRepositoryInterface::class,HeroLessonRepository::class);
+
 
         // Role  Permission
         $this->app->bind(PermissionRepositoryInterface::class,PermissionRepository::class);

@@ -43,4 +43,5 @@ class Subject extends Model
         public function quizzes(){
             return $this->HasMany(Quiz::class);
         }
+        
 }
