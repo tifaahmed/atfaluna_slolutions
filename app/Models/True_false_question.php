@@ -17,10 +17,8 @@ class True_false_question extends Model
     protected $table = 'true_false_questions';
 
     protected $fillable = [
-        'image',//required , max:5000
-        'videos',//required , max:5000
-        'audio',//required , max:5000
-        'answer',//boolean [default:false]
+        'image',//nullable , max:5000
+        'answer',//required , boolean [default:false]
 
         'quiz_id',//unsigned 
     ];

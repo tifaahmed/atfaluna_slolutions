@@ -32,7 +32,7 @@ class UserController extends Controller
         $this->RepositoryCountry = $RepositoryCountry;
         $this->path = 'user';
         $this->disk = 'public';
-        $this->folder_name = 'store';
+        $this->folder_name = 'user/'.Str::random(10).time();
     }
 
     

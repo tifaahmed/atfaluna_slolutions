@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
-
+use Illuminate\Support\Str;
 
 // Requests
 use App\Http\Requests\Api\Quiz\QuizApiRequest as modelInsertRequest;
@@ -27,7 +27,7 @@ class QuizController extends Controller
     {
         $this->ModelRepository = $Repository;
         $this->ModelRepositoryLanguage = $RepositoryLanguage;
-        $this->folder_name = 'quiz';
+        $this->folder_name = 'quiz/'.Str::random(10).time();
         $this->related_language = 'quiz_id';
     }
     public function all(){

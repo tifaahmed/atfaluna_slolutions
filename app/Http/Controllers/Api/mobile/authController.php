@@ -77,7 +77,6 @@ class authController extends Controller {
             $all += array( 'name'       => $request -> get( 'name' ) );
             $all += array( 'email'      => $request -> get( 'email' ) );
             $all += array( 'phone'      => $request -> get( 'phone' ) );
-            $all += array( 'name'       => $request -> get( 'name' ) );
             $all += array( 'login_type' => $request -> get( 'login_type' ) );
             
             $user  = User::create($all);
@@ -93,6 +92,7 @@ class authController extends Controller {
                 Response::HTTP_OK
             ) ; 
         
+            
         
     }
     

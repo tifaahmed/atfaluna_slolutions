@@ -17,7 +17,13 @@ class Mcq_question_language extends Model
     protected $table = 'mcq_question_languages';
 
     protected $fillable = [
+        'video',//nullable, max:5000
+
+        'audio',//nullable , max:5000
         'title',//required 
+
+        'header',//nullable
+
         'language',//required ,limit 2
         'mcq_question_id',//unsigned cascade
     ];

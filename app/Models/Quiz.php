@@ -20,19 +20,19 @@ class Quiz extends Model
         'points',//required integer
         'subject_id',//unsigned
     ];
+
     // relations
-    public function subject(){
-        return $this->belongsTo(Subject::class,'subject_id');
-    }
-    // relations
-    public function quiz_languages(){
-    return $this->HasMany(Quiz_language::class);
-    }
-    // public function quizMcqQuestion(){
-    //     return $this->belongsToMany(Mcq_question::class, 'quiz_mcq_questions', 'quizs_id', 'mcq_question_id');
-    // }
-    // public function quizTrueOrFalseQuestion(){
-    //     return $this->belongsToMany(True_false_question::class, 'quiz_true_false_questions', 'quizs_id', 'true_false_question_id');
-    // }
+        public function subject(){
+            return $this->belongsTo(Subject::class,'subject_id');
+        }
+        public function quiz_languages(){
+            return $this->HasMany(Quiz_language::class);
+        }
+        public function mcq_question(){
+            return $this->HasMany(Mcq_question::class);
+        }
+        public function true_false_question(){
+            return $this->HasMany(True_false_question::class);
+        }
 }
 

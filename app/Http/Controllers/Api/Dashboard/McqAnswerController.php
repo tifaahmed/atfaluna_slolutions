@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
+use Illuminate\Support\Str;
 
 //AgeGroupController
 // Requests
@@ -13,8 +14,8 @@ use App\Http\Requests\Api\McqAnswer\McqAnswerUpdateApiRequest as modelUpdateRequ
 
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\McqAnswerCollection as ModelCollection;
-use App\Http\Resources\Dashboard\McqAnswerResource as ModelResource;
+use App\Http\Resources\Dashboard\Collections\McqAnswer\McqAnswerCollection as ModelCollection;
+use App\Http\Resources\Dashboard\McqAnswer\McqAnswerResource as ModelResource;
 
 // lInterfaces
 use App\Repository\McqAnswerRepositoryInterface as ModelInterface;
@@ -28,9 +29,8 @@ class McqAnswerController extends Controller
     {
         $this->ModelRepository = $Repository;
         $this->ModelRepositoryLanguage = $RepositoryLanguage;
-        $this->folder_name = 'mcqanswer';
+        $this->folder_name = 'mcq-answer/'.Str::random(10).time();
         $this->related_language = 'mcq_answer_id';
-
     }
     public function all(){
         try {
@@ -103,8 +103,34 @@ class McqAnswerController extends Controller
 
     public function premanently_delete($id) {
         try {
+            $model = $this->ModelRepository->findTrashedById($id);
+            $file_key_names =['image'];
+
+            //delete folder that has all this row files if exists
+            $this->HelperDeleteDirectory($this->HelperGetDirectory($model->image));
+            
+            //delete all this row files if exists
+            $this->HandleFileDelete($model,$file_key_names);
+
+            // get all related language
+            $language_models = $model->mcq_answer_languages()->get();
+            $language_file_key_names =['audio'];
+
+            foreach ($language_models as  $language_model) {
+
+                //delete all this row files if exists
+                $this->HandleFileDelete($language_model,$language_file_key_names);
+
+                foreach ($language_file_key_names as $value) {
+                    //delete folder that has all this row files if exists
+                    $this->HelperDeleteDirectory($this->HelperGetDirectory($model->$value));
+                }
+
+            }
+            $this->ModelRepository->PremanentlyDeleteById($id);
+
             return $this -> MakeResponseSuccessful( 
-                [$this->ModelRepository->PremanentlyDeleteById($id)] ,
+                [$model] ,
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
@@ -133,14 +159,19 @@ class McqAnswerController extends Controller
     }
     
     public function update(modelUpdateRequest $request ,$id) {
+        $old_model = new ModelResource( $this->ModelRepository->findById($id) );
+        $all = [ ];
+        $file_one = 'image';
+        if ($request->hasFile($file_one)) {  
+            // return old folder location of the file
+            $old_folder_location = $this->HelperGetDirectory($old_model->$file_one);                        
+            $path = $this->HelperHandleFile($old_folder_location,$request->file($file_one),$file_one)  ;
+            $all += array( $file_one => $path );    
+            //delete the old file
+            $this->HelperDelete($old_model->$file_one);    
+        }
         try {
-            $all = [ ];
-            $file_one = 'image';
-            if ($request->hasFile($file_one)) {            
-                $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
-                $all += array( $file_one => $path );
 
-            }
             $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
             $model = new ModelResource( $this->ModelRepository->findById($id) );
             //  request languages
@@ -177,7 +208,15 @@ class McqAnswerController extends Controller
             public function storeLanguage($language_array ) {
                 $all = [ ];
                 foreach ($language_array as $key => $value) {
+                    if ( $key == 'audio' ) {
+                        if (isset($language_array[$key]) && $language_array[$key]) {    
+                            // store the gevin file or image
+                            $path =  $this->HelperHandleFile($this->folder_name,$language_array[$key],$key)  ;
+                            $all += array( $key => $path );
+                        }
+                    }else{
                         $all += array( $key => $value );
+                    }
                 }
                 $this->ModelRepositoryLanguage->create( $all ) ;
             }
@@ -195,7 +234,7 @@ class McqAnswerController extends Controller
                         // language_array : single array ready to enter table; 
                         // model : single row of a main table (collection)
                         // update single row of lang table ; 
-                            $this ->updateLanguage($model,$language_array);
+                           $this ->updateLanguage($model,$language_array);
                     }
                 }
             }
@@ -209,7 +248,20 @@ class McqAnswerController extends Controller
                     $language_model  = $language_models->where('language',$language_array['language'])->first() ;
                 $all = [ ];
                 foreach ($language_array as $key => $value) {
+                    if ( $key == 'audio' ) {
+                        // check file value
+                        if (isset($language_array[$key]) && $language_array[$key]) {
+                            // get the old directory
+                            $old_folder_location = $this->HelperGetDirectory($language_model->$key);    
+                            // store the gevin file or image
+                            $path =  $this->HelperHandleFile($old_folder_location,$language_array[$key],$key)  ;
+                            $all += array( $key => $path );
+                            // delete the old file or image
+                            $this->HelperDelete($language_model->$key); 
+                        }
+                    }else{
                         $all += array( $key => $value );
+                    }
                 }
                 // for safty
                 if($language_model ){

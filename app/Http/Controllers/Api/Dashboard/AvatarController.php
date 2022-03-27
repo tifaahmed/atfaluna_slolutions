@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
+use Illuminate\Support\Str;
 
 //AgeGroupController
 // Requests
@@ -25,7 +26,7 @@ class AvatarController extends Controller
     public function __construct(ModelInterface $Repository)
     {
         $this->ModelRepository = $Repository;
-        $this->folder_name = 'avatar';
+        $this->folder_name = 'avatar/'.Str::random(10).time();;
     }
     public function all(){
         try {

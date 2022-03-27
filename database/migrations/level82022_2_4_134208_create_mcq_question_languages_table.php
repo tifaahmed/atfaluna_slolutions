@@ -15,12 +15,16 @@ class CreateMcqQuestionlanguagesTable extends Migration
     {
         Schema::create('mcq_question_languages', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->string('title')->notnull();//[note: "ex (  arabic or english or italian -...etc)"]
-            $table->string('language')->notnull();//[note: "ex ( ar-en-it-...etc)"]
+            $table->string('video')->nullable();
+
+            $table->string('audio')->nullable();
+            $table->string('title');//[note: "ex (  arabic or english or italian -...etc)"]
+
+            $table->string('header')->nullable();//[note: "ex (  arabic or english or italian -...etc)"]
+            
+            $table->string('language',2);//[note: "ex ( ar-en-it-...etc)"]
             $table->integer('mcq_question_id')->unsigned();
             $table->foreign('mcq_question_id')->references('id')->on('mcq_questions')->onDelete('cascade');
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
     

@@ -17,7 +17,7 @@ class CreateQuizlanguagesTable extends Migration
             $table->increments('id');//[pk]
             $table->string('image')->nullable();
             $table->string('name');//[note: "ex (  arabic or english or italian -...etc)"]
-            $table->string('language');//[note: "ex ( ar-en-it-...etc)"]
+            $table->string('language',2);//[note: "ex ( ar-en-it-...etc)"]
             $table->integer('quiz_id')->unsigned();
             $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade');
         });

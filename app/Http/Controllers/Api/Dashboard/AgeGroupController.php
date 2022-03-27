@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
-
+use Str;
 
 // Requests
 use App\Http\Requests\Api\AgeGroup\AgeGroupApiRequest as modelInsertRequest;
