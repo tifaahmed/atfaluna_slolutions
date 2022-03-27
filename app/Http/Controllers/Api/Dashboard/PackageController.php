@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
+use Illuminate\Support\Str;
 
 //AgeGroupController
 // Requests
@@ -27,7 +28,7 @@ class PackageController extends Controller
     {
         $this->ModelRepository = $Repository;
         $this->ModelRepositoryLanguage = $RepositoryLanguage;
-        $this->folder_name = 'package';
+        $this->folder_name = 'package/'.Str::random(10).time();
         $this->related_language = 'package_id';
 
     }

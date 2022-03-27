@@ -16,8 +16,8 @@ class Mcq_answer extends Model
     protected $table = 'mcq_answers';
 
     protected $fillable = [
-        'image',//required, max:5000
-        'answer',//boolean [default:false]
+        'image',//nullable, max:5000
+        'answer',//required
         'mcq_question_id',//unsigned 
     ];
     // relations

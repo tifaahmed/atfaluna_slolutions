@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\Collections;
+namespace App\Http\Resources\Dashboard\Collections\McqAnswer;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Dashboard\McqAnswerResource as ModelResource;
+use App\Http\Resources\Dashboard\McqAnswer\McqAnswerLanguagesResource as ModelResource;
 
-class McqAnswerCollection  extends ResourceCollection{
+class McqAnswerLanguagesCollection  extends ResourceCollection{
 
     public function toArray( $request ) {
         return $this -> collection -> map( fn( $model ) => new ModelResource ( $model ) );

@@ -15,8 +15,14 @@ class CreateTrueFalseQuestionlanguagesTable extends Migration
     {
         Schema::create('true_false_question_languages', function (Blueprint $table) {
             $table->increments('id');//[pk]
+            $table->string('video')->nullable();
+
+            $table->string('audio')->nullable();
             $table->string('title');//[note: "ex (  arabic or english or italian -...etc)"]
-            $table->string('language');//[note: "ex ( ar-en-it-...etc)"]
+
+            $table->string('header')->nullable();//[note: "ex (  arabic or english or italian -...etc)"]
+            
+            $table->string('language',2);//[note: "ex ( ar-en-it-...etc)"]
             $table->integer('true_false_question_id')->unsigned();
             $table->foreign('true_false_question_id')->references('id')->on('true_false_questions');
         });

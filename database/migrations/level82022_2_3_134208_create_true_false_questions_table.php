@@ -15,9 +15,7 @@ class CreateTrueFalseQuestionsTable extends Migration
     {
         Schema::create('true_false_questions', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->string('image');
-            $table->string('videos');
-            $table->string('audio');
+            $table->string('image')->nullable();;
             $table->boolean('answer'); //[default:false]
             $table->integer('quiz_id')->unsigned();
             $table->foreign('quiz_id')->references('id')->on('quizzes');

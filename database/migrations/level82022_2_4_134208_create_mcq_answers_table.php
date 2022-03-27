@@ -15,8 +15,8 @@ class CreateMcqAnswersTable extends Migration
     {
         Schema::create('mcq_answers', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->string('image');
-            $table->boolean('answer'); //[default:false]
+            $table->string('image')->nullable();
+            
             $table->integer('mcq_question_id')->unsigned();
             $table->foreign('mcq_question_id')->references('id')->on('mcq_questions');
             $table->timestamps();

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
-
+use Str;
 
 // Requests
 use App\Http\Requests\Api\Lesson\LessonApiRequest as modelInsertRequest;
@@ -27,7 +27,7 @@ class LessonController extends Controller
     {
         $this->ModelRepository = $Repository;
         $this->ModelRepositoryLanguage = $RepositoryLanguage;
-        $this->folder_name = 'lesson';
+        $this->folder_name = 'lesson/'.Str::random(10).time();
         $this->related_language = 'lesson_id';
     }
     public function all(){
@@ -205,7 +205,6 @@ class LessonController extends Controller
                 }else{
                     $this->ModelRepositoryLanguage->create( $all ) ;
                 }
-                
             }
         // lang update
 

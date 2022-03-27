@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
+use Illuminate\Support\Str;
 
 // Requests
 use App\Http\Requests\Api\SubSubject\SubSubjectApiRequest as modelInsertRequest;
@@ -29,7 +30,7 @@ class SubSubjectController extends Controller
     {
         $this->ModelRepository = $Repository;
         $this->ModelRepositoryLanguage = $RepositoryLanguage;
-        $this->folder_name = 'sub-subject';
+        $this->folder_name = 'sub-subject/'.Str::random(10).time();
         $this->related_language = 'sub_subject_id';
     }
     public function all(){

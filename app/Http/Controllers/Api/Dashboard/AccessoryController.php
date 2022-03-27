@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
+use Illuminate\Support\Str;
 
     // Requests
     use App\Http\Requests\Api\Accessory\AccessoryApiRequest as modelInsertRequest;
@@ -29,7 +30,7 @@ use Illuminate\Http\Response ;
         {
             $this->ModelRepository = $Repository;
             $this->ModelRepositoryLanguage = $RepositoryLanguage;
-            $this->folder_name = 'accessory';
+            $this->folder_name = 'accessory/'.Str::random(10).time();;
             $this->related_language = 'accessory_id';
         }
         public function all(){

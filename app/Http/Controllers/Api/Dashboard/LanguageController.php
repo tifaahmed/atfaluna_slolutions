@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
+use Illuminate\Support\Str;
 
 use App\Http\Requests\Api\Language\LanguageApiRequest as modelInsertRequest;
 use App\Http\Requests\Api\Language\LanguageUpdateApiRequest as modelUpdateRequest;

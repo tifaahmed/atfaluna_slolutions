@@ -31,6 +31,7 @@ class McqAnswerUpdateApiRequest extends FormRequest
         $all += [ 'mcq_question_id'         =>  [ 'required' ,'integer','exists:mcq_questions,id'] ] ;
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.title'   =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.audio'   =>  [ 'sometimes' ,'max:5000'] ] ;
             $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
         }
         return $all;

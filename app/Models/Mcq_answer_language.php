@@ -18,6 +18,8 @@ class Mcq_answer_language extends Model
 
     protected $fillable = [
         'title',//required
+        'audio',//nullable , max:5000
+        
         'language',//required ,limit 2
         'mcq_answer_id',//unsigned cascade
     ];

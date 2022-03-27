@@ -17,7 +17,13 @@ class True_false_question_language extends Model
     protected $table = 'true_false_question_languages';
 
     protected $fillable = [
+        'video',//nullable, max:5000
+
+        'audio',//nullable , max:5000
         'title',//required
+
+        'header',//nullable 
+
         'language',//required ,limit 2
         'true_false_question_id',//unsigned cascade
     ];

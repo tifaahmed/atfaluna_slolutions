@@ -52,19 +52,31 @@ trait FileTrait {
 
         if ($file_path && Storage::disk('public')->exists($file_path)) {
 
-            $extension = substr($file_path, strpos($file_path, ".") + 1);    //0 to 10 
+            $extension = substr($file_path, strpos($file_path, ".") + 1);    // all 14 get 11 to 14 
 
             if ($extension == 'php' || $extension == 'html' ) {                     // delete folder
+                $folder_path =  $this->HelperGetDirectory($file_path); //all 14 get 0 to 11
+                $this->HelperDeleteDirectory($folder_path);
                 
-                $last_slash_position = strrpos($file_path, '/'); //10
-                $text = substr($file_path, 0, $last_slash_position); //0 to 10
-
-                Storage::disk('public')->deleteDirectory($text);
             } else{                                                                 // or delete file
                 Storage::disk('public')->delete($file_path);
             }
         }
     }
+    public function HelperGetDirectory($file_path)  
+    {
+        if ($file_path && Storage::disk('public')->exists($file_path)) {
+            $last_slash_position = strrpos($file_path, '/'); //position number of character from the last  
+            return  substr($file_path, 0, $last_slash_position); //delete characters from position number to the end
+        }
+    }
+    public function HelperDeleteDirectory($folder_path)  
+    {
+        if ($folder_path && Storage::disk('public')->exists($folder_path)) { // if folder exists
+            Storage::disk('public')->deleteDirectory($folder_path);   // delete it with every file in it
+        }
+    }
+
 	// * @param  collection $model
 	// * @param  array of arraies  $file_names 
     // $file_names = [file_name_one,file_name_two ]
