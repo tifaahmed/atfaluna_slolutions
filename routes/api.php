@@ -108,7 +108,13 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/collection'                ,   'QuizController@collection'          )->name('collection'),
                 Route::post('/attach'                   ,   'QuizController@attach'              )->name('attach'),
                 Route::post('/detach'                   ,   'QuizController@detach'              )->name('detach'),
-            ]),  
+            ]), 
+            //hero
+            Route::name('hero.')->prefix('/hero')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'HeroController@all'                 )    ->name('all'),
+                Route::get('/{id}/show'                 ,   'HeroController@show'                )->name('show'),
+                Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
+            ]), 
         // Lesson
         Route::name('lesson.')->prefix('/lesson')->group( fn ( ) : array => [
             Route::get('/'                          ,   'LessonController@all'                 )->name('all'),

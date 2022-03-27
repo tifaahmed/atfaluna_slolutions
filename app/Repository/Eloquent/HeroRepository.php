@@ -22,7 +22,14 @@ class HeroRepository extends BaseRepository implements HeroRepositoryInterface
 		$this->model =  $model;
 	}
 
-
+    public function attachLessons($lesson_ids,$id)
+	{
+		if($lesson_ids && $id){
+			$result = $this->findById($id); 
+			$result->herolesson()->sync($lesson_ids);
+			return 'success';
+		}
+	}
 
 
 	

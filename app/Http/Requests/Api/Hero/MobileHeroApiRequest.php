@@ -25,8 +25,8 @@ class MobileHeroApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'hero_ids'         =>  [ 'required' ,'array' ,'exists:heroes,id'] ,
-            'sub_user_id'       =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,
+            'hero_ids'        =>  [ 'required' ,'array' ,'exists:heroes,id'] ,
+            'lesson_id'       =>  [ 'required' ,'integer' ,'exists:lessons,id',] ,
         ]; 
     }
 }

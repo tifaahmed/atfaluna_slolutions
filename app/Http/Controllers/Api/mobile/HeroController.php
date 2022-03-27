@@ -18,7 +18,6 @@ use App\Http\Resources\Mobile\Hero\HeroResource as ModelResource;
 // lInterfaces
 use App\Repository\HeroRepositoryInterface as ModelInterface;
 use App\Repository\HeroLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages
-// use Illuminate\Support\Facades\Auth;
 
 class HeroController extends Controller
 {
@@ -42,7 +41,6 @@ class HeroController extends Controller
             );
         }
     }
-
     public function collection(Request $request){
         try {
             return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
@@ -55,24 +53,6 @@ class HeroController extends Controller
             );
         }
     }
-    
-    public function destroy($id) {
-        try {
-            return $this -> MakeResponseSuccessful( 
-                [$this->ModelRepository->deleteById($id)] ,
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [ $e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-
-
     public function show($id) {
         try {
             return $this -> MakeResponseSuccessful( 
@@ -88,6 +68,4 @@ class HeroController extends Controller
             );
         }
     }
-    
-   // relation
 }
