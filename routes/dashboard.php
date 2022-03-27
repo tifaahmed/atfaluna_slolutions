@@ -447,5 +447,19 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::get('/collection-trash'          ,   'UserSubscriptionController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'UserSubscriptionController@show_trash'          )->name('show_trash'),
         ]),
+           //hero
+            Route::name('hero.')->prefix('/hero')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'HeroController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'HeroController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'HeroController@show'                )->name('show'),
+            Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'HeroController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'HeroController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'HeroController@restore'             )->name('restore'),
+        
+            Route::DELETE('premanently-delete/{id}' ,   'HeroController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'HeroController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'HeroController@show_trash'          )->name('show_trash'),
+        ]),
 ]);
 

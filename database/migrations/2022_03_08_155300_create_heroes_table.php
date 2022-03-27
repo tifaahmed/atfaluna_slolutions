@@ -15,8 +15,7 @@ class CreateHeroesTable extends Migration
     {
         Schema::create('heroes', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->string('image'); // not null
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }
