@@ -23,8 +23,9 @@ class Hero extends Model
         return $this->HasMany(Hero_language::class);
     }
     public function herolesson(){
-        return $this->belongsToMany(Lesson::class, 'hero_lessons', 'heros_id', 'lesson_id');
+        return $this->belongsToMany(Lesson::class, 'hero_lessons', 'hero_id', 'lesson_id');
     }
+
 }
 
 

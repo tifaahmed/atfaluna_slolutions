@@ -2,6 +2,9 @@
 
 namespace App\Http\Resources\Mobile\Hero;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Mobile\Lesson\LessonResource;
+use App\Http\Resources\Mobile\Collections\Hero\HeroLanguagesCollection;
+use App\Http\Resources\Mobile\Collections\Lesson\LessonCollection;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,16 +23,17 @@ class HeroResource extends JsonResource
 
         return [
             'id'            => $this->id,
-            'image'          =>( $row && $row->image && Storage::disk('public')->exists($row->image) )? asset(Storage::url($row->image))  : null ,
-            'description'        => $this->description,
             'title'          => $row ? $row->title:'',
-            
+
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
             
-            
+            'languages'     => new HeroLanguagesCollection ( $this->hero_languages ),
+            'lessons'        => new LessonCollection ($this->herolesson)  ,
+
+
 
         ];        
     }
