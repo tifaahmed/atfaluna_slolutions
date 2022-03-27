@@ -48,9 +48,6 @@
                                  :FactoryErrors="( ServerReaponse && Array.isArray( ServerReaponse.errors.lesson_type_id )  ) ? ServerReaponse.errors.lesson_type_id : null"       
                             />
 
-
-
-
                         
                         <button  @click="FormSubmet()" class="btn btn-primary ">
                             Submit

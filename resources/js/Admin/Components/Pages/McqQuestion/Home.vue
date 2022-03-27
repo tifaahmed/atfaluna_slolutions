@@ -64,19 +64,17 @@
             <router-view></router-view>
     </div>
 
-
-
 </template>
 <script>
     export default {
-        name:'LessonHome',
+        name:'McqQuestionHome',
         mounted() {
         },
         components:{
         },
         data( ) { return {
-            TableLable :'Lesson',
-            TableName :'Lesson',
+            TableLable :'McqQuestion',
+            TableName :'McqQuestion',
         } } ,
 
     }
