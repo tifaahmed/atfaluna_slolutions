@@ -27,7 +27,7 @@ class LessonController extends Controller
     }
     public function all(Request $request){
         try {
-            return $model =  $this->ModelRepository->filterAll($request->sub_user_id,$request->lesson_type_id) ;
+                $model =  $this->ModelRepository->filterAll($request->sub_user_id,$request->lesson_type_id) ;
             return new ModelCollection (  $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  

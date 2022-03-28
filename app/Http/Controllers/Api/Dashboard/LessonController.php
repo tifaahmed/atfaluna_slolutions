@@ -188,12 +188,15 @@ class LessonController extends Controller
                 $all = [ ];
                 foreach ($language_array as $key => $value) {
                     if ( $value && $key == 'image' || $key == 'url' ) {
-
-                        $this->HelperDelete($language_model->$key); 
-
-                        if (isset($language_array[$key]) && $language_array[$key]) {            
-                            $path =  $this->HelperHandleFile($this->folder_name,$language_array[$key],$key)  ;
+                        // check file value
+                        if (isset($language_array[$key]) && $language_array[$key]) {
+                            // get the old directory
+                            $old_folder_location = $this->HelperGetDirectory($language_model->$key);    
+                            // store the gevin file or image
+                            $path =  $this->HelperHandleFile($old_folder_location,$language_array[$key],$key)  ;
                             $all += array( $key => $path );
+                            // delete the old file or image
+                            $this->HelperDelete($language_model->$key); 
                         }
                     }else{
                         $all += array( $key => $value );
@@ -243,11 +246,18 @@ class LessonController extends Controller
         public function premanently_delete($id) {
             try {
                 $model = $this->ModelRepository->findTrashedById($id);
+
                 // get all related language
                 $language_models = $model->lesson_languages()->get();
+                $language_file_key_names =['image','url'];
+
                 foreach ($language_models as  $language_model) {
-                    $file_key_names =['image','url'];
-                    $this->HandleFileDelete($language_model,$file_key_names);
+                    foreach ($language_file_key_names as $value) {
+                        //delete folder that has all this row files if exists
+                        $this->HelperDeleteDirectory($this->HelperGetDirectory($language_model->$value));
+                    }
+                    //delete all this row files if exists
+                    $this->HandleFileDelete($language_model,$language_file_key_names);
                 }
                 $this->ModelRepository->PremanentlyDeleteById($id);
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Dashboard\SubjectResource;
 use App\Http\Resources\Dashboard\Collections\SubSubject\SubSubjectLanguagesCollection;
+use App\Http\Resources\Dashboard\Collections\Lesson\LessonCollection;
 
 class SubSubjectResource extends JsonResource
 {
@@ -23,11 +24,12 @@ class SubSubjectResource extends JsonResource
             'id'            => $this->id,
             'name'          => $row ? $row->name:'',
             'languages'     => new SubSubjectLanguagesCollection ( $this->subSubject_languages ),
+            'lessons'        => new LessonCollection ($this->lessons)  ,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
-            'subject'       => new SubjectResource (  $this->subject )  ,
+            'subject'       =>   $this->subject   ,
 
         ];        
     }

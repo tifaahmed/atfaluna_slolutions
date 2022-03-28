@@ -4,7 +4,7 @@ namespace App\Repository\Eloquent;
 
 use App\Models\Lesson as ModelName;
 use App\Repository\LessonRepositoryInterface;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Sub_subject;
 use App\Models\Subject;
 use \Illuminate\Database\Eloquent\Collection;
