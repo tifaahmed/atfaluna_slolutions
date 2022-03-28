@@ -32,13 +32,13 @@ class SubUserResource extends JsonResource
             'gender'        => $this->gender,
             'points'        => $this->points,
 
-            'user'              => new UserResource ( $this->user ),
+            'user'              =>  $this->user ,
             'avatar'            => new AvatarResource (  $this->avatar )  ,
             
             'accessories'    => new AccessoryCollection ($this->subUserAccessory)  ,
             'avatars'        => new AvatarCollection ($this->subUserAvatar)  ,
             'certificates'    => new CertificateCollection ($this->subUserCertificate)  ,
-            'quizs'          => new QuizCollection ($this->subUserQuiz)  ,
+            // 'quizs'          => new QuizCollection ($this->subUserQuiz)  ,
             // 'lessons'        => new LessonCollection ($this->subUserLesson)  ,
             'subjects'       => new SubjectCollection ($this->subUserSubject)  ,
 
