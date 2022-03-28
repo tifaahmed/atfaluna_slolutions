@@ -7,6 +7,7 @@ use App\Http\Resources\Dashboard\SubjectResource;
 use App\Http\Resources\Dashboard\LessonTypeResource;
 
 use App\Http\Resources\Dashboard\Collections\Lesson\LessonLanguagesCollection;
+use App\Http\Resources\Dashboard\Collections\Quiz\QuizCollection;
 
 class LessonResource extends JsonResource
 {
@@ -30,12 +31,14 @@ class LessonResource extends JsonResource
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
             'languages'     => new LessonLanguagesCollection ( $this->lesson_languages ),
-
             'name'          => $row ? $row->name:'',
             
             'subject'       => new SubjectResource (  $this->subject )  ,
             'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
 
+            'quiz'       =>   new QuizCollection ($this->quiz)   ,
+
+            
         ];        
     }
 }

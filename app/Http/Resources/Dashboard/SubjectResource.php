@@ -5,6 +5,7 @@ namespace App\Http\Resources\Dashboard;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Dashboard\CertificateResource;
+use App\Http\Resources\Dashboard\Collections\Quiz\QuizCollection;
 
 class SubjectResource extends JsonResource
 {
@@ -33,6 +34,7 @@ class SubjectResource extends JsonResource
             'age_group'     => $this->age_group,
 
             'certification'  => new CertificateResource (  $this->certificate )  ,
+            'quiz'       =>   new QuizCollection ($this->quiz)   ,
 
         ];        
     }
