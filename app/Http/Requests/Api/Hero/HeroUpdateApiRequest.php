@@ -26,6 +26,9 @@ class HeroUpdateApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
+        
+        $all += [ 'lesson_id'   =>  [ 'required' ,'integer','exists:lessons,id'] ] ;
+
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.title'   =>  [ 'required' ] ] ;
             $all += [ 'languages.'.$key.'.description'   =>  [ 'required'] ] ;

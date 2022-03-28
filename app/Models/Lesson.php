@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Lesson_type;      // belongsTo
 use App\Models\Sub_subject;      // belongsTo
+use App\Models\Hero;             //belongsToMany
 
 use App\Models\Lesson_language;  // HasMany
 
@@ -35,6 +36,11 @@ class Lesson extends Model
                 return $this->belongsTo(Lesson_type::class,'lesson_type_id');
             }
 
+        // belongsToMany
+            public function herolesson(){
+                return $this->belongsToMany(Hero::class, 'hero_lessons', 'lesson_id','hero_id' );
+            }
+
         // HasMany
             public function lesson_languages(){
                 return $this->HasMany(Lesson_language::class);
@@ -44,6 +50,11 @@ class Lesson extends Model
             public function quiz(){
                 return $this->morphMany(Quiz::class, 'quizable'); // assignment
             }
+
+
+
+
+
 }
 
 

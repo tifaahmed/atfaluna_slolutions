@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Dashboard\Hero;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Dashboard\Collections\Lesson\LessonCollection;
 
 use App\Http\Resources\Dashboard\Collections\Hero\HeroLanguagesCollection;
 
@@ -29,6 +30,7 @@ class HeroResource extends JsonResource
 
             'title'          => $row ? $row->title:'',
             
+            'lessons'        => new LessonCollection ($this->herolesson)  ,
 
         ];        
     }

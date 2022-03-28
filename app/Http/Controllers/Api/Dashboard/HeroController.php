@@ -44,6 +44,8 @@ class HeroController extends Controller
     public function store(modelInsertRequest $request) {
         try {
             $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
+            $this->ModelRepository->attachLessons($request->lesson_ids,$model->id);
+
             // // languages
             $this -> store_array_languages($request->languages,$model) ;
 

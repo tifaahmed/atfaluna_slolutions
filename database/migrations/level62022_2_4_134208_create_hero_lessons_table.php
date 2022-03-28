@@ -15,9 +15,9 @@ class CreateHeroLessonsTable extends Migration
     {
         Schema::create('hero_lessons', function (Blueprint $table) {
             $table->integer('hero_id')->unsigned();
-            $table->foreign('hero_id')->references('id')->on('heroes');
+            $table->foreign('hero_id')->references('id')->on('heroes')->onDelete('cascade');
             $table->integer('lesson_id')->unsigned();
-            $table->foreign('lesson_id')->references('id')->on('lessons');
+            $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade');
         });
     }
     /**
