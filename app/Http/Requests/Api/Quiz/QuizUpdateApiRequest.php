@@ -28,7 +28,9 @@ class QuizUpdateApiRequest extends FormRequest
 
         $all=[];
         $all += [ 'points'       =>  [ 'required' ,'integer'] ]  ;
-        $all += [ 'subject_id'   =>  [ 'required' ,'integer','exists:subjects,id'] ] ;
+        $all += [ 'quizable_id'     =>  ['required','exists:'.$this->quizable_type.',id'] ]  ;
+        $all += [ 'quizable_type'   =>  [ 'required' ] ] ;        
+        
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
             $all += [ 'languages.'.$key.'.image'   =>  [ 'required' ,'max:50000'] ] ;

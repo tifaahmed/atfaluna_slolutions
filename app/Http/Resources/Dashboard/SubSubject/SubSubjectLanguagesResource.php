@@ -17,8 +17,8 @@ class SubSubjectLanguagesResource extends JsonResource
     {
 
         return [
-            'image_one'             => Storage::disk('public')->exists($this->image_one) ? Storage::url($this->image_one)  : null,
-            'image_two'             => Storage::disk('public')->exists($this->image_two) ? Storage::url($this->image_two)  : null,
+            'image_one'             => Storage::disk('public')->exists($this->image_one) ? asset(Storage::url($this->image_one))  : null,
+            'image_two'             => Storage::disk('public')->exists($this->image_two) ? asset(Storage::url($this->image_two))  : null,
             'name'              => $this->name,
             'description'       => $this->description,
             'language'          => $this->language,

@@ -18,13 +18,9 @@ class Mcq_question extends Model
 
     protected $fillable = [
         'image',//required, max:5000
-        'quiz_id',//unsigned
     ];
 
     // relation
-        public function quiz(){
-            return $this->belongsTo(Quiz::class,'quiz_id');
-        }
         public function mcq_question_languages(){
             return $this->HasMany(Mcq_question_language::class);
         }
