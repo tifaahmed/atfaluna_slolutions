@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\Collections;
+namespace App\Http\Resources\Dashboard\Collections\Quiz;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 

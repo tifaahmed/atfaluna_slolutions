@@ -8,6 +8,7 @@ use App\Http\Resources\Dashboard\SubjectResource;
 use App\Http\Resources\Dashboard\McqQuestionResource;
 use App\Http\Resources\Dashboard\TrueFalseQuestionResource;
 
+use App\Http\Resources\Dashboard\Collections\Quiz\QuizLanguagesCollection;
 
 class QuizResource extends JsonResource
 {
@@ -29,13 +30,15 @@ class QuizResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            'languages'     => $this->quiz_languages,
+            'languages'     => new QuizLanguagesCollection ($this->quiz_languages),
             'name'          => $row ? $row->name:'',
 
-            'subject'       => new SubjectResource ( $this->subject )  ,
+            
+            // 'subject'       => new SubjectResource ( $this->subject )  ,
 
-            'true_false_questions'        => new TrueFalseQuestionResource ($this->quizTrueOrFalseQuestion)  ,
-            'mcq_questions'               => new McqQuestionResource ($this->quizMcqQuestion)  ,
+            // 'true_false_questions'        => new TrueFalseQuestionResource ($this->quizTrueOrFalseQuestion)  ,
+            // 'mcq_questions'               => new McqQuestionResource ($this->quizMcqQuestion)  ,
+            'questions'               => $this->quiz_questions   ,
 
         ];        
     }

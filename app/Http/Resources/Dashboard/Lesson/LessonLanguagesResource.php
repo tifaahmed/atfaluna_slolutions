@@ -17,10 +17,10 @@ class LessonLanguagesResource extends JsonResource
     {
 
         return [
-            'image'             => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
+            'image'             => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
             'name'              => $this->name,
             'language'          => $this->language,
-            'url'               => Storage::disk('public')->exists($this->url) ? Storage::url($this->url)  : null,
+            'url'               => Storage::disk('public')->exists($this->url) ? asset(Storage::url($this->url))  : null,
         ];        
     }
 }
