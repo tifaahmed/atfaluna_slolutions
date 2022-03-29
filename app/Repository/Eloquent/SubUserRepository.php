@@ -40,7 +40,23 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 		}
 	}
 	
-
+	public function attachCertificates($certificate_ids,$id)
+	{
+		if($certificate_ids){
+			$result = $this->findById($id); 
+			$result->subUserCertificate()->syncWithoutDetaching($certificate_ids);
+	
+		}
+	}
+	
+	public function attachSubjects($subject_ids,$id)
+	{
+		if($subject_ids){
+			$result = $this->findById($id); 
+			$result->subUserSubject()->syncWithoutDetaching($subject_ids);
+	
+		}
+	}
 	
 }
 

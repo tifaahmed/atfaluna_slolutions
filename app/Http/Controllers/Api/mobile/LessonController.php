@@ -27,7 +27,7 @@ class LessonController extends Controller
     }
     public function all(Request $request){
         try {
-                $model =  $this->ModelRepository->filterAll($request->sub_user_id,$request->lesson_type_id) ;
+            $model =  $this->ModelRepository->filterAll($request->sub_user_id,$request->lesson_type_id,$request->hero_id) ;
             return new ModelCollection (  $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
@@ -41,7 +41,7 @@ class LessonController extends Controller
 
     public function collection(Request $request){
         try {
-            $model = $this->ModelRepository->filterPaginate($request->sub_user_id,$request->lesson_type_id, $request->PerPage ? $request->PerPage : 10);
+            return $model = $this->ModelRepository->filterPaginate($request->sub_user_id,$request->lesson_type_id,$request->hero_id, $request->prepage ? $request->prepage : 10);
             return new ModelCollection ($model)  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  

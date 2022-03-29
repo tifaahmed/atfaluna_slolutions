@@ -38,8 +38,8 @@ class SubUserResource extends JsonResource
             'accessories'    => new AccessoryCollection ($this->subUserAccessory)  ,
             'avatars'        => new AvatarCollection ($this->subUserAvatar)  ,
             'certificates'    => new CertificateCollection ($this->subUserCertificate)  ,
-            // 'quizs'          => new QuizCollection ($this->subUserQuiz)  ,
-            // 'lessons'        => new LessonCollection ($this->subUserLesson)  ,
+            // 'quizs'       => new QuizCollection ($this->subUserQuiz)  ,
+            // 'lessons'     => new LessonCollection ($this->subUserLesson)  ,
             'subjects'       => new SubjectCollection ($this->subUserSubject)  ,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
