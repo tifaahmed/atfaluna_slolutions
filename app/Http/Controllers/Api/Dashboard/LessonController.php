@@ -173,7 +173,7 @@ class LessonController extends Controller
                         // language_array : single array ready to enter table; 
                         // model : single row of a main table (collection)
                         // update single row of lang table ; 
-                            $this ->updateLanguage($model,$language_array);
+                        $this ->updateLanguage($model,$language_array);
                     }
                 }
             }
@@ -191,12 +191,16 @@ class LessonController extends Controller
                         // check file value
                         if (isset($language_array[$key]) && $language_array[$key]) {
                             // get the old directory
-                            $old_folder_location = $this->HelperGetDirectory($language_model->$key);    
+                            if ( isset($language_model->$key) && $language_model->$key ) {
+                                $old_folder_location = $this->HelperGetDirectory($language_model->$key); 
+                                // delete the old file or image
+                                $this->HelperDelete($language_model->$key); 
+                            }else{
+                                $old_folder_location = $this->folder_name;
+                            }
                             // store the gevin file or image
                             $path =  $this->HelperHandleFile($old_folder_location,$language_array[$key],$key)  ;
                             $all += array( $key => $path );
-                            // delete the old file or image
-                            $this->HelperDelete($language_model->$key); 
                         }
                     }else{
                         $all += array( $key => $value );

@@ -36,7 +36,7 @@ class LessonResource extends JsonResource
             'subject'       => new SubjectResource (  $this->subject )  ,
             'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
 
-            'quiz'       =>   new QuizCollection ($this->quiz)   ,
+            // 'quiz'       =>   new QuizCollection ($this->quiz)   ,
 
             
         ];        

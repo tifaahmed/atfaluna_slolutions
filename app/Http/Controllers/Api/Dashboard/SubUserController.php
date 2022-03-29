@@ -121,9 +121,9 @@ class SubUserController extends Controller
 
             $this->ModelRepository->attachAccessories($request->accessory_ids,$id);
             $this->ModelRepository->attachAvatars($request->avatar_ids,$id);
-            // $this->ModelRepository->attachCertificates($request->certificat_ids,$id);
-            // $this->ModelRepository->attachSubjects($request->subject_ids,$id);
-            // $this->ModelRepository->attachLessons($request->lesson_ids,$id);
+            $this->ModelRepository->attachCertificates($request->certificat_ids,$id);
+            $this->ModelRepository->attachSubjects($request->subject_ids,$id);
+            $this->ModelRepository->attachLessons($request->lesson_ids,$id);
             
             $modal = new ModelResource($this->ModelRepository->findById($id)); 
 

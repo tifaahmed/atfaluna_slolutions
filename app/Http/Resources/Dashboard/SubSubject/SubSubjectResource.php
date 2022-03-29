@@ -32,8 +32,8 @@ class SubSubjectResource extends JsonResource
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
             'languages'     => new SubSubjectLanguagesCollection ( $this->subSubject_languages ),
 
-            'subject'       => $this->subject   ,
-            'quiz'       =>   new QuizCollection ($this->quiz)   ,
+            // 'subject'       => $this->subject   ,
+            // 'quiz'       =>   new QuizCollection ($this->quiz)   ,
         ];        
     }
 }

@@ -37,7 +37,7 @@ class SubjectResource extends JsonResource
             'sub_subjects'        => new SubSubjectCollection  ($this->sub_subjects),
 
             'certification'  => new CertificateResource (  $this->certificate )  ,
-            'quiz'       =>   new QuizCollection ($this->quiz)   ,
+            // 'quiz'       =>   new QuizCollection ($this->quiz)   ,
 
         ];        
     }
