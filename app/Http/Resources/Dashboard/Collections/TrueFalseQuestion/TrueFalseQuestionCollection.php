@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Mobile\Collections;
+namespace App\Http\Resources\Dashboard\Collections\TrueFalseQuestion;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Mobile\Quiz\QuizResource as ModelResource;
+use App\Http\Resources\Dashboard\TrueFalseQuestion\TrueFalseQuestionResource as ModelResource;
 
-class QuizCollection  extends ResourceCollection{
+class TrueFalseQuestionCollection extends ResourceCollection{
 
     public function toArray( $request ) {
         return $this -> collection -> map( fn( $model ) => new ModelResource ( $model ) );

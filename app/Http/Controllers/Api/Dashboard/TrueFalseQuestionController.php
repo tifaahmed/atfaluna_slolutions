@@ -8,12 +8,12 @@ use Illuminate\Http\Response ;
 use Illuminate\Support\Str;
 
 // Requests
-use App\Http\Requests\Api\TrueFalseQuestion\TrueFalseQuestionApiRequest as modelInsertRequest;
+use App\Http\Requests\Api\TrueFalseQuestion\TrueFalseQuestionStoreApiRequest  as modelInsertRequest;
 use App\Http\Requests\Api\TrueFalseQuestion\TrueFalseQuestionUpdateApiRequest as modelUpdateRequest;
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\TrueFalseQuestionCollection as ModelCollection;
-use App\Http\Resources\Dashboard\TrueFalseQuestionResource as ModelResource;
+use App\Http\Resources\Dashboard\Collections\TrueFalseQuestion\TrueFalseQuestionCollection as ModelCollection;
+use App\Http\Resources\Dashboard\TrueFalseQuestion\TrueFalseQuestionResource as ModelResource;
 
 // lInterfaces
 use App\Repository\TrueFalseQuestionRepositoryInterface as ModelInterface;
@@ -42,26 +42,19 @@ class TrueFalseQuestionController extends Controller
         }
     }
     public function store(modelInsertRequest $request) {
+        $all = [ ];
+        $file_one = 'image';
+        if ($request->hasFile($file_one)) { 
+            $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+                $all += array( $file_one => $path );           
+        }
         try {
-            $all = [ ];
-            $file_one = 'image';
-            if ($request->hasFile($file_one)) { 
-                $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
-                    $all += array( $file_one => $path );           
-            }
-            $file_two = 'videos';
-            if ($request->hasFile($file_two)) { 
-                $path = $this->HelperHandleFile($this->folder_name,$request->file($file_two),$file_two)  ;
-                    $all += array( $file_two => $path );           
-            }
-            $file_three= 'audio';
-            if ($request->hasFile($file_three)) { 
-                $path = $this->HelperHandleFile($this->folder_name,$request->file($file_three),$file_three)  ;
-                    $all += array( $file_three => $path );           
-            }
-            $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one,$file_two,$file_three)+$all ) );
+            $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
+            
+            // attach
+            $this->ModelRepository->attachQuestionTags($request->question_tag_ids,$model->id);
 
-            // // languages
+            // languages
             $this -> store_array_languages($request->languages,$model) ;
 
             return $this -> MakeResponseSuccessful( 
@@ -127,31 +120,31 @@ class TrueFalseQuestionController extends Controller
     
     public function update(modelInsertRequest $request ,$id) {
         try {
-            $old_model_one = new ModelResource( $this->ModelRepository->findById($id) );
-            $old_model_two = new ModelResource( $this->ModelRepository->findById($id) );
-            $old_model_three = new ModelResource( $this->ModelRepository->findById($id) );
+            // find old model row
+            $old_model = new ModelResource( $this->ModelRepository->findById($id) );
 
+            // attach
+            $this->ModelRepository->attachQuestionTags($request->question_tag_ids,$id);
+
+            // delete & store new files
             $all = [ ];
             $file_one = 'image';
-            if ($request->hasFile($file_one)) { 
-                $this->HelperDelete($old_model_one->$file_one);           
-                    $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
-                    $all += array( $file_one => $path );           
+            if ($request->hasFile($file_one)) {  
+                // return old folder location of the file
+                $old_folder_location = $this->HelperGetDirectory($old_model->$file_one);                        
+                $path = $this->HelperHandleFile($old_folder_location,$request->file($file_one),$file_one)  ;
+                $all += array( $file_one => $path );    
+                //delete the old file
+                $this->HelperDelete($old_model->$file_one);    
             }
-            $file_two = 'videos';
-            if ($request->hasFile($file_two)) {  
-                $this->HelperDelete($old_model_two->$file_two);                     
-                $path= $this->HelperHandleFile($this->folder_name,$request->file($file_two),$file_two)  ;
-                $all += array( $file_two => $path );           
-            }
-            $file_three = 'audio';
-            if ($request->hasFile($file_three)) { 
-                $this->HelperDelete($old_model_three->$file_three);                                
-                $path= $this->HelperHandleFile($this->folder_name,$request->file($file_three),$file_three)  ;
-                $all += array( $file_three => $path );           
-            }
-            $this->ModelRepository->update( $id,Request()->except($file_one,$file_two,$file_three)+$all) ;
+            // update model row
+            $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
+
+            // find new model row
             $model = new ModelResource( $this->ModelRepository->findById($id) );
+
+            // update languages array
+            $this -> update_array_languages($request->languages,$model) ;
 
             return $this -> MakeResponseSuccessful( 
                     [ $model],
@@ -167,69 +160,96 @@ class TrueFalseQuestionController extends Controller
         } 
     }
     
-     // lang create
-            //  requested_languages : from data request (array)
-            //  model : single row of the main table (collection)
-            //  handle languages  & store languages
-            public function store_array_languages($requested_languages,$model) {
-                if (is_array($requested_languages) ) {
-                    foreach ($requested_languages as $key => $language_sigle_row) {
-                        // insert relation_id_name with relation_id to the associative arrsy  ; 
-                        $language_array = $this->handleLanguageData($language_sigle_row,$this->related_language,$model->id);
-                        $this ->storeLanguage(  $language_array  );
-                    }
+    // lang create
+        //  requested_languages : from data request (array)
+        //  model : single row of the main table (collection)
+        //  handle languages  & store languages
+        public function store_array_languages($requested_languages,$model) {
+            if (is_array($requested_languages) ) {
+                foreach ($requested_languages as $key => $language_sigle_row) {
+                    // insert relation_id_name with relation_id to the associative arrsy  ; 
+                    $language_array = $this->handleLanguageData($language_sigle_row,$this->related_language,$model->id);
+                    $this ->storeLanguage(  $language_array  );
                 }
             }
-            //  language_array : single associative array ready to enter table; 
-            //  add new files && create data
-            public function storeLanguage($language_array ) {
-                $all = [ ];
-                foreach ($language_array as $key => $value) {
-                        $all += array( $key => $value );
+        }
+        //  language_array : single associative array ready to enter table; 
+        //  add new files && create data
+        public function storeLanguage($language_array ) {
+            $all = [ ];
+            foreach ($language_array as $key => $value) {
+                if ( $key == 'video'|| $key == 'audio') {
+                    if (isset($language_array[$key]) && $language_array[$key]) {    
+                        // store the gevin file or image
+                        $path =  $this->HelperHandleFile($this->folder_name,$language_array[$key],$key)  ;
+                        $all += array( $key => $path );
+                    }
+                }else{
+                    $all += array( $key => $value );
                 }
+            }
+            $this->ModelRepositoryLanguage->create( $all ) ;
+        }
+    // lang create
+
+    // lang update
+        //  requested_languages : from data request (array)
+        //  model : single row of the main table (collection)
+        //  handle languages  & update languages
+        public function update_array_languages($requested_languages,$model) {
+            if (is_array($requested_languages) ) {// for safty
+                foreach ($requested_languages as $key => $language_sigle_row) {
+                    // handle single array ; 
+                        $language_array = $this->handleLanguageData($language_sigle_row,$this->related_language,$model->id);
+                    // language_array : single array ready to enter table; 
+                    // model : single row of a main table (collection)
+                    // update single row of lang table ; 
+                        $this ->updateLanguage($model,$language_array);
+                }
+            }
+        }
+        //  model : single row of a main table (collection)
+        //  language_array : single associative array ready to enter table; 
+        //  delete old files & add new one && update data
+        public function updateLanguage($model,$language_array ) {
+            // get all row of language table
+                $language_models  =  $model->true_false_question_languages()->get() ;
+            // get single row of language table
+                $language_model  = $language_models->where('language',$language_array['language'])->first() ;
+            $all = [ ];
+            foreach ($language_array as $key => $value) {
+                if ( $value && $key == 'video' || $key == 'audio' ) {
+                    // check file value
+                    if (isset($language_array[$key]) && $language_array[$key]) {
+
+                        if (isset($language_model->$key) && $language_model->$key) {
+                            // get the old directory
+                            $old_folder_location = $this->HelperGetDirectory($language_model->$key);    
+                            // delete the old file or image
+                            $this->HelperDelete($language_model->$key); 
+                        }  
+                              
+                        $location = $old_folder_location ? $old_folder_location : $this->folder_name ;
+
+                        // store the gevin file or image
+                        $path =  $this->HelperHandleFile($location,$language_array[$key],$key)  ;
+                        $all += array( $key => $path );
+
+                    }
+                }else{
+                    $all += array( $key => $value );
+                }
+            }
+            // for safty
+            if($language_model ){
+                $this->ModelRepositoryLanguage->update( $language_model->id,$all ) ;
+            }else{
                 $this->ModelRepositoryLanguage->create( $all ) ;
             }
-        // lang create
+        }
+    // lang update
 
-        // lang update
-            //  requested_languages : from data request (array)
-            //  model : single row of the main table (collection)
-            //  handle languages  & update languages
-            public function update_array_languages($requested_languages,$model) {
-                if (is_array($requested_languages) ) {// for safty
-                    foreach ($requested_languages as $key => $language_sigle_row) {
-                        // handle single array ; 
-                            $language_array = $this->handleLanguageData($language_sigle_row,$this->related_language,$model->id);
-                        // language_array : single array ready to enter table; 
-                        // model : single row of a main table (collection)
-                        // update single row of lang table ; 
-                            $this ->updateLanguage($model,$language_array);
-                    }
-                }
-            }
-            //  model : single row of a main table (collection)
-            //  language_array : single associative array ready to enter table; 
-            //  delete old files & add new one && update data
-            public function updateLanguage($model,$language_array ) {
-                // get all row of language table
-                    $language_models  =  $model->accessory_languages()->get() ;
-                // get single row of language table
-                    $language_model  = $language_models->where('language',$language_array['language'])->first() ;
-                $all = [ ];
-                foreach ($language_array as $key => $value) {
-                        $all += array( $key => $value );
-                }
-                // for safty
-                if($language_model ){
-                    $this->ModelRepositoryLanguage->update( $language_model->id,$all ) ;
-                }else{
-                    $this->ModelRepositoryLanguage->create( $all ) ;
-                }
-                
-            }
-        // lang update
-
-        // trash
+    // trash
         public function collection_trash(Request $request){
             try {
                 return new ModelCollection (  $this->ModelRepository->collection_trash( $request->PerPage ? $request->PerPage : 10 ) ) ;

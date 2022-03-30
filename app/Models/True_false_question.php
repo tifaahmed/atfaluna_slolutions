@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Quiz;
 use App\Models\True_false_question_language;
+use App\Models\QuestionTag;
 
 
 class True_false_question extends Model
@@ -17,17 +18,22 @@ class True_false_question extends Model
     protected $table = 'true_false_questions';
 
     protected $fillable = [
-        'image',//nullable , max:5000
-        'answer',//required , boolean [default:false]
-
-        'quiz_id',//unsigned 
+        'image', // string   / nullable , max:5000
+        'degree',// integer  / default:0
+        'level', // enum     / 'hard','medium','easy' default:easy
+        'answer',// boolean  / default:0
     ];
     //relation
-    public function quiz(){
-    return $this->belongsTo(Quiz::class,'quiz_id');
-    }
-    // relations
-    public function true_false_question_languages(){
-    return $this->HasMany(True_false_question_language::class);
-    }
+        // HasMany
+            public function quiz(){
+                return $this->belongsTo(Quiz::class,'quiz_id');
+            }
+            public function true_false_question_languages(){
+                return $this->HasMany(True_false_question_language::class);
+            }
+
+        // morphedByMany    
+            public function question_tags(){
+                return $this->morphToMany(QuestionTag::class, 'question_tagables');
+            }   
 }

@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Language;
 use Illuminate\Validation\Rule;
 
-class QuizUpdateApiRequest extends FormRequest
+class QuizStoreApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,8 +28,8 @@ class QuizUpdateApiRequest extends FormRequest
         $Languages=Language::get();
         $all=[];
         // quizzes
-        $all += [ 'points'       =>  [ 'integer'] ]  ; // default 0
-        $all += [ 'minimum_requirements'       =>  [ 'integer'] ]  ; // default 0
+        $all += [ 'points'                      =>  [ 'integer'] ]  ; // default 0
+        $all += [ 'minimum_requirements'        =>  [ 'integer'] ]  ; // default 0
         
         $model_name = 'App\Models\Lesson';
         if ($this->quizable_type == 'sub_subject') {
@@ -48,12 +48,12 @@ class QuizUpdateApiRequest extends FormRequest
                 }else{
                     return $query->where('id','0');
                 }
-            })->ignore($this->id),
+            })
         ] ]  ;
         
         // question_tagables
         foreach ($this->questionable_type as $question_key => $question_value) {
-            $all += [ 'questionable_id.'.$question_key    =>  [ 'required' , 'exists:'.$this->questionable_type[$question_key].',id'] ]  ;
+            $all += [ 'questionable_id.'.$question_key     =>  [ 'required' , 'exists:'.$this->questionable_type[$question_key].',id'] ]  ;
             $all += [ 'questionable_type.'.$question_key   =>  [ 'required' ] ] ;
         }
         // quiz_languages

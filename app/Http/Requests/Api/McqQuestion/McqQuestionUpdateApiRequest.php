@@ -27,7 +27,8 @@ class McqQuestionUpdateApiRequest extends FormRequest
 
         $all=[];
         $all += [ 'image'           =>  [ 'sometimes' ,'max:50000'] ]  ;
-        $all += [ 'quiz_id'         =>  [ 'required' ,'integer','exists:quizzes,id'] ] ;
+        $all += [ 'question_tag_ids'  =>  [ 'sometimes' ,'array','exists:question_tags,id'] ]  ;
+
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.video'   =>  [ 'sometimes' ,'max:5000','mimes:mp4'] ] ;
 

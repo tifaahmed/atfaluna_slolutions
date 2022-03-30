@@ -22,9 +22,14 @@ class McqQuestionRepository extends BaseRepository implements McqQuestionReposit
 		$this->model =  $model;
 	}
 
+    public function attachQuestionTags($question_tag_ids,$id)
+	{
+		if($question_tag_ids){
+			$result = $this->findById($id); 
+			// $result->subUserAvatar()->detach();
+			return $result->question_tags()->sync($question_tag_ids);
+		}
+	}
 
-
-
-	
 }
 

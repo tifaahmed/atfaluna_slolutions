@@ -15,9 +15,9 @@ class CreateSubUseravatarsTable extends Migration
     {
         Schema::create('sub_user_avatars', function (Blueprint $table) {
             $table->integer('sub_users_id')->unsigned();
-            $table->foreign('sub_users_id')->references('id')->on('sub_users');
+            $table->foreign('sub_users_id')->references('id')->on('sub_users')->onDelete('cascade');
             $table->integer('avatar_id')->unsigned();
-            $table->foreign('avatar_id')->references('id')->on('avatars');
+            $table->foreign('avatar_id')->references('id')->on('avatars')->onDelete('cascade');
         });
     }
     /**

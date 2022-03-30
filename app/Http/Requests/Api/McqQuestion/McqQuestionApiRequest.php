@@ -27,8 +27,9 @@ class McqQuestionApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
-        $all += [ 'image'           =>  [ 'required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ]  ;
-        $all += [ 'quiz_id'         =>  [ 'required' ,'integer','exists:quizzes,id'] ] ;
+        $all += [ 'image'             =>  [ 'required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ]  ;
+        $all += [ 'question_tag_ids'  =>  [ 'sometimes' ,'array','exists:question_tags,id'] ]  ;
+
 
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.video'   =>  [ 'sometimes' ,'max:5000','mimes:mp4'] ] ;
@@ -38,7 +39,7 @@ class McqQuestionApiRequest extends FormRequest
 
             $all += [ 'languages.'.$key.'.header'    =>  [ 'required' ] ] ;
             
-            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'max:2','exists:languages,name'] ] ;
         }
         return $all;
     }

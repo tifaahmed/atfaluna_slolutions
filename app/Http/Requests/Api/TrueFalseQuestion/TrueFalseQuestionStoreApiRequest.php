@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Language;
 use Illuminate\Validation\Rule;
 
-class TrueFalseQuestionUpdateApiRequest extends FormRequest
+class TrueFalseQuestionStoreApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,7 @@ class TrueFalseQuestionUpdateApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
-
+        
         // true_false_question
         $all += [ 'image'           =>  [ 'sometimes' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ]  ;
         $all += [ 'degree'          =>  [ 'integer' ] ]  ; //  default:0

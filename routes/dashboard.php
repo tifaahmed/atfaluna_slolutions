@@ -90,6 +90,16 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::post('/{id}/update'  ,   'LanguageController@update'     )  ->name('update'),
 
         ]),
+    // QuestionTag
+        Route::name('question-tag.')->prefix('/question-tag')->group( fn ( ) : array => [
+            Route::get('/'              ,   'QuestionTagController@all'        )  ->name('all'),
+            Route::post(''              ,   'QuestionTagController@store'      )  ->name('store'),
+            Route::get('/{id}/show'     ,   'QuestionTagController@show'       )  ->name('show'),
+            Route::get('/collection'    ,   'QuestionTagController@collection' )  ->name('collection'),
+            Route::DELETE('/{id}'       ,   'QuestionTagController@destroy'    )  ->name('destroy'),
+            Route::post('/{id}/update'  ,   'QuestionTagController@update'     )  ->name('update'),
+
+        ]),    
     // store
         Route::name('store.')->prefix('/store')->group( fn ( ) : array => [
             Route::get('/'                          ,   'StoreController@all'                 )    ->name('all'),

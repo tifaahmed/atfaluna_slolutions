@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\Collections;
+namespace App\Http\Resources\Dashboard\Collections\TrueFalseQuestion;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Dashboard\TrueFalseQuestionResource as ModelResource;
+use App\Http\Resources\Dashboard\TrueFalseQuestion\TrueFalseQuestionLanguagesResource as ModelResource;
 
-class TrueFalseQuestionCollection extends ResourceCollection{
+class TrueFalseQuestionLanguagesCollection  extends ResourceCollection{
 
     public function toArray( $request ) {
         return $this -> collection -> map( fn( $model ) => new ModelResource ( $model ) );
@@ -20,3 +20,4 @@ class TrueFalseQuestionCollection extends ResourceCollection{
         ];
     }
 }
+//

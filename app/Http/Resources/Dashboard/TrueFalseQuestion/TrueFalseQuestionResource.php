@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Dashboard;
+namespace App\Http\Resources\Dashboard\TrueFalseQuestion;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Dashboard\Collections\TrueFalseQuestion\TrueFalseQuestionLanguagesCollection;
 
 class TrueFalseQuestionResource extends JsonResource
 {
@@ -19,9 +20,9 @@ class TrueFalseQuestionResource extends JsonResource
 
         return [
             'id'             => $this->id,
-            'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
-            'videos'          => Storage::disk('public')->exists($this->videos) ? Storage::url($this->videos)  : null,
-            'audio'          => Storage::disk('public')->exists($this->audio) ? Storage::url($this->audio)  : null,
+            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
+            'degree'          => $this->degree,
+            'level'          => $this->level,
 
             'answer'         => $this->answer,
 
@@ -29,8 +30,10 @@ class TrueFalseQuestionResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
             
-            'languages'     => $this->true_false_question_languages,
-            'title'          => $row ? $row->title:'',
+            'languages'     => new TrueFalseQuestionLanguagesCollection ($this->true_false_question_languages),
+            'title'         => $row ? $row->title:'',
+
+            'question_tags'     => $this->question_tags
 
         ];        
     }

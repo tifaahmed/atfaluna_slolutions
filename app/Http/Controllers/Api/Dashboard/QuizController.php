@@ -8,7 +8,7 @@ use Illuminate\Http\Response ;
 use Illuminate\Support\Str;
 
 // Requests
-use App\Http\Requests\Api\Quiz\QuizApiRequest as modelInsertRequest;
+use App\Http\Requests\Api\Quiz\QuizStoreApiRequest  as modelInsertRequest;
 use App\Http\Requests\Api\Quiz\QuizUpdateApiRequest as modelUpdateRequest;
 
 // Resources
@@ -43,7 +43,6 @@ class QuizController extends Controller
     }
     public function store(modelInsertRequest $request) {
         try {
-            return $request->all();
             $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
 
             // // languages
@@ -195,13 +194,19 @@ class QuizController extends Controller
                     if ( $value && $key == 'image'  ) {
                         // check file value
                         if (isset($language_array[$key]) && $language_array[$key]) {
-                            // get the old directory
-                            $old_folder_location = $this->HelperGetDirectory($language_model->$key);    
+
+                            if (isset($language_model->$key) && $language_model->$key) {
+                                // get the old directory
+                                $old_folder_location = $this->HelperGetDirectory($language_model->$key);    
+                                // delete the old file or image
+                                $this->HelperDelete($language_model->$key);                             
+                            }else{
+                                $old_folder_location = $this->folder_name ;
+                            }
+
                             // store the gevin file or image
                             $path =  $this->HelperHandleFile($old_folder_location,$language_array[$key],$key)  ;
                             $all += array( $key => $path );
-                            // delete the old file or image
-                            $this->HelperDelete($language_model->$key); 
                         }
                     }else{
                         $all += array( $key => $value );

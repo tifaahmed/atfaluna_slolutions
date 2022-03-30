@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Quiz;
-use App\Models\Mcq_question_language;
-use App\Models\Mcq_answer;
+
+use App\Models\Mcq_question_language;   //HasMany
+use App\Models\Mcq_answer;              //HasMany
+use App\Models\QuestionTag;              //morphedByMany
 
 class Mcq_question extends Model
 {
@@ -18,13 +19,22 @@ class Mcq_question extends Model
 
     protected $fillable = [
         'image',//required, max:5000
+        'degree',//default 0 
+        'level',//'hard','medium','easy'  default easy
     ];
-
     // relation
-        public function mcq_question_languages(){
-            return $this->HasMany(Mcq_question_language::class);
-        }
-        public function mcq_answer(){
-            return $this->HasMany(Mcq_answer::class);
-        }
+
+        // HasMany
+            public function mcq_question_languages(){
+                return $this->HasMany(Mcq_question_language::class);
+            }
+            public function mcq_answer(){
+                return $this->HasMany(Mcq_answer::class);
+            }
+
+        // morphedByMany    
+            public function question_tags(){
+                return $this->morphToMany(QuestionTag::class, 'question_tagables');
+            }   
+              
 }

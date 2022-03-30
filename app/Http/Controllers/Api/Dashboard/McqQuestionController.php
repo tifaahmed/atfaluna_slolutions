@@ -44,16 +44,19 @@ class McqQuestionController extends Controller
         }
     }
     public function store(modelInsertRequest $request) {
+        $all = [ ];
+        $file_one = 'image';
+        if ($request->hasFile($file_one)) {            
+            $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+            $all += array( $file_one => $path );            
+        }
         try {
-            $all = [ ];
-            $file_one = 'image';
-            if ($request->hasFile($file_one)) {            
-                $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
-                $all += array( $file_one => $path );            
-            }
             $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
-            
-            // // languages
+
+            // attach
+            $this->ModelRepository->attachQuestionTags($request->question_tag_ids,$model->id);
+
+            // languages
             $this -> store_array_languages($request->languages,$model) ;
 
             return $this -> MakeResponseSuccessful( 
@@ -117,23 +120,32 @@ class McqQuestionController extends Controller
     }
     
     public function update(modelUpdateRequest $request ,$id) {
-        $old_model = new ModelResource( $this->ModelRepository->findById($id) );
-        $all = [ ];
-        $file_one = 'image';
-        if ($request->hasFile($file_one)) {  
-            // return old folder location of the file
-            $old_folder_location = $this->HelperGetDirectory($old_model->$file_one);                        
-            $path = $this->HelperHandleFile($old_folder_location,$request->file($file_one),$file_one)  ;
-            $all += array( $file_one => $path );    
-            //delete the old file
-            $this->HelperDelete($old_model->$file_one);    
-        }
-        try {
 
+        try {
+            // find old model row
+            $old_model = new ModelResource( $this->ModelRepository->findById($id) );
+
+            // attach
+            $this->ModelRepository->attachQuestionTags($request->question_tag_ids,$id);
+
+            // delete & store new files
+            $all = [ ];
+            $file_one = 'image';
+            if ($request->hasFile($file_one)) {  
+                // return old folder location of the file
+                $old_folder_location = $this->HelperGetDirectory($old_model->$file_one);                        
+                $path = $this->HelperHandleFile($old_folder_location,$request->file($file_one),$file_one)  ;
+                $all += array( $file_one => $path );    
+                //delete the old file
+                $this->HelperDelete($old_model->$file_one);    
+            }
+            // update model row
             $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
+
+            // find new model row
             $model = new ModelResource( $this->ModelRepository->findById($id) );
 
-            //  request languages
+            // update languages array
             $this -> update_array_languages($request->languages,$model) ;
 
             return $this -> MakeResponseSuccessful( 
@@ -210,13 +222,20 @@ class McqQuestionController extends Controller
                 if ( $value && $key == 'video' || $key == 'audio' ) {
                     // check file value
                     if (isset($language_array[$key]) && $language_array[$key]) {
-                        // get the old directory
-                        $old_folder_location = $this->HelperGetDirectory($language_model->$key);    
+
+                        if (isset($language_model->$key) && $language_model->$key) {
+                            // get the old directory
+                            $old_folder_location = $this->HelperGetDirectory($language_model->$key);    
+                            // delete the old file or image
+                            $this->HelperDelete($language_model->$key); 
+                        }  
+                              
+                        $location = $old_folder_location ? $old_folder_location : $this->folder_name ;
+
                         // store the gevin file or image
-                        $path =  $this->HelperHandleFile($old_folder_location,$language_array[$key],$key)  ;
+                        $path =  $this->HelperHandleFile($location,$language_array[$key],$key)  ;
                         $all += array( $key => $path );
-                        // delete the old file or image
-                        $this->HelperDelete($language_model->$key); 
+
                     }
                 }else{
                     $all += array( $key => $value );
@@ -286,7 +305,7 @@ class McqQuestionController extends Controller
                 $this->ModelRepository->PremanentlyDeleteById($id);
 
                 return $this -> MakeResponseSuccessful( 
-                    [$model] ,
+                    [ 'Premanently Deleteted'] ,
                     'Successful'               ,
                     Response::HTTP_OK
                 ) ;
