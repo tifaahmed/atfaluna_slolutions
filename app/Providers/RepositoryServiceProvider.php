@@ -22,6 +22,7 @@ namespace App\Providers;
     use App\Repository\Eloquent\AvatarRepository;
 
     use App\Repository\Eloquent\AgeRepository;
+
     use App\Repository\Eloquent\AgeGroupLanguageRepository;
     use App\Repository\Eloquent\AgeGroupRepository;
 
@@ -69,7 +70,10 @@ namespace App\Providers;
 
     use App\Repository\Eloquent\HeroRepository;
     use App\Repository\Eloquent\HeroLanguageRepository;
+
     use App\Repository\Eloquent\HeroLessonRepository;
+
+    use App\Repository\Eloquent\QuestionTagRepository;
 
 
     // Role  Permission
@@ -152,6 +156,8 @@ namespace App\Providers;
     use App\Repository\HeroLanguageRepositoryInterface;
 
     use App\Repository\HeroLessonRepositoryInterface;
+
+    use App\Repository\QuestionTagRepositoryInterface;
     // Role  Permission  
 
     use App\Repository\RolePermissionInterface\PermissionRepositoryInterface;
@@ -245,6 +251,7 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(HeroLessonRepositoryInterface::class,HeroLessonRepository::class);
 
+        $this->app->bind(QuestionTagRepositoryInterface::class,QuestionTagRepository::class);
 
         // Role  Permission
         $this->app->bind(PermissionRepositoryInterface::class,PermissionRepository::class);

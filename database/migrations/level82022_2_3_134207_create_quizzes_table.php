@@ -15,7 +15,9 @@ class CreateQuizzesTable extends Migration
     {
         Schema::create('quizzes', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->integer('points')->default('0');//[note: "ex ( 5 - 6)"]
+            $table->integer('points')->default('0');//[note: "ex ( 5 - 6)"] // get from success
+
+            $table->integer('minimum_requirements')->default('0');//[note: "ex ( 100 - 200)"] // to enter the quiz 
 
             $table->integer('quizable_id'); //[note: 'morphs_id (subject_id , age_group_id)']
             $table->string('quizable_type'); //[note: 'morphs_type (subject_model , age_group_model)']

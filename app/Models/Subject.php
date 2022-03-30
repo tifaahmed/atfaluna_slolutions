@@ -55,7 +55,7 @@ class Subject extends Model
             }
 
         // morphMany    
-            public function quiz(){
+            public function quizzes(){
                 return $this->morphMany(Quiz::class, 'quizable');
             }
         

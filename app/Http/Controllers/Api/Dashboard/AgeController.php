@@ -22,7 +22,6 @@ use App\Repository\AgeRepositoryInterface as ModelInterface;
 class AgeController extends Controller
 {
     private $Repository;
-    private $RepositoryLanguage;
     public function __construct(ModelInterface $Repository)
     {
         $this->ModelRepository = $Repository;
@@ -40,9 +39,9 @@ class AgeController extends Controller
     }
     public function store(modelInsertRequest $request) {
         try {
-            $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ));
+            $model = new ModelResource( $this->ModelRepository->create( Request()->all() ));
             return $this -> MakeResponseSuccessful( 
-                [ $modal ],
+                [ $model ],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;

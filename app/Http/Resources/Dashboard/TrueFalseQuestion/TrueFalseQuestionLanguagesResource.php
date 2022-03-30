@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\McqQuestion;
+namespace App\Http\Resources\Dashboard\TrueFalseQuestion;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
-class McqQuestionLanguagesResource extends JsonResource
+class TrueFalseQuestionLanguagesResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

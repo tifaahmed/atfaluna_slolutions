@@ -21,8 +21,10 @@ class McqQuestionResource extends JsonResource
 
         return [
             'id'                  => $this->id,
-            'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
-
+            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
+            'degree'          => $this->degree,
+            'level'          => $this->level,
+            
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
@@ -31,6 +33,7 @@ class McqQuestionResource extends JsonResource
             'title'          => $row ? $row->title:'',
 
             'mcq_answers'     => new McqAnswerCollection ($this->mcq_answer),
+            'question_tags'     => $this->question_tags
 
         ];        
     }
