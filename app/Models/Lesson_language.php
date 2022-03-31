@@ -19,11 +19,13 @@ class Lesson_language extends Model
 
     protected $fillable = [
         'url',//required, max:100000
-        'image',//required, max:5000
+        'image_one',//required, max:5000
+        'image_two',//required, max:5000
         'name',//required
         'language',//required ,limit 2
         'lesson_id',//unsigned cascade
     ];
+
     public $timestamps = false;
     //relation
     public function lesson(){

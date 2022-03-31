@@ -32,7 +32,8 @@ class LessonUpdateApiRequest extends FormRequest
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.name'     =>  [ 'required'  ] ] ;
             $all += [ 'languages.'.$key.'.url'      =>  [ 'sometimes' ,'max:100000'] ] ;
-            $all += [ 'languages.'.$key.'.image'    =>  [ 'sometimes' ,'max:50000'] ] ;
+            $all += [ 'languages.'.$key.'.image_one'   =>  [ 'required' ,'max:50000'] ] ;
+            $all += [ 'languages.'.$key.'.image_two'   =>  [ 'required' ,'max:50000'] ] ;            
             $all += [ 'languages.'.$key.'.language' =>  [ 'required'  ,'exists:languages,name'] ] ;
         }
         return $all;

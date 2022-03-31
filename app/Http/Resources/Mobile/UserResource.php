@@ -22,9 +22,7 @@ class UserResource extends JsonResource
             'email'          => $this->email,
             'phone'          => $this->phone,
             'avatar'         => Storage::disk('public')->exists($this->avatar) ? asset(Storage::url($this->avatar))  : null,
-
             'birthdate'        => $this->birthdate,
-
             // date
                 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
                 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
@@ -35,7 +33,6 @@ class UserResource extends JsonResource
                 'UserPermissions'   => $this->UserPermission,
                 'sub_user'          => $this->sub_user,
                 'country'          => new CountryResource ( $this->country ),
-
         ];
     }
 }

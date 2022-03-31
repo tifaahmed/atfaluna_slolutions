@@ -12,6 +12,7 @@ use App\Models\Certificate;
 use App\Models\Quiz;
 use App\Models\Lesson;
 use App\Models\Subject;
+use App\Models\Age_group;
 
 
 class Sub_user extends Model
@@ -20,7 +21,6 @@ class Sub_user extends Model
     public $guarded = ['id'];
 
     protected $table = 'sub_users';
-
 
     protected $fillable = [
         'name',//required , string
@@ -55,6 +55,9 @@ class Sub_user extends Model
         }
         public function subUserSubject(){
             return $this->belongsToMany(Subject::class, 'sub_user_subjects', 'sub_users_id', 'subject_id');
+        }
+        public function subUserAgeGroup(){
+            return $this->belongsToMany(Age_group::class, 'sub_user_age_groups', 'sub_users_id', 'age_group_id');
         }
         public function playTime(){
             return $this->hasMany(Play_time::class);

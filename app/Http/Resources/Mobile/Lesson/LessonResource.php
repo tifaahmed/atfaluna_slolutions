@@ -23,8 +23,9 @@ class LessonResource extends JsonResource
         return [
             'id'            => $this->id,
             'name'          => $row ? $row->name:'',
-            'image'          =>( $row && $row->image && Storage::disk('public')->exists($row->image) )? asset(Storage::url($row->image))  : null ,
-            'url'          =>( $row && $row->url && Storage::disk('public')->exists($row->url) )? asset(Storage::url($row->url))  : null ,
+            'image_one'     =>( $row && $row->image_one && Storage::disk('public')->exists($row->image_one) )? asset(Storage::url($row->image_one))  : null ,
+            'image_two'     =>( $row && $row->image_two && Storage::disk('public')->exists($row->image_two) )? asset(Storage::url($row->image_two))  : null ,
+            'url'           =>( $row && $row->url && Storage::disk('public')->exists($row->url) )? asset(Storage::url($row->url))  : null ,
 
             'points'        =>  $this->points,
 

@@ -16,7 +16,8 @@ class CreateLessonlanguagesTable extends Migration
         Schema::create('lesson_languages', function (Blueprint $table) {
             $table->increments('id');//[pk]
             $table->string('url'); //[not null]
-            $table->string('image'); //[not null]
+            $table->string('image_one'); //[not null]
+            $table->string('image_two'); //[not null]
             $table->string('name');//[note: "ex (  arabic or english or italian -...etc) ,'not null'"]
             $table->string('language',2);//[note: "ex ( ar-en-it-...etc) , 'not null'"]
             $table->integer('lesson_id')->unsigned();

@@ -30,10 +30,11 @@ class LessonApiRequest extends FormRequest
         $all += [ 'sub_subject_id'   =>  [ 'required' ,'integer','exists:sub_subjects,id'] ]  ;
         $all += [ 'lesson_type_id'   =>  [ 'required' ,'integer','exists:lesson_types,id'] ] ;
         foreach ($Languages as $key => $value) {
-            $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.url'   =>  [ 'required' ,'max:100000'] ] ;
-            $all += [ 'languages.'.$key.'.image'   =>  [ 'required' ,'max:50000'] ] ;
-            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+            $all += [ 'languages.'.$key.'.name'        =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.url'         =>  [ 'required' ,'max:100000'] ] ;
+            $all += [ 'languages.'.$key.'.image_one'   =>  [ 'required' ,'max:50000'] ] ;
+            $all += [ 'languages.'.$key.'.image_two'   =>  [ 'required' ,'max:50000'] ] ;
+            $all += [ 'languages.'.$key.'.language'    =>  [ 'required' ,'exists:languages,name'] ] ;
         }
         return $all;
     }

@@ -17,7 +17,8 @@ class LessonLanguagesResource extends JsonResource
     {
 
         return [
-            'image'             => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
+            'image_one'         => Storage::disk('public')->exists($this->image_one) ? asset(Storage::url($this->image_one))  : null,
+            'image_two'         => Storage::disk('public')->exists($this->image_two) ? asset(Storage::url($this->image_two))  : null,
             'name'              => $this->name,
             'language'          => $this->language,
             'url'               => Storage::disk('public')->exists($this->url) ? asset(Storage::url($this->url))  : null,

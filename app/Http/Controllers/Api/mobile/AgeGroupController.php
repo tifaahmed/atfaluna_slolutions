@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api\mobile;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
+use Illuminate\Support\Facades\Auth;
 
 // Requests
+use App\Http\Requests\Api\AgeGroup\MobileAgeGroupApiRequest;
 
 // Resources
 use App\Http\Resources\Mobile\Collections\AgeGroupCollection as ModelCollection;
@@ -69,5 +71,43 @@ class AgeGroupController extends Controller
         }
     }
     
+    // relation
+    public function attach(MobileAgeGroupApiRequest $request){
+        try {
+            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
+            // foreach ($request->accessory_id as $key => $value) {
+                $model->subUserAgeGroup()->syncWithoutDetaching($request->age_group_ids);
+            // }
+            return $this -> MakeResponseSuccessful( 
+                ['Successful'],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
 
+    public function  detach(MobileAgeGroupApiRequest $request){
+        try {
+            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
+            $model->subUserAgeGroup()->detach($request->age_group_ids);
+
+            return $this -> MakeResponseSuccessful( 
+                [new ModelResource ( $this->ModelRepository->findById($request->age_group_ids) )  ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
 }
