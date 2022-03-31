@@ -17,7 +17,7 @@ class CreateSubSubjectsTable extends Migration
             $table->increments('id');//[pk]
 
             $table->integer('subject_id')->unsigned();
-            $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
             
             $table->timestamps();
             $table->softDeletes();

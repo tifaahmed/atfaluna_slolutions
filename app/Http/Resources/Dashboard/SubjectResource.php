@@ -6,7 +6,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Dashboard\CertificateResource;
 use App\Http\Resources\Dashboard\Collections\SubSubject\SubSubjectCollection;
-use App\Http\Resources\Dashboard\Collections\Quiz\QuizCollection;
+
+use App\Http\Resources\Dashboard\Quiz\QuizResource;
  
 
 class SubjectResource extends JsonResource
@@ -36,8 +37,8 @@ class SubjectResource extends JsonResource
             'age_group'     => $this->age_group,
             'sub_subjects'        => new SubSubjectCollection  ($this->sub_subjects),
 
-            'certification'  => new CertificateResource (  $this->certificate )  ,
-            // 'quiz'       =>   new QuizCollection ($this->quiz)   ,
+            'certification' => new CertificateResource (  $this->certificate )  ,
+            'quiz'          =>   new QuizResource ( $this->quiz )   ,
 
         ];        
     }

@@ -67,6 +67,9 @@ class SubjectController extends Controller
             }
 
             $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
+            
+            // attach
+            $this->ModelRepository->attachQuiz($request->quiz_id,$model->id);
 
             // // languages
             $this -> store_array_languages($request->languages,$model) ;
@@ -121,6 +124,10 @@ class SubjectController extends Controller
     public function update(modelUpdateRequest $request ,$id) {
         try {
             $old_model = new ModelResource( $this->ModelRepository->findById($id) );
+
+            // attach
+            $this->ModelRepository->attachQuiz($request->quiz_id,$id);
+            
             $all = [ ];
             $file_one = 'image';
             if ($request->hasFile($file_one)) {  

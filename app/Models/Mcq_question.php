@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Mcq_question_language;   //HasMany
 use App\Models\Mcq_answer;              //HasMany
-use App\Models\QuestionTag;              //morphedByMany
-
+use App\Models\QuestionTag;              //morphToMany // has many tags 
+use App\Models\Quiz;              //morphedByMany      // belong to many Quizs 
+use App\Models\Quiz_questionable; 
 class Mcq_question extends Model
 {
     use HasFactory,SoftDeletes;
@@ -31,10 +32,14 @@ class Mcq_question extends Model
             public function mcq_answer(){
                 return $this->HasMany(Mcq_answer::class);
             }
-
-        // morphedByMany    
+        // morphToMany    
             public function question_tags(){
                 return $this->morphToMany(QuestionTag::class, 'question_tagables');
-            }   
+            }  
+
+        // morphedByMany    
+            public function Quizs(){
+                return $this->morphToMany(Quiz::class, 'quiz_questionables');
+            } 
               
 }

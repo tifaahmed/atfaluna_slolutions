@@ -54,9 +54,9 @@ class Subject extends Model
                 return $this->morphOne(Certificate::class, 'certificatable');
             }
 
-        // morphMany    
-            public function quizzes(){
-                return $this->morphMany(Quiz::class, 'quizable');
+        // morphOne    
+            public function quiz(){
+                return $this->morphOne(Quiz::class, 'quizable');
             }
         
 }

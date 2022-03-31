@@ -43,9 +43,14 @@ class QuizController extends Controller
     }
     public function store(modelInsertRequest $request) {
         try {
+            // store model row
             $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
 
-            // // languages
+            // attach
+            $this->ModelRepository->attachMcqQuestions($request->mcq_question_ids,$model->id);
+            $this->ModelRepository->attachTrueFalseQuestions($request->true_false_question_ids,$model->id);
+            
+            // languages
             $this -> store_array_languages($request->languages,$model) ;
 
             return $this -> MakeResponseSuccessful( 
@@ -110,8 +115,16 @@ class QuizController extends Controller
     
     public function update(modelUpdateRequest $request ,$id) {
         try {
+            // update model row
             $this->ModelRepository->update( $id,Request()->all()) ;
-            $model = new ModelResource( $this->ModelRepository->findById($id) ); 
+
+            // attach
+            $this->ModelRepository->attachMcqQuestions($request->mcq_question_ids,$id);
+            $this->ModelRepository->attachTrueFalseQuestions($request->true_false_question_ids,$id);
+            
+            // find new model row
+            $model = new ModelResource( $this->ModelRepository->findById($id) );
+
             //  request languages
             $this -> update_array_languages($request->languages,$model) ;
 
@@ -128,7 +141,6 @@ class QuizController extends Controller
             );
         } 
     }
-    
     
     // lang
 
@@ -150,7 +162,7 @@ class QuizController extends Controller
             public function storeLanguage($language_array ) {
                 $all = [ ];
                 foreach ($language_array as $key => $value) {
-                    if ( $key == 'image') {
+                    if ( $key == 'image_one' || $key == 'image_two') {
                         if (isset($language_array[$key]) && $language_array[$key]) {    
                             // store the gevin file or image
                             // if zip store in folder & axtract (else) just store   
@@ -191,7 +203,7 @@ class QuizController extends Controller
                     $language_model  = $language_models->where('language',$language_array['language'])->first() ;
                 $all = [ ];
                 foreach ($language_array as $key => $value) {
-                    if ( $value && $key == 'image'  ) {
+                    if ( $value && $key == 'image_one' || $key == 'image_two' ) {
                         // check file value
                         if (isset($language_array[$key]) && $language_array[$key]) {
 
@@ -200,12 +212,12 @@ class QuizController extends Controller
                                 $old_folder_location = $this->HelperGetDirectory($language_model->$key);    
                                 // delete the old file or image
                                 $this->HelperDelete($language_model->$key);                             
-                            }else{
-                                $old_folder_location = $this->folder_name ;
                             }
+                            
+                            $location = $old_folder_location ? $old_folder_location : $this->folder_name ;
 
                             // store the gevin file or image
-                            $path =  $this->HelperHandleFile($old_folder_location,$language_array[$key],$key)  ;
+                            $path =  $this->HelperHandleFile($location,$language_array[$key],$key)  ;
                             $all += array( $key => $path );
                         }
                     }else{
@@ -260,7 +272,7 @@ class QuizController extends Controller
 
                 // get all related language
                 $language_models = $model->quiz_languages()->get();
-                $language_file_key_names =['image'];
+                $language_file_key_names =['image_one' ,'image_two'];
 
                 foreach ($language_models as  $language_model) {
                     foreach ($language_file_key_names as $value) {

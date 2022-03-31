@@ -5,6 +5,8 @@ namespace App\Repository\Eloquent;
 use App\Models\Subject as ModelName;
 use App\Repository\SubjectRepositoryInterface;
 use Auth ;
+use App\Models\Quiz;             // morphedByMany
+
 class SubjectRepository extends BaseRepository implements SubjectRepositoryInterface
 {
 
@@ -41,8 +43,20 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 			return $this->all()  ;
 		}
 	}
-	
+	public function attachQuiz($quiz_id,$id)  
+    {
+		if($quiz_id){
+			$subject = $this->findById($id); 
+			$quiz =  Quiz::find($quiz_id);
+			$subject_quizzes =  $subject->quiz()->get();
 
+			$subject_quizzes->each(function($quiz) {
+                $quiz->update(['quizable_id'=>null,'quizable_type'=>null]); 
+            });
+			$quiz->update(['quizable_id'=>$id,'quizable_type'=>$subject::class]); 
+		}
+	}
+	
 	
 }
 

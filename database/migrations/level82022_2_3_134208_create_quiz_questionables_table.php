@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuizQuestionsTable extends Migration
+class CreateQuizQuestionablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateQuizQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('quiz_questions', function (Blueprint $table) {
+        Schema::create('quiz_questionables', function (Blueprint $table) {
             $table->increments('id');//[pk]
 
             $table->integer('quiz_id')->unsigned();
@@ -21,8 +21,8 @@ class CreateQuizQuestionsTable extends Migration
 
             $table->integer('position')->default(0);
 
-            $table->integer('questionable_id'); //[note: 'morphs_id (mcq_questions_id , true_false_question_id)']
-            $table->string('questionable_type'); //[note: 'morphs_type (Mcq_question , True_false_question)']
+            $table->integer('quiz_questionable_id'); //[note: 'morphs_id (mcq_questions_id , true_false_question_id)']
+            $table->string('quiz_questionable_type'); //[note: 'morphs_type (Mcq_question , True_false_question)']
             
             $table->timestamps();
 

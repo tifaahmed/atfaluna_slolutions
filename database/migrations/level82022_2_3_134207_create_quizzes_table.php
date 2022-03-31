@@ -19,8 +19,8 @@ class CreateQuizzesTable extends Migration
 
             $table->integer('minimum_requirements')->default('0');//[note: "ex ( 100 - 200)"] // to enter the quiz 
 
-            $table->integer('quizable_id'); //[note: 'morphs_id (subject_id , age_group_id)']
-            $table->string('quizable_type'); //[note: 'morphs_type (subject_model , age_group_model)']
+            $table->integer('quizable_id')->nullable(); //[note: 'morphs_id (subject_id , age_group_id)']
+            $table->string('quizable_type')->nullable();; //[note: 'morphs_type (subject_model , age_group_model)']
             
             $table->timestamps();
             $table->softDeletes();

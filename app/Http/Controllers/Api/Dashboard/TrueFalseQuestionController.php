@@ -218,7 +218,7 @@ class TrueFalseQuestionController extends Controller
                 $language_model  = $language_models->where('language',$language_array['language'])->first() ;
             $all = [ ];
             foreach ($language_array as $key => $value) {
-                if ( $value && $key == 'video' || $key == 'audio' ) {
+                if ( $value && ( $key == 'video' || $key == 'audio' ) ) {
                     // check file value
                     if (isset($language_array[$key]) && $language_array[$key]) {
 
