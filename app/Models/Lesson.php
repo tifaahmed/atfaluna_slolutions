@@ -51,10 +51,6 @@ class Lesson extends Model
                 return $this->morphMany(Quiz::class, 'quizable'); // assignment
             }
 
-
-
-
-
 }
 
 

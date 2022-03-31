@@ -24,8 +24,9 @@ class MobileAgeGroupApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'age'       =>  [ 'required' ,'integer'] ,
-
+            'sub_user_id'      =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,
+            'age_group_ids'    =>  [ 'required' ,'array' ,'exists:age_groups,id'] ,
+            'active'           =>  [ 'required' ,'boolean'] ,
         ];
     }
 }

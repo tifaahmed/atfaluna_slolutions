@@ -146,7 +146,7 @@ class LessonController extends Controller
             public function storeLanguage($language_array ) {
                 $all = [ ];
                 foreach ($language_array as $key => $value) {
-                    if ( $key == 'image'|| $key == 'url') {
+                    if ( $key == 'image_one'||$key == 'image_two'|| $key == 'url') {
                         if (isset($language_array[$key]) && $language_array[$key]) {    
                             // store the gevin file or image
                             // if zip store in folder & axtract (else) just store   
@@ -187,7 +187,7 @@ class LessonController extends Controller
                     $language_model  = $language_models->where('language',$language_array['language'])->first() ;
                 $all = [ ];
                 foreach ($language_array as $key => $value) {
-                    if ( $value && $key == 'image' || $key == 'url' ) {
+                    if ( $value && $key == 'image_one' || $key == 'image_two'||$key == 'url' ) {
                         // check file value
                         if (isset($language_array[$key]) && $language_array[$key]) {
                             // get the old directory
@@ -214,8 +214,6 @@ class LessonController extends Controller
                 }
             }
         // lang update
-
-
 
     // lang
 
@@ -253,7 +251,7 @@ class LessonController extends Controller
 
                 // get all related language
                 $language_models = $model->lesson_languages()->get();
-                $language_file_key_names =['image','url'];
+                $language_file_key_names =['image_one','image_two','url'];
 
                 foreach ($language_models as  $language_model) {
                     foreach ($language_file_key_names as $value) {

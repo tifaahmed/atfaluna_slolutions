@@ -57,6 +57,14 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	
 		}
 	}
+
+	public function attachAgeGroups($age_group_ids,$id)
+	{
+		if($age_group_ids){
+			$result = $this->findById($id); 
+			$result->subUserAgeGroup()->syncWithoutDetaching($age_group_ids);
 	
+		}
+	}
 }
 
