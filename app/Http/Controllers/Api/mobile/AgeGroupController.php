@@ -76,8 +76,8 @@ class AgeGroupController extends Controller
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
             // foreach ($request->accessory_id as $key => $value) {
-                $model->subUserAgeGroup()->syncWithoutDetaching($request->age_group_ids);
-            // }
+                $model->subUserAgeGroup()->syncWithoutDetaching($request->age_group_id);
+            // }            
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
                 'Successful'               ,
@@ -92,13 +92,15 @@ class AgeGroupController extends Controller
         }
     }
 
-    public function  detach(MobileAgeGroupApiRequest $request){
+    // relation
+    public function active(MobileAgeGroupApiRequest $request){
         try {
-            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
-            $model->subUserAgeGroup()->detach($request->age_group_ids);
-
+            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
+            // foreach ($request->lesson_id as $key => $value) {
+                $model->subUserActiveAgeGroup()->syncWithoutDetaching($request->age_group_id,['active'=> $request->active]);
+            // }
             return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($request->age_group_ids) )  ],
+                ['Successful'],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
@@ -110,4 +112,4 @@ class AgeGroupController extends Controller
             );
         }
     }
-}
+}  

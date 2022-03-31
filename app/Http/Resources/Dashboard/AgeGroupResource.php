@@ -15,12 +15,11 @@ class AgeGroupResource extends JsonResource
     public function toArray($request)
     {
         $row=$this->age_group_languages()->Localization()->RelatedLanguage($this->id)->first();
-
         return [
 
             'id'            => $this->id,
             'age'          => $this->age,
-                
+            // 'active'       => $this->active,
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

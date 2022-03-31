@@ -44,7 +44,7 @@ use Illuminate\Support\Facades\Route;
             Route::get('/{id}/show'                 ,   'AgeGroupController@show'                )->name('show'),
             Route::get('/collection'                ,   'AgeGroupController@collection'          )->name('collection'),
             Route::post('/attach'                   ,   'AgeGroupController@attach'              )->name('attach'),
-            Route::post('/detach'                   ,   'AgeGroupController@detach'              )->name('detach'),
+            Route::post('/active'                   ,   'AgeGroupController@active'              )->name('active'),
         ]), 
         ]),
 

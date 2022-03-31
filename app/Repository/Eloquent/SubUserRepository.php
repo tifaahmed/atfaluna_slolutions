@@ -48,7 +48,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	
 		}
 	}
-	
+
 	public function attachSubjects($subject_ids,$id)
 	{
 		if($subject_ids){
