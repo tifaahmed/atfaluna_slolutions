@@ -36,7 +36,9 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
     {
 		if($sub_user_id){
 			$sub_user = Auth::user()->sub_user()->find($sub_user_id);
-			return $sub_user->subUserSubject()->get();
+			return $sub_user->subUserActiveAgeGroup()->get();
+
+			// return $sub_user->subUserSubject()->get();
 		}else{
 			return $this->all()  ;
 		}

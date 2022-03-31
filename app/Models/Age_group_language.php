@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Age_group;
 use Illuminate\Support\Facades\App;
 
-
 class Age_group_language extends Model
 {
     use HasFactory;
@@ -34,4 +33,5 @@ class Age_group_language extends Model
     public function scopeLocalization($query){
         return $query->where('language', App::getLocale());
     }
+
 }

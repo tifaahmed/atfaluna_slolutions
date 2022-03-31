@@ -16,8 +16,8 @@ class CreateQuestionTagablesTable extends Migration
         Schema::create('question_tagables', function (Blueprint $table) {
             $table->increments('id');//[pk]
 
-            $table->integer('question_tag_id ')->unsigned();
-            $table->foreign('question_tag_id ')->references('id')->on('question_tags')->onDelete('cascade');
+            $table->integer('question_tag_id')->unsigned();
+            $table->foreign('question_tag_id')->references('id')->on('question_tags')->onDelete('cascade');
 
             $table->integer('position')->default(0);
 

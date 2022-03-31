@@ -59,7 +59,11 @@ class Sub_user extends Model
         public function subUserAgeGroup(){
             return $this->belongsToMany(Age_group::class, 'sub_user_age_groups', 'sub_users_id', 'age_group_id');
         }
+        public function subUserActiveAgeGroup(){
+            return $this->belongsToMany(Age_group::class, 'sub_user_age_groups', 'sub_users_id', 'age_group_id')->wherePivot('active' , 1);
+        }
         public function playTime(){
             return $this->hasMany(Play_time::class);
         }
 }
+// 

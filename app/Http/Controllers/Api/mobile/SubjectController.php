@@ -26,7 +26,7 @@ class SubjectController extends Controller
     }
     public function all(Request $request){
         try {
-            $model =  $this->ModelRepository->filterAll($request->sub_user_id) ;
+            return    $model =  $this->ModelRepository->filterAll($request->sub_user_id) ;
             return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  

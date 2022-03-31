@@ -18,6 +18,7 @@ class Age_group extends Model
 
     protected $fillable = [
         'age',//required , integer
+
     ];
     // relations
         public function age_group_languages(){
@@ -27,4 +28,13 @@ class Age_group extends Model
         public function certificate(){
             return $this->morphOne(Certificate::class, 'certificatable');
         }
+        public function scopeIsActive($query)
+    {
+        return $query->where('active', 1);
+    }
+
+    public function scopeIsNotActive($query)
+    {
+        return $query->where('active', 0);
+    }
 }
