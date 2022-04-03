@@ -90,6 +90,35 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::post('/{id}/update'  ,   'LanguageController@update'     )  ->name('update'),
 
         ]),
+        // about_us
+        Route::name('about_us.')->prefix('/about_us')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'AboutUsController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'AboutUsController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'AboutUsController@show'                )->name('show'),
+            Route::get('/collection'                ,   'AboutUsController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'AboutUsController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'AboutUsController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'AboutUsController@restore'             )->name('restore'),
+
+            Route::DELETE('premanently-delete/{id}' ,   'AboutUsController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'AboutUsController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'AboutUsController@show_trash'          )->name('show_trash'),
+        ]),
+        // contact_us
+    Route::name('contact_us.')->prefix('/contact_us')->group( fn ( ) : array => [
+        Route::get('/'                          ,   'ContactUsController@all'                 )->name('all'),
+        Route::get('/{id}/show'                 ,   'ContactUsController@show'                )->name('show'),
+        Route::get('/collection'                ,   'ContactUsController@collection'          )->name('collection'),
+        Route::post(''                          ,   'ContactUsController@store'               )->name('store'),
+        Route::DELETE('/{id}'                   ,   'ContactUsController@destroy'             )->name('destroy'),
+        Route::post('/{id}/update'              ,   'ContactUsController@update'              )->name('update'),
+        Route::post('/{id}/restore'             ,   'ContactUsController@restore'             )->name('restore'),
+
+        Route::DELETE('premanently-delete/{id}' ,   'ContactUsController@premanently_delete'  )->name('premanently_delete'),
+        Route::get('/collection-trash'          ,   'ContactUsController@collection_trash'    )->name('collection_trash'),
+        Route::get('/{id}/show-trash'           ,   'ContactUsController@show_trash'          )->name('show_trash'),
+
+    ]),
     // QuestionTag
         Route::name('question-tag.')->prefix('/question-tag')->group( fn ( ) : array => [
             Route::get('/'              ,   'QuestionTagController@all'        )  ->name('all'),
