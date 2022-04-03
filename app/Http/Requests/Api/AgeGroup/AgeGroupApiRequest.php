@@ -27,7 +27,7 @@ class AgeGroupApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
-        $all += [ 'age'           =>  [ 'required' ,'integer'] ]  ;
+        // $all += [ 'age'           =>  [ 'required' ,'integer'] ]  ;
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
             $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;

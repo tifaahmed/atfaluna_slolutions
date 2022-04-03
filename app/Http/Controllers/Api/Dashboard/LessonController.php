@@ -89,8 +89,15 @@ class LessonController extends Controller
     public function store(modelInsertRequest $request) {
         try {
             $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
-            // // languages
+
+            // attach
+            if (isset($request->quiz_ids) && $request->quiz_ids) {
+                $this->ModelRepository->attachQuiz($request->quiz_ids,$model->id);
+            }
+
+            // languages
             $this -> store_array_languages($request->languages,$model) ;
+
 
             return $this -> MakeResponseSuccessful( 
                 [ $model ],
@@ -109,6 +116,12 @@ class LessonController extends Controller
         try {
             $this->ModelRepository->update( $id,Request()->all()) ;
             $model = new ModelResource( $this->ModelRepository->findById($id) ); 
+
+            // attach
+            if (isset($request->quiz_ids) && $request->quiz_ids) {
+                $this->ModelRepository->attachQuiz($request->quiz_ids,$id);
+            }
+
             //  request languages
             $this -> update_array_languages($request->languages,$model) ;
 
@@ -195,11 +208,11 @@ class LessonController extends Controller
                                 $old_folder_location = $this->HelperGetDirectory($language_model->$key); 
                                 // delete the old file or image
                                 $this->HelperDelete($language_model->$key); 
-                            }else{
-                                $old_folder_location = $this->folder_name;
                             }
+                            $folder_location = $old_folder_location ? $old_folder_location : $this->folder_name;
+                            
                             // store the gevin file or image
-                            $path =  $this->HelperHandleFile($old_folder_location,$language_array[$key],$key)  ;
+                            $path =  $this->HelperHandleFile($folder_location,$language_array[$key],$key)  ;
                             $all += array( $key => $path );
                         }
                     }else{

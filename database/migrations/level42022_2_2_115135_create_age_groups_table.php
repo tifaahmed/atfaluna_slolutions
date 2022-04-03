@@ -15,9 +15,6 @@ class CreateAgeGroupsTable extends Migration
     {
         Schema::create('age_groups', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->integer('age'); // notnull
-            // $table->text('standard')->nullable();
-            // $table->text('sub_standard')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

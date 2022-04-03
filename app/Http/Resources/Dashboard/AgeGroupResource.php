@@ -18,8 +18,6 @@ class AgeGroupResource extends JsonResource
         return [
 
             'id'            => $this->id,
-            'age'          => $this->age,
-            // 'active'       => $this->active,
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

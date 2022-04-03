@@ -28,12 +28,16 @@ class SubSubjectApiRequest extends FormRequest
 
         $all=[];
         $all += [ 'subject_id'   =>  [ 'required' ,'integer','exists:subjects,id'] ] ;
+
+        // quiz
+        $all += [ 'quiz_id'  =>  [ 'sometimes' ,'integer','exists:quizzes,id'] ]  ;
+
         foreach ($Languages as $key => $value) {
-            $all += [ 'languages.'.$key.'.name'        =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.description' =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.image_two'   =>  [ 'required' ,'max:50000'] ] ;
-            $all += [ 'languages.'.$key.'.image_one'   =>  [ 'required' ,'max:50000'] ] ;
-            $all += [ 'languages.'.$key.'.language'    =>  [ 'required' ,'exists:languages,name'] ] ;
+            $all += [ 'languages.'.$key.'.name'        =>  [ 'required' , 'max:255' ] ] ;
+            $all += [ 'languages.'.$key.'.description' =>  [ 'required' , 'max:255' ] ] ;
+            $all += [ 'languages.'.$key.'.image_two'   =>  [ 'required' , 'max:50000' , 'mimes:jpg,jpeg,webp,bmp,png' ] ] ;
+            $all += [ 'languages.'.$key.'.image_one'   =>  [ 'required' , 'max:50000' , 'mimes:jpg,jpeg,webp,bmp,png' ] ] ;
+            $all += [ 'languages.'.$key.'.language'    =>  [ 'required' , 'max:2' ,'exists:languages,name'] ] ;
         }
         return $all;
     }
