@@ -22,6 +22,9 @@ namespace App\Providers;
     use App\Repository\Eloquent\AvatarRepository;
 
     use App\Repository\Eloquent\AgeRepository;
+    use App\Repository\Eloquent\AboutUsRepository;
+
+    use App\Repository\Eloquent\ContactUsRepository;
 
     use App\Repository\Eloquent\AgeGroupLanguageRepository;
     use App\Repository\Eloquent\AgeGroupRepository;
@@ -106,9 +109,12 @@ namespace App\Providers;
     use App\Repository\SubUserRepositoryInterface;
     use App\Repository\SubUserQuizRepositoryInterface;
     use App\Repository\SubUserLessonRepositoryInterface;
+    use App\Repository\AboutUsRepositoryInterface;
+
+    use App\Repository\ContactUsRepositoryInterface;
 
     use App\Repository\AvatarRepositoryInterface;
-
+    
     use App\Repository\AgeRepositoryInterface;
     use App\Repository\AgeGroupLanguageRepositoryInterface;
     use App\Repository\AgeGroupRepositoryInterface;
@@ -202,6 +208,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(SubUserLessonRepositoryInterface::class,SubUserLessonRepository::class);
 
         $this->app->bind(AvatarRepositoryInterface::class,AvatarRepository::class);
+        $this->app->bind(AboutUsRepositoryInterface::class,AboutUsRepository::class);
+
+        $this->app->bind(ContactUsRepositoryInterface::class,ContactUsRepository::class);
 
         $this->app->bind(AgeRepositoryInterface::class,AgeRepository::class);
         $this->app->bind(AgeGroupLanguageRepositoryInterface::class,AgeGroupLanguageRepository::class);

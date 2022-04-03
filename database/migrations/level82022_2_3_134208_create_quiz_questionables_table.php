@@ -36,6 +36,6 @@ class CreateQuizQuestionablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quiz_questions');
+        Schema::dropIfExists('quiz_questionables');
     }
 }

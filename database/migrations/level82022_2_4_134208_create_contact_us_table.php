@@ -18,7 +18,7 @@ class CreateContactUsTable extends Migration
             $table->string('name')-> nullable( );//[note: "ex (  arabic or english or italian -...etc)"]
             $table->string('message')-> nullable( );//[note: "ex (  arabic or english or italian -...etc)"]
             $table->string('subject')-> nullable( );//[note: "ex (  arabic or english or italian -...etc)"]
-            $table->string('email')-> nullable( )-> unique( ) ;
+            $table->string('email')-> nullable( ) ;
             $table->boolean('status')-> default (0); //read or not 
             $table->timestamps();
             $table->softDeletes();

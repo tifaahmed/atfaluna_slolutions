@@ -211,7 +211,21 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::get('/collection'                ,   'CityController@collection'          )->name('collection'),
         ]),
 
+    // about_us
+    Route::name('about_us.')->prefix('/about_us')->group( fn ( ) : array => [
+        Route::get('/'                          ,   'AboutUsController@all'                 )->name('all'),
+        Route::get('/{id}/show'                 ,   'AboutUsController@show'                )->name('show'),
+        Route::get('/collection'                ,   'AboutUsController@collection'          )->name('collection'),
+    ]),
+    // contact_us
+    Route::name('contact_us.')->prefix('/contact_us')->group( fn ( ) : array => [
+        Route::get('/'                          ,   'ContactUsController@all'                 )->name('all'),
+        Route::get('/{id}/show'                 ,   'ContactUsController@show'                )->name('show'),
+        Route::get('/collection'                ,   'ContactUsController@collection'          )->name('collection'),
+        Route::post(''                          ,   'ContactUsController@store'               )->name('store'),
+        Route::DELETE('/{id}'                   ,   'ContactUsController@destroy'             )->name('destroy'),
 
+    ]),
     // age
         Route::name('age.')->prefix('/age')->group( fn ( ) : array => [
             Route::get('/'                          ,   'AgeController@all'                 )->name('all'),

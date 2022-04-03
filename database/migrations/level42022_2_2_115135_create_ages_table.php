@@ -16,7 +16,6 @@ class CreateAgesTable extends Migration
         Schema::create('ages', function (Blueprint $table) {
             $table->increments('id');//[pk]
             $table->integer('age')->unique(); // not null
-
             $table->integer('age_group_id')->unsigned();
             $table->foreign('age_group_id')->references('id')->on('age_groups')->onDelete('cascade');
 
