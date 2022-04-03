@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Quiz_language;            // HasMany
-// use App\Models\Quiz_question;             // HasMany
+// use App\Models\Quiz_questionable;             // HasMany
 
 use App\Models\True_false_question;      // morphedByMany
 use App\Models\Mcq_question;             // morphedByMany
@@ -29,46 +29,47 @@ class Quiz extends Model
     {
         parent::boot();
 
-        Quiz::creating(function ($model) {
-            if ($model->quizable_type == 'sub_subject') {
-                $model_name = 'App\Models\Sub_subject';
-            }else if ($model->quizable_type == 'subject'){
-                $model_name = 'App\Models\Subject';
-            }else if ($model->quizable_type == 'lesson'){
-                $model_name = 'App\Models\Lesson';
-            }
-            $model->quizable_type = $model_name;
-        });
-        Quiz::updating(function ($model) {
-            if ($model->quizable_type == 'sub_subject') {
-                $model_name = 'App\Models\Sub_subject';
-            }else if ($model->quizable_type == 'subject'){
-                $model_name = 'App\Models\Subject';
-            }else if ($model->quizable_type == 'lesson'){
-                $model_name = 'App\Models\Lesson';
-            }
-            $model->quizable_type = $model_name;
-        });
+        // Quiz::creating(function ($model) {
+        //     if ($model->quizable_type == 'sub_subject') {
+        //         $model_name = 'App\Models\Sub_subject';
+        //     }else if ($model->quizable_type == 'subject'){
+        //         $model_name = 'App\Models\Subject';
+        //     }else if ($model->quizable_type == 'lesson'){
+        //         $model_name = 'App\Models\Lesson';
+        //     }
+        //     $model->quizable_type = $model_name;
+        // });
+        // Quiz::updating(function ($model) {
+        //     if ($model->quizable_type == 'sub_subject') {
+        //         $model_name = 'App\Models\Sub_subject';
+        //     }else if ($model->quizable_type == 'subject'){
+        //         $model_name = 'App\Models\Subject';
+        //     }else if ($model->quizable_type == 'lesson'){
+        //         $model_name = 'App\Models\Lesson';
+        //     }
+        //     $model->quizable_type = $model_name;
+        // });
     }
     // relations
 
         // morphTo
             public function quizable(){
-                return $this->morphTo(__FUNCTION__, 'quizable_type', 'quizable_id');
+                return $this->morphTo();
             }
 
         // HasMany
             public function quiz_languages(){
                 return $this->HasMany(Quiz_language::class);
             }
-
         // morphedByMany    
-            public function mcq_question(){
-                return $this->morphedByMany(Mcq_question::class, 'quiz_questions');
+            public function mcq_questions(){
+                return $this->morphedByMany(Mcq_question::class,'quiz_questionable','quiz_questionables');
             }
-            public function true_false_question(){
-                return $this->morphedByMany(True_false_question::class, 'quiz_questions');
+            public function true_false_questions(){
+                return $this->morphedByMany(True_false_question::class,'quiz_questionable','quiz_questionables');
             }
+
+
 
 }
 

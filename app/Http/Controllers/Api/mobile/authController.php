@@ -59,8 +59,8 @@ class authController extends Controller {
 
             $user = User::
             where( 'email'          , $request -> get( 'email' ) ) 
-            ->where( 'token'        , $request -> get( 'token' ) ) 
-            ->where( 'login_type'   , $request -> get( 'login_type' ) ) 
+            // ->where( 'token'        , $request -> get( 'token' ) ) 
+            // ->where( 'login_type'   , $request -> get( 'login_type' ) ) 
             -> first( ) ;
 
         if ( !$user ) {

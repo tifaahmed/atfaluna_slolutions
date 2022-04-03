@@ -24,15 +24,22 @@ class SubjectUpdateApiRequest extends FormRequest
      */
     public function rules()
     {
+        
         $Languages=Language::get();
 
         $all=[];
+
+        // quiz
+        $all += [ 'quiz_id'  =>  [ 'sometimes' ,'integer','exists:quizzes,id'] ]  ;
+
+        // subjects        
         $all += [ 'image'           =>  [ 'sometimes' ,'max:5000'] ]  ;
         $all += [ 'points'          =>  [ 'required' ,'integer' ] ]  ;
         $all += [ 'age_group_id'  =>  [ 'required' ,'integer','exists:age_groups,id'] ] ;
+
         foreach ($Languages as $key => $value) {
-            $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+            $all += [ 'languages.'.$key.'.name'         =>  [ 'required' , 'max:255'  ] ] ;
+            $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name'] ] ;
         }
         return $all;
     }

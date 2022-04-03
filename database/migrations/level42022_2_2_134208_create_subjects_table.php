@@ -16,12 +16,11 @@ class CreateSubjectsTable extends Migration
         Schema::create('subjects', function (Blueprint $table) {
             $table->increments('id');//[pk]
             $table->string('image'); // not null
-            $table->integer('points');//[note: "ex ( 5 - 6)"]
+            $table->integer('points')->default('0');//[note: "ex ( 5 - 6)"]
 
             $table->integer('age_group_id')->unsigned();
             $table->foreign('age_group_id')->references('id')->on('age_groups');
 
-            
             $table->timestamps();
             $table->softDeletes();
         });

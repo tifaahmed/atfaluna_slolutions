@@ -17,10 +17,11 @@ class Quiz_language extends Model
     protected $table = 'quiz_languages';
 
     protected $fillable = [
-        'name',//required
-        'language',//required ,limit 2
-        'image',//required, max:5000
-        'quiz_id',//unsigned cascade
+        'name',     //required , max:255
+        'language', //required ,max:2
+        'image_one',//required, max:5000
+        'image_two',//required, max:5000
+        'quiz_id',  //unsigned cascade
     ];
     public $timestamps = false;
     //relation

@@ -5,10 +5,10 @@ namespace App\Http\Resources\Dashboard\Quiz;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 use App\Http\Resources\Dashboard\SubjectResource;
-use App\Http\Resources\Dashboard\McqQuestionResource;
-use App\Http\Resources\Dashboard\TrueFalseQuestionResource;
 
 use App\Http\Resources\Dashboard\Collections\Quiz\QuizLanguagesCollection;
+use App\Http\Resources\Dashboard\Collections\McqQuestion\McqQuestionCollection;
+use App\Http\Resources\Dashboard\Collections\TrueFalseQuestion\TrueFalseQuestionCollection;
 
 class QuizResource extends JsonResource
 {
@@ -36,10 +36,8 @@ class QuizResource extends JsonResource
             
             // 'subject'       => new SubjectResource ( $this->subject )  ,
 
-            // 'true_false_questions'        => new TrueFalseQuestionResource ($this->quizTrueOrFalseQuestion)  ,
-            // 'mcq_questions'               => new McqQuestionResource ($this->quizMcqQuestion)  ,
-            'questions'               => $this->quiz_questions   ,
-
+            'mcq_questions'          => new McqQuestionCollection ($this->mcq_questions)  ,
+            'true_false_questions'   => new TrueFalseQuestionCollection ($this->true_false_questions)  ,
         ];        
     }
 }
