@@ -17,7 +17,8 @@ class CreateAgesTable extends Migration
             $table->increments('id');//[pk]
             $table->integer('age')->unique(); // not null
             $table->integer('age_group_id')->unsigned();
-            $table->foreign('age_group_id')->references('id')->on('age_groups');
+            $table->foreign('age_group_id')->references('id')->on('age_groups')->onDelete('cascade');
+
             $table->softDeletes();
             $table->timestamps();
         });

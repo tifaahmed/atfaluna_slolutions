@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Mobile\SubjectResource;
 use App\Http\Resources\Mobile\Collections\Lesson\LessonCollection;
+use App\Http\Resources\Dashboard\Quiz\QuizResource;
 
 class SubSubjectResource extends JsonResource
 {
@@ -31,7 +32,9 @@ class SubSubjectResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
+            'subject'       => $this->subject   ,
             'lessons'       => new LessonCollection ($this->lessons),
+            'quiz'          =>   new QuizResource ($this->quiz)   ,
 
             
         ];        

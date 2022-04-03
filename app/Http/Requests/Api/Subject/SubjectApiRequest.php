@@ -32,7 +32,7 @@ class SubjectApiRequest extends FormRequest
         $all += [ 'quiz_id'  =>  [ 'sometimes' ,'integer','exists:quizzes,id'] ]  ;
 
         // subjects        
-        $all += [ 'image'           =>  [ 'required' ,'max:5000'] ]  ;
+        $all += [ 'image'           =>  [ 'required' ,'max:5000','mimes:jpg,jpeg,webp,bmp,png' ] ] ;
         $all += [ 'points'          =>  [ 'integer' ] ]  ; //default:0
         $all += [ 'age_group_id'    =>  [ 'required' ,'integer','exists:age_groups,id'] ] ;
 

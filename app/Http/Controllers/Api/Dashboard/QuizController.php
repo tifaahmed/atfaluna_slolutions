@@ -12,7 +12,7 @@ use App\Http\Requests\Api\Quiz\QuizStoreApiRequest  as modelInsertRequest;
 use App\Http\Requests\Api\Quiz\QuizUpdateApiRequest as modelUpdateRequest;
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\QuizCollection as ModelCollection;
+use App\Http\Resources\Dashboard\Collections\Quiz\QuizCollection as ModelCollection;
 use App\Http\Resources\Dashboard\Quiz\QuizResource as ModelResource;
 
 // lInterfaces

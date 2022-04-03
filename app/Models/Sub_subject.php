@@ -38,9 +38,8 @@ class Sub_subject extends Model
             public function lessons(){
                 return $this->HasMany(Lesson::class);
             }
-
-        // morphMany    
+        // morphOne    
             public function quiz(){
-                return $this->morphMany(Quiz::class, 'quizable');
+                return $this->morphOne(Quiz::class, 'quizable');
             }
 }
