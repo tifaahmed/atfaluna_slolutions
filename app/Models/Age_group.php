@@ -17,7 +17,7 @@ class Age_group extends Model
     protected $table = 'age_groups';
 
     protected $fillable = [
-        'age',//required , integer
+        // 'age',//required , integer
 
     ];
     // relations
@@ -28,7 +28,9 @@ class Age_group extends Model
         public function certificate(){
             return $this->morphOne(Certificate::class, 'certificatable');
         }
-        public function scopeIsActive($query)
+
+    // scopes  
+    public function scopeIsActive($query)
     {
         return $query->where('active', 1);
     }

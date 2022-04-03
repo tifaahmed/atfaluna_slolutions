@@ -60,9 +60,15 @@ class SubSubjectController extends Controller
     public function store(modelInsertRequest $request) {
         try {
             $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
-            // // languages
+
+            // attach
+            if (isset($request->quiz_id) && $request->quiz_id) {
+                $this->ModelRepository->attachQuiz($request->quiz_id,$model->id);
+            }
+
+            // languages
             $this -> store_array_languages($request->languages,$model) ;
-            // return Request()->all();
+
             return $this -> MakeResponseSuccessful( 
                 [ $model ],
                 'Successful'               ,
@@ -114,6 +120,11 @@ class SubSubjectController extends Controller
         try {
             $this->ModelRepository->update( $id,Request()->all()) ;
             $model = new ModelResource( $this->ModelRepository->findById($id) ); 
+
+            // attach
+            if (isset($request->quiz_id) && $request->quiz_id) {
+                $this->ModelRepository->attachQuiz($request->quiz_id,$id);
+            }
             //  request languages
             $this -> update_array_languages($request->languages,$model) ;
 
@@ -193,11 +204,18 @@ class SubSubjectController extends Controller
                 $all = [ ];
                 foreach ($language_array as $key => $value) {
                     if ( $value && $key == 'image_one' || $key == 'image_two' ) {
-
-                        $this->HelperDelete($language_model->$key); 
-
-                        if (isset($language_array[$key]) && $language_array[$key]) {            
-                            $path =  $this->HelperHandleFile($this->folder_name,$language_array[$key],$key)  ;
+                        // check file value
+                        if (isset($language_array[$key]) && $language_array[$key]) {
+                            // get the old directory
+                            if ( isset($language_model->$key) && $language_model->$key ) {
+                                $old_folder_location = $this->HelperGetDirectory($language_model->$key); 
+                                // delete the old file or image
+                                $this->HelperDelete($language_model->$key); 
+                            }
+                            $folder_location = $old_folder_location ? $old_folder_location : $this->folder_name;
+                            
+                            // store the gevin file or image
+                            $path =  $this->HelperHandleFile($folder_location,$language_array[$key],$key)  ;
                             $all += array( $key => $path );
                         }
                     }else{
@@ -244,8 +262,25 @@ class SubSubjectController extends Controller
         }
         public function premanently_delete($id) {
             try {
+                $model = $this->ModelRepository->findTrashedById($id);
+
+                // get all related language
+                $language_models = $model->subSubject_languages()->get();
+                $language_file_key_names =['image_one','image_two'];
+
+                foreach ($language_models as  $language_model) {
+                    foreach ($language_file_key_names as $value) {
+                        //delete folder that has all this row files if exists
+                        $this->HelperDeleteDirectory($this->HelperGetDirectory($language_model->$value));
+                    }
+                    //delete all this row files if exists
+                    $this->HandleFileDelete($language_model,$language_file_key_names);
+                }
+
+                $this->ModelRepository->PremanentlyDeleteById($id);
+
                 return $this -> MakeResponseSuccessful( 
-                    [$this->ModelRepository->PremanentlyDeleteById($id)] ,
+                    [$model] ,
                     'Successful'               ,
                     Response::HTTP_OK
                 ) ;

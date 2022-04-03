@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Mobile\SubjectResource;
 use App\Http\Resources\Mobile\LessonTypeResource;
+use App\Http\Resources\Dashboard\Collections\Quiz\QuizCollection;
 
 
 class LessonResource extends JsonResource
@@ -25,7 +26,7 @@ class LessonResource extends JsonResource
             'name'          => $row ? $row->name:'',
             'image_one'     =>( $row && $row->image_one && Storage::disk('public')->exists($row->image_one) )? asset(Storage::url($row->image_one))  : null ,
             'image_two'     =>( $row && $row->image_two && Storage::disk('public')->exists($row->image_two) )? asset(Storage::url($row->image_two))  : null ,
-            'url'           =>( $row && $row->url && Storage::disk('public')->exists($row->url) )? asset(Storage::url($row->url))  : null ,
+            'url'           =>( $row && $row->url       && Storage::disk('public')->exists($row->url) )? asset(Storage::url($row->url))  : null ,
 
             'points'        =>  $this->points,
 
@@ -34,6 +35,8 @@ class LessonResource extends JsonResource
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
             'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
+            'sub_subject'   => $this->subSubject   ,
+            'quiz'       =>   new QuizCollection ($this->quiz)   ,
 
         ];        
     }

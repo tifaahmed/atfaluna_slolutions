@@ -30,11 +30,11 @@ class QuizResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            'languages'     => new QuizLanguagesCollection ($this->quiz_languages),
+            'languages'     => new QuizLanguagesCollection  ($this->quiz_languages) ,
             'name'          => $row ? $row->name:'',
 
             
-            // 'subject'       => new SubjectResource ( $this->subject )  ,
+            'quizable'       =>  $this->quizable  ,
 
             'mcq_questions'          => new McqQuestionCollection ($this->mcq_questions)  ,
             'true_false_questions'   => new TrueFalseQuestionCollection ($this->true_false_questions)  ,

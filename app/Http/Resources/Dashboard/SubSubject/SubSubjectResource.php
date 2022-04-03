@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Dashboard\SubjectResource;
 use App\Http\Resources\Dashboard\Collections\SubSubject\SubSubjectLanguagesCollection;
 use App\Http\Resources\Dashboard\Collections\Lesson\LessonCollection;
-use App\Http\Resources\Dashboard\Collections\Quiz\QuizCollection;
+
+use App\Http\Resources\Dashboard\Quiz\QuizResource;
 
 class SubSubjectResource extends JsonResource
 {
@@ -24,16 +25,15 @@ class SubSubjectResource extends JsonResource
         return [
             'id'            => $this->id,
             'name'          => $row ? $row->name:'',
-            'languages'     => new SubSubjectLanguagesCollection ( $this->subSubject_languages ),
-            'lessons'        => new LessonCollection ($this->lessons)  ,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
             'languages'     => new SubSubjectLanguagesCollection ( $this->subSubject_languages ),
 
-            // 'subject'       => $this->subject   ,
-            // 'quiz'       =>   new QuizCollection ($this->quiz)   ,
+            'subject'       => $this->subject   ,
+            'lessons'       => new LessonCollection ($this->lessons),
+            'quiz'          =>   new QuizResource ($this->quiz)   ,
         ];        
     }
 }

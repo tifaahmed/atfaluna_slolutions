@@ -28,7 +28,7 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
     {
 		if($sub_user_id){
 			$sub_user = Auth::user()->sub_user()->find($sub_user_id);
-			$result =$sub_user->subUserSubject();
+			$result =$sub_user->subUserActiveAgeGroup();
 			return $this->queryPaginate($result,$itemsNumber);
 		}else{
 			return $this->collection( $itemsNumber)  ;
@@ -39,8 +39,6 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 		if($sub_user_id){
 			$sub_user = Auth::user()->sub_user()->find($sub_user_id);
 			return $sub_user->subUserActiveAgeGroup()->get();
-
-			// return $sub_user->subUserSubject()->get();
 		}else{
 			return $this->all()  ;
 		}
@@ -48,17 +46,17 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 	public function attachQuiz($quiz_id,$id)  
     {
 		if($quiz_id){
-			$subject = $this->findById($id); 
-			$quiz =  Quiz::find($quiz_id);
-			$subject_quizzes =  $subject->quiz()->get();
+			$sub_subject = $this->findById($id); 
+			
+			$sub_subject_quizzes =  $sub_subject->quiz()->get();
+			$sub_subject_quizzes->each(function($quiz) {
+				$quiz->update(['quizable_id'=>null,'quizable_type'=>null]); 
+			});
 
-			$subject_quizzes->each(function($quiz) {
-                $quiz->update(['quizable_id'=>null,'quizable_type'=>null]); 
-            });
-			$quiz->update(['quizable_id'=>$id,'quizable_type'=>$subject::class]); 
+			$quiz =  Quiz::find($quiz_id);
+			$quiz->update(['quizable_id'=>$id,'quizable_type'=>$sub_subject::class]); 
 		}
 	}
-	
 	
 }
 
