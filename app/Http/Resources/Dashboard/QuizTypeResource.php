@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-class LessonTypeResource extends JsonResource
+class QuizTypeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

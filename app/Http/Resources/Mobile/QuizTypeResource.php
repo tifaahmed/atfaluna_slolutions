@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Resources\Dashboard;
+namespace App\Http\Resources\Mobile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-class LessonTypeResource extends JsonResource
+class QuizTypeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

@@ -18,7 +18,7 @@ class CreateSubUserAgeGroupsTable extends Migration
             $table->foreign('sub_users_id')->references('id')->on('sub_users');
             $table->integer('age_group_id')->unsigned();
             $table->foreign('age_group_id')->references('id')->on('age_groups')->onDelete('cascade');
-            // $table->boolean('active') -> default (0) ;
+            $table->boolean('active') -> default (0) ;
 
         });
     }

@@ -77,8 +77,9 @@ namespace App\Providers;
     use App\Repository\Eloquent\HeroLessonRepository;
 
     use App\Repository\Eloquent\QuestionTagRepository;
+    use App\Repository\Eloquent\QuizTypeRepository;
 
-
+    
     // Role  Permission
         use App\Repository\Eloquent\RolePermissionRepository\PermissionRepository;
         use App\Repository\Eloquent\RolePermissionRepository\RoleRepository;
@@ -164,7 +165,9 @@ namespace App\Providers;
     use App\Repository\HeroLessonRepositoryInterface;
 
     use App\Repository\QuestionTagRepositoryInterface;
-    // Role  Permission  
+    use App\Repository\QuizTypeRepositoryInterface;
+
+    // Role  Permission   
 
     use App\Repository\RolePermissionInterface\PermissionRepositoryInterface;
     use App\Repository\RolePermissionInterface\RoleRepositoryInterface;
@@ -230,6 +233,7 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(QuizRepositoryInterface::class,QuizRepository::class);
         $this->app->bind(QuizLanguageRepositoryInterface::class,QuizLanguageRepository::class);
+        $this->app->bind(QuizTypeRepositoryInterface::class,QuizTypeRepository::class);
 
         $this->app->bind(PlayTimeRepositoryInterface::class,PlayTimeRepository::class);
 
@@ -258,6 +262,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(HeroRepositoryInterface::class,HeroRepository::class);
         $this->app->bind(HeroLanguageRepositoryInterface::class,HeroLanguageRepository::class);
 
+        $this->app->bind(HeroLessonRepositoryInterface::class,HeroLessonRepository::class);
         $this->app->bind(HeroLessonRepositoryInterface::class,HeroLessonRepository::class);
 
         $this->app->bind(QuestionTagRepositoryInterface::class,QuestionTagRepository::class);
