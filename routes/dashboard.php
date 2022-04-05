@@ -90,6 +90,33 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::post('/{id}/update'  ,   'LanguageController@update'     )  ->name('update'),
 
         ]),
+        // Introduction
+        Route::name('introduction.')->prefix('/introduction')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'IntroductionController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'IntroductionController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'IntroductionController@show'                )->name('show'),
+            Route::get('/collection'                ,   'IntroductionController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'IntroductionController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'IntroductionController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'IntroductionController@restore'             )->name('restore'),
+
+            Route::DELETE('premanently-delete/{id}' ,   'IntroductionController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'IntroductionController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'IntroductionController@show_trash'          )->name('show_trash'),
+        ]),// IntroductionContent
+        Route::name('introduction_content.')->prefix('/introduction_content')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'IntroductionContentController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'IntroductionContentController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'IntroductionContentController@show'                )->name('show'),
+            Route::get('/collection'                ,   'IntroductionContentController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'IntroductionContentController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'IntroductionContentController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'IntroductionContentController@restore'             )->name('restore'),
+
+            Route::DELETE('premanently-delete/{id}' ,   'IntroductionContentController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'IntroductionContentController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'IntroductionContentController@show_trash'          )->name('show_trash'),
+        ]),
         // about_us
         Route::name('about_us.')->prefix('/about_us')->group( fn ( ) : array => [
             Route::get('/'                          ,   'AboutUsController@all'                 )    ->name('all'),
@@ -275,6 +302,20 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('premanently-delete/{id}' ,   'CertificateController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'CertificateController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'CertificateController@show_trash'          )->name('show_trash'),
+        ]),
+        // QuizType
+        Route::name('quiz-type.')->prefix('/quiz-type')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'QuizTypeController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'QuizTypeController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'QuizTypeController@show'                )->name('show'),
+            Route::get('/collection'                ,   'QuizTypeController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'QuizTypeController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'QuizTypeController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'QuizTypeController@restore'             )->name('restore'),
+
+            Route::DELETE('premanently-delete/{id}' ,   'QuizTypeController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'QuizTypeController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'QuizTypeController@show_trash'          )->name('show_trash'),
         ]),
     // LessonType
         Route::name('lesson-type.')->prefix('/lesson-type')->group( fn ( ) : array => [

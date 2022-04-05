@@ -225,8 +225,19 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
         Route::get('/collection'                ,   'ContactUsController@collection'          )->name('collection'),
         Route::post(''                          ,   'ContactUsController@store'               )->name('store'),
         Route::DELETE('/{id}'                   ,   'ContactUsController@destroy'             )->name('destroy'),
-
     ]),
+    // Introduction
+Route::name('introduction.')->prefix('/introduction')->group( fn ( ) : array => [
+    Route::get('/'                          ,   'IntroductionController@all'                 )->name('all'),
+    Route::get('/{id}/show'                 ,   'IntroductionController@show'                )->name('show'),
+    Route::get('/collection'                ,   'IntroductionController@collection'          )->name('collection'),
+]),
+// IntroductionContent
+Route::name('introduction_content.')->prefix('/introduction_content')->group( fn ( ) : array => [
+    Route::get('/'                          ,   'IntroductionContentController@all'                 )->name('all'),
+    Route::get('/{id}/show'                 ,   'IntroductionContentController@show'                )->name('show'),
+    Route::get('/collection'                ,   'IntroductionContentController@collection'          )->name('collection'),
+]),
     // age
         Route::name('age.')->prefix('/age')->group( fn ( ) : array => [
             Route::get('/'                          ,   'AgeController@all'                 )->name('all'),
@@ -244,7 +255,12 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::get('/{id}/show'                 ,   'LessonTypeController@show'                )->name('show'),
             Route::get('/collection'                ,   'LessonTypeController@collection'          )->name('collection'),
         ]),
-  
+        // QuizType
+        Route::name('quiz-type.')->prefix('/quiz-type')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'QuizTypeController@all'                 )->name('all'),
+            Route::get('/{id}/show'                 ,   'QuizTypeController@show'                )->name('show'),
+            Route::get('/collection'                ,   'QuizTypeController@collection'          )->name('collection'),
+        ]),
     // McqAnswer
         Route::name('mcq-answer.')->prefix('/mcq-answer')->group( fn ( ) : array => [
             Route::get('/'                          ,   'McqAnswerController@all'                 )->name('all'),
