@@ -14,11 +14,13 @@ class CreateSubUserAgeGroupsTable extends Migration
     public function up()
     {
         Schema::create('sub_user_age_groups', function (Blueprint $table) {
+            $table->increments('id');//[pk]
+
             $table->integer('sub_users_id')->unsigned();
             $table->foreign('sub_users_id')->references('id')->on('sub_users');
             $table->integer('age_group_id')->unsigned();
             $table->foreign('age_group_id')->references('id')->on('age_groups')->onDelete('cascade');
-            // $table->boolean('active') -> default (0) ;
+            $table->boolean('active') -> default (0) ;
 
         });
     }

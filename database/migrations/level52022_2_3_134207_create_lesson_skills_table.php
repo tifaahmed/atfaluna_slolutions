@@ -14,6 +14,8 @@ class CreateLessonSkillsTable extends Migration
     public function up()
     {
         Schema::create('lesson_skills', function (Blueprint $table) {
+            $table->increments('id');//[pk]
+
             $table->integer('skill_id')->unsigned();
             $table->foreign('skill_id')->references('id')->on('skills');
             $table->integer('lesson_id')->unsigned();

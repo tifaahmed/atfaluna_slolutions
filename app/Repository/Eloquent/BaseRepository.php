@@ -44,7 +44,7 @@ class BaseRepository implements EloquentRepositoryInterface
 
 	public function queryPaginate($query,$itemsNumber) 
 	{
-		return $query->get()->paginate($itemsNumber);
+		return $query->latest()->paginate($itemsNumber);
 	}
 
 	

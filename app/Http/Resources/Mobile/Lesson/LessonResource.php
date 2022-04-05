@@ -35,7 +35,7 @@ class LessonResource extends JsonResource
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
             'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
-            'sub_subject'   => $this->subSubject   ,
+            // 'sub_subject'   => $this->subSubject   ,
             'quiz'       =>   new QuizCollection ($this->quiz)   ,
 
         ];        
