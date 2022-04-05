@@ -96,9 +96,8 @@ class AgeGroupController extends Controller
     public function active(MobileAgeGroupApiRequest $request){
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            // foreach ($request->lesson_id as $key => $value) {
-                $model->subUserActiveAgeGroup()->syncWithoutDetaching($request->age_group_id,['active'=> $request->active]);
-            // }
+            $model->subUserAgeGroup()->update(['active'=> 0]);
+            $model->subUserAgeGroup()->where('age_group_id',$request->age_group_id)->update(['active'=> 1]);
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
                 'Successful'               ,

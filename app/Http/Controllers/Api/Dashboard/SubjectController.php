@@ -136,7 +136,6 @@ class SubjectController extends Controller
             $all = [ ];
             $file_one = 'image';
             if ( $request->hasFile($file_one) ) { 
-                
                 // get the old directory
                 if ( $old_model->$file_one ) {
                     $old_folder_location = $this->HelperGetDirectory($old_model->$file_one); 
@@ -147,7 +146,6 @@ class SubjectController extends Controller
                 
                 $path = $this->HelperHandleFile($folder_location,$request->file($file_one),$file_one)  ;
                 $all += array( $file_one => $path );
-
             }
 
             // update

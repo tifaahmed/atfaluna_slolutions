@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Age_group_language;
 use App\Models\Certificate;
+use App\Models\Subject;
 
 
 class Age_group extends Model
@@ -29,14 +30,8 @@ class Age_group extends Model
             return $this->morphOne(Certificate::class, 'certificatable');
         }
 
-    // scopes  
-    public function scopeIsActive($query)
-    {
-        return $query->where('active', 1);
-    }
-
-    public function scopeIsNotActive($query)
-    {
-        return $query->where('active', 0);
-    }
+    // HasMany
+        public function subjects(){
+            return $this->HasMany(Subject::class);
+        }
 }

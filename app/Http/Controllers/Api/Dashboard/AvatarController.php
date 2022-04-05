@@ -97,6 +97,13 @@ class AvatarController extends Controller
 
     public function premanently_delete($id) {
         try {
+            $model = $this->ModelRepository->findTrashedById($id);
+
+            $file_key_names =['image'];
+            foreach ($file_key_names as $value) {
+                //delete folder that has all this row files if exists
+                $this->HelperDeleteDirectory($this->HelperGetDirectory($model->$value));
+            }
             return $this -> MakeResponseSuccessful( 
                 [$this->ModelRepository->PremanentlyDeleteById($id)] ,
                 'Successful'               ,
@@ -129,11 +136,20 @@ class AvatarController extends Controller
     public function update(modelUpdateRequest $request ,$id) {
         try {
             $old_model = new ModelResource( $this->ModelRepository->findById($id) );
+
+            // files
             $all = [ ];
             $file_one = 'image';
-            if ($request->hasFile($file_one)) {  
-                $this->HelperDelete($old_model->$file_one);           
-                $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+            if ( $request->hasFile($file_one) ) { 
+                // get the old directory
+                if ( $old_model->$file_one ) {
+                    $old_folder_location = $this->HelperGetDirectory($old_model->$file_one); 
+                    // delete the old file or image
+                    $this->HelperDelete($old_model->$file_one);  
+                }
+                $folder_location = $old_folder_location ? $old_folder_location : $this->folder_name;
+                
+                $path = $this->HelperHandleFile($folder_location,$request->file($file_one),$file_one)  ;
                 $all += array( $file_one => $path );
             }
             $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;

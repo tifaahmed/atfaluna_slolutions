@@ -28,11 +28,9 @@ class SubjectResource extends JsonResource
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
-            'languages'     => $this->Subject_language,
             
             'name'          => $row ? $row->name:'',
 
-            'age_group'     => $this->age_group,
             'sub_subjects'        => new SubSubjectCollection  ($this->sub_subjects),
 
             'certificate'        =>  new CertificateResource  ($this->certificate),

@@ -26,9 +26,12 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 
 	public function filterPaginate($sub_user_id,int $itemsNumber)  
     {
-		if($sub_user_id){
+		$chick_sub_user = Auth::user()->sub_user()->find($sub_user_id);
+
+		if( $sub_user_id && $chick_sub_user){
 			$sub_user = Auth::user()->sub_user()->find($sub_user_id);
-			$result =$sub_user->subUserActiveAgeGroup();
+			$age_group = $sub_user->subUserActiveAgeGroup()->first();
+			$result = ModelName::where('age_group_id',$age_group->id);
 			return $this->queryPaginate($result,$itemsNumber);
 		}else{
 			return $this->collection( $itemsNumber)  ;
@@ -38,7 +41,9 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
     {
 		if($sub_user_id){
 			$sub_user = Auth::user()->sub_user()->find($sub_user_id);
-			return $sub_user->subUserActiveAgeGroup()->get();
+			$age_group = $sub_user->subUserActiveAgeGroup()->first();
+			$result = ModelName::where('age_group_id',$age_group->id)->get();
+			return $result;
 		}else{
 			return $this->all()  ;
 		}

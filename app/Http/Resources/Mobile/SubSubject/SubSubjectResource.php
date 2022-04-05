@@ -32,9 +32,9 @@ class SubSubjectResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            'subject'       => $this->subject   ,
+            // 'subject'       => $this->subject   ,
             'lessons'       => new LessonCollection ($this->lessons),
-            'quiz'          =>   new QuizResource ($this->quiz)   ,
+            'quiz'          => new QuizResource ($this->quiz)   ,
 
             
         ];        

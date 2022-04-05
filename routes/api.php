@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\Route;
     Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
 
         Route::group(['middleware' => ['IfAuthChild']], fn ( ) : array => [
+            //Subject
+            Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'SubjectController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'SubjectController@show'                )->name('show'),
+                Route::get('/collection'                ,   'SubjectController@collection'          )->name('collection'),
+                Route::post('/attach'                   ,   'SubjectController@attach'              )->name('attach'),
+                Route::post('/detach'                   ,   'SubjectController@detach'              )->name('detach'),
+            ]),
              // Lesson
             Route::name('lesson.')->prefix('/lesson')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'LessonController@all'                 )->name('all'),
@@ -25,27 +33,27 @@ use Illuminate\Support\Facades\Route;
                 Route::post('/detach'            ,   'AvatarController@detach'              )->name('detach'),
             ]),
             // accessory
-                Route::name('accessory.')->prefix('/accessory')->group( fn ( ) : array => [
-                    Route::post('/attach'        ,   'AccessoryController@attach'   )->name('attach'),
-                    Route::post('/detach'        ,   'AccessoryController@detach'   )->name('detach'),
-                ]), 
+            Route::name('accessory.')->prefix('/accessory')->group( fn ( ) : array => [
+                Route::post('/attach'        ,   'AccessoryController@attach'   )->name('attach'),
+                Route::post('/detach'        ,   'AccessoryController@detach'   )->name('detach'),
+            ]), 
             //PlayTime
-                Route::name('play-time.')->prefix('/play-time')->group( fn ( ) : array => [
-                    Route::get('/'                          ,   'PlayTimeController@all'                 )->name('all'),
-                    Route::get('/{id}/show'                 ,   'PlayTimeController@show'                )->name('show'),
-                    Route::get('/collection'                ,   'PlayTimeController@collection'          )->name('collection'),
-                
-                    Route::post('attatch-array'    ,   'PlayTimeController@attatchArray'          )->name('attatchArray'),
-                    Route::post(''               ,   'PlayTimeController@store'               )->name('store'),
-                ]),  
-                  // age_group
-        Route::name('age-group.')->prefix('/age-group')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'AgeGroupController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'AgeGroupController@show'                )->name('show'),
-            Route::get('/collection'                ,   'AgeGroupController@collection'          )->name('collection'),
-            Route::post('/attach'                   ,   'AgeGroupController@attach'              )->name('attach'),
-            Route::post('/active'                   ,   'AgeGroupController@active'              )->name('active'),
-        ]), 
+            Route::name('play-time.')->prefix('/play-time')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'PlayTimeController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'PlayTimeController@show'                )->name('show'),
+                Route::get('/collection'                ,   'PlayTimeController@collection'          )->name('collection'),
+            
+                Route::post('attatch-array'    ,   'PlayTimeController@attatchArray'          )->name('attatchArray'),
+                Route::post(''               ,   'PlayTimeController@store'               )->name('store'),
+            ]),  
+            // age_group
+            Route::name('age-group.')->prefix('/age-group')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'AgeGroupController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'AgeGroupController@show'                )->name('show'),
+                Route::get('/collection'                ,   'AgeGroupController@collection'          )->name('collection'),
+                Route::post('/attach'                   ,   'AgeGroupController@attach'              )->name('attach'),
+                Route::post('/active'                   ,   'AgeGroupController@active'              )->name('active'),
+            ]), 
         ]),
 
 
@@ -132,14 +140,7 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
             ]), 
         
-        //Subject
-        Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'SubjectController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'SubjectController@show'                )->name('show'),
-            Route::get('/collection'                ,   'SubjectController@collection'          )->name('collection'),
-            Route::post('/attach'                   ,   'SubjectController@attach'              )->name('attach'),
-            Route::post('/detach'                   ,   'SubjectController@detach'              )->name('detach'),
-        ]),
+
     //Sub-subjec
     Route::name('sub-subject.')->prefix('/sub-subject')->group( fn ( ) : array => [
         Route::get('/'                          ,   'SubSubjectController@all'                 )->name('all'),

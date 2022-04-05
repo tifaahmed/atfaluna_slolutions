@@ -14,6 +14,7 @@ class CreateUserSubscriptionsTable extends Migration
     public function up()
     {
         Schema::create('user_subscriptions', function (Blueprint $table) {
+            $table->increments('id');//[pk]
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->date('start')->default( date('Y-m-d') ); //[note:'1-1-2022']
