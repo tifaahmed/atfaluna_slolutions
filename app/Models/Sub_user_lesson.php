@@ -16,7 +16,7 @@ class Sub_user_lesson extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'sub_users_id',
+        'sub_user_id',
         'lesson_id',
         'score',
     ];
@@ -26,7 +26,7 @@ class Sub_user_lesson extends Model
     }
     // relations
     public function sub_user(){
-        return $this->belongsTo(Sub_user::class,'sub_users_id');
+        return $this->belongsTo(Sub_user::class,'sub_user_id');
     }
 
 }

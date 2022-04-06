@@ -15,8 +15,8 @@ class CreateSubUserAccessoriesTable extends Migration
     public function up()
     {
         Schema::create('sub_user_accessories', function (Blueprint $table) {
-            $table->integer('sub_users_id')->unsigned();
-            $table->foreign('sub_users_id')->references('id')->on('sub_users');
+            $table->integer('sub_user_id')->unsigned();
+            $table->foreign('sub_user_id')->references('id')->on('sub_users');
             $table->integer('accessory_id')->unsigned();
             $table->foreign('accessory_id')->references('id')->on('accessories');
         });

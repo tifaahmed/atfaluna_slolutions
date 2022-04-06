@@ -13,6 +13,7 @@ use App\Http\Resources\Dashboard\Collections\CertificateCollection;
 use App\Http\Resources\Dashboard\Collections\QuizCollection;
 use App\Http\Resources\Dashboard\Collections\LessonCollection;
 use App\Http\Resources\Dashboard\Collections\SubjectCollection;
+use App\Http\Resources\Dashboard\Collections\AgeGroupCollection;
 
 class SubUserResource extends JsonResource
 {
@@ -40,11 +41,13 @@ class SubUserResource extends JsonResource
             'certificates'    => new CertificateCollection ($this->subUserCertificate)  ,
             // 'quizs'       => new QuizCollection ($this->subUserQuiz)  ,
             // 'lessons'     => new LessonCollection ($this->subUserLesson)  ,
-            'subjects'       => new SubjectCollection ($this->subUserSubject)  ,
+            
+            'sub_user_age_group'    => new AgeGroupCollection ($this->subUserAgeGroup)  ,
+            'subjects'              => new SubjectCollection ($this->subUserSubject)  ,
 
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
+            'created_at'            => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
+            'updated_at'            => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            'deleted_at'            => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
         ];        
     }

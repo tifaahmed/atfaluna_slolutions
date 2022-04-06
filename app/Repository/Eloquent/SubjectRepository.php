@@ -30,8 +30,7 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 
 		if( $sub_user_id && $chick_sub_user){
 			$sub_user = Auth::user()->sub_user()->find($sub_user_id);
-			$age_group = $sub_user->subUserActiveAgeGroup()->first();
-			$result = ModelName::where('age_group_id',$age_group->id);
+			$result = $sub_user->ActiveSubjectsFromActiveAgeGroup();
 			return $this->queryPaginate($result,$itemsNumber);
 		}else{
 			return $this->collection( $itemsNumber)  ;
@@ -41,8 +40,7 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
     {
 		if($sub_user_id){
 			$sub_user = Auth::user()->sub_user()->find($sub_user_id);
-			$age_group = $sub_user->subUserActiveAgeGroup()->first();
-			$result = ModelName::where('age_group_id',$age_group->id)->get();
+			$result = $sub_user->ActiveSubjectsFromActiveAgeGroup()->get();
 			return $result;
 		}else{
 			return $this->all()  ;

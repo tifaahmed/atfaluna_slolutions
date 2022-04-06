@@ -67,51 +67,26 @@ class SubjectController extends Controller
         }
     }
     
-// relation
-
-        /*
-        
-        impload string=>array
-
-        1.2.2.3
-        [1,2,2,3]
-        
-        */
-public function attach(MobileSubjectApiRequest $request){
-    try {
-        $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-        // foreach ($request->subject_ids as $key => $value) {
-            $model->subUserSubject()->sync($request->subject_ids);
-    // } 
-        return $this -> MakeResponseSuccessful( 
-            ['Successful'],
-            'Successful'               ,
-            Response::HTTP_OK
-        ) ;
-    } catch (\Exception $e) {
-        return $this -> MakeResponseErrors(  
-            [$e->getMessage()  ] ,
-            'Errors',
-            Response::HTTP_NOT_FOUND
-        );
+    // relation
+    public function attach(MobileSubjectApiRequest $request){
+        try {
+            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
+            $model->subUserSubject()->syncWithoutDetaching($request->subject_ids);
+            foreach ($request->subject_ids as $key => $subject_id) {
+                $model->subUserSubject()->updateExistingPivot( $subject_id , ['active'=> isset($request->active[$key]) ? $request->active[$key] : 0 ] );
+            }
+            return $this -> MakeResponseSuccessful( 
+                ['Successful'],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
     }
-}
-public function  detach(MobileSubjectApiRequest $request){
-    try {
-        $model = Auth::user()->sub_user()->find($request->sub_user_id); 
-        $model->subUserSubject()->detach($request->subject_id);
 
-        return $this -> MakeResponseSuccessful( 
-            [new ModelResource ( $this->ModelRepository->findById($request->subject_id) )  ],
-            'Successful'               ,
-            Response::HTTP_OK
-        ) ;
-    } catch (\Exception $e) {
-        return $this -> MakeResponseErrors(  
-            [$e->getMessage()  ] ,
-            'Errors',
-            Response::HTTP_NOT_FOUND
-        );
-    }
-    }
 }

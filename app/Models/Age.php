@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Models\Age_group;   //belongsTo
 
 class Age extends Model
 {
@@ -18,8 +19,9 @@ class Age extends Model
         'age',//required unique 
         'age_group_id',//unsigned 
     ];
-    //relation
-    public function age_group(){
-        return $this->belongsTo(Age_group::class,'age_group_id');
-    }
+    // relation
+        //belongsTo
+            public function age_group(){
+                return $this->belongsTo(Age_group::class,'age_group_id');
+            }
 }
