@@ -68,8 +68,12 @@ class SubUserController extends Controller
     
     public function store(MobileStoreSubUserApiRequest $request){
         try {
+            $model = Auth::user()->sub_user()->create( $request->all() );
+            // attach one age group and only one can be active
+             $this->ModelRepository->attachAgeGroupByAge($model->age,$model->id) ;
+            
             return $this -> MakeResponseSuccessful( 
-                [ Auth::user()->sub_user()->create( $request->all() ) ],
+                [new ModelResource ( $model )  ],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
@@ -84,8 +88,7 @@ class SubUserController extends Controller
 
     public function update(MobileStoreSubUserApiRequest $request ,$id) {
         try {
-        Auth::user()->sub_user()->find($id)->update($request->all());
-
+            Auth::user()->sub_user()->find($id)->update($request->all());
             $modal = new ModelResource($this->ModelRepository->findById($id)); 
 
             return $this -> MakeResponseSuccessful( 

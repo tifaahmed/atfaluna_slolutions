@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder {
         $this -> call ( UserSeeder::class );
         $this -> call ( LanguageSeeder::class );
         $this -> call ( basics::class );
+        $this -> call ( AgeGroupSeeder::class );
 
     }
 }

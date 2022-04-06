@@ -30,7 +30,7 @@ class MobileStoreSubUserApiRequest extends FormRequest
                 Rule::in(['boy', 'girl']),
             ],
             'name'       =>  [ 'required' ] ,
-            'age'        =>  [ 'required' ,'integer'] ,
+            'age'        =>  [ 'required' ,'integer','exists:ages,age'] ,
             'points'     =>  [ 'integer' ] ,
             'avatar_id'  =>  [ 'required','integer','exists:avatars,id' ] ,
 

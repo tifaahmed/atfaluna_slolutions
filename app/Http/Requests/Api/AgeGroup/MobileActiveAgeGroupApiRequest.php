@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\SubUserQuiz;
+namespace App\Http\Requests\Api\AgeGroup;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SubUserQuizApiRequest extends FormRequest
+class MobileActiveAgeGroupApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class SubUserQuizApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'sub_user_id'      =>  [ 'required' ,'integer'] ,
-            'quiz_id'         =>  [ 'required' ,'integer'] ,
-            'score'             =>  [ 'required' ,'integer'] ,
+            'sub_user_id'      => [ 'required' ,'integer' ,'exists:sub_user_age_groups,sub_user_id'  , 'exists:sub_users,id',] ,
+            'age_group_id'     => [ 'required' ,'integer' ,'exists:sub_user_age_groups,age_group_id' , 'exists:age_groups,id',] ,
         ];
     }
 }

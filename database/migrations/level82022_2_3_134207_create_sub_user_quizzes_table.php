@@ -15,8 +15,8 @@ class CreateSubUserQuizzesTable extends Migration
     {
         Schema::create('sub_user_quizzes', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->integer('sub_users_id')->unsigned();
-            $table->foreign('sub_users_id')->references('id')->on('sub_users')->onDelete('cascade');
+            $table->integer('sub_user_id')->unsigned();
+            $table->foreign('sub_user_id')->references('id')->on('sub_users')->onDelete('cascade');
             $table->integer('quiz_id')->unsigned();
             $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade');
             $table->integer('score')->default('0');

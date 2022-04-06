@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 // Requests
 use App\Http\Requests\Api\AgeGroup\MobileAgeGroupApiRequest;
+use App\Http\Requests\Api\AgeGroup\MobileActiveAgeGroupApiRequest;
 
 // Resources
 use App\Http\Resources\Mobile\Collections\AgeGroupCollection as ModelCollection;
@@ -93,7 +94,7 @@ class AgeGroupController extends Controller
     }
 
     // relation
-    public function active(MobileAgeGroupApiRequest $request){
+    public function active(MobileActiveAgeGroupApiRequest $request){
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
             $model->subUserAgeGroup()->update(['active'=> 0]);

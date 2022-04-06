@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Mobile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+// use App\Http\Resources\Dashboard\AgeGroupResource;
 
 class AgeResource extends JsonResource
 {
@@ -16,7 +17,8 @@ class AgeResource extends JsonResource
     {
         return [
             'id'          => $this->id,
-            'Age'        =>  $this->Age,
+            'age'        =>  $this->age,
+            'age_group'              =>  $this->age_group ,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

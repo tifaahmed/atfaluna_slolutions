@@ -16,7 +16,7 @@ class Sub_user_quiz extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'sub_users_id',//unsigned
+        'sub_user_id',//unsigned
         'quiz_id',//unsigned
         'score',//required integer
     ];
@@ -26,7 +26,7 @@ class Sub_user_quiz extends Model
     }
     // relations
     public function sub_user(){
-        return $this->belongsTo(Sub_user::class,'sub_users_id');
+        return $this->belongsTo(Sub_user::class,'sub_user_id');
     }
 
 }

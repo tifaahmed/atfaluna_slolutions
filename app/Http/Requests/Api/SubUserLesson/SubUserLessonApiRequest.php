@@ -24,7 +24,7 @@ class SubUserLessonApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'sub_users_id'      =>  [ 'required' ,'integer'] ,
+            'sub_user_id'      =>  [ 'required' ,'integer'] ,
             'lesson_id'         =>  [ 'required' ,'integer'] ,
             'score'             =>  [ 'required' ,'integer'] ,
         ];
