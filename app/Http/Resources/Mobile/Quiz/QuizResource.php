@@ -8,6 +8,7 @@ use App\Http\Resources\Mobile\Collections\McqQuestionCollection;
 use App\Http\Resources\Mobile\Collections\TrueFalseQuestionCollection;
 
 use Illuminate\Support\Facades\Storage;
+use App\Models\Basic;
 
 class QuizResource extends JsonResource
 {
@@ -20,11 +21,12 @@ class QuizResource extends JsonResource
     public function toArray($request)
     {
         $row=$this->quiz_languages()->Localization()->RelatedLanguage($this->id)->first();
+        $basic = Basic::find(1); //logo
 
         return [
             'id'            => $this->id,
 
-            'image'          =>( $row && $row->image && Storage::disk('public')->exists($row->image) )? asset(Storage::url($row->image))  : null ,
+            'image'          =>( $row && $row->image && Storage::disk('public')->exists($row->image) )? asset(Storage::url($row->image))  : asset(Storage::url($basic->item)),
             'name'          => $row ? $row->name:'',
             'points'        => $this->points,
 

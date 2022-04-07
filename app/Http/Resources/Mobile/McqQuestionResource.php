@@ -4,6 +4,8 @@ namespace App\Http\Resources\Mobile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Basic;
+
 class McqQuestionResource extends JsonResource
 {
     /**
@@ -15,11 +17,12 @@ class McqQuestionResource extends JsonResource
     public function toArray($request)
     {
         $row=$this->mcq_question_languages()->Localization()->RelatedLanguage($this->id)->first();
+        $basic = Basic::find(1);
 
         return [
             'id'                  => $this->id,
-            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
-            'videos'        => Storage::disk('public')->exists($this->videos) ? asset(Storage::url($this->videos))  : null,
+            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)),
+            'videos'        => Storage::disk('public')->exists($this->videos) ? asset(Storage::url($this->videos))  : asset(Storage::url($basic->item)),
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

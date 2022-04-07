@@ -73,7 +73,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	{
 		if ($age_number) {
 			$age = Age::where('age',$age_number)->first();
-			echo  $age_group =  $age->age_group()->first();
+			$age_group =  $age->age_group()->first();
 			$this->attachAgeGroups($age_group->id,$id);
 			$this->UnactiveAllAgeGroups($id);	
 			$this->activeAgeGroup($age_group->id,$id);

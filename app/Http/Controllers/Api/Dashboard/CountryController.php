@@ -25,7 +25,7 @@ class CountryController extends Controller
     public function __construct(ModelInterface $Repository)
     {
         $this->ModelRepository = $Repository;
-        $this->folder_name = 'country/'.Str::random(10).time();
+        $this->folder_name = 'country';
     }
 
     public function all(){
@@ -129,27 +129,40 @@ class CountryController extends Controller
     public function update(modelUpdateRequest $request ,$id) {
         try {
             $old_model = new ModelResource( $this->ModelRepository->findById($id) );
+
+            // files
             $all = [ ];
             $file_one = 'image';
             if ($request->hasFile($file_one)) {  
-                $this->HelperDelete($old_model->$file_one);           
-                $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+                // get the old directory
+                if ( $old_model->$file_one ) {
+                    $old_folder_location = $this->HelperGetDirectory($old_model->$file_one); 
+                    // delete the old file or image
+                    $this->HelperDelete($old_model->$file_one);  
+                }
+                $folder_location = $old_folder_location ? $old_folder_location : $this->folder_name;
+
+                $path = $this->HelperHandleFile($folder_location,$request->file($file_one),$file_one)  ;
                 $all += array( $file_one => $path );
             }
+            // update
             $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
+            
+            // new model 
             $model = new ModelResource( $this->ModelRepository->findById($id) );
-                return $this -> MakeResponseSuccessful( 
-                        [ $model],
-                        'Successful'               ,
-                        Response::HTTP_OK
-                ) ;
-                } catch (\Exception $e) {
-                return $this -> MakeResponseErrors(  
-                    [$e->getMessage()  ] ,
-                    'Errors',
-                    Response::HTTP_NOT_FOUND
-                );
-            } 
+
+            return $this -> MakeResponseSuccessful( 
+                    [ $model],
+                    'Successful'               ,
+                    Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        } 
     }
     
 // lang

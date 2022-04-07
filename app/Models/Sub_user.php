@@ -62,18 +62,24 @@ class Sub_user extends Model
             return $this->belongsToMany(Age_group::class, 'sub_user_age_groups', 'sub_user_id', 'age_group_id');
         }
         public function ActiveAgeGroup(){
-            return $this->subUserAgeGroup()->wherePivot('active' ,1);
+            if ($this->subUserAgeGroup()) {
+                return $this->subUserAgeGroup()->wherePivot('active' ,1);
+            }
         }
         public function subUserSubject(){
             return $this->belongsToMany(Subject::class, 'sub_user_subjects', 'sub_user_id', 'subject_id');
         }
         public function ActiveSubject(){
-            return $this->subUserSubject()->wherePivot('active' ,1);
+            if ($this->subUserSubject()) {
+                return $this->subUserSubject()->wherePivot('active' ,1);
+            }
         }
         public function ActiveSubjectsFromActiveAgeGroup(){
-            $active_age_group = $this->ActiveAgeGroup();
+            $active_age_group = $this->ActiveAgeGroup()->first();
             $all_active_subjects = $this->ActiveSubject();
-            return $all_active_subjects->where('age_group_id',3);
+            if ($active_age_group && $all_active_subjects) {
+                return $all_active_subjects->where('age_group_id',$active_age_group->id);
+            }
         }
 }
 // 

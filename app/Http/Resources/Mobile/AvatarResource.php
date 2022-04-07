@@ -4,6 +4,7 @@ namespace App\Http\Resources\Mobile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Basic;
 
 class AvatarResource extends JsonResource
 {
@@ -15,11 +16,13 @@ class AvatarResource extends JsonResource
      */
     public function toArray($request)
     {
+        $basic = Basic::find(1);
+
         return [
             'id'          => $this->id,
             'type'        =>  $this->type,
             'price'        =>  $this->price,
-            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
+            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)),
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

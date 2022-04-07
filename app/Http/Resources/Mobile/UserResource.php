@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Mobile\CountryResource;
 use App\Http\Resources\Mobile\Collections\SubUserCollection;
+use App\Models\Basic;
 class UserResource extends JsonResource
 {
     /**
@@ -16,12 +17,14 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
+        $basic = Basic::find(1);
+
         return [
             'id'             => $this->id,
             'name'           => $this->name,
             'email'          => $this->email,
             'phone'          => $this->phone,
-            'avatar'         => Storage::disk('public')->exists($this->avatar) ? asset(Storage::url($this->avatar))  : null,
+            'avatar'         => Storage::disk('public')->exists($this->avatar) ? asset(Storage::url($this->avatar))  : asset(Storage::url($basic->item)),
             'birthdate'        => $this->birthdate,
             // date
                 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,

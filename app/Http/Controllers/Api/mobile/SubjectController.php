@@ -26,7 +26,7 @@ class SubjectController extends Controller
     }
     public function all(Request $request){
         try {
-             $model =  $this->ModelRepository->filterAll($request->sub_user_id) ;
+            $model =  $this->ModelRepository->filterAll($request->sub_user_id,$request->age_group_id) ;
             return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
@@ -39,7 +39,7 @@ class SubjectController extends Controller
 
     public function collection(Request $request){
         try {
-             $model =  $this->ModelRepository->filterPaginate($request->sub_user_id,$request->PerPage ? $request->PerPage : 10) ;
+             $model =  $this->ModelRepository->filterPaginate($request->sub_user_id,$request->age_group_id,$request->PerPage ? $request->PerPage : 10) ;
             return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
@@ -76,7 +76,7 @@ class SubjectController extends Controller
                 $model->subUserSubject()->updateExistingPivot( $subject_id , ['active'=> isset($request->active[$key]) ? $request->active[$key] : 0 ] );
             }
             return $this -> MakeResponseSuccessful( 
-                ['Successful'],
+                [$model],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;

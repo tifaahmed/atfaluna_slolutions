@@ -34,8 +34,8 @@ class SubUserResource extends JsonResource
             'certificate'    => new CertificateCollection ($this->subUserCertificate)  ,
             'quizs'          => new QuizCollection ($this->subUserQuiz)  ,
             'lessons'        => new LessonCollection ($this->subUserLesson)  ,
-            'active_age_group'  => $this->ActiveAgeGroup()->first()  ,
-            'active_subjects_from_active_age_group'  =>  $this->ActiveSubjectsFromActiveAgeGroup()->get()   ,
+            'active_age_group'  => $this->ActiveAgeGroup() ? $this->ActiveAgeGroup()->first()  : null ,
+            'active_subjects_from_active_age_group'  =>  $this->ActiveSubjectsFromActiveAgeGroup() ? $this->ActiveSubjectsFromActiveAgeGroup()->get() : []   ,
             'user'         => $this->user,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
