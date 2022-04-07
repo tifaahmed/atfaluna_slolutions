@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Massage;
 
 
 class Avatar extends Model
@@ -26,5 +27,10 @@ class Avatar extends Model
             return $query->where('type', $gender);
         }
     }
+     // morphOne    
+            public function massage(){
+                return $this->morphOne(Massage::class, 'massagable');
+            }
+
 
 }
