@@ -38,4 +38,4 @@ class Massage extends Model
     {
         return $this->morphTo(__FUNCTION__, 'massagable_type', 'massagable_id');
     }
-
+}
