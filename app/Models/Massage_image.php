@@ -5,31 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Hero_language;
-use App\Models\Lesson;
 use App\Models\Massage;
 
-class Hero extends Model
+class Massage_image extends Model
 {
     use HasFactory,SoftDeletes;
     public $guarded = ['id'];
 
-    protected $table = 'heroes';
+    protected $table = 'massage_images';
 
     protected $fillable = [
-//
+        'image',//required, max:5000
+
     ];
-    //relation
-    public function hero_languages(){
-        return $this->HasMany(Hero_language::class);
-    }
-    public function herolesson(){
-        return $this->belongsToMany(Lesson::class, 'hero_lessons', 'hero_id', 'lesson_id');
-    }
+    // relations
     // morphOne    
     public function massage(){
         return $this->morphOne(Massage::class, 'massagable');
     }
 }
-
-
+// 
