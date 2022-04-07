@@ -39,7 +39,7 @@ class BaseRepository implements EloquentRepositoryInterface
 	 */
 	public function collection(int $modelId, array $relations = []) 
 	{
-		return $this->model->latest()->with($relations)->paginate($modelId);
+		return $this->model->latest()->with($relations)->paginate($modelId)->appends(request()->query());
 	}
 
 	public function queryPaginate($query,$itemsNumber) 

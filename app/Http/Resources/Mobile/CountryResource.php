@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Dashboard\Collections\GovernmentCollection;
 use App\Http\Resources\Dashboard\Collections\CityCollection;
+use App\Models\Basic;
 
 class CountryResource extends JsonResource
 {
@@ -17,10 +18,12 @@ class CountryResource extends JsonResource
      */
     public function toArray($request)
     {
+        $basic = Basic::find(1);
+
         return [
             'id'             => $this->id,
             'name'             => $this->name,
-            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
+            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)),
             'code'             => $this->code,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,

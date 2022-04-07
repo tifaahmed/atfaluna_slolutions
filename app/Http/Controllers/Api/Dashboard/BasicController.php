@@ -26,6 +26,8 @@ class BasicController extends Controller
     public function __construct(ModelInterface $Repository)
     {
         $this->ModelRepository = $Repository;
+        $this->folder_name = 'basics';
+
     }
     public function collection(Request $request){
         try {
@@ -41,10 +43,24 @@ class BasicController extends Controller
     
 
     public function update(modelUpdateRequest $request ,$id) {
-        try {
+        // try {
+            $old_model = new ModelResource( $this->ModelRepository->findById($id) );
 
-            
-            $this->ModelRepository->update( $id,Request()->all()) ;
+
+            if ( $request->hasFile('item') ) { 
+                $all = [ ];
+                // get the old directory
+                if ( $old_model->item ) {
+                    // delete the old file or image
+                    $this->HelperDelete($old_model->item);  
+                }
+                $path = $this->HelperHandleFile($this->folder_name,$request->file('item'),'item')  ;
+                $all += array( 'item' => $path );
+                            // update
+                $this->ModelRepository->update( $id,Request()->except('item')+$all) ;
+            }else{
+                $this->ModelRepository->update( $id,Request()->all()) ;
+            }
             $modal = new ModelResource($this->ModelRepository->findById($id)); 
 
 
@@ -53,13 +69,13 @@ class BasicController extends Controller
                     'Successful'               ,
                     Response::HTTP_OK
             ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        } 
+        // } catch (\Exception $e) {
+        //     return $this -> MakeResponseErrors(  
+        //         [$e->getMessage()  ] ,
+        //         'Errors',
+        //         Response::HTTP_NOT_FOUND
+        //     );
+        // } 
     }
     
 

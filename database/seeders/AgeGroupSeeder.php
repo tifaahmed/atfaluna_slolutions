@@ -15,7 +15,7 @@ class AgeGroupSeeder extends Seeder
     public function run()
     {
         // 1
-            $age_group= Age_group::create([ 'id' => '1' ]);
+            $age_group= Age_group::create();
             $age_group->age_group_languages()->create( [
                 'name' => 'تمهيدي اولى',
                 'language' => 'ar',
@@ -26,7 +26,7 @@ class AgeGroupSeeder extends Seeder
             ]);
             $age_group->age()->create( [ 'age' => '3' ]); 
         // 2
-            $age_group= Age_group::create([ 'id' => '2' ]);
+            $age_group= Age_group::create();
             $age_group->age_group_languages()->create( [
                 'name' => 'تمهيدي ثانى',
                 'language' => 'ar',
@@ -37,7 +37,7 @@ class AgeGroupSeeder extends Seeder
             ]);
             $age_group->age()->create( [ 'age' => '4' ]); 
         // 3
-            $age_group= Age_group::create([ 'id' => '3' ]);
+            $age_group= Age_group::create();
             $age_group->age_group_languages()->create( [
                 'name' => 'اولى ابتدائي',
                 'language' => 'ar',
@@ -48,7 +48,7 @@ class AgeGroupSeeder extends Seeder
             ]);
             $age_group->age()->create( [ 'age' => '5' ]); 
         // 4
-            $age_group= Age_group::create([ 'id' => '4' ]);
+            $age_group= Age_group::create();
             $age_group->age_group_languages()->create( [
                 'name' => 'ثانية ابتدائي',
                 'language' => 'ar',
@@ -59,7 +59,7 @@ class AgeGroupSeeder extends Seeder
             ]);
             $age_group->age()->create( ['age' => '6' ]);   
         // 5
-            $age_group= Age_group::create([ 'id' => '5' ]);
+            $age_group= Age_group::create();
             $age_group->age_group_languages()->create( [
                 'name' => 'ثالثة ابتدائي',
                 'language' => 'ar',
@@ -70,7 +70,7 @@ class AgeGroupSeeder extends Seeder
             ]);
             $age_group->age()->create( ['age' => '7' ]);     
         // 6
-            $age_group= Age_group::create([ 'id' => '6' ]);
+            $age_group= Age_group::create();
             $age_group->age_group_languages()->create( [
                 'name' => 'رابعة ابتدائي',
                 'language' => 'ar',
