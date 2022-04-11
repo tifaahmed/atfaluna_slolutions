@@ -8,8 +8,8 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\Mobile\Collections\McqAnswerCollection as ModelCollection;
-use App\Http\Resources\Mobile\McqAnswerResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\McqAnswer\McqAnswerCollection as ModelCollection;
+use App\Http\Resources\Mobile\McqAnswer\McqAnswerResource as ModelResource;
 
 
 // lInterfaces

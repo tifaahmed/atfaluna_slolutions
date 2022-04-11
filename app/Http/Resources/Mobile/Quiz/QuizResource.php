@@ -4,8 +4,8 @@ namespace App\Http\Resources\Mobile\Quiz;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-use App\Http\Resources\Mobile\Collections\McqQuestionCollection;
-use App\Http\Resources\Mobile\Collections\TrueFalseQuestionCollection;
+use App\Http\Resources\Mobile\Collections\McqQuestion\McqQuestionCollection;
+use App\Http\Resources\Mobile\Collections\TrueFalseQuestion\TrueFalseQuestionCollection;
 
 use Illuminate\Support\Facades\Storage;
 use App\Models\Basic;
@@ -30,8 +30,8 @@ class QuizResource extends JsonResource
             'name'          => $row ? $row->name:'',
             'points'        => $this->points,
 
-            'mcq_questions'          =>   $this->mcq_questions    ,
-            // 'true_false_questions'   =>   $this->true_false_questions    ,
+            'mcq_questions'          => new McqQuestionCollection ($this->mcq_questions)  ,
+            'true_false_questions'   => new TrueFalseQuestionCollection ($this->true_false_questions)  ,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

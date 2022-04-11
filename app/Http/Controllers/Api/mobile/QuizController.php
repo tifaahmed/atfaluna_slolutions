@@ -69,16 +69,16 @@ class QuizController extends Controller
     // relation
     public function attach(MobileQuizApiRequest $request){
         try {
-            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            // foreach ($request->quiz_id as $key => $value) {
-                $model->subUserQuiz()->syncWithoutDetaching($request->quiz_id,['score'=> $request->score]);
-            // }    
+            $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
+            $sub_user->subUserQuiz()->syncWithoutDetaching($request->quiz_id);
 
-            return $this -> MakeResponseSuccessful( 
-                ['Successful'],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
+            $attempt = $sub_user->subUserQuizAttemptOpen()->first();
+            if (!$attempt) {
+                $sub_user->subUserAttempt()->attach($request->quiz_id);
+            }
+            
+            return $model = $this->show($request->quiz_id);
+            
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

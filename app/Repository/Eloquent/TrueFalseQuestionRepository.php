@@ -4,7 +4,7 @@ namespace App\Repository\Eloquent;
 
 use App\Models\True_false_question as ModelName;
 use App\Repository\TrueFalseQuestionRepositoryInterface;
-
+use Auth ;
 class TrueFalseQuestionRepository extends BaseRepository implements TrueFalseQuestionRepositoryInterface
 {
 
@@ -30,6 +30,16 @@ class TrueFalseQuestionRepository extends BaseRepository implements TrueFalseQue
 			return $result->question_tags()->sync($question_tag_ids);
 		}
 	}
-
+	public function filterAll($quiz_id,$sub_user_id)  
+    {
+		if($quiz_id && $sub_user_id){
+			$sub_user = Auth::user()->sub_user()->find($sub_user_id);
+			$quiz = $sub_user->subUserQuiz()->wherePivot('quiz_id' ,$quiz_id)->get();
+			return $quiz;
+		}
+		else{
+			return $this->all()  ;
+		}
+	}
 }
 

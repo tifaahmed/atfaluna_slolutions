@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\Route;
     Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
 
         Route::group(['middleware' => ['IfAuthChild']], fn ( ) : array => [
+            //True_false_question
+            Route::name('true-false-question.')->prefix('/true-false-question')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'TrueFalseQuestionController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'TrueFalseQuestionController@show'                )->name('show'),
+                Route::get('/collection'                ,   'TrueFalseQuestionController@collection'          )->name('collection'),
+            ]),
+            // quiz
+            Route::name('quiz.')->prefix('/quiz')->group( fn ( ) : array => [
+                Route::post('/attach'                   ,   'QuizController@attach'              )->name('attach'),
+                Route::post('/detach'                   ,   'QuizController@detach'              )->name('detach'),
+            ]), 
             //Subject
             Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'SubjectController@all'                 )->name('all'),
@@ -130,8 +141,6 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/'                          ,   'QuizController@all'                 )->name('all'),
                 Route::get('/{id}/show'                 ,   'QuizController@show'                )->name('show'),
                 Route::get('/collection'                ,   'QuizController@collection'          )->name('collection'),
-                Route::post('/attach'                   ,   'QuizController@attach'              )->name('attach'),
-                Route::post('/detach'                   ,   'QuizController@detach'              )->name('detach'),
             ]), 
             //hero
             Route::name('hero.')->prefix('/hero')->group( fn ( ) : array => [
@@ -287,12 +296,7 @@ Route::name('introduction_content.')->prefix('/introduction_content')->group( fn
         Route::get('/{id}/show'                 ,   'SubUserQuizController@show'                )->name('show'),
         Route::get('/collection'                ,   'SubUserQuizController@collection'          )->name('collection'),
     ]),
-    //True_false_question
-        Route::name('true-false-question.')->prefix('/true-false-question')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'TrueFalseQuestionController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'TrueFalseQuestionController@show'                )->name('show'),
-            Route::get('/collection'                ,   'TrueFalseQuestionController@collection'          )->name('collection'),
-        ]),
+
     
 ]);
 

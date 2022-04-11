@@ -8,8 +8,8 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\Mobile\Collections\TrueFalseQuestionCollection as ModelCollection;
-use App\Http\Resources\Mobile\TrueFalseQuestionResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\TrueFalseQuestion\TrueFalseQuestionCollection as ModelCollection;
+use App\Http\Resources\Mobile\TrueFalseQuestion\TrueFalseQuestionResource as ModelResource;
 
 
 // lInterfaces
@@ -23,9 +23,11 @@ class TrueFalseQuestionController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            return $model = $this->ModelRepository->filterAll($request->quiz_id,$request->sub_user_id);
+
+            return new ModelCollection (  $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Mobile\Collections;
+namespace App\Http\Resources\Mobile\Collections\McqQuestion;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Mobile\McqQuestionResource as ModelResource;
+use App\Http\Resources\Mobile\McqQuestion\McqQuestionResource as ModelResource;
 
 class McqQuestionCollection  extends ResourceCollection{
 
