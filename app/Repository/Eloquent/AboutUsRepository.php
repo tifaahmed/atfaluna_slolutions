@@ -22,9 +22,11 @@ class AboutUsRepository extends BaseRepository implements AboutUsRepositoryInter
 		$this->model =  $model;
 	}
 
+	public function filterFirst($language)  
+    {	
+		$result=$this->model->Localization()->first();
+	return $result;
+		}
+	}
 
-
-
-	
-}
 
