@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Mobile\Collections;
+namespace App\Http\Resources\Mobile\Collections\McqAnswer;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Mobile\TrueFalseQuestionResource as ModelResource;
+use App\Http\Resources\Mobile\McqAnswer\McqAnswerResource as ModelResource;
 
-class TrueFalseQuestionCollection extends ResourceCollection{
+class McqAnswerCollection  extends ResourceCollection{
 
     public function toArray( $request ) {
         return $this -> collection -> map( fn( $model ) => new ModelResource ( $model ) );
@@ -20,3 +20,4 @@ class TrueFalseQuestionCollection extends ResourceCollection{
         ];
     }
 }
+//

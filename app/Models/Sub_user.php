@@ -47,9 +47,17 @@ class Sub_user extends Model
         public function subUserCertificate(){
             return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_user_id', 'certificate_id');
         }
+
         public function subUserQuiz(){
             return $this->belongsToMany(Quiz::class, 'sub_user_quizzes', 'sub_user_id', 'quiz_id');
         }
+        public function subUserQuizAttempt(){
+            return $this->belongsToMany(Quiz::class, 'sub_user_quiz_attempts', 'sub_user_id', 'quiz_id');
+        }
+        public function subUserQuizAttemptOpen(){
+            return $this->subUserQuizAttempt()->where('status','open')->first();
+        }
+        
         public function subUserLesson(){
             return $this->belongsToMany(Lesson::class, 'sub_user_lessons', 'sub_user_id', 'lesson_id');
         }
