@@ -29,8 +29,7 @@ class ContactUsApiRequest extends FormRequest
             'message'    =>  ['max:100' ],
             'subject'    =>  [ 'max:50']  ,
             'email'      =>  ['required'  ,'email'] ,
-            'status'     =>  ['boolean']  ,
-    ];
+            ];
     }
 
 }

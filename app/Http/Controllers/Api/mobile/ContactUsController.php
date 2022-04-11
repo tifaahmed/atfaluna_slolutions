@@ -25,17 +25,6 @@ class ContactUsController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-    public function all(){
-        try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
 
     public function store(modelInsertRequest $request) {
         try {
@@ -53,54 +42,5 @@ class ContactUsController extends Controller
             );
         }
     }
-
-
-    public function collection(Request $request){
-        try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-    
-
-    public function destroy($id) {
-        try {
-            return $this -> MakeResponseSuccessful( 
-                [$this->ModelRepository->deleteById($id)] ,
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [ $e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-
-    public function show($id) {
-        try {
-            return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($id) )  ],
-                'Successful',
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-    
-    
-    // trash
 
 }

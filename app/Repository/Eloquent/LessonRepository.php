@@ -27,13 +27,15 @@ class LessonRepository extends BaseRepository implements LessonRepositoryInterfa
 	{
 		$this->model =  $model;
 	}
-
 	public function filterAll($sub_user_id,$lesson_type_id,$hero_id)  
     {
-		if($sub_user_id){
+		if($sub_user_id ){
 			$sub_user       = Auth::user()->sub_user()->find($sub_user_id);
-			$subjects   = $sub_user->subUserSubject()->has('lesssons')->get();
+			$subjects      =$sub_user->ActiveSubjectsFromActiveAgeGroup()->get();
+
+			// return $subjects   = $sub_user->subUserSubject()->has('lessons')->get();
 			$result = new Collection;
+
 			foreach ($subjects as $key => $value) {
 				$lesssons = $value->lesssons();
 
@@ -62,7 +64,7 @@ class LessonRepository extends BaseRepository implements LessonRepositoryInterfa
     {
 		if($sub_user_id && $lesson_type_id){
 			$sub_user       = Auth::user()->sub_user()->find($sub_user_id);
-			$subjects   = $sub_user->subUserSubject()->has('lesssons')->get();
+			$subjects   = $sub_user->subUserSubject()->has('lessons')->get();
 			$result = new Collection() ;
 			foreach ($subjects as $key => $value) {
 				$lesssons = $value->lesssons();
