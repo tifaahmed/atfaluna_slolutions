@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Conversation;
+use App\Models\Sub_user;
 
 class Group_chat extends Model
 {
@@ -20,6 +21,9 @@ class Group_chat extends Model
     // relations
         public function conversation(){
             return $this->belongsTo(Conversation::class,'conversation_id');
+        }
+        public function recevier(){
+            return $this->belongsTo(Sub_user::class,'recevier_id');
         }
 }
 // 
