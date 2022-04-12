@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Route;
     ]);
 // only auth
     Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
-
+        
         Route::group(['middleware' => ['IfAuthChild']], fn ( ) : array => [
             //True_false_question
             Route::name('true-false-question.')->prefix('/true-false-question')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'TrueFalseQuestionController@all'                 )->name('all'),
                 Route::get('/{id}/show'                 ,   'TrueFalseQuestionController@show'                )->name('show'),
                 Route::get('/collection'                ,   'TrueFalseQuestionController@collection'          )->name('collection'),
+                Route::get('/attach'                    ,   'TrueFalseQuestionController@attach'              )->name('attach'),
             ]),
             // quiz
             Route::name('quiz.')->prefix('/quiz')->group( fn ( ) : array => [
