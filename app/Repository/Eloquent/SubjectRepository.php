@@ -24,22 +24,30 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 		$this->model =  $model;
 	}
 
-	public function filterPaginate($sub_user_id,int $itemsNumber)  
+	public function filterPaginate($sub_user_id,$age_group_id, int $itemsNumber)  
     {
-		if($sub_user_id){
-			$sub_user = Auth::user()->sub_user()->find($sub_user_id);
-			$result =$sub_user->subUserActiveAgeGroup();
-			return $this->queryPaginate($result,$itemsNumber);
-		}else{
-			return $this->collection( $itemsNumber)  ;
-		}
+			if($sub_user_id && $age_group_id == null){
+				$sub_user = Auth::user()->sub_user()->find($sub_user_id);
+				$result = $sub_user->ActiveSubjectsFromActiveAgeGroup();
+				return $this->queryPaginate($result,$itemsNumber);
+			}else if($sub_user_id == null && $age_group_id){
+				$result = ModelName::where('age_group_id',$age_group_id);
+				return $this->queryPaginate($result,$itemsNumber);
+			}else{
+				return $this->collection( $itemsNumber)  ;
+			}
     }
-	public function filterAll($sub_user_id)  
+	public function filterAll($sub_user_id,$age_group_id)  
     {
-		if($sub_user_id){
+		if($sub_user_id && $age_group_id == null){
 			$sub_user = Auth::user()->sub_user()->find($sub_user_id);
-			return $sub_user->subUserActiveAgeGroup()->get();
-		}else{
+			$result = $sub_user->ActiveSubjectsFromActiveAgeGroup()->get();
+			return $result;
+		}else if($sub_user_id == null && $age_group_id){
+			$result = ModelName::where('age_group_id',$age_group_id)->get();
+			return $result;
+		}
+		else{
 			return $this->all()  ;
 		}
 	}

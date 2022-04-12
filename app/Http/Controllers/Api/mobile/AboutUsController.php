@@ -8,7 +8,6 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\Mobile\Collections\AboutUsCollection as ModelCollection;
 use App\Http\Resources\Mobile\AboutUsResource as ModelResource;
 
 
@@ -23,42 +22,10 @@ class AboutUsController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-    public function all(){
+
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-
-
-    public function collection(Request $request){
-        // return $request->language;
-        try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
-
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-    
-
-
-    public function show($id) {
-        try {
-            return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($id) )  ],
-                'Successful',
-                Response::HTTP_OK
-            ) ;
+            return new ModelResource (  $this->ModelRepository->filterFirst($request->language) );
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

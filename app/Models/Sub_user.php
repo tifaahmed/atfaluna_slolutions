@@ -39,31 +39,47 @@ class Sub_user extends Model
             return $this->belongsTo(Avatar::class,'avatar_id');
         }
         public function subUserAccessory(){
-            return $this->belongsToMany(Accessory::class, 'sub_user_accessories', 'sub_users_id', 'accessory_id');
+            return $this->belongsToMany(Accessory::class, 'sub_user_accessories', 'sub_user_id', 'accessory_id');
         }
         public function subUserAvatar(){
-            return $this->belongsToMany(Avatar::class, 'sub_user_avatars', 'sub_users_id', 'avatar_id');
+            return $this->belongsToMany(Avatar::class, 'sub_user_avatars', 'sub_user_id', 'avatar_id');
         }
         public function subUserCertificate(){
-            return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_users_id', 'certificate_id');
+            return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_user_id', 'certificate_id');
         }
         public function subUserQuiz(){
-            return $this->belongsToMany(Quiz::class, 'sub_user_quizzes', 'sub_users_id', 'quiz_id');
+            return $this->belongsToMany(Quiz::class, 'sub_user_quizzes', 'sub_user_id', 'quiz_id');
         }
         public function subUserLesson(){
-            return $this->belongsToMany(Lesson::class, 'sub_user_lessons', 'sub_users_id', 'lesson_id');
-        }
-        public function subUserSubject(){
-            return $this->belongsToMany(Subject::class, 'sub_user_subjects', 'sub_users_id', 'subject_id');
-        }
-        public function subUserAgeGroup(){
-            return $this->belongsToMany(Age_group::class, 'sub_user_age_groups', 'sub_users_id', 'age_group_id');
-        }
-        public function subUserActiveAgeGroup(){
-            return $this->belongsToMany(Age_group::class, 'sub_user_age_groups', 'sub_users_id', 'age_group_id')->wherePivot('active' , 1);
+            return $this->belongsToMany(Lesson::class, 'sub_user_lessons', 'sub_user_id', 'lesson_id');
         }
         public function playTime(){
             return $this->hasMany(Play_time::class);
+        }
+
+
+        public function subUserAgeGroup(){
+            return $this->belongsToMany(Age_group::class, 'sub_user_age_groups', 'sub_user_id', 'age_group_id');
+        }
+        public function ActiveAgeGroup(){
+            if ($this->subUserAgeGroup()) {
+                return $this->subUserAgeGroup()->wherePivot('active' ,1);
+            }
+        }
+        public function subUserSubject(){
+            return $this->belongsToMany(Subject::class, 'sub_user_subjects', 'sub_user_id', 'subject_id');
+        }
+        public function ActiveSubject(){
+            if ($this->subUserSubject()) {
+                return $this->subUserSubject()->wherePivot('active' ,1);
+            }
+        }
+        public function ActiveSubjectsFromActiveAgeGroup(){
+            $active_age_group = $this->ActiveAgeGroup()->first();
+            $all_active_subjects = $this->ActiveSubject();
+            if ($active_age_group && $all_active_subjects) {
+                return $all_active_subjects->where('age_group_id',$active_age_group->id);
+            }
         }
 }
 // 

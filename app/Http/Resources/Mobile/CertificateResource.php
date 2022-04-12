@@ -3,6 +3,8 @@
 namespace App\Http\Resources\Mobile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
+
 class CertificateResource extends JsonResource
 {
     /**
@@ -19,8 +21,8 @@ class CertificateResource extends JsonResource
             'id'               => $this->id,
             'relation_id'      =>  $this->relation_id,
             'relation_type'    =>  $this->relation_type,
-            'image_one'        =>  $this->image_one,
-            'image_two'        =>  $this->image_two,
+            'image_one'        =>  Storage::disk('public')->exists($this->image_one) ? asset(Storage::url($this->image_one))  : null,
+            'image_two'        =>  Storage::disk('public')->exists($this->image_one) ? asset(Storage::url($this->image_two))  : null,
             'min_point'        =>  $this->min_point,
             'max_point'        =>  $this->max_point,
             'min_point'        =>  $this->min_point,
@@ -35,4 +37,3 @@ class CertificateResource extends JsonResource
         ];        
     }
 }
-//

@@ -68,11 +68,12 @@ class SubUserController extends Controller
     
     public function store(MobileStoreSubUserApiRequest $request){
         try {
-            return $this -> MakeResponseSuccessful( 
-                [ Auth::user()->sub_user()->create( $request->all() ) ],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
+            $sub_user = Auth::user()->sub_user()->create( $request->all() );
+            // attach one age group and only one can be active
+            $this->ModelRepository->attachAgeGroupByAge($sub_user->age,$sub_user->id) ;
+
+            return $this->show($sub_user->id);
+
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -84,15 +85,10 @@ class SubUserController extends Controller
 
     public function update(MobileStoreSubUserApiRequest $request ,$id) {
         try {
-        Auth::user()->sub_user()->find($id)->update($request->all());
+            Auth::user()->sub_user()->find($id)->update($request->all());
 
-            $modal = new ModelResource($this->ModelRepository->findById($id)); 
+            return $this->show($sub_user->id);
 
-            return $this -> MakeResponseSuccessful( 
-                    [ $modal],
-                    'Successful'               ,
-                    Response::HTTP_OK
-            ) ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

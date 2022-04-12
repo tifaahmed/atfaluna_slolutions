@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Dashboard\AgeGroupResource;
+// use App\Http\Resources\Dashboard\AgeGroupResource;
 
 class AgeResource extends JsonResource
 {
@@ -23,7 +23,7 @@ class AgeResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            'age_group'              => new AgeGroupResource ( $this->age_group ),
+            'age_group'     => $this->age_group ,
 
         ];        
     }

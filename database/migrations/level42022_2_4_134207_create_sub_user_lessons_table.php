@@ -14,8 +14,10 @@ class CreateSubUserLessonsTable extends Migration
     public function up()
     {
         Schema::create('sub_user_lessons', function (Blueprint $table) {
-            $table->integer('sub_users_id')->unsigned();
-            $table->foreign('sub_users_id')->references('id')->on('sub_users');
+            $table->increments('id');//[pk]
+
+            $table->integer('sub_user_id')->unsigned();
+            $table->foreign('sub_user_id')->references('id')->on('sub_users');
             $table->integer('lesson_id')->unsigned();
             $table->foreign('lesson_id')->references('id')->on('lessons');
             $table->integer('score')->default('0');

@@ -23,10 +23,6 @@ class ContactUsUpdateApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'       =>  ['max:50'] ,
-            'message'    =>  ['max:100' ],
-            'subject'    =>  [ 'max:50']  ,
-            'email'      =>  ['required'  ,'email'] ,
             'status'     =>  ['boolean']  ,
         ];
     }

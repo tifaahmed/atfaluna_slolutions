@@ -14,6 +14,8 @@ class CreateSubjectSkillsTable extends Migration
     public function up()
     {
         Schema::create('subject_skills', function (Blueprint $table) {
+            $table->increments('id');//[pk]
+
             $table->integer('skill_id')->unsigned();
             $table->foreign('skill_id')->references('id')->on('skills');
             $table->integer('subject_id')->unsigned();

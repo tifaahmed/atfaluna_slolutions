@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 // Requests
 use App\Http\Requests\Api\AgeGroup\MobileAgeGroupApiRequest;
+use App\Http\Requests\Api\AgeGroup\MobileActiveAgeGroupApiRequest;
 
 // Resources
 use App\Http\Resources\Mobile\Collections\AgeGroupCollection as ModelCollection;
@@ -93,12 +94,11 @@ class AgeGroupController extends Controller
     }
 
     // relation
-    public function active(MobileAgeGroupApiRequest $request){
+    public function active(MobileActiveAgeGroupApiRequest $request){
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            // foreach ($request->lesson_id as $key => $value) {
-                $model->subUserActiveAgeGroup()->syncWithoutDetaching($request->age_group_id,['active'=> $request->active]);
-            // }
+            $model->subUserAgeGroup()->update(['active'=> 0]);
+            $model->subUserAgeGroup()->where('age_group_id',$request->age_group_id)->update(['active'=> 1]);
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
                 'Successful'               ,

@@ -4,7 +4,7 @@ namespace App\Http\Resources\Mobile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-
+use App\Models\Basic;
 class UserPackageResource extends JsonResource
 {
     /**
@@ -15,10 +15,12 @@ class UserPackageResource extends JsonResource
      */
     public function toArray($request)
     {
+        $basic = Basic::find(1);
+
         return [
             'id'             => $this->id,
             'price'          => $this->price,
-            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
+            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  :  asset(Storage::url($basic->item)),
             'points'         => $this->points,
             
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,

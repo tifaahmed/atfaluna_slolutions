@@ -17,7 +17,9 @@ class IfAuthChildMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-			if(Auth::user()->sub_user()->find($request->sub_user_id)){
+        if ($request->sub_user_id ) {
+            $chick_sub_user = Auth::user()->sub_user()->find($request->sub_user_id);
+			if( $chick_sub_user){
                 return $next($request);
 
             }else{
@@ -29,5 +31,9 @@ class IfAuthChildMiddleware
                     ],
                 );
             }
+        }else{
+            return $next($request);
+        }
+        
     }
 }

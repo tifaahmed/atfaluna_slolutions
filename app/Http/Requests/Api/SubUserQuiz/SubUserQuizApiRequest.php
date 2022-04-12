@@ -24,7 +24,7 @@ class SubUserQuizApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'sub_users_id'      =>  [ 'required' ,'integer'] ,
+            'sub_user_id'      =>  [ 'required' ,'integer'] ,
             'quiz_id'         =>  [ 'required' ,'integer'] ,
             'score'             =>  [ 'required' ,'integer'] ,
         ];

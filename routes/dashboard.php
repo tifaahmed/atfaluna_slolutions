@@ -83,10 +83,10 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
     // language
         Route::name('language.')->prefix('/language')->group( fn ( ) : array => [
             Route::get('/'              ,   'LanguageController@all'        )  ->name('all'),
-            Route::post(''              ,   'LanguageController@store'      )  ->name('store'),
+            // Route::post(''              ,   'LanguageController@store'      )  ->name('store'),
             Route::get('/{id}/show'     ,   'LanguageController@show'       )  ->name('show'),
             Route::get('/collection'    ,   'LanguageController@collection' )  ->name('collection'),
-            Route::DELETE('/{id}'       ,   'LanguageController@destroy'    )  ->name('destroy'),
+            // Route::DELETE('/{id}'       ,   'LanguageController@destroy'    )  ->name('destroy'),
             Route::post('/{id}/update'  ,   'LanguageController@update'     )  ->name('update'),
 
         ]),
@@ -272,16 +272,9 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
     // age
         Route::name('age.')->prefix('/age')->group( fn ( ) : array => [
             Route::get('/'                          ,   'AgeController@all'                 )    ->name('all'),
-            Route::post(''                          ,   'AgeController@store'               )->name('store'),
             Route::get('/{id}/show'                 ,   'AgeController@show'                )->name('show'),
             Route::get('/collection'                ,   'AgeController@collection'          )->name('collection'),
-            Route::DELETE('/{id}'                   ,   'AgeController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'AgeController@update'              )->name('update'),
-            Route::post('/{id}/restore'             ,   'AgeController@restore'             )->name('restore'),
-
-            Route::DELETE('premanently-delete/{id}' ,   'AgeController@premanently_delete'  )->name('premanently_delete'),
-            Route::get('/collection-trash'          ,   'AgeController@collection_trash'    )->name('collection_trash'),
-            Route::get('/{id}/show-trash'           ,   'AgeController@show_trash'          )->name('show_trash'),
         ]),
 
     // Basic
