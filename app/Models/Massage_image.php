@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Massage;
+use App\Models\Massage;// morphOne
 
 class Massage_image extends Model
 {
@@ -16,7 +16,6 @@ class Massage_image extends Model
 
     protected $fillable = [
         'image',//required, max:5000
-
     ];
     // relations
     // morphOne    

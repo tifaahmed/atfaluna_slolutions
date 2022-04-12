@@ -14,15 +14,18 @@ class Friend extends Model
     protected $table = 'friends';
 
     protected $fillable = [
-        'recevier_id',//required , integer
         'status',//required , boolean
         'accept',//required , boolean
+        'block',//required , boolean
         'sub_user_id',//unsigned  
 
     ];
     // relations
         public function sub_user(){
             return $this->belongsTo(Sub_user::class,'sub_user_id');
+        }
+        public function recevier(){
+            return $this->belongsTo(Sub_user::class,'recevier_id');
         }
 }
 // 

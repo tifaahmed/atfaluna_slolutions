@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Hero_language;
 use App\Models\Lesson;
-use App\Models\Massage;
+use App\Models\Massage;// morphOne
 
 class Hero extends Model
 {

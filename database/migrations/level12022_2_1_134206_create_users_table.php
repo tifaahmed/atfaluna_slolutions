@@ -28,9 +28,8 @@ class CreateUsersTable extends Migration
             $table->integer('country_id') -> nullable( )->unsigned();
             $table->foreign('country_id')->references('id')->on('countries');
             $table -> string        ( 'login_type') -> nullable( )              ;
-
-            
-
+            $table -> string        ( 'latitude'  ) -> nullable( )              ;
+            $table -> string        ( 'longitude' ) -> nullable( )              ;
             $table->softDeletes();
             $table -> timestamps    (            )                             ;
         });

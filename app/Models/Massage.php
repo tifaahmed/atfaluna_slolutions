@@ -19,20 +19,15 @@ class Massage extends Model
     protected $fillable = [
         'massagable_id',//  ,morphs_id (avatar_id , hero_id ,massage_image_id)']
         'massagable_type',// morphs_type (avatar_model , hero_model , massage_image_model)
-        'recevier_id',//required , integer
         'text',//required not null
-
         'sub_user_id',//unsigned 
         'conversation_id',//unsigned  
-        'massage_image_id',//unsigned 
     ];
     // relations
     public function conversation(){
         return $this->belongsTo(Conversation::class,'conversation_id');
     }public function sub_user(){
         return $this->belongsTo(Sub_user::class,'sub_user_id');
-    }public function massage_image(){
-        return $this->belongsTo(Massage_image::class,'massage_image_id');
     }
     public function massagable()
     {

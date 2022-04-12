@@ -14,7 +14,6 @@ class Conversation extends Model
     protected $table = 'conversation';
 
     protected $fillable = [
-        'recevier_id',//required , integer
         'title',//required , string
         'read',//required , boolean
         'sub_user_id',//unsigned  
