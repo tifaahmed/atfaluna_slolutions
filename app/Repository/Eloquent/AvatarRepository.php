@@ -21,7 +21,17 @@ class AvatarRepository extends BaseRepository implements AvatarRepositoryInterfa
 	{
 		$this->model =  $model;
 	}
-
+	public function filterFirst($price)  
+    {	
+	// if($price == 0){
+	// $result = $this->model->Free()->first();
+	// return $result;
+	// }else($price > 0){
+	// 	return $this->all()  ;
+	// }
+		$result=$this->model->Free()->first();
+		return $result;
+		}
 
 	public function filterPaginate($gender,int $itemsNumber)  
     {
@@ -29,6 +39,5 @@ class AvatarRepository extends BaseRepository implements AvatarRepositoryInterfa
 		return $this->queryPaginate($result,$itemsNumber);
     }
 
-	
 }
 

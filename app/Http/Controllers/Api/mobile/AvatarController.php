@@ -28,8 +28,8 @@ class AvatarController extends Controller
     }
     public function all(Request $request){
         try {
-            $model  =  $this->ModelRepository->all()   ;
-            return new ModelCollection ( $model )  ;
+            return new ModelResource (  $this->ModelRepository->filterFirst($request->free) );
+
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
