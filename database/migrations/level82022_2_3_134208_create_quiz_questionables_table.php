@@ -21,8 +21,8 @@ class CreateQuizQuestionablesTable extends Migration
 
             $table->integer('position')->default(0);
 
-            $table->integer('quiz_questionable_id'); //[note: 'morphs_id (mcq_questions_id , true_false_question_id)']
-            $table->string('quiz_questionable_type'); //[note: 'morphs_type (Mcq_question , True_false_question)']
+            $table->integer('questionable_id'); //[note: 'morphs_id (mcq_questions_id , true_false_question_id)']
+            $table->string('questionable_type'); //[note: 'morphs_type (Mcq_question , True_false_question)']
             
             $table->timestamps();
 

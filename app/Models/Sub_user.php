@@ -13,6 +13,7 @@ use App\Models\Quiz;
 use App\Models\Lesson;
 use App\Models\Subject;
 use App\Models\Age_group;
+use App\Models\Sub_user_quiz;
 
 
 class Sub_user extends Model
@@ -51,13 +52,13 @@ class Sub_user extends Model
         public function subUserQuiz(){
             return $this->belongsToMany(Quiz::class, 'sub_user_quizzes', 'sub_user_id', 'quiz_id');
         }
-        public function subUserQuizAttempt(){
-            return $this->belongsToMany(Quiz::class, 'sub_user_quiz_attempts', 'sub_user_id', 'quiz_id');
+        public function subUserQuizModel(){
+            return $this->hasMany(Sub_user_quiz::class);
         }
-        public function subUserQuizAttemptOpen(){
-            return $this->subUserQuizAttempt()->where('status','open')->first();
-        }
+
+
         
+
         public function subUserLesson(){
             return $this->belongsToMany(Lesson::class, 'sub_user_lessons', 'sub_user_id', 'lesson_id');
         }
