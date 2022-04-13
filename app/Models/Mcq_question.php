@@ -11,6 +11,8 @@ use App\Models\Mcq_answer;              //HasMany
 use App\Models\QuestionTag;              //morphToMany // has many tags 
 use App\Models\Quiz;              //morphedByMany      // belong to many Quizs 
 use App\Models\Quiz_questionable; 
+use App\Models\QuestionAttempt; 
+
 class Mcq_question extends Model
 {
     use HasFactory,SoftDeletes;
@@ -41,5 +43,7 @@ class Mcq_question extends Model
             public function Quizs(){
                 return $this->morphToMany(Quiz::class, 'quiz_questionables');
             } 
-              
+            public function question_attempts(){
+                return $this->morphOne(QuestionAttempt::class, 'question_attempts','questionable_type','questionable_id');
+            }  
 }

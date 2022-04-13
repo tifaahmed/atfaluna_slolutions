@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Quiz;
 use App\Models\Sub_user;
+use App\Models\QuizAttempt;
 
 class Sub_user_quiz extends Model
 {
@@ -21,13 +22,17 @@ class Sub_user_quiz extends Model
         'score',//required integer
     ];
     // relations
-    public function quiz(){
-        return $this->belongsTo(Quiz::class,'quiz_id');
-    }
-    // relations
-    public function sub_user(){
-        return $this->belongsTo(Sub_user::class,'sub_user_id');
-    }
+        // belongsTo
+        public function quiz(){
+            return $this->belongsTo(Quiz::class,'quiz_id');
+        }
+        public function sub_user(){
+            return $this->belongsTo(Sub_user::class,'sub_user_id');
+        }
+        // hasMany
+        public function quiz_attempts(){
+            return $this->hasMany(QuizAttempt::class);
+        }
 
 }
 

@@ -20,6 +20,8 @@ class McqQuestionResource extends JsonResource
         $basic = Basic::find(1);
 
         return [
+            'type'       => ' McqQuestion',
+
             'id'                  => $this->id,
             'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)),
             'videos'        => Storage::disk('public')->exists($this->videos) ? asset(Storage::url($this->videos))  : asset(Storage::url($basic->item)),

@@ -10,6 +10,7 @@ use Illuminate\Http\Response ;
 // Resources
 use App\Http\Resources\Mobile\Collections\QuizCollection as ModelCollection;
 use App\Http\Resources\Mobile\Quiz\QuizResource as ModelResource;
+use App\Http\Resources\Mobile\QuizAttempt\QuizAttemptResource ;
 
 
 // lInterfaces
@@ -72,13 +73,36 @@ class QuizController extends Controller
             $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
             $sub_user->subUserQuiz()->syncWithoutDetaching($request->quiz_id);
 
-            $attempt = $sub_user->subUserQuizAttemptOpen()->first();
-            if (!$attempt) {
-                $sub_user->subUserAttempt()->attach($request->quiz_id);
+            $subUserQuiz = $sub_user->subUserQuizModel()->where('quiz_id',$request->quiz_id)->first();
+
+            $quiz_attempt = $subUserQuiz->quiz_attempts();
+            //
+            $quiz_attempt_open = $quiz_attempt->QuizAttemptOpen()->first();
+
+            if (!$quiz_attempt_open) {
+
+                $created_quiz_attempt = $quiz_attempt->create();
+
+                // open the first question
+                $quiz = $this->ModelRepository->findById($request->quiz_id);
+                $quiz_questions = $quiz->quiz_questionable()->get();
+                foreach ($quiz_questions as $key => $value) {
+                    $created_quiz_attempt->question_attempt()->create([
+                        'questionable_id'=> $value->questionable_id,
+                        'questionable_type'=> $value->questionable_type
+                        ]
+                    );
+                }
+                //  return $quiz_question->morph_to()->get();
+                 
             }
-            
-            return $model = $this->show($request->quiz_id);
-            
+
+            return $this -> MakeResponseSuccessful( 
+                [  new QuizAttemptResource ($quiz_attempt_open->first() )  ],
+                'Successful',
+                Response::HTTP_OK
+            ) ;
+
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -87,23 +111,6 @@ class QuizController extends Controller
             );
         }
     } 
-    public function  detach(MobileQuizApiRequest $request){
-        try {
-            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
-            $model->subUserQuiz()->detach($request->quiz_id);
 
-            return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($request->quiz_id) )  ],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
 
 }

@@ -11,17 +11,23 @@ use Illuminate\Support\Facades\Route;
 //  auth : have to get the access token 
 //  IfAuthChild : if parameter (sub_user_id) check if he is the child of the authenticated parent
     Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild']], fn ( ) : array => [
+        //McqQuestion
+            Route::name('mcq-question.')->prefix('/mcq-question')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'McqQuestionController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'McqQuestionController@show'                )->name('show'),
+                Route::get('/collection'                ,   'McqQuestionController@collection'          )->name('collection'),
+                Route::post('/attach'                    ,   'McqQuestionController@attach'              )->name('attach'),
+            ]),
         //True_false_question
             Route::name('true-false-question.')->prefix('/true-false-question')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'TrueFalseQuestionController@all'                 )->name('all'),
                 Route::get('/{id}/show'                 ,   'TrueFalseQuestionController@show'                )->name('show'),
                 Route::get('/collection'                ,   'TrueFalseQuestionController@collection'          )->name('collection'),
-                Route::get('/attach'                    ,   'TrueFalseQuestionController@attach'              )->name('attach'),
+                Route::post('/attach'                    ,   'TrueFalseQuestionController@attach'              )->name('attach'),
             ]),
         // quiz
             Route::name('quiz.')->prefix('/quiz')->group( fn ( ) : array => [
                 Route::post('/attach'                   ,   'QuizController@attach'              )->name('attach'),
-                Route::post('/detach'                   ,   'QuizController@detach'              )->name('detach'),
             ]), 
         //Subject
             Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
@@ -262,12 +268,7 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/{id}/show'                 ,   'McqAnswerController@show'                )->name('show'),
                 Route::get('/collection'                ,   'McqAnswerController@collection'          )->name('collection'),
             ]),
-        //McqQuestion
-            Route::name('mcq-question.')->prefix('/mcq-question')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'McqQuestionController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'McqQuestionController@show'                )->name('show'),
-                Route::get('/collection'                ,   'McqQuestionController@collection'          )->name('collection'),
-            ]),
+
         //Sub_user_lesson
             Route::name('sub-user-lesson.')->prefix('/sub-user-lesson')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'SubUserLessonController@all'                 )->name('all'),
