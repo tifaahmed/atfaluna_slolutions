@@ -534,5 +534,75 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::get('/collection-trash'          ,   'HeroController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'HeroController@show_trash'          )->name('show_trash'),
         ]),
+         //Friend
+            Route::name('friend.')->prefix('/friend')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'FriendController@all'                 )    ->name('all'),
+                Route::post(''                          ,   'FriendController@store'               )->name('store'),
+                Route::get('/{id}/show'                 ,   'FriendController@show'                )->name('show'),
+                Route::get('/collection'                ,   'FriendController@collection'          )->name('collection'),
+                Route::DELETE('/{id}'                   ,   'FriendController@destroy'             )->name('destroy'),
+                Route::post('/{id}/update'              ,   'FriendController@update'              )->name('update'),
+                Route::post('/{id}/restore'             ,   'FriendController@restore'             )->name('restore'),
+            
+                Route::DELETE('premanently-delete/{id}' ,   'FriendController@premanently_delete'  )->name('premanently_delete'),
+                Route::get('/collection-trash'          ,   'FriendController@collection_trash'    )->name('collection_trash'),
+                Route::get('/{id}/show-trash'           ,   'FriendController@show_trash'          )->name('show_trash'),
+            ]),
+            //Group_chat
+            Route::name('group_chat.')->prefix('/group_chat')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'GroupChatController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'GroupChatController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'GroupChatController@show'                )->name('show'),
+            Route::get('/collection'                ,   'GroupChatController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'GroupChatController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'GroupChatController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'GroupChatController@restore'             )->name('restore'),
+        
+            Route::DELETE('premanently-delete/{id}' ,   'GroupChatController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'GroupChatController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'GroupChatController@show_trash'          )->name('show_trash'),
+        ]),
+        //Massage
+        Route::name('massage.')->prefix('/massage')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'MassageController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'MassageController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'MassageController@show'                )->name('show'),
+            Route::get('/collection'                ,   'MassageController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'MassageController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'MassageController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'MassageController@restore'             )->name('restore'),
+        
+            Route::DELETE('premanently-delete/{id}' ,   'MassageController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'MassageController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'MassageController@show_trash'          )->name('show_trash'),
+        ]),
+        //MassageImage
+        Route::name('massage_image.')->prefix('/massage_image')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'MassageImageController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'MassageImageController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'MassageImageController@show'                )->name('show'),
+            Route::get('/collection'                ,   'MassageImageController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'MassageImageController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'MassageImageController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'MassageImageController@restore'             )->name('restore'),
+        
+            Route::DELETE('premanently-delete/{id}' ,   'MassageImageController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'MassageImageController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'MassageImageController@show_trash'          )->name('show_trash'),
+        ]),
+        //Conversation
+        Route::name('conversation.')->prefix('/conversation')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'ConversationController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'ConversationController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'ConversationController@show'                )->name('show'),
+            Route::get('/collection'                ,   'ConversationController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'ConversationController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'ConversationController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'ConversationController@restore'             )->name('restore'),
+        
+            Route::DELETE('premanently-delete/{id}' ,   'ConversationController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'ConversationController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'ConversationController@show_trash'          )->name('show_trash'),
+        ]),
 ]);
 
