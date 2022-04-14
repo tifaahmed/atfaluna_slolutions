@@ -397,5 +397,6 @@ Route::name('introduction_content.')->prefix('/introduction_content')->group( fn
                 Route::get('/{id}/show'                 ,   'SubUserQuizController@show'                )->name('show'),
                 Route::get('/collection'                ,   'SubUserQuizController@collection'          )->name('collection'),
             ]),
+        ]),
     ]);
 
