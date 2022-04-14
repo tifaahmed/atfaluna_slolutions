@@ -172,37 +172,14 @@ use Illuminate\Support\Facades\Route;
         Route::name('friend.')->prefix('/friend')->group( fn ( ) : array => [
             Route::get('/'                          ,   'FriendController@all'                 )    ->name('all'),
             Route::post(''                          ,   'FriendController@store'               )->name('store'),
-            Route::get('/{id}/show'                 ,   'FriendController@show'                )->name('show'),
             Route::get('/collection'                ,   'FriendController@collection'          )->name('collection'),
             Route::DELETE('/{id}'                   ,   'FriendController@destroy'             )->name('destroy'),
-            Route::post('/{id}/update'              ,   'FriendController@update'              )->name('update'),
-        ]),
-        //Group_chat
-        Route::name('group_chat.')->prefix('/group_chat')->group( fn ( ) : array => [
-        Route::get('/'                          ,   'GroupChatController@all'                 )    ->name('all'),
-        Route::post(''                          ,   'GroupChatController@store'               )->name('store'),
-        Route::get('/{id}/show'                 ,   'GroupChatController@show'                )->name('show'),
-        Route::get('/collection'                ,   'GroupChatController@collection'          )->name('collection'),
-        Route::DELETE('/{id}'                   ,   'GroupChatController@destroy'             )->name('destroy'),
-        Route::post('/{id}/update'              ,   'GroupChatController@update'              )->name('update'),
         ]),
         //Massage
         Route::name('massage.')->prefix('/massage')->group( fn ( ) : array => [
         Route::get('/'                          ,   'MassageController@all'                 )    ->name('all'),
         Route::post(''                          ,   'MassageController@store'               )->name('store'),
-        Route::get('/{id}/show'                 ,   'MassageController@show'                )->name('show'),
         Route::get('/collection'                ,   'MassageController@collection'          )->name('collection'),
-        Route::DELETE('/{id}'                   ,   'MassageController@destroy'             )->name('destroy'),
-        Route::post('/{id}/update'              ,   'MassageController@update'              )->name('update'),
-        ]),
-        //MassageImage
-        Route::name('massage_image.')->prefix('/massage_image')->group( fn ( ) : array => [
-        Route::get('/'                          ,   'MassageImageController@all'                 ) ->name('all'),
-        Route::post(''                          ,   'MassageImageController@store'               )->name('store'),
-        Route::get('/{id}/show'                 ,   'MassageImageController@show'                )->name('show'),
-        Route::get('/collection'                ,   'MassageImageController@collection'          )->name('collection'),
-        Route::DELETE('/{id}'                   ,   'MassageImageController@destroy'             )->name('destroy'),
-        Route::post('/{id}/update'              ,   'MassageImageController@update'              )->name('update'),
         ]),
         //Conversation
         Route::name('conversation.')->prefix('/conversation')->group( fn ( ) : array => [
@@ -211,7 +188,6 @@ use Illuminate\Support\Facades\Route;
             Route::get('/{id}/show'                 ,   'ConversationController@show'                )->name('show'),
             Route::get('/collection'                ,   'ConversationController@collection'          )->name('collection'),
             Route::DELETE('/{id}'                   ,   'ConversationController@destroy'             )->name('destroy'),
-            Route::post('/{id}/update'              ,   'ConversationController@update'              )->name('update'),
         ]),
     ]);
     
@@ -421,5 +397,6 @@ Route::name('introduction_content.')->prefix('/introduction_content')->group( fn
                 Route::get('/{id}/show'                 ,   'SubUserQuizController@show'                )->name('show'),
                 Route::get('/collection'                ,   'SubUserQuizController@collection'          )->name('collection'),
             ]),
+        ]),
     ]);
 

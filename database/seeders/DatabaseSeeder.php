@@ -8,6 +8,7 @@ class DatabaseSeeder extends Seeder {
     public function run( ) {
         $this -> call ( basics::class );
 
+        $this -> call ( LessonType::class );
         $this -> call ( RolesAndPermissionsSeeder::class );
         $this -> call ( CountrySeeder::class );
         $this -> call ( UserSeeder::class );
