@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuizQuestionablesTable extends Migration
+class CreateQuestionAttemptsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,19 @@ class CreateQuizQuestionablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('quiz_questionables', function (Blueprint $table) {
+        Schema::create('question_attempts', function (Blueprint $table) {
             $table->increments('id');//[pk]
 
-            $table->integer('quiz_id')->unsigned();
-            $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade');
+            $table->integer('quiz_attempt_id')->unsigned();
+            $table->foreign('quiz_attempt_id')->references('id')->on('quiz_attempts')->onDelete('cascade');
 
-            $table->integer('position')->default(0);
+            $table->enum('status',['closed','open'])->default('open');
+            $table->boolean('answer')->default('0'); //[default:false]            
 
             $table->integer('questionable_id'); //[note: 'morphs_id (mcq_questions_id , true_false_question_id)']
             $table->string('questionable_type'); //[note: 'morphs_type (Mcq_question , True_false_question)']
             
             $table->timestamps();
-
         });
     }
 
@@ -36,6 +36,6 @@ class CreateQuizQuestionablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quiz_questionables');
+        Schema::dropIfExists('question_attempts');
     }
 }

@@ -68,6 +68,24 @@ class TrueFalseQuestionController extends Controller
             );
         }
     }
-    
+    public function attach(Request $request) {
 
+        try {
+            // attach
+            $this->ModelRepository->attachQuizQuestionAttempt($request->question_id,$model->id);
+
+            return $this -> MakeResponseSuccessful( 
+                [ 'Successful' ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+    
 }

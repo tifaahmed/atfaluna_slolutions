@@ -19,17 +19,24 @@ class TrueFalseQuestionResource extends JsonResource
         $basic = Basic::find(1);
 
         return [
+            'type'       => 'TrueFalseQuestion',
+
             'id'             => $this->id,
-            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)),
-            'videos'          => Storage::disk('public')->exists($this->videos) ? asset(Storage::url($this->videos))  : asset(Storage::url($basic->item)),
+            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image)) : asset(Storage::url($basic->item)),
+
+            'video'             => $row && Storage::disk('public')->exists($row->video) ? asset(Storage::url($row->video)) : asset(Storage::url($basic->item)),
+            'audio'             => $row && Storage::disk('public')->exists($row->audio) ? asset(Storage::url($row->audio)) : asset(Storage::url($basic->item)),
+            'title'             => $row ? $row->title : null,
+            'header'            => $row ? $row->header : null,
+            'language'          => $row ? $row->language : null,
+
+
+            
             'answer'         => $this->answer,
             
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
-            'languages'     => $this->True_false_question_language,
-            'name'          => $row ? $row->name:'',
-
         ];        
     }
 }
