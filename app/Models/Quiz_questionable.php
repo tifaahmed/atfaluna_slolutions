@@ -17,14 +17,19 @@ class Quiz_questionable extends Model
         'quiz_id',//required , integer , unsigned
         'position',//integer , default 0
 
-        'quiz_questionable_id',// integer , required , exist / ex: mcq_questions_id , true_false_question_id
-        'quiz_questionable_type',// string , required /ex: Mcq_question , True_false_question
+        'questionable_id',// integer , required , exist / ex: mcq_questions_id , true_false_question_id
+        'questionable_type',// string , required /ex: Mcq_question , True_false_question
     ];
     protected static function boot()
     {
         parent::boot();
-        Quiz_question::creating(function ($model) {
-            $model->position = Quiz_question::max('position') + 1;
+        Quiz_questionable::creating(function ($model) {
+            $model->position = Quiz_questionable::max('position') + 1;
         });
     }
+        // morphTo
+        public function morph_to(){
+            return $this->morphTo('questionable');
+        }
+
 }

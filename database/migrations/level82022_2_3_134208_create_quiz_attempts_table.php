@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubUserQuizzesTable extends Migration
+class CreateQuizAttemptsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,21 @@ class CreateSubUserQuizzesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_user_quizzes', function (Blueprint $table) {
+        Schema::create('quiz_attempts', function (Blueprint $table) {
             $table->increments('id');//[pk]
 
-            $table->integer('sub_user_id')->unsigned();
-            $table->foreign('sub_user_id')->references('id')->on('sub_users')->onDelete('cascade');
+            $table->integer('sub_user_quiz_id')->unsigned();
+            $table->foreign('sub_user_quiz_id')->references('id')->on('sub_user_quizzes')->onDelete('cascade');
 
-            $table->integer('quiz_id')->unsigned();
-            $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade');
-
+            
             $table->integer('score')->default('0');
+
+            $table->enum('status',['closed','open'])->default('open');
+
             $table->timestamps();
         });
     }
-    
+
     /**
      * Reverse the migrations.
      *
@@ -34,6 +35,6 @@ class CreateSubUserQuizzesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_user_quizzes');
+        Schema::dropIfExists('quiz_attempts');
     }
 }

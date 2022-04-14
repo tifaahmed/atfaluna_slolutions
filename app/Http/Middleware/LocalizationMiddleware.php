@@ -17,7 +17,7 @@ class LocalizationMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->language){
+        if(isset($request->language) && $request->language){
             App::setLocale($request->language);
         }
         return $next($request);    
