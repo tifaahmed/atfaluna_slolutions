@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Conversation;
 use App\Models\Sub_user;
-use App\Models\Massage_image;
 
 class Massage extends Model
 {

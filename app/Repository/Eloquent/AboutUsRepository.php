@@ -6,7 +6,7 @@ use App\Models\About_us as ModelName;
 use App\Repository\AboutUsRepositoryInterface;
 
 class AboutUsRepository extends BaseRepository implements AboutUsRepositoryInterface
-{
+{  
 
 	/**
 	 * @var Model

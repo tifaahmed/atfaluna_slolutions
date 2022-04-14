@@ -79,7 +79,12 @@ namespace App\Providers;
     use App\Repository\Eloquent\QuestionTagRepository;
     use App\Repository\Eloquent\QuizTypeRepository;
 
-    
+    use App\Repository\Eloquent\FriendRepository;
+    use App\Repository\Eloquent\GroupChatRepository;
+    use App\Repository\Eloquent\MassageImageRepository;
+    use App\Repository\Eloquent\MassageRepository;
+    use App\Repository\Eloquent\ConversationRepository;
+
     // Role  Permission
         use App\Repository\Eloquent\RolePermissionRepository\PermissionRepository;
         use App\Repository\Eloquent\RolePermissionRepository\RoleRepository;
@@ -166,6 +171,12 @@ namespace App\Providers;
 
     use App\Repository\QuestionTagRepositoryInterface;
     use App\Repository\QuizTypeRepositoryInterface;
+
+    use App\Repository\FriendRepositoryInterface;
+    use App\Repository\GroupChatRepositoryInterface;
+    use App\Repository\MassageImageRepositoryInterface;
+    use App\Repository\MassageRepositoryInterface;
+    use App\Repository\ConversationRepositoryInterface;
 
     // Role  Permission   
 
@@ -266,6 +277,12 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(HeroLessonRepositoryInterface::class,HeroLessonRepository::class);
 
         $this->app->bind(QuestionTagRepositoryInterface::class,QuestionTagRepository::class);
+
+        $this->app->bind(MassageRepositoryInterface::class,MassageRepository::class);
+        $this->app->bind(MassageImageRepositoryInterface::class,MassageImageRepository::class);
+        $this->app->bind(GroupChatRepositoryInterface::class,GroupChatRepository::class);
+        $this->app->bind(FriendRepositoryInterface::class,FriendRepository::class);
+        $this->app->bind(ConversationRepositoryInterface::class,ConversationRepository::class);
 
         // Role  Permission
         $this->app->bind(PermissionRepositoryInterface::class,PermissionRepository::class);

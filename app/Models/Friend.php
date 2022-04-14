@@ -14,10 +14,11 @@ class Friend extends Model
     protected $table = 'friends';
 
     protected $fillable = [
-        'status',//required , boolean
+        'online',//required , boolean
         'accept',//required , boolean
         'block',//required , boolean
         'sub_user_id',//unsigned  
+        'recevier_id',//unsigned  
 
     ];
     // relations
