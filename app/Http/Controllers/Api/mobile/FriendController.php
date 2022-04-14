@@ -82,42 +82,4 @@ class FriendController extends Controller
             );
         }
     }
-
-
-
-    public function show($id) {
-        try {
-            return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($id) )  ],
-                'Successful',
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-    
-    public function update(modelUpdateRequest $request ,$id) {
-        try {
-            $this->ModelRepository->update( $id,Request()->all()) ;
-            $model = new ModelResource( $this->ModelRepository->findById($id) ); 
-
-            return $this -> MakeResponseSuccessful( 
-                    [ $model],
-                    'Successful'               ,
-                    Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        } 
-    }
-
 }

@@ -8,7 +8,6 @@ use Illuminate\Http\Response ;
 
 // Requests
 use App\Http\Requests\Api\Massage\MassageApiRequest as modelInsertRequest;
-use App\Http\Requests\Api\Massage\MassageUpdateApiRequest as modelUpdateRequest;
 
 // Resources
 use App\Http\Resources\Mobile\Collections\MassageCollection as ModelCollection;
@@ -65,59 +64,5 @@ class MassageController extends Controller
                 Response::HTTP_NOT_FOUND
             );
         }
-    }
-    
-    public function destroy($id) {
-        try {
-            return $this -> MakeResponseSuccessful( 
-                [$this->ModelRepository->deleteById($id)] ,
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [ $e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-
-
-
-    public function show($id) {
-        try {
-            return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($id) )  ],
-                'Successful',
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-    
-    public function update(modelUpdateRequest $request ,$id) {
-        try {
-            $this->ModelRepository->update( $id,Request()->all()) ;
-            $model = new ModelResource( $this->ModelRepository->findById($id) ); 
-
-            return $this -> MakeResponseSuccessful( 
-                    [ $model],
-                    'Successful'               ,
-                    Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        } 
-    }
-
+    } 
 }

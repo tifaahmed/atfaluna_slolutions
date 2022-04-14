@@ -8,7 +8,6 @@ use Illuminate\Http\Response ;
 
 // Requests
 use App\Http\Requests\Api\Conversation\ConversationApiRequest as modelInsertRequest;
-use App\Http\Requests\Api\Conversation\ConversationUpdateApiRequest as modelUpdateRequest;
 
 // Resources
 use App\Http\Resources\Dashboard\Collections\ConversationCollection as ModelCollection;
@@ -101,22 +100,4 @@ class ConversationController extends Controller
         }
     }
     
-    public function update(modelUpdateRequest $request ,$id) {
-        try {
-            $this->ModelRepository->update( $id,Request()->all()) ;
-            $model = new ModelResource( $this->ModelRepository->findById($id) ); 
-
-            return $this -> MakeResponseSuccessful( 
-                    [ $model],
-                    'Successful'               ,
-                    Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        } 
-    }
 }

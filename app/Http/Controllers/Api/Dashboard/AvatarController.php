@@ -210,6 +210,7 @@ class AvatarController extends Controller
                 );
             }
         }
+        
     // trash
 
 }

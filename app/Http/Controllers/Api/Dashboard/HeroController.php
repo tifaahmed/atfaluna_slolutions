@@ -248,6 +248,13 @@ class HeroController extends Controller
         }
         public function premanently_delete($id) {
             try {
+                $model = $this->ModelRepository->findTrashedById($id);
+                $file_key_names =['image'];
+                foreach ($file_key_names as $value) {
+                    //delete folder that has all this row files if exists
+                    $this->HelperDeleteDirectory($this->HelperGetDirectory($model->$value));
+                }
+
                 return $this -> MakeResponseSuccessful( 
                     [$this->ModelRepository->PremanentlyDeleteById($id)] ,
                     'Successful'               ,
