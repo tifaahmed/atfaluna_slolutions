@@ -24,7 +24,7 @@ class QuizAttempt extends Model
         return $query->where('status','open');
     }
 
-    public function question_attempt (){
+    public function question_attempts(){
         return $this->HasMany(QuestionAttempt::class);
     }
 }

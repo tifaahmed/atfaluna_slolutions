@@ -21,14 +21,14 @@ class QuestionAttemptResource extends JsonResource
     public function toArray($request)
     {
         $all = [];
-        $all += array('id'            => $this->id);
-        $all += array('quiz_attempt_id'            => $this->quiz_attempt_id);
+        $all += array('id'                => $this->id);
+        $all += array('quiz_attempt_id'   => $this->quiz_attempt_id);
         $all += array('status'            => $this->status);
         $all += array('answer'            => $this->answer);
 
         if( $this->questionable_type == 'App\Models\True_false_question' ){
             $all += array('questionable'            => new TrueFalseQuestionResource ( $this->questionable ) );
-        }else{
+        }else if( $this->questionable_type == 'App\Models\Mcq_question' ){
             $all += array('questionable'            => new McqQuestionResource ( $this->questionable ) );
         }
         return $all;  

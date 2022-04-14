@@ -27,7 +27,9 @@ use Illuminate\Support\Facades\Route;
             ]),
         // quiz
             Route::name('quiz.')->prefix('/quiz')->group( fn ( ) : array => [
-                Route::post('/attach'                   ,   'QuizController@attach'              )->name('attach'),
+                Route::post('/start-quiz'                   ,   'QuizController@startQuiz'              )->name('start-quiz'),
+                Route::post('/answer-question'                   ,   'QuizController@answerQuestion'              )->name('start-question'),
+                Route::post('/finish-quiz'                   ,   'QuizController@finishQuiz'              )->name('finish-question'),
             ]), 
         //Subject
             Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
