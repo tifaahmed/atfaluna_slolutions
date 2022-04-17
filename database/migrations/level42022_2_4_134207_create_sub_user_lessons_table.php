@@ -17,10 +17,9 @@ class CreateSubUserLessonsTable extends Migration
             $table->increments('id');//[pk]
 
             $table->integer('sub_user_id')->unsigned();
-            $table->foreign('sub_user_id')->references('id')->on('sub_users');
+            $table->foreign('sub_user_id')->references('id')->on('sub_users')->onDelete('cascade');
             $table->integer('lesson_id')->unsigned();
-            $table->foreign('lesson_id')->references('id')->on('lessons');
-            $table->integer('score')->default('0');
+            $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade');
         });
     }
     /**

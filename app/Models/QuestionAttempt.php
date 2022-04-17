@@ -25,12 +25,14 @@ class QuestionAttempt extends Model
     public function scopeQuestionAttemptOpen($query){
         return $query->where('status','open');
     }
+    public function scopeQuestionAttemptCorrect($query){
+        return $query->where('answer','1');
+    }
     public function quiz_attempt (){
         return $this->belongsTo(QuizAttempt::class);
     }
 
     public function questionable(){
-        return $this->morphTo();
+        return $this->morphTo('questionable');
     }
-
 }

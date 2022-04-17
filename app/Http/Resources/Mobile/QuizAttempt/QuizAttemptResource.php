@@ -26,7 +26,7 @@ class QuizAttemptResource extends JsonResource
             'id'            => $this->id,
             'score'        => $this->score,
             'status'          => $this->status,
-            'question_attempts'          => new QuestionAttemptCollection( $this->question_attempt ),
+            'question_attempts'          => new QuestionAttemptCollection( $this->question_attempts ),
         ];        
     }
 }

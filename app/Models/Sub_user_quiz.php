@@ -17,9 +17,10 @@ class Sub_user_quiz extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'sub_user_id',//unsigned
-        'quiz_id',//unsigned
-        'score',//required integer
+        'sub_user_id',//integer , exist
+        'quiz_id',//integer , exist
+        'score',// integer / default:0
+        'pass', // boolean / default:0
     ];
     // relations
         // belongsTo

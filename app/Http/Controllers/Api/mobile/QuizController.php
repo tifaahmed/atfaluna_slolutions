@@ -70,37 +70,12 @@ class QuizController extends Controller
     // relation
     public function startQuiz(MobileQuizApiRequest $request){
         try {
-            $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
-            $sub_user->subUserQuiz()->syncWithoutDetaching($request->quiz_id);
-            $subUserQuiz = $sub_user->subUserQuizModel()->where('quiz_id',$request->quiz_id)->first();
-
-            $quiz_attempt = $subUserQuiz->quiz_attempts();
-            //
-            $quiz_attempt = $quiz_attempt->QuizAttemptOpen()->first();
-
-            if (!$quiz_attempt) {
-
-                $quiz_attempt = $quiz_attempt->create();
-
-                // add all question with open status
-                $quiz = $this->ModelRepository->findById($request->quiz_id);
-                $quiz_questions = $quiz->quiz_questionable()->get();
-                foreach ($quiz_questions as $key => $value) {
-                    $quiz_attempt->question_attempts()->create([
-                        'questionable_id'=> $value->questionable_id,
-                        'questionable_type'=> $value->questionable_type
-                        ]
-                    );
-                }
-                 
-            }
-
+            $quiz_attempt = $this->ModelRepository->startQuiz($request->sub_user_id,$request->quiz_id);
             return $this -> MakeResponseSuccessful( 
-                [  new QuizAttemptResource ($quiz_attempt->first() )  ],
+                [  new QuizAttemptResource ($quiz_attempt )  ],
                 'Successful',
                 Response::HTTP_OK
             ) ;
-
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -112,26 +87,17 @@ class QuizController extends Controller
 
     public function answerQuestion(Request $request){
         try {
-
-            $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
-            $sub_user_quiz = $sub_user->subUserQuizModel()->where('quiz_id',$request->quiz_id)->first();
-            $quiz_attempt_open = $sub_user_quiz->quiz_attempts()->QuizAttemptOpen()->first();
-            
-            $question_attempt = $quiz_attempt_open->question_attempts()->QuestionAttemptOpen()->find($request->question_attempt_id);
-
-            if ($question_attempt) {
-                $question_attempt->update([
-                    'answer'=>$request->answer,
-                    'status'=>'closed',
-                ]);
-            }
-
+            $question_attempt = $this->ModelRepository->answerQuestion(
+                 $request->sub_user_id,      
+                 $request->quiz_id,
+                 $request->question_attempt_id,
+                 $request->answer
+            );
             return $this -> MakeResponseSuccessful( 
                 [ $question_attempt   ],
                 'Successful',
                 Response::HTTP_OK
             ) ;
-
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -142,29 +108,15 @@ class QuizController extends Controller
     } 
 
     public function finishQuiz(MobileQuizApiRequest $request){
-        $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
-        $sub_user_quiz = $sub_user->subUserQuizModel()->where('quiz_id',$request->quiz_id)->first();
-        $quiz_attempt= $sub_user_quiz->quiz_attempts();
-        $quiz_attempt_open = $quiz_attempt->QuizAttemptOpen()->first();
-
-        $question_attempt = $quiz_attempt_open->question_attempts()->get();
-
-        $score = 0;
-        foreach ($question_attempt as $key => $value) {
-            $score = $score + $value->score;
+        try {
+            return $this->ModelRepository->finishQuiz($request->sub_user_id,$request->quiz_id);
+        } catch (\Exception $e) {
+        return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
         }
-
-        if ($quiz_attempt_open) {
-            $quiz_attempt_open->update([
-                'status'=>'closed',
-                'score'=>$score,
-            ]);
-        }
-
-        $sub_user_quiz->update([                
-            'score'=>$quiz_attempt-max('score')->first(),
-        ]);
-        
     }
 
 

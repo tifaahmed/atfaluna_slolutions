@@ -72,10 +72,12 @@ class LessonController extends Controller
     // relation
     public function attach(MobileLessonApiRequest $request){
         try {
-            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            // foreach ($request->lesson_id as $key => $value) {
-                $model->subUserLesson()->syncWithoutDetaching($request->lesson_ids,['score'=> $request->score]);
-            // }
+            $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
+            $model = $this->ModelRepository->findById($request->lesson_id);
+            $subUserLesson =   $sub_user->subUserLesson()->syncWithoutDetaching($request->lesson_id);
+
+            $sub_user->update(['points' => $sub_user->points + $model->points]);
+
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
                 'Successful'               ,
@@ -89,22 +91,5 @@ class LessonController extends Controller
             );
         }
     } 
-        public function  detach(MobileLessonApiRequest $request){
-        try {
-            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
-            $model->subUserlesson()->detach($request->lesson_id);
 
-            return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($request->lesson_id) )  ],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
 }
