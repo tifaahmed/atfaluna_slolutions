@@ -76,7 +76,6 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/{id}/show'                 ,   'LessonController@show'                )->name('show'),
                 Route::get('/collection'                ,   'LessonController@collection'          )->name('collection'),
                 Route::post('/attach'                   ,   'LessonController@attach'              )->name('attach'),
-                Route::post('/detach'                   ,   'LessonController@detach'              )->name('detach'),
             ]), 
         // user
             Route::name('user.')->prefix('/user')->group( fn ( ) : array => [

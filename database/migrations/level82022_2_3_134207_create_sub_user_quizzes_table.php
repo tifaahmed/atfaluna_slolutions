@@ -23,6 +23,7 @@ class CreateSubUserQuizzesTable extends Migration
             $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade');
 
             $table->integer('score')->default('0');
+            $table->integer('pass')->default('0');
             $table->timestamps();
         });
     }
