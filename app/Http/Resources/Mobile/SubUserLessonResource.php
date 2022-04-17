@@ -14,9 +14,7 @@ class SubUserLessonResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'            => $this->id,
-            'score'         => $this->score,
-                
+            'id'            => $this->id,                
             // 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             // 'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
