@@ -26,7 +26,6 @@ class SubUserLessonApiRequest extends FormRequest
         return [
             'sub_user_id'      =>  [ 'required' ,'integer'] ,
             'lesson_id'         =>  [ 'required' ,'integer'] ,
-            'score'             =>  [ 'required' ,'integer'] ,
         ];
     }
 }

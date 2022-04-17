@@ -19,17 +19,17 @@ class CertificateResource extends JsonResource
         return [
             'id'               => $this->id,
             
-            'image_one'        =>  Storage::disk('public')->exists($this->image_one) ? Storage::url($this->image_one)  : null,
-            'image_two'        =>  Storage::disk('public')->exists($this->image_two) ? Storage::url($this->image_two)  : null,
+            'image_one'        =>  Storage::disk('public')->exists($this->image_one) ? asset(Storage::url($this->image_one))  : null,
+            'image_two'        =>  Storage::disk('public')->exists($this->image_one) ? asset(Storage::url($this->image_two))  : null,
             'min_point'        =>  $this->min_point,
             'max_point'        =>  $this->max_point,
+
+            'languages'     => $this->certificate_languages,
+            'title_one'          => $row ? $row->title_one:'',
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
-
-            'languages'     => $this->certificate_languages,
-            'title_one'          => $row ? $row->title_one:'',
 
         ];        
     }
