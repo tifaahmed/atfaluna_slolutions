@@ -75,9 +75,11 @@ class LessonController extends Controller
             $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
             $model = $this->ModelRepository->findById($request->lesson_id);
             $subUserLesson =   $sub_user->subUserLesson()->syncWithoutDetaching($request->lesson_id);
-
             $sub_user->update(['points' => $sub_user->points + $model->points]);
 
+            if (condition) {
+                # code...
+            }
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
                 'Successful'               ,

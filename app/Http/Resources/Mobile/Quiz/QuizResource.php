@@ -30,8 +30,8 @@ class QuizResource extends JsonResource
             'name'          => $row ? $row->name:'',
             'points'        => $this->points,
 
-            'mcq_questions'          => new McqQuestionCollection ($this->mcq_questions)  ,
-            'true_false_questions'   => new TrueFalseQuestionCollection ($this->true_false_questions)  ,
+            // 'mcq_questions'          => new McqQuestionCollection ($this->mcq_questions)  ,
+            // 'true_false_questions'   => new TrueFalseQuestionCollection ($this->true_false_questions)  ,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

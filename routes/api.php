@@ -7,10 +7,18 @@ use Illuminate\Support\Facades\Route;
         Route::post( '/login-social' ,   'authController@loginSocial'  ) -> name( 'loginSocial' ) ,
         Route::post( '/register' ,  'authController@register' )  -> name( 'register' ) ,    
     ]);
+
 //  LocalizationMiddleware : if parameter (language) exist change lange 
 //  auth : have to get the access token 
 //  IfAuthChild : if parameter (sub_user_id) check if he is the child of the authenticated parent
     Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild']], fn ( ) : array => [
+        // QuizAttempt
+        Route::name('quiz-attempt.')->prefix('/quiz-attempt')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'QuizAttemptController@all'                 )->name('all'),
+            Route::get('/{id}/show'                 ,   'QuizAttemptController@show'                )->name('show'),
+            Route::get('/collection'                ,   'QuizAttemptController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'SubUserController@destroy'                 )->name('destroy'),
+        ]),
         //McqQuestion
             Route::name('mcq-question.')->prefix('/mcq-question')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'McqQuestionController@all'                 )->name('all'),
@@ -376,12 +384,6 @@ Route::name('introduction_content.')->prefix('/introduction_content')->group( fn
                 Route::get('/'                          ,   'QuizTypeController@all'                 )->name('all'),
                 Route::get('/{id}/show'                 ,   'QuizTypeController@show'                )->name('show'),
                 Route::get('/collection'                ,   'QuizTypeController@collection'          )->name('collection'),
-            ]),
-        // McqAnswer
-            Route::name('mcq-answer.')->prefix('/mcq-answer')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'McqAnswerController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'McqAnswerController@show'                )->name('show'),
-                Route::get('/collection'                ,   'McqAnswerController@collection'          )->name('collection'),
             ]),
 
         //Sub_user_lesson
