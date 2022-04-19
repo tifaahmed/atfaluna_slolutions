@@ -66,7 +66,8 @@ class Kernel extends HttpKernel
         'LocalizationMiddleware' => \App\Http\Middleware\LocalizationMiddleware::class,
         'IfSuperAdmin' => \App\Http\Middleware\IfSuperAdminMiddleware::class,
         'IfAuthChild' => \App\Http\Middleware\IfAuthChildMiddleware::class,
+        'IfPlayTime' => \App\Http\Middleware\IfPlayTimeMiddleware::class,
 
-
+        
     ];
 }

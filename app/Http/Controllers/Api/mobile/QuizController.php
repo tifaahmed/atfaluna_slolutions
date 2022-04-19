@@ -8,7 +8,7 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\Mobile\Collections\QuizCollection as ModelCollection;
+use App\Http\Resources\Mobile\Collections\Quiz\QuizCollection as ModelCollection;
 use App\Http\Resources\Mobile\Quiz\QuizResource as ModelResource;
 use App\Http\Resources\Mobile\QuizAttempt\QuizAttemptResource ;
 

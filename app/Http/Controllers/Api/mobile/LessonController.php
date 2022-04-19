@@ -42,7 +42,11 @@ class LessonController extends Controller
     public function collection(Request $request){
         try {
             $model = $this->ModelRepository->filterPaginate($request->sub_user_id,$request->lesson_type_id,$request->hero_id, $request->prepage ? $request->prepage : 10);
-            return new ModelCollection ($model)  ;
+            if ( is_array($model) ) {
+                return new ModelCollection (  $model )  ;
+            }else{
+                return $model ;
+            }
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -73,15 +77,17 @@ class LessonController extends Controller
     public function attach(MobileLessonApiRequest $request){
         try {
             $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
-            $model = $this->ModelRepository->findById($request->lesson_id);
-            $subUserLesson =   $sub_user->subUserLesson()->syncWithoutDetaching($request->lesson_id);
-            $sub_user->update(['points' => $sub_user->points + $model->points]);
 
-            if (condition) {
-                # code...
+            $subUserLesson =   $sub_user->subUserLesson()->where('lesson_id',$request->lesson_id)->first();
+
+
+            if (!$subUserLesson) {
+                $subUserLesson = $sub_user->subUserLesson()->syncWithoutDetaching($request->lesson_id);
+                $model = $this->ModelRepository->findById($request->lesson_id);
+                $sub_user->update(['points' => $sub_user->points + $model->points]);
             }
             return $this -> MakeResponseSuccessful( 
-                ['Successful'],
+                [$subUserLesson],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;

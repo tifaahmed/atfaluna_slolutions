@@ -28,8 +28,10 @@ class McqAnswerResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            'name'          => $row ? $row->name:'',
-            'languages'     => $this->Mcq_answer_language,
+            'title'         => $row ? $row->title : '',
+            'audio'         => ( $row && Storage::disk('public')->exists($row->audio)) ? asset(Storage::url($row->audio))  : null,
+            'languages'     => $row ? $row->language : '',
+
         ];        
     }
 }

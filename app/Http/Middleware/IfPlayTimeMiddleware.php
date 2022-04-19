@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response ;
 use Carbon\Carbon;
-class IfAuthChildMiddleware
+class IfPlayTimeMiddleware
 {
     /**
      * Handle an incoming request.
@@ -20,20 +20,27 @@ class IfAuthChildMiddleware
     {
         if ($request->sub_user_id ) {
             $sub_user = Auth::user()->sub_user()->find($request->sub_user_id);
-			if( $sub_user){
+            $playTimes = $sub_user->playTime()->where('day',Carbon::now()->dayOfWeek)->get();
+            $flag = 0;
+            foreach ($playTimes as $key => $value) {
+                if (Carbon::now()->between($value->start, $value->end)) {
+                    $flag = 1 ;
+                }
+            }
+            if ($flag) {
                 return $next($request);
-            }else{
+            }else {
                 return Response()->json( 
                     [
-                        'message' => 'not child for the authenticated parent.' ,
+                        'message' => 'now is not play time.' ,
                         'check' => 'false.' ,
                         'code'   => Response::HTTP_UNAUTHORIZED           ,
                     ],
                 );
-            }
+            }    
         }else{
             return $next($request);
         }
-        
     }
+
 }

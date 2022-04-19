@@ -7,6 +7,34 @@ use Illuminate\Support\Facades\Route;
         Route::post( '/login-social' ,   'authController@loginSocial'  ) -> name( 'loginSocial' ) ,
         Route::post( '/register' ,  'authController@register' )  -> name( 'register' ) ,    
     ]);
+//  LocalizationMiddleware : if parameter (language) exist change lange 
+//  auth : have to get the access token 
+//  IfAuthChild : if parameter (sub_user_id) check if he is the child of the authenticated parent   
+// IfPlayTime : if child not in play time
+Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild','IfPlayTime']], fn ( ) : array => [
+
+    //Subject
+    Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
+        Route::get('/'                          ,   'SubjectController@all'                 )->name('all'),
+        Route::get('/{id}/show'                 ,   'SubjectController@show'                )->name('show'),
+        Route::get('/collection'                ,   'SubjectController@collection'          )->name('collection'),
+        Route::post('/attach'                   ,   'SubjectController@attach'              )->name('attach'),
+        Route::post('/detach'                   ,   'SubjectController@detach'              )->name('detach'),
+    ]),
+    // Lesson
+    Route::name('lesson.')->prefix('/lesson')->group( fn ( ) : array => [
+        Route::get('/'                          ,   'LessonController@all'                 )->name('all'),
+        Route::get('/{id}/show'                 ,   'LessonController@show'                )->name('show'),
+        Route::get('/collection'                ,   'LessonController@collection'          )->name('collection'),
+        Route::post('/attach'                   ,   'LessonController@attach'              )->name('attach'),
+    ]), 
+    //hero
+    Route::name('hero.')->prefix('/hero')->group( fn ( ) : array => [
+        Route::get('/'                          ,   'HeroController@all'                 )    ->name('all'),
+        Route::get('/{id}/show'                 ,   'HeroController@show'                )->name('show'),
+        Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
+    ]),
+]);
 
 //  LocalizationMiddleware : if parameter (language) exist change lange 
 //  auth : have to get the access token 
@@ -39,14 +67,9 @@ use Illuminate\Support\Facades\Route;
                 Route::post('/answer-question'                   ,   'QuizController@answerQuestion'              )->name('start-question'),
                 Route::post('/finish-quiz'                   ,   'QuizController@finishQuiz'              )->name('finish-question'),
             ]), 
-        //Subject
-            Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'SubjectController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'SubjectController@show'                )->name('show'),
-                Route::get('/collection'                ,   'SubjectController@collection'          )->name('collection'),
-                Route::post('/attach'                   ,   'SubjectController@attach'              )->name('attach'),
-                Route::post('/detach'                   ,   'SubjectController@detach'              )->name('detach'),
-            ]),
+    
+                
+
         // avatar
             Route::name('avatar.')->prefix('/avatar')->group( fn ( ) : array => [
                 Route::post('/attach'            ,   'AvatarController@attach'              )->name('attach'),
@@ -78,13 +101,7 @@ use Illuminate\Support\Facades\Route;
             Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
                 Route::post( '/logout' ,  'authController@logout' )  -> name( 'logout' ) ,
             ]),
-        // Lesson
-            Route::name('lesson.')->prefix('/lesson')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'LessonController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'LessonController@show'                )->name('show'),
-                Route::get('/collection'                ,   'LessonController@collection'          )->name('collection'),
-                Route::post('/attach'                   ,   'LessonController@attach'              )->name('attach'),
-            ]), 
+
         // user
             Route::name('user.')->prefix('/user')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'UserController@all'                 )->name('all'),
@@ -147,12 +164,7 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/{id}/show'                 ,   'QuizController@show'                )->name('show'),
                 Route::get('/collection'                ,   'QuizController@collection'          )->name('collection'),
             ]), 
-        //hero
-            Route::name('hero.')->prefix('/hero')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'HeroController@all'                 )    ->name('all'),
-                Route::get('/{id}/show'                 ,   'HeroController@show'                )->name('show'),
-                Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
-            ]), 
+ 
         //Sub-subject
             Route::name('sub-subject.')->prefix('/sub-subject')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'SubSubjectController@all'                 )->name('all'),

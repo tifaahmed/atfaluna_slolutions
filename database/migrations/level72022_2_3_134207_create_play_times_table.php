@@ -15,7 +15,7 @@ class CreatePlayTimesTable extends Migration
     {
         Schema::create('play_times', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->enum('day',[1,2,3,4,5,6,7]);
+            $table->enum('day',[1,2,3,4,5,6,0]);
             $table->boolean('status'); //[default:1 , note: '0 off , 1 on']
             $table->time('start');//[note: 'time only']
             $table->time('end');//[note: 'time only']

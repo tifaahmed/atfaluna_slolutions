@@ -27,7 +27,7 @@ class PlayTimeApiRequest extends FormRequest
         return [
             'day'=>[
                 'required',
-                    Rule::in([1,2,3,4,5,6,7]),
+                    Rule::in([1,2,3,4,5,6,0]),
                 ],
             'status'                =>  [  'required' , 'boolean' ] ,
             'start'                 =>  [  'required' , 'date_format:H:i:s' ] ,

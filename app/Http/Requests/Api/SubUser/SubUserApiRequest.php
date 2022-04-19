@@ -30,7 +30,7 @@ class SubUserApiRequest extends FormRequest
                     Rule::in(['boy', 'girl']),
             ],
             'name'       =>  [ 'required' ] ,
-            'age'        =>  [ 'required' ,'integer'] ,
+            'age'        =>  [ 'required' ,'integer','exists:ages,age'] ,
             'points'     =>  [ 'integer' ] ,
             'user_id'    =>  [ 'required','integer' ,'exists:users,id'] ,
             'avatar_ids' =>  [ 'sometimes','array','exists:avatars,id' ] ,

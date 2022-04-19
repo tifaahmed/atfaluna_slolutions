@@ -124,7 +124,9 @@ class SubUserController extends Controller
             $this->ModelRepository->attachCertificates($request->certificat_ids,$id);
             $this->ModelRepository->attachSubjects($request->subject_ids,$id);
             $this->ModelRepository->attachLessons($request->lesson_ids,$id);
+            
             $this->ModelRepository->attachAgeGroups($request->age_group_ids,$id);
+            $this->ModelRepository->attachAgeGroupByAge($sub_user->age,$sub_user->id) ;
 
             $modal = new ModelResource($this->ModelRepository->findById($id)); 
 

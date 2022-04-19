@@ -17,22 +17,22 @@ use App\Http\Resources\Mobile\Hero\HeroResource as ModelResource;
 
 // lInterfaces
 use App\Repository\HeroRepositoryInterface as ModelInterface;
-use App\Repository\HeroLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages
 
 class HeroController extends Controller
 {
     private $Repository;
-    private $RepositoryLanguage;
-    public function __construct(ModelInterface $Repository,ModelInterfaceLanguage $RepositoryLanguage)
+    public function __construct(ModelInterface $Repository)
     {
         $this->ModelRepository = $Repository;
-        $this->ModelRepositoryLanguage = $RepositoryLanguage;
-        $this->folder_name = 'hero';
-        $this->related_language = 'hero_id';
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model =  $this->ModelRepository->filterAll($request->sub_user_id) ;
+            if ( is_array($model) ) {
+                return new ModelCollection (  $model )  ;
+            }else{
+                return $model ;
+            }
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -43,8 +43,12 @@ class HeroController extends Controller
     }
     public function collection(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
-
+            $model = $this->ModelRepository->filterPaginate( $request->sub_user_id , $request->PerPage ? $request->PerPage : 10)  ;
+            if ( is_array($model) ) {
+                return new ModelCollection (  $model )  ;
+            }else{
+                return $model ;
+            }
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
