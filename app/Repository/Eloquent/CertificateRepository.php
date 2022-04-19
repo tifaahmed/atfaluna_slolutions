@@ -22,9 +22,6 @@ class CertificateRepository extends BaseRepository implements CertificateReposit
 		$this->model =  $model;
 	}
 
-
-
-
 	
 }
 

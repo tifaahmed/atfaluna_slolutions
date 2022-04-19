@@ -9,6 +9,7 @@ use Illuminate\Http\Response ;
 
 // Resources
 use App\Http\Resources\Mobile\Collections\CertificateCollection as ModelCollection;
+
 use App\Http\Resources\Mobile\CertificateResource as ModelResource;
 
 
@@ -42,7 +43,7 @@ class CertificateController extends Controller
     public function collection(Request $request){
         // return $request->language;
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
+            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10)) ;
 
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
