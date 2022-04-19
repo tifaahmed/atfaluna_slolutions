@@ -5,6 +5,7 @@ namespace App\Http\Resources\Mobile\McqQuestion;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Basic;
+use App\Http\Resources\Mobile\Collections\McqAnswer\McqAnswerCollection;
 
 class McqQuestionResource extends JsonResource
 {
@@ -31,6 +32,7 @@ class McqQuestionResource extends JsonResource
             'header'            => $row ? $row->header : null,
             'language'          => $row ? $row->language : null,
 
+            'mcq_answers'     => new McqAnswerCollection ($this->mcq_answer),
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

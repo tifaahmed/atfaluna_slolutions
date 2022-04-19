@@ -65,9 +65,7 @@ class Quiz extends Model
             public function quiz_questionable(){
                 return $this->HasMany(Quiz_questionable::class,'quiz_id');
             }
-            public function quiz_type(){
-                return $this->OneToMany(Quiz_type::class,'quiz_type_id');
-            }
+
         // morphedByMany    
             public function mcq_questions(){
                 return $this->morphedByMany(Mcq_question::class,'questionable','quiz_questionables');

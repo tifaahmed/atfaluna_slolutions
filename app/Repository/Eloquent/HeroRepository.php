@@ -4,6 +4,11 @@ namespace App\Repository\Eloquent;
 
 use App\Models\Hero as ModelName;
 use App\Repository\HeroRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response ;
+use \Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Builder;
+use URL;
 
 class HeroRepository extends BaseRepository implements HeroRepositoryInterface
 {
@@ -21,6 +26,117 @@ class HeroRepository extends BaseRepository implements HeroRepositoryInterface
 	{
 		$this->model =  $model;
 	}
+
+    public function filterAll($sub_user_id) 
+	{
+		if($sub_user_id ){
+			$sub_user       = Auth::user()->sub_user()->find($sub_user_id);
+			// first
+			$all_sub_user_age_group =  $sub_user->subUserAgeGroup()->get();// check only
+			if ($all_sub_user_age_group->count() ) {
+				$active_subjects      =$sub_user->ActiveSubjectsFromActiveAgeGroup()->get();
+			}else{
+                return Response()->json( 
+                    [
+                        'message' => 'there is no age_group for this child' ,
+                        'check' => 'false.' ,
+                        'code'   => Response::HTTP_NOT_FOUND           ,
+                    ],
+                );			
+			}
+			// second
+			if ( isset($active_subjects) && $active_subjects) {
+				$result = new Collection; // to collect all lessons
+				foreach ($active_subjects as $key => $value) {
+					$lesssons = $value->lesssons()->get();
+					$result = $result->merge( $lesssons );
+				}	
+				$lessson_ids = $result->pluck('id')->toArray();
+		
+			}else{
+				return Response()->json( 
+					[
+						'message' => 'there is no active_subjects for this child' ,
+						'check' => 'false.' ,
+						'code'   => Response::HTTP_NOT_FOUND           ,
+					],
+				);	
+			}
+			// third
+			if ( isset($lessson_ids) && $lessson_ids) {
+				return ModelName::whereHas('herolesson',function (Builder $query) use($lessson_ids) {
+					$query->whereIn('lesson_id',$lessson_ids);
+				})->get();
+			}else{
+				return Response()->json( 
+					[
+						'message' => 'there is no lessons' ,
+						'check' => 'false.' ,
+						'code'   => Response::HTTP_NOT_FOUND           ,
+					],
+				);	
+			}
+		}else{
+			return $this->all()  ;
+		}	
+	}
+
+	public function filterPaginate($sub_user_id,$itemsNumber)  
+    {
+		if($sub_user_id ){
+			$sub_user       = Auth::user()->sub_user()->find($sub_user_id);
+			// first
+			$all_sub_user_age_group =  $sub_user->subUserAgeGroup()->get();// check only
+			if ($all_sub_user_age_group->count() ) {
+				$active_subjects      =$sub_user->ActiveSubjectsFromActiveAgeGroup()->get();
+			}else{
+                return Response()->json( 
+                    [
+                        'message' => 'there is no age_group for this child' ,
+                        'check' => 'false.' ,
+                        'code'   => Response::HTTP_NOT_FOUND           ,
+                    ],
+                );			
+			}
+			// second
+			if ( isset($active_subjects) && $active_subjects) {
+				$result = new Collection; // to collect all lessons
+				foreach ($active_subjects as $key => $value) {
+					$lesssons = $value->lesssons()->get();
+					$result = $result->merge( $lesssons );
+				}	
+				$lessson_ids = $result->pluck('id')->toArray();
+		
+			}else{
+				return Response()->json( 
+					[
+						'message' => 'there is no active_subjects for this child' ,
+						'check' => 'false.' ,
+						'code'   => Response::HTTP_NOT_FOUND           ,
+					],
+				);	
+			}
+			// third
+			if ( isset($lessson_ids) && $lessson_ids) {
+				 $heros =  ModelName::whereHas('herolesson',function (Builder $query) use($lessson_ids) {
+					$query->whereIn('lesson_id',$lessson_ids);
+				});
+				return $this->queryPaginate($heros,$itemsNumber,null,URL::full());
+
+			}else{
+				return Response()->json( 
+					[
+						'message' => 'there is no lessons' ,
+						'check' => 'false.' ,
+						'code'   => Response::HTTP_NOT_FOUND           ,
+					],
+				);	
+			}
+		}else{
+			return $this->collection( $itemsNumber)  ;
+		}	
+	}
+
 
     public function attachLessons($lesson_ids,$id)
 	{

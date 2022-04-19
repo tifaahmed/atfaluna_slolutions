@@ -87,7 +87,14 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             // Route::DELETE('/{id}'       ,   'LanguageController@destroy'    )  ->name('destroy'),
             Route::post('/{id}/update'  ,   'LanguageController@update'     )  ->name('update'),
         ]),
-        // Introduction
+    // QuizAttempt
+        Route::name('quiz-attempt.')->prefix('/quiz-attempt')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'QuizAttemptController@all'                 )->name('all'),
+            Route::get('/{id}/show'                 ,   'QuizAttemptController@show'                )->name('show'),
+            Route::get('/collection'                ,   'QuizAttemptController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'SubUserController@destroy'                 )->name('destroy'),
+        ]),
+    // Introduction
         Route::name('introduction.')->prefix('/introduction')->group( fn ( ) : array => [
             Route::get('/'                          ,   'IntroductionController@all'                 )    ->name('all'),
             Route::post(''                          ,   'IntroductionController@store'               )->name('store'),
@@ -100,7 +107,8 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('premanently-delete/{id}' ,   'IntroductionController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'IntroductionController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'IntroductionController@show_trash'          )->name('show_trash'),
-        ]),// IntroductionContent
+        ]),
+    // IntroductionContent
         Route::name('introduction_content.')->prefix('/introduction_content')->group( fn ( ) : array => [
             Route::get('/'                          ,   'IntroductionContentController@all'                 )    ->name('all'),
             Route::post(''                          ,   'IntroductionContentController@store'               )->name('store'),
@@ -114,7 +122,7 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::get('/collection-trash'          ,   'IntroductionContentController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'IntroductionContentController@show_trash'          )->name('show_trash'),
         ]),
-        // about_us
+    // about_us
         Route::name('about_us.')->prefix('/about_us')->group( fn ( ) : array => [
             Route::get('/'                          ,   'AboutUsController@all'                 )    ->name('all'),
             Route::post(''                          ,   'AboutUsController@store'               )->name('store'),
@@ -128,7 +136,7 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::get('/collection-trash'          ,   'AboutUsController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'AboutUsController@show_trash'          )->name('show_trash'),
         ]),
-        // contact_us
+    // contact_us
         Route::name('contact_us.')->prefix('/contact_us')->group( fn ( ) : array => [
             Route::get('/'                          ,   'ContactUsController@all'                 )->name('all'),
             Route::get('/{id}/show'                 ,   'ContactUsController@show'                )->name('show'),
@@ -143,7 +151,7 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::get('/{id}/show-trash'           ,   'ContactUsController@show_trash'          )->name('show_trash'),
 
         ]),
-        // QuestionTag
+    // QuestionTag
         Route::name('question-tag.')->prefix('/question-tag')->group( fn ( ) : array => [
             Route::get('/'              ,   'QuestionTagController@all'        )  ->name('all'),
             Route::post(''              ,   'QuestionTagController@store'      )  ->name('store'),
@@ -222,7 +230,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('premanently-delete/{id}' ,   'GovernmentController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'GovernmentController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'GovernmentController@show_trash'          )->name('show_trash'),
-
             ]),
         // City
             Route::name('city.')->prefix('/city')->group( fn ( ) : array => [

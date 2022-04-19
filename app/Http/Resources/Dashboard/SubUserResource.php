@@ -44,6 +44,9 @@ class SubUserResource extends JsonResource
             
             'sub_user_age_group'    => new AgeGroupCollection ($this->subUserAgeGroup)  ,
             'subjects'              => new SubjectCollection ($this->subUserSubject)  ,
+            'active_age_group'  => $this->ActiveAgeGroup() ? $this->ActiveAgeGroup()->first()  : null ,
+            'active_subjects_from_active_age_group'  =>  $this->ActiveSubjectsFromActiveAgeGroup() ? $this->ActiveSubjectsFromActiveAgeGroup()->get() : []   ,
+
 
             'created_at'            => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'            => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

@@ -14,6 +14,7 @@ class CreateHeroLessonsTable extends Migration
     public function up()
     {
         Schema::create('hero_lessons', function (Blueprint $table) {
+            $table->increments('id');//[pk]
             $table->integer('hero_id')->unsigned();
             $table->foreign('hero_id')->references('id')->on('heroes')->onDelete('cascade');
             $table->integer('lesson_id')->unsigned();

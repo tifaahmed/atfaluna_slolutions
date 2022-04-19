@@ -32,7 +32,6 @@ class QuestionAttemptResource extends JsonResource
             $all += array('questionable'            => new McqQuestionResource ( $this->questionable ) );
         }
  
-        
         return $all;  
     }
 }

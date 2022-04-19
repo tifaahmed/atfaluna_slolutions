@@ -45,7 +45,7 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 
 		$quiz_attempts = $subUserQuiz->quiz_attempts();
 		//
-		 $quiz_attempt = $quiz_attempts->QuizAttemptOpen()->first();
+		$quiz_attempt = $quiz_attempts->QuizAttemptOpen()->first();
 
 		if (!$quiz_attempt) {
 
@@ -128,6 +128,8 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
                 // 4- get the point of the quiz
                 $sub_user->update(['points' => $sub_user->points + $quiz->points]);
             }
+
+			return $quiz_attempt_open;
         }
 	}
 
