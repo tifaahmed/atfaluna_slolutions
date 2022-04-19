@@ -14,6 +14,7 @@ use App\Models\Lesson;
 use App\Models\Subject;
 use App\Models\Age_group;
 use App\Models\Sub_user_quiz;
+use App\Models\Achievement;
 
 
 class Sub_user extends Model
@@ -48,17 +49,9 @@ class Sub_user extends Model
         public function subUserCertificate(){
             return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_user_id', 'certificate_id');
         }
-
-        public function subUserQuiz(){
-            return $this->belongsToMany(Quiz::class, 'sub_user_quizzes', 'sub_user_id', 'quiz_id');
+        public function subUserAchievement(){
+            return $this->belongsToMany(Achievement::class, 'sub_user_achievements', 'sub_user_id', 'achievement_id');
         }
-        public function subUserQuizModel(){
-            return $this->hasMany(Sub_user_quiz::class);
-        }
-
-
-        
-
         public function subUserLesson(){
             return $this->belongsToMany(Lesson::class, 'sub_user_lessons', 'sub_user_id', 'lesson_id');
         }
@@ -66,7 +59,15 @@ class Sub_user extends Model
             return $this->hasMany(Play_time::class);
         }
 
+        //Quiz
+        public function subUserQuiz(){
+            return $this->belongsToMany(Quiz::class, 'sub_user_quizzes', 'sub_user_id', 'quiz_id');
+        }
+        public function subUserQuizModel(){
+            return $this->hasMany(Sub_user_quiz::class);
+        }
 
+        //Age_group
         public function subUserAgeGroup(){
             return $this->belongsToMany(Age_group::class, 'sub_user_age_groups', 'sub_user_id', 'age_group_id');
         }
@@ -75,6 +76,8 @@ class Sub_user extends Model
                 return $this->subUserAgeGroup()->wherePivot('active' ,1);
             }
         }
+
+        //Subject
         public function subUserSubject(){
             return $this->belongsToMany(Subject::class, 'sub_user_subjects', 'sub_user_id', 'subject_id');
         }

@@ -79,6 +79,9 @@ namespace App\Providers;
     use App\Repository\Eloquent\QuestionTagRepository;
     use App\Repository\Eloquent\QuizTypeRepository;
 
+    use App\Repository\Eloquent\AchievementRepository;
+    use App\Repository\Eloquent\SubUserAchievementRepository;
+
     use App\Repository\Eloquent\FriendRepository;
     use App\Repository\Eloquent\GroupChatRepository;
     use App\Repository\Eloquent\MassageImageRepository;
@@ -171,6 +174,9 @@ namespace App\Providers;
 
     use App\Repository\QuestionTagRepositoryInterface;
     use App\Repository\QuizTypeRepositoryInterface;
+
+    use App\Repository\SubUserAchievementRepositoryInterface;
+    use App\Repository\AchievementRepositoryInterface;
 
     use App\Repository\FriendRepositoryInterface;
     use App\Repository\GroupChatRepositoryInterface;
@@ -272,9 +278,10 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(HeroRepositoryInterface::class,HeroRepository::class);
         $this->app->bind(HeroLanguageRepositoryInterface::class,HeroLanguageRepository::class);
+        $this->app->bind(HeroLessonRepositoryInterface::class,HeroLessonRepository::class);
 
-        $this->app->bind(HeroLessonRepositoryInterface::class,HeroLessonRepository::class);
-        $this->app->bind(HeroLessonRepositoryInterface::class,HeroLessonRepository::class);
+        $this->app->bind(SubUserAchievementRepositoryInterface::class,SubUserAchievementRepository::class);
+        $this->app->bind(AchievementRepositoryInterface::class,AchievementRepository::class);
 
         $this->app->bind(QuestionTagRepositoryInterface::class,QuestionTagRepository::class);
 
