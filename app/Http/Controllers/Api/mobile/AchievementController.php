@@ -1,33 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\Api\mobile;
+namespace App\Http\Controllers\Api\Mobile;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
-
-
-// Resources
-use App\Http\Resources\Mobile\Collections\CertificateCollection as ModelCollection;
-
-use App\Http\Resources\Mobile\CertificateResource as ModelResource;
-
-
-// lInterfaces
-use App\Repository\CertificateRepositoryInterface as ModelInterface;
-
-use App\Http\Requests\Api\Certificate\MobileCertificateApiRequest;
-
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
-class CertificateController extends Controller
+// Requests
+use App\Http\Requests\Api\Achievement\AchievementApiRequest as modelInsertRequest;
+use App\Http\Requests\Api\Achievement\AchievementUpdateApiRequest as modelUpdateRequest;
+use App\Http\Requests\Api\Achievement\MobileAchievementApiRequest;
+
+// Resources
+use App\Http\Resources\Mobile\Collections\AchievementCollection as ModelCollection;
+use App\Http\Resources\Mobile\AchievementResource as ModelResource;
+
+// lInterfaces
+use App\Repository\AchievementRepositoryInterface as ModelInterface;
+
+class AchievementController extends Controller
 {
     private $Repository;
     public function __construct(ModelInterface $Repository)
     {
         $this->ModelRepository = $Repository;
+        $this->folder_name = 'Achievement/'.Str::random(10).time();
     }
-
     public function all(){
         try {
             return new ModelCollection (  $this->ModelRepository->all() )  ;
@@ -41,26 +41,8 @@ class CertificateController extends Controller
     }
 
     public function collection(Request $request){
-        // return $request->language;
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10)) ;
-
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-    
-    public function show($id) {
-        try {
-            return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($id) )  ],
-                'Successful',
-                Response::HTTP_OK
-            ) ;
+            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -70,12 +52,12 @@ class CertificateController extends Controller
         }
     }
     // relation
-    public function attach(MobileCertificateApiRequest $request){
+    public function attach(MobileAchievementApiRequest $request){
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            // foreach ($request->certificate_id as $key => $value) {
-                $model->subUserCertificate()->syncWithoutDetaching($request->certificate_ids);
-            // } 
+            // foreach ($request->accessory_id as $key => $value) {
+                $model->subUserAchievement()->syncWithoutDetaching($request->achievement_ids);
+            // }
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
                 'Successful'               ,
@@ -88,14 +70,14 @@ class CertificateController extends Controller
                 Response::HTTP_NOT_FOUND
             );
         }
-    } 
-    public function  detach(MobileCertificateApiRequest $request){
+    }
+    public function  detach(MobileAchievementApiRequest $request){
         try {
             $model = Auth::user()->sub_user()->find($request->sub_user_id); 
-            $model->subUserCertificate()->detach($request->certificate_id);
+            $model->subUserAchievement()->detach($request->achievement_ids);
 
             return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($request->certificate_id) )  ],
+                [new ModelResource ( $this->ModelRepository->findById($request->achievement_ids) )  ],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;

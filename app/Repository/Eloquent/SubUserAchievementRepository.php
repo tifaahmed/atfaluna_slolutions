@@ -2,10 +2,10 @@
 
 namespace App\Repository\Eloquent;
 
-use App\Models\Certificate as ModelName;
-use App\Repository\CertificateRepositoryInterface;
+use App\Models\Sub_user_achievement as ModelName;
+use App\Repository\SubUserAchievementRepositoryInterface;
 
-class CertificateRepository extends BaseRepository implements CertificateRepositoryInterface
+class SubUserAchievementRepository extends BaseRepository implements SubUserAchievementRepositoryInterface
 {
 
 	/**

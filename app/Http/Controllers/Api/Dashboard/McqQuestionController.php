@@ -133,8 +133,9 @@ class McqQuestionController extends Controller
             $file_one = 'image';
             if ($request->hasFile($file_one)) {  
                 // return old folder location of the file
-                $old_folder_location = $this->HelperGetDirectory($old_model->$file_one);                        
-                $path = $this->HelperHandleFile($old_folder_location,$request->file($file_one),$file_one)  ;
+                $old_folder_Directory_location = $this->HelperGetDirectory($old_model->$file_one) ;     
+                $location = $old_folder_Directory_location ? $old_folder_Directory_location : $this->folder_name;
+                $path = $this->HelperHandleFile($location,$request->file($file_one),$file_one)  ;
                 $all += array( $file_one => $path );    
                 //delete the old file
                 $this->HelperDelete($old_model->$file_one);    
@@ -229,8 +230,8 @@ class McqQuestionController extends Controller
                             // delete the old file or image
                             $this->HelperDelete($language_model->$key); 
                         }  
-                              
-                        $location = $old_folder_location ? $old_folder_location : $this->folder_name ;
+                            
+                        $location = ( isset($old_folder_location) && $old_folder_location ) ? $old_folder_location : $this->folder_name ;
 
                         // store the gevin file or image
                         $path =  $this->HelperHandleFile($location,$language_array[$key],$key)  ;

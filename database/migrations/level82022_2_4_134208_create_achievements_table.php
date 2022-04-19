@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMcqAnswersTable extends Migration
+class CreateAchievementsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateMcqAnswersTable extends Migration
      */
     public function up()
     {
-        Schema::create('mcq_answers', function (Blueprint $table) {
+        Schema::create('achievements', function (Blueprint $table) {
             $table->increments('id');//[pk]
+            $table->integer('count');
             $table->string('image')->nullable();
-            $table->boolean('answer')->default('0');
-            $table->integer('mcq_question_id')->unsigned();
-            $table->foreign('mcq_question_id')->references('id')->on('mcq_questions');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +29,6 @@ class CreateMcqAnswersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mcq_answers');
+        Schema::dropIfExists('achievements');
     }
 }
