@@ -80,7 +80,6 @@ class LessonController extends Controller
 
             $subUserLesson =   $sub_user->subUserLesson()->where('lesson_id',$request->lesson_id)->first();
 
-
             if (!$subUserLesson) {
                 $subUserLesson = $sub_user->subUserLesson()->syncWithoutDetaching($request->lesson_id);
                 $model = $this->ModelRepository->findById($request->lesson_id);

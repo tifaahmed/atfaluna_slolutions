@@ -162,24 +162,19 @@ class LessonRepository extends BaseRepository implements LessonRepositoryInterfa
 
 		return $lap;
 	}
-
-	public function attachQuiz($quiz_ids,$id)  
+	public function attachQuiz($quiz_id,$id)  
     {
-		if($quiz_ids){
+		// if($quiz_id){
 			$lesson = $this->findById($id); 
-
+			
 			$lesson_quizzes =  $lesson->quiz()->get();
-			$lesson_quizzes->each(function($quiz) {
-				$quiz->update(['quizable_id'=>null,'quizable_type'=>null]); 
-			});
-
-			$quizs =  Quiz::findMany($quiz_ids);
-			foreach ($quizs as $quiz_key => $quiz) {
-				$quiz->update(['quizable_id'=>$id,'quizable_type'=>$lesson::class]); 
+			foreach ($lesson_quizzes as $key => $value) {
+				$value->quizable()->dissociate()->save();
 			}
 
-
-		}
+			$quiz =  Quiz::find($quiz_id);
+			$quiz->quizable()->associate($lesson)->save(); 
+		// }
 	}
 }
 

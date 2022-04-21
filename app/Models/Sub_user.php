@@ -46,9 +46,7 @@ class Sub_user extends Model
         public function subUserAvatar(){
             return $this->belongsToMany(Avatar::class, 'sub_user_avatars', 'sub_user_id', 'avatar_id');
         }
-        public function subUserCertificate(){
-            return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_user_id', 'certificate_id');
-        }
+        
         public function subUserAchievement(){
             return $this->belongsToMany(Achievement::class, 'sub_user_achievements', 'sub_user_id', 'achievement_id');
         }
@@ -85,6 +83,14 @@ class Sub_user extends Model
             if ($this->subUserSubject()) {
                 return $this->subUserSubject()->wherePivot('active' ,1);
             }
+        }
+
+        //Certificate
+        public function subUserCertificate(){
+            return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_user_id', 'certificate_id');
+        }
+        public function Certificate(){
+            return $this->hasMany(Sub_user_certificate::class);
         }
         public function ActiveSubjectsFromActiveAgeGroup(){
             $active_age_group = $this->ActiveAgeGroup()->first();
