@@ -28,9 +28,9 @@ class CertificateController extends Controller
         $this->ModelRepository = $Repository;
     }
 
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model =  $this->ModelRepository->filterAll($request->sub_user_id) ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -43,8 +43,7 @@ class CertificateController extends Controller
     public function collection(Request $request){
         // return $request->language;
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10)) ;
-
+            $model =  $this->ModelRepository->filterPaginate($request->sub_user_id,$request->PerPage ? $request->PerPage : 10) ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -74,7 +73,7 @@ class CertificateController extends Controller
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
             // foreach ($request->certificate_id as $key => $value) {
-                $model->subUserCertificate()->syncWithoutDetaching($request->certificate_ids);
+                $model->subUserCertificate()->syncWithoutDetaching($request->certificate_id);
             // } 
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
@@ -89,22 +88,14 @@ class CertificateController extends Controller
             );
         }
     } 
-    public function  detach(MobileCertificateApiRequest $request){
-        try {
-            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
-            $model->subUserCertificate()->detach($request->certificate_id);
-
-            return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($request->certificate_id) )  ],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
 }
+        // $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
+
+        // $subUserCertificate =   $sub_user->subUserCertificate()->where('certificate_id',$request->certificate_id)->first();
+
+
+        // if (!$subUserCertificate) {
+        //     $subUserCertificate = $sub_user->subUserCertificate()->syncWithoutDetaching($request->certificate_id);
+        //     $model = $this->ModelRepository->findById($request->certificate_id);
+        //     $sub_user->update(['point' => $sub_user->points + $model->points]);
+        // }

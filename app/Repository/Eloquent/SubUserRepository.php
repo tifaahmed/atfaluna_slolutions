@@ -41,7 +41,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	public function attachCertificates($certificate_ids,$id)
 	{
 		if($certificate_ids){
-			$result = $this->findById($id); 
+			$result = Auth::user()->sub_user()->find($id); 
 			$result->subUserCertificate()->syncWithoutDetaching($certificate_ids);
 		}
 	}

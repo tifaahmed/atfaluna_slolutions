@@ -68,11 +68,13 @@ class SubjectController extends Controller
 
             $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
             
-            // attach
+            // attach Quiz
             if (isset($request->quiz_id) && $request->quiz_id) {
                 $this->ModelRepository->attachQuiz($request->quiz_id,$model->id);
             }
-
+            // attach Certificate
+            $this->ModelRepository->attachCertificate($request->certificate_id,$model->id);
+                
             // languages
             $this -> store_array_languages($request->languages,$model) ;
 
@@ -127,11 +129,12 @@ class SubjectController extends Controller
         try {
             $old_model = new ModelResource( $this->ModelRepository->findById($id) );
 
-            // attach
+            // attach Quiz
             if (isset($request->quiz_id) && $request->quiz_id) {
                 $this->ModelRepository->attachQuiz($request->quiz_id,$id);
             }
-            
+            // attach Certificate
+            $this->ModelRepository->attachCertificate($request->certificate_id,$old_model->id);
             // files
             $all = [ ];
             $file_one = 'image';
