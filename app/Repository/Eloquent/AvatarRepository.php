@@ -4,7 +4,13 @@ namespace App\Repository\Eloquent;
 
 use App\Models\Avatar as ModelName;
 use App\Repository\AvatarRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
+use \Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
+use URL;
+use Illuminate\Http\Response ;
 class AvatarRepository extends BaseRepository implements AvatarRepositoryInterface
 {
 
@@ -21,23 +27,88 @@ class AvatarRepository extends BaseRepository implements AvatarRepositoryInterfa
 	{
 		$this->model =  $model;
 	}
-	public function filterFirst($price)  
-    {	
-	// if($price == 0){
-	// $result = $this->model->Free()->first();
-	// return $result;
-	// }else($price > 0){
-	// 	return $this->all()  ;
-	// }
-		$result=$this->model->Free()->first();
-		return $result;
+	public function filterAll($gender,$free,$sub_user_id)  
+    {
+		$result = null ;
+
+		if ($sub_user_id) {
+			$sub_user       = Auth::user()->sub_user()->find($sub_user_id);
+			$sub_user_avatars =  $sub_user->subUserAvatar()->get();	
+			$result = $this->model->merge( $sub_user_avatars );
 		}
 
-	public function filterPaginate($gender,int $itemsNumber)  
-    {
-		$result =   $this->model->Gender($gender);
-		return $this->queryPaginate($result,$itemsNumber);
+		if ($gender || $free) {
+			$query =   $this->model;
+			if ($gender) {
+				$query = $query->Gender($gender);
+			}
+			if($free == '1'){
+				$query = $query->Free();
+			}
+			if($free == '0'){
+				$query = $query->HasPrice();
+			}
+			$query = $query->get();
+			$result = $result->merge( $query );	
+
+		} if (!$result->count()) {
+			return $result ;
+		}
+		else{
+			return $this->all()  ;
+		}	
     }
+	public function filterPaginate($gender,$free,$sub_user_id,int $itemsNumber)  
+    {
+		
+		$result = new Collection() ;
+
+		if ($sub_user_id) {
+			$sub_user       = Auth::user()->sub_user()->find($sub_user_id);
+			$sub_user_avatars =  $sub_user->subUserAvatar()->get();	
+			$result = $result->merge( $sub_user_avatars );
+		}
+
+		if ($gender || $free) {
+			$query =   $this->model;
+			if ($gender) {
+				$query = $query->Gender($gender);
+			}
+			if($free == '1'){
+				$query = $query->Free();
+			}
+			if($free == '0'){
+				$query = $query->HasPrice();
+			}
+			$query = $query->get();
+			$result = $result->merge( $query );		
+		}
+		if (!$result->count()) {
+			return $result = $this->collection( $itemsNumber)  ;
+		}else{
+			return $this->paginate($result,$itemsNumber,null,URL::full());
+		}
+		
+
+    }
+
+    public function paginate($items, $perPage = 10, $page = null, $baseUrl = null, $options = [])
+	{
+		$page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+
+		$items = $items instanceof Collection ? 
+					$items : Collection::make($items);
+
+		$lap = new LengthAwarePaginator($items->forPage($page, $perPage), 
+						$items->count(),
+						$perPage, $page, $options);
+
+		if ($baseUrl) {
+			$lap->setPath($baseUrl);
+		}
+
+		return $lap;
+	}
 
 }
 

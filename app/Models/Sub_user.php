@@ -89,9 +89,7 @@ class Sub_user extends Model
         public function subUserCertificate(){
             return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_user_id', 'certificate_id');
         }
-        public function Certificate(){
-            return $this->hasMany(Sub_user_certificate::class);
-        }
+        
         public function ActiveSubjectsFromActiveAgeGroup(){
             $active_age_group = $this->ActiveAgeGroup()->first();
             $all_active_subjects = $this->ActiveSubject();

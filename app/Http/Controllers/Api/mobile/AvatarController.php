@@ -28,7 +28,7 @@ class AvatarController extends Controller
     }
     public function all(Request $request){
         try {
-            return new ModelResource (  $this->ModelRepository->filterFirst($request->free) );
+            return new ModelResource (  $this->ModelRepository->filterAll($request->Gender,$request->free,$request->sub_user_id) );
 
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
@@ -40,7 +40,7 @@ class AvatarController extends Controller
     }
     public function collection(Request $request){
         try {
-            $model =  $this->ModelRepository->filterPaginate($request->Gender,$request->PerPage ? $request->PerPage : 10) ;             
+            $model =  $this->ModelRepository->filterPaginate($request->Gender,$request->free,$request->sub_user_id,$request->PerPage ? $request->PerPage : 10) ;             
             return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
