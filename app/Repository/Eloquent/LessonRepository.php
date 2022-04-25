@@ -176,5 +176,46 @@ class LessonRepository extends BaseRepository implements LessonRepositoryInterfa
 			$quiz->quizable()->associate($lesson)->save(); 
 		// }
 	}
-}
 
+	public function attachLessson($sub_user_id,$lesson_id)  
+    {
+		$sub_user =   Auth::user()->sub_user()->find($sub_user_id);
+
+	$subUserLesson =   $sub_user->subUserLesson()->where('lesson_id',$lesson_id)->first();
+
+	if (!$subUserLesson) {
+		$subUserLesson = $sub_user->subUserLesson()->syncWithoutDetaching($lesson_id);
+		$model = $this->ModelRepository->findById($lesson_id);
+		$sub_user->update(['points' => $sub_user->points + $model->points]);
+	}
+	// $this->attachCertificate($sub_user_id,$lesson_id)
+	}
+	// public function attachCertificate($sub_user_id,$lesson_type_id,$hero_id,)  
+    // {
+        // return ModelName::where('id',1)->get();
+
+
+
+
+
+	// 	$subjects = null;
+	// 	$lessons = null;
+	// 	if($sub_user_id){
+	// 		$sub_user       = Auth::user()->sub_user()->find($sub_user_id); // checked in middleware
+	// 		$subjects = $this->getActiveSubjectsFromChild($sub_user)  ;
+	// 		$lessons = $this->getFilteredLessonsFromSubjects($subjects,$lesson_type_id,$hero_id,)  ;
+
+	// 	}
+	// 	return  $lessons;
+		// if($certificate_id){
+			// $subject = $this->findById($id); 
+			
+			// $subject_certificates =  $subject->certificate()->get();
+			// foreach ($subject_certificates as $key => $value) {
+			// 	$value->certificatable()->dissociate()->save();
+			// }
+
+			// $certificate =  Certificate::find($certificate_id);
+			// $certificate->certificatable()->associate($subject)->save();
+		// }
+	}
