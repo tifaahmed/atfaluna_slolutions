@@ -30,7 +30,7 @@ class SubjectUpdateApiRequest extends FormRequest
         $all=[];
 
         // quiz
-        $all += [ 'quiz_id'  =>  [ 'sometimes' ,'integer','exists:quizzes,id'] ]  ;
+        $all += [ 'quiz_id'  =>  [ 'required' ,'integer','exists:quizzes,id'] ]  ;
 
         // subjects        
         $all += [ 'image'           =>  [ 'sometimes' ,'max:5000'] ]  ;

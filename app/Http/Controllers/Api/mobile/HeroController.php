@@ -28,11 +28,7 @@ class HeroController extends Controller
     public function all(Request $request){
         try {
             $model =  $this->ModelRepository->filterAll($request->sub_user_id) ;
-            if ( is_array($model) ) {
-                return new ModelCollection (  $model )  ;
-            }else{
-                return $model ;
-            }
+            return new ModelCollection (  $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -44,11 +40,7 @@ class HeroController extends Controller
     public function collection(Request $request){
         try {
             $model = $this->ModelRepository->filterPaginate( $request->sub_user_id , $request->PerPage ? $request->PerPage : 10)  ;
-            if ( is_array($model) ) {
-                return new ModelCollection (  $model )  ;
-            }else{
-                return $model ;
-            }
+            return new ModelCollection (  $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

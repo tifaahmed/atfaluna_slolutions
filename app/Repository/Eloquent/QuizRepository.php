@@ -42,16 +42,19 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 		$sub_user =   Auth::user()->sub_user()->find($sub_user_id);
 		$sub_user->subUserQuiz()->syncWithoutDetaching($id);
 		$subUserQuiz = $sub_user->subUserQuizModel()->where('quiz_id',$id)->first();
-
+		// get all  quiz attempts
 		$quiz_attempts = $subUserQuiz->quiz_attempts();
-		//
+		// get the open  quiz attempt
 		$quiz_attempt = $quiz_attempts->QuizAttemptOpen()->first();
 
+		// get there no open quiz attempt : create new
 		if (!$quiz_attempt) {
-
+			//first
+			// create quiz_attempt with default status:open
 			$quiz_attempt = $quiz_attempts->create();
 
-			// add all question with open status
+			//second
+			// add all question of the quiz to the quiz_attempt with default status:open
 			$quiz = $this->findById($id);
 			$quiz_questions = $quiz->quiz_questionable()->get();
 			foreach ($quiz_questions as $key => $value) {

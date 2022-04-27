@@ -24,12 +24,11 @@ class IfAuthMiddleware
                return $next($request);
             }
         }
-        return \Response::json( 
-            ['message' => 'Un Authenticated.' ],
-            false, 
-            Response::HTTP_UNAUTHORIZED 
-        );
-        
+        return \Response::json( [
+            'message'   => 'Un Authenticated.',
+            'status'    => 'false.' ,
+            'code'      => Response::HTTP_UNAUTHORIZED           ,
+        ] + [] , Response::HTTP_UNAUTHORIZED);
 
   
     }

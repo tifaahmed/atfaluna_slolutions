@@ -68,13 +68,8 @@ class PlayTimeController extends Controller
     public function attatchArray(modelInsertArrayRequest $request) {
 
         try {
-            $this->ModelRepository->attatchByArray( $request->all() ) ;
-            
-            return $this -> MakeResponseSuccessful( 
-                [ 'Successful' ],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
+            $sub_user_play_times =  $this->ModelRepository->attatchByArray( $request->all() ) ;
+            return new ModelCollection ( $sub_user_play_times  )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

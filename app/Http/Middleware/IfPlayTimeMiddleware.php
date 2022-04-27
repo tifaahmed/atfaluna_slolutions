@@ -5,7 +5,10 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Response ;
+use Illuminate\Http\JsonResponse ;
+
 use Carbon\Carbon;
 class IfPlayTimeMiddleware
 {
@@ -20,7 +23,8 @@ class IfPlayTimeMiddleware
     {
         if ($request->sub_user_id ) {
             $sub_user = Auth::user()->sub_user()->find($request->sub_user_id);
-            $playTimes = $sub_user->playTime()->where('day',Carbon::now()->dayOfWeek)->get();
+            $day_number = Carbon::now()->dayOfWeek;
+            $playTimes = $sub_user->playTime()->where('day',''.$day_number.'')->where('status',1)->get();
             $flag = 0;
             foreach ($playTimes as $key => $value) {
                 if (Carbon::now()->between($value->start, $value->end)) {
@@ -30,13 +34,11 @@ class IfPlayTimeMiddleware
             if ($flag) {
                 return $next($request);
             }else {
-                return Response()->json( 
-                    [
-                        'message' => 'now is not play time.' ,
-                        'check' => 'false.' ,
-                        'code'   => Response::HTTP_UNAUTHORIZED           ,
-                    ],
-                );
+                return \Response::json( [
+                    'message'   => 'now is not play time.' ,
+                    'status'    => 'false.' ,
+                    'code'      => Response::HTTP_UNPROCESSABLE_ENTITY           ,
+                ] + [] , Response::HTTP_UNPROCESSABLE_ENTITY);
             }    
         }else{
             return $next($request);

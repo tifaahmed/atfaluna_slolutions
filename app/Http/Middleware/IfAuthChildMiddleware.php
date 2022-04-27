@@ -23,13 +23,11 @@ class IfAuthChildMiddleware
 			if( $sub_user){
                 return $next($request);
             }else{
-                return Response()->json( 
-                    [
-                        'message' => 'not child for the authenticated parent.' ,
-                        'check' => 'false.' ,
-                        'code'   => Response::HTTP_UNAUTHORIZED           ,
-                    ],
-                );
+                return \Response::json( [
+                    'message'   => 'not child for the authenticated parent.' ,
+                    'status'    => 'false.' ,
+                    'code'      => Response::HTTP_UNPROCESSABLE_ENTITY           ,
+                ] + [] , Response::HTTP_UNPROCESSABLE_ENTITY);
             }
         }else{
             return $next($request);

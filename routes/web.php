@@ -28,3 +28,7 @@ Route::get( '/dashboard' , fn( ) => view( 'admin-panel' ) ) ;
 Auth::routes();
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

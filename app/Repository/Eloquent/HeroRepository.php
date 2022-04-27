@@ -89,14 +89,8 @@ class HeroRepository extends BaseRepository implements HeroRepositoryInterface
 			$all_sub_user_age_group =  $sub_user->subUserAgeGroup()->get();// check only
 			if ($all_sub_user_age_group->count() ) {
 				$active_subjects      =$sub_user->ActiveSubjectsFromActiveAgeGroup()->get();
-			}else{
-                return Response()->json( 
-                    [
-                        'message' => 'there is no age_group for this child' ,
-                        'check' => 'false.' ,
-                        'code'   => Response::HTTP_NOT_FOUND           ,
-                    ],
-                );			
+			}else{	
+				return abort( Response::HTTP_NOT_FOUND , 'there is no age_group for this child');			
 			}
 			// second
 			if ( isset($active_subjects) && $active_subjects) {
@@ -108,13 +102,7 @@ class HeroRepository extends BaseRepository implements HeroRepositoryInterface
 				$lessson_ids = $result->pluck('id')->toArray();
 		
 			}else{
-				return Response()->json( 
-					[
-						'message' => 'there is no active_subjects for this child' ,
-						'check' => 'false.' ,
-						'code'   => Response::HTTP_NOT_FOUND           ,
-					],
-				);	
+				return abort( Response::HTTP_NOT_FOUND , 'there is no active_subjects for this child');			
 			}
 			// third
 			if ( isset($lessson_ids) && $lessson_ids) {
@@ -123,14 +111,8 @@ class HeroRepository extends BaseRepository implements HeroRepositoryInterface
 				});
 				return $this->queryPaginate($heros,$itemsNumber,null,URL::full());
 
-			}else{
-				return Response()->json( 
-					[
-						'message' => 'there is no lessons' ,
-						'check' => 'false.' ,
-						'code'   => Response::HTTP_NOT_FOUND           ,
-					],
-				);	
+			}else{	
+				return abort( Response::HTTP_NOT_FOUND , 'there is no lessons');			
 			}
 		}else{
 			return $this->collection( $itemsNumber)  ;

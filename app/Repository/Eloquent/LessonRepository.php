@@ -6,10 +6,13 @@ use App\Models\Lesson as ModelName;
 use App\Repository\LessonRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Quiz;
+
 use \Illuminate\Database\Eloquent\Collection;
+
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+
 use URL;
 use Illuminate\Http\Response ;
 
@@ -36,13 +39,7 @@ class LessonRepository extends BaseRepository implements LessonRepositoryInterfa
 			// active_subjects
 			return $subjects = $sub_user->ActiveSubjectsFromActiveAgeGroup()->get();
 		}else{
-			return Response()->json( 
-				[
-					'message' => 'there is no age_group for this child' ,
-					'check' => 'false.' ,
-					'code'   => Response::HTTP_NOT_FOUND           ,
-				],
-			);			
+			return abort( Response::HTTP_NOT_FOUND , 'there is no age_group for this child');			
 		}
 	}
 
@@ -68,13 +65,7 @@ class LessonRepository extends BaseRepository implements LessonRepositoryInterfa
 			}
 			return $result ;
 		}else{
-			return Response()->json( 
-				[
-					'message' => 'there is no active_subjects for this child' ,
-					'check' => 'false.' ,
-					'code'   => Response::HTTP_NOT_FOUND           ,
-				],
-			);	
+			return abort( Response::HTTP_NOT_FOUND , 'there is no active_subjects for this child');			
 		}
 	}
 
@@ -97,13 +88,7 @@ class LessonRepository extends BaseRepository implements LessonRepositoryInterfa
 			if ( $lessons ) {
 				return $lessons ;
 			}else{
-				return Response()->json( 
-					[
-						'message' => 'there is no lessons' ,
-						'check' => 'false.' ,
-						'code'   => Response::HTTP_NOT_FOUND           ,
-					],
-				);
+				return abort( Response::HTTP_NOT_FOUND , 'there is no lessons');			
 			}
 		}
 		else{
@@ -131,13 +116,7 @@ class LessonRepository extends BaseRepository implements LessonRepositoryInterfa
 			if ( $lessons ) {
 				return $this->paginate($lessons,$itemsNumber,null,URL::full());
 			}else{
-				return Response()->json( 
-					[
-						'message' => 'there is no lessons' ,
-						'check' => 'false.' ,
-						'code'   => Response::HTTP_NOT_FOUND           ,
-					],
-				);
+				return abort( Response::HTTP_NOT_FOUND , 'there is no lessons');			
 			}
 
 		}

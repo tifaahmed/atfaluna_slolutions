@@ -28,8 +28,8 @@ class QuizStoreApiRequest extends FormRequest
         $Languages=Language::get();
         $all=[];
         // quizzes
-        $all += [ 'points'                      =>  [ 'integer'] ]  ; // default 0
-        $all += [ 'minimum_requirements'        =>  [ 'integer'] ]  ; // default 0
+        $all += [ 'points'                      =>  [ 'sometimes' ,'integer'] ]  ; // default 0
+        $all += [ 'minimum_requirements'        =>  [ 'sometimes' ,'integer'] ]  ; // default 0
         
         // $model_name = 'App\Models\Lesson';
         // if ($this->quizable_type == 'sub_subject') {
@@ -52,9 +52,8 @@ class QuizStoreApiRequest extends FormRequest
         // ] ]  ;
         
         // quiz_questions
-        $all += [ 'mcq_question_ids'  =>  [ 'sometimes' ,'array','exists:mcq_questions,id'] ]  ;
-        $all += [ 'true_false_question_ids'  =>  [ 'sometimes' ,'array','exists:true_false_questions,id'] ]  ;
-
+        $all += [ 'mcq_question_ids'        =>  [ 'sometimes' ,'array','exists:mcq_questions,id'] ]  ;
+        $all += [ 'true_false_question_ids' =>  [ 'sometimes' ,'array','exists:true_false_questions,id'] ]  ;
         
         // quiz_languages
         foreach ($Languages as $key => $value) {

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Auth\Notifications\ResetPassword;
 
 use App\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
@@ -14,7 +15,8 @@ use App\Models\Role;
 use App\Models\Sub_user;
 use App\Models\User_package;
 use App\Models\User_subscription;
-
+use App\Notifications\ResetPasswordNotification;
+use DB ;
 class User extends Authenticatable {
 
     use
@@ -40,7 +42,9 @@ class User extends Authenticatable {
         'country_id', //unsigned
         'token',
         'remember_token',
-        'login_type'
+        'login_type',
+        'latitude','longitude',
+        'pin_code'
     ];
     public function getToken( ) : array { return [
         'token_type'    => 'Bearer'                                     ,
@@ -48,7 +52,27 @@ class User extends Authenticatable {
         'refresh_token' => null                                         ,
         'access_token'  => $this -> createToken( '' ) -> accessToken ,
     ] ; }
+    protected static function boot()
+    {
+        parent::boot();
+        User::creating(function ($model) {
+            $model->pin_code = rand(111111,999999);
+        });
+        User::updating(function ($model) {
+            $model->pin_code = rand(111111,999999);
+        });
+    }
+    public function sendPasswordResetNotification($token)
+    {
+        $data = [] ;
 
+        $url = asset('api/auth/reset-password?token='.$token);
+
+        $data += ['url' => $url];
+        $data += ['pin_code' => $this->pin_code];
+
+        $this->notify(new ResetPasswordNotification($data));
+    }
 
     //relations
         public function country(){

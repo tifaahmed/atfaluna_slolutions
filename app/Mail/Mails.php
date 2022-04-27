@@ -17,11 +17,11 @@ class Mails extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public $entry;
+    public $pin;
 
-    public function __construct($entry)
+    public function __construct($pin)
     {
-        $this->entry = $entry;
+        $this->pin = $pin;
 
     }
 
@@ -32,10 +32,8 @@ class Mails extends Mailable implements ShouldQueue
      */
     public function build()
     {
-
-
         return $this->from('tifa.ahmed23@gmail.com','email_title')
                     ->subject('email_subject_title')
-                    ->view('mails.conversation');
+                    ->view('mails.clint-forgot-password');
     }
 }
