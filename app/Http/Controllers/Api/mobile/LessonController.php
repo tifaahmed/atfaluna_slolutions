@@ -17,7 +17,6 @@ use App\Repository\LessonRepositoryInterface as ModelInterface;
 
 use App\Http\Requests\Api\Lesson\MobileLessonApiRequest;
 
-use Illuminate\Support\Facades\Auth;
 class LessonController extends Controller
 {
     private $Repository;
@@ -72,21 +71,13 @@ class LessonController extends Controller
     // relation
     public function attach(MobileLessonApiRequest $request){
         try {
-            $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
+            // return Lesson::where('id',1)->first();
 
-            $subUserLesson =   $sub_user->subUserLesson()->where('lesson_id',$request->lesson_id)->first();
+        return  $this->ModelRepository->attachLessson($request->sub_user_id,$request->lesson_id,) ;
+        // return  $this->ModelRepository->attachCertificate($request->sub_user_id,$request->lesson_id,) ;
 
+            return $this->show($request->lesson_id);
 
-            if (!$subUserLesson) {
-                $subUserLesson = $sub_user->subUserLesson()->syncWithoutDetaching($request->lesson_id);
-                $model = $this->ModelRepository->findById($request->lesson_id);
-                $sub_user->update(['points' => $sub_user->points + $model->points]);
-            }
-            return $this -> MakeResponseSuccessful( 
-                [$subUserLesson],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

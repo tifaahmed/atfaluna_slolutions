@@ -31,7 +31,7 @@ class Certificate extends Model
         }
         public function certificatable()
         {
-            return $this->morphTo(__FUNCTION__, 'certificatable_type', 'certificatable_id');
+            return $this->morphTo();
         }
 }
 

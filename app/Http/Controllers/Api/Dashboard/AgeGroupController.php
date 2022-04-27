@@ -43,6 +43,9 @@ class AgeGroupController extends Controller
     public function store(modelInsertRequest $request) {
         try {
             $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
+            // attach
+                $this->ModelRepository->attachCertificate($request->certificate_id,$model->id);
+    
             // // languages
             $this -> store_array_languages($request->languages,$model) ;
 
@@ -112,6 +115,9 @@ class AgeGroupController extends Controller
         try {
             $this->ModelRepository->update( $id,Request()->all()) ;
             $model = new ModelResource( $this->ModelRepository->findById($id) ); 
+            // attach
+                $this->ModelRepository->attachCertificate($request->certificate_id,$model->id);
+    
             //  request languages
             $this -> update_array_languages($request->languages,$model) ;
 

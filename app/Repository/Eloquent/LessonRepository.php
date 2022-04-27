@@ -141,24 +141,60 @@ class LessonRepository extends BaseRepository implements LessonRepositoryInterfa
 
 		return $lap;
 	}
-
-	public function attachQuiz($quiz_ids,$id)  
+	public function attachQuiz($quiz_id,$id)  
     {
-		if($quiz_ids){
+		// if($quiz_id){
 			$lesson = $this->findById($id); 
-
+			
 			$lesson_quizzes =  $lesson->quiz()->get();
-			$lesson_quizzes->each(function($quiz) {
-				$quiz->update(['quizable_id'=>null,'quizable_type'=>null]); 
-			});
-
-			$quizs =  Quiz::findMany($quiz_ids);
-			foreach ($quizs as $quiz_key => $quiz) {
-				$quiz->update(['quizable_id'=>$id,'quizable_type'=>$lesson::class]); 
+			foreach ($lesson_quizzes as $key => $value) {
+				$value->quizable()->dissociate()->save();
 			}
 
-
-		}
+			$quiz =  Quiz::find($quiz_id);
+			$quiz->quizable()->associate($lesson)->save(); 
+		// }
 	}
-}
 
+	public function attachLessson($sub_user_id,$lesson_id)  
+    {
+		$sub_user =   Auth::user()->sub_user()->find($sub_user_id);
+
+	$subUserLesson =   $sub_user->subUserLesson()->where('lesson_id',$lesson_id)->first();
+
+	if (!$subUserLesson) {
+		$subUserLesson = $sub_user->subUserLesson()->syncWithoutDetaching($lesson_id);
+		$model = $this->ModelRepository->findById($lesson_id);
+		$sub_user->update(['points' => $sub_user->points + $model->points]);
+	}
+	// $this->attachCertificate($sub_user_id,$lesson_id)
+	}
+	// public function attachCertificate($sub_user_id,$lesson_type_id,$hero_id,)  
+    // {
+        // return ModelName::where('id',1)->get();
+
+
+
+
+
+	// 	$subjects = null;
+	// 	$lessons = null;
+	// 	if($sub_user_id){
+	// 		$sub_user       = Auth::user()->sub_user()->find($sub_user_id); // checked in middleware
+	// 		$subjects = $this->getActiveSubjectsFromChild($sub_user)  ;
+	// 		$lessons = $this->getFilteredLessonsFromSubjects($subjects,$lesson_type_id,$hero_id,)  ;
+
+	// 	}
+	// 	return  $lessons;
+		// if($certificate_id){
+			// $subject = $this->findById($id); 
+			
+			// $subject_certificates =  $subject->certificate()->get();
+			// foreach ($subject_certificates as $key => $value) {
+			// 	$value->certificatable()->dissociate()->save();
+			// }
+
+			// $certificate =  Certificate::find($certificate_id);
+			// $certificate->certificatable()->associate($subject)->save();
+		// }
+	}

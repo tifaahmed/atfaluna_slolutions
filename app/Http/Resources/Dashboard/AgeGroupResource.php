@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Dashboard\CertificateResource;
 
 class AgeGroupResource extends JsonResource
 {
@@ -21,9 +22,11 @@ class AgeGroupResource extends JsonResource
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            
+
             'languages'     => $this->age_group_languages,
             'name'          => $row ? $row->name:'',
+            
+            'certificate'          =>   new CertificateResource ( $this->certificate )   ,
 
         ];        
     }

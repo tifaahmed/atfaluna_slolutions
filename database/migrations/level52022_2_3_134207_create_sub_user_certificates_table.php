@@ -15,7 +15,7 @@ class CreateSubUserCertificatesTable extends Migration
     {
         Schema::create('sub_user_certificates', function (Blueprint $table) {
             $table->increments('id');//[pk]
-
+            $table->integer('point');
             $table->integer('sub_user_id')->unsigned();
             $table->foreign('sub_user_id')->references('id')->on('sub_users');
             $table->integer('certificate_id')->unsigned();

@@ -22,13 +22,20 @@ class Avatar extends Model
         'price',//unsignedDecimal
     ];
     public function scopeFree($query){
-        return $query->where('price');
+        return $query->where('price','<=',0);
+    }
+    public function scopeHasPrice($query){
+        return $query->where('price','>',0);
     }
     public function scopeGender($query,$gender){
         if($gender){
             return $query->where('type', $gender);
         }
     }
+    public function subUserAvatar(){
+        return $this->belongsToMany(Sub_user::class, 'sub_user_avatars', 'avatar_id', 'sub_user_id');
+    }
+    //free 
      // morphOne    
             public function massage(){
                 return $this->morphOne(Massage::class, 'massagable');

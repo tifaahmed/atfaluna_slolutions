@@ -4,9 +4,10 @@ namespace App\Repository\Eloquent;
 
 use App\Models\Subject as ModelName;
 use App\Repository\SubjectRepositoryInterface;
-use Auth ;
 use App\Models\Quiz;             // morphedByMany
 use Illuminate\Http\Response ;
+use App\Models\Certificate;             // morphedByMany
+use Illuminate\Support\Facades\Auth;
 
 class SubjectRepository extends BaseRepository implements SubjectRepositoryInterface
 {
@@ -58,18 +59,30 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 	}
 	public function attachQuiz($quiz_id,$id)  
     {
-		if($quiz_id){
-			$sub_subject = $this->findById($id); 
+		// if($quiz_id){
+			$subject = $this->findById($id); 
 			
-			$sub_subject_quizzes =  $sub_subject->quiz()->get();
-			$sub_subject_quizzes->each(function($quiz) {
-				$quiz->update(['quizable_id'=>null,'quizable_type'=>null]); 
-			});
+			$subject_quizzes =  $subject->quiz()->get();
+			foreach ($subject_quizzes as $key => $value) {
+				$value->quizable()->dissociate()->save();
+			}
 
 			$quiz =  Quiz::find($quiz_id);
-			$quiz->update(['quizable_id'=>$id,'quizable_type'=>$sub_subject::class]); 
-		}
+			$quiz->quizable()->associate($subject)->save();
 	}
-	
+	public function attachCertificate($certificate_id,$id)  
+    {
+		// if($certificate_id){
+			$subject = $this->findById($id); 
+			
+			$subject_certificates =  $subject->certificate()->get();
+			foreach ($subject_certificates as $key => $value) {
+				$value->certificatable()->dissociate()->save();
+			}
+
+			$certificate =  Certificate::find($certificate_id);
+			$certificate->certificatable()->associate($subject)->save();
+		// }
+	}
 }
 
