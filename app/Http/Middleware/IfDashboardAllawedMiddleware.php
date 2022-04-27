@@ -20,14 +20,11 @@ class IfDashboardAllawedMiddleware
         if (Auth::user()->hasRole(['admin'])  ) {
             return $next($request);
         }else{
-            return       
-            Response()->json( 
-                [
-                    'message' => 'Un Authenticated.' ,
-                    'check' => 'false.' ,
-                    'code'   => Response::HTTP_UNAUTHORIZED           ,
-                ],
-            );
+            return \Response::json( [
+                'message'   => 'Un Authenticated.',
+                'status'    => 'false.' ,
+                'code'      => Response::HTTP_UNAUTHORIZED           ,
+            ] + [] , Response::HTTP_UNAUTHORIZED);    
         }
 
 

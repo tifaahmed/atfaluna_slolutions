@@ -48,10 +48,11 @@ class PlayTimeRepository extends BaseRepository implements PlayTimeRepositoryInt
 		$sub_user       = Auth::user()->sub_user()->find($array[$relation_name]);
 		$result   = $sub_user->playTime()->get();
 		if ($result->count()) {
-			return $this->updateByArray($array,$result,$relation_name) ;
+			$this->updateByArray($array,$result,$relation_name) ;
 		}else{
 			$this->createByArray($array,$relation_name) ;
 		}
+		return $sub_user->playTime()->get();
 	}
 
 	public function updateByArray($array,$result,$relation_name)  
@@ -67,7 +68,6 @@ class PlayTimeRepository extends BaseRepository implements PlayTimeRepositoryInt
 			}
 			$this->update( $result_value->id ,$all  ) ;
 		}
-		return 'ttue';
 	}
 
 	public function createByArray($array,$relation_name)  

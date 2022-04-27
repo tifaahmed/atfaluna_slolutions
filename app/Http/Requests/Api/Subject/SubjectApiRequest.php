@@ -30,8 +30,10 @@ class SubjectApiRequest extends FormRequest
 
         // quiz
         $all += [ 'quiz_id'  =>  [ 'sometimes' ,'integer','exists:quizzes,id'] ]  ;
+      
         // certificate
         $all += [ 'certificate_id'  =>  [ 'required' ,'integer','exists:certificates,id'] ]  ;
+      
         // subjects        
         $all += [ 'image'           =>  [ 'required' ,'max:5000','mimes:jpg,jpeg,webp,bmp,png' ] ] ;
         $all += [ 'points'          =>  [ 'integer' ] ]  ; //default:0

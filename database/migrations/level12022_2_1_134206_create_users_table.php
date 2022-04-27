@@ -30,6 +30,8 @@ class CreateUsersTable extends Migration
             $table -> string        ( 'login_type') -> nullable( )              ;
             $table -> string        ( 'latitude'  ) -> nullable( )              ;
             $table -> string        ( 'longitude' ) -> nullable( )              ;
+            $table->integer('pin_code')->nullable();
+
             $table->softDeletes();
             $table -> timestamps    (            )                             ;
         });

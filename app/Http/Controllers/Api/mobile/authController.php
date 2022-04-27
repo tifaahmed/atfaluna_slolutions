@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\mobile;
 
 use App\Http\Controllers\Controller;
+
 use App\Http\Requests\Api\loginApiRequest ;
 use App\Http\Requests\Api\RegisterApiRequest ;
 use App\Models\User ;
@@ -14,6 +15,11 @@ use Illuminate\Support\Str;
 
 use App\Http\Resources\Mobile\UserResource;
 use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Validation\Rules\Password as RulesPassword;
+use DB;
 class authController extends Controller {
  
     public function __construct(){
@@ -125,15 +131,7 @@ class authController extends Controller {
 
 
     public function logout( Request $request ) {
-       // Auth::guard( 'sanctum' ) -> logout( );
-        // Auth::guard('sanctum')->logout();
-        // Auth::logout();
-        return $user = Auth::user()->token();
-        $user->revoke();
-        // $user->token()->revoke()
-        // Auth::user()->currentAccessToken()->delete();
-      
-        // dd( Auth::user()  );
+        return Auth::user()->token()->revoke();
         return $this -> MakeResponseSuccessful( 
             ['user'  => null ],
             'Successful' ,
@@ -141,4 +139,52 @@ class authController extends Controller {
          ) ;
     }
 
+
+    public function forget_password(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        if ($status == Password::RESET_LINK_SENT) {
+            return [
+                'status' => __($status)
+            ];
+        }
+    }
+    public function check_pin_code(Request $request){
+        $user =  User::where('pin_code',$request->pin_code)->first();
+        if ($user) {
+            Auth::login($user);
+
+            return $this -> MakeResponseSuccessful( 
+                [
+                    'user'  =>   new UserResource ( Auth::user()   )   , 
+                    'Token' => Auth::user() -> getToken( ) 
+                ], 
+                'Successful' ,
+                Response::HTTP_OK
+            ) ;
+        }else{
+            return $this -> MakeResponseSuccessful( 
+                [ 'message' => 'InvalidCredentials' ],  
+                'InvalidCredentials' ,
+                Response::HTTP_UNAUTHORIZED
+            ) ;  
+        }
+    }
+
+    public function update_password(Request $request)
+    {
+        Auth::user()->update(['password'=>$request->password]);
+        return $this -> MakeResponseSuccessful( 
+            ['message'=> 'Password reset successfully'],
+            'Successful' ,
+            Response::HTTP_OK
+        ) ;
+    }
 }

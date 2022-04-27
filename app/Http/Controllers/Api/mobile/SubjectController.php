@@ -39,8 +39,8 @@ class SubjectController extends Controller
 
     public function collection(Request $request){
         try {
-        $model =  $this->ModelRepository->filterPaginate($request->sub_user_id,$request->age_group_id,$request->PerPage ? $request->PerPage : 10) ;
-            return new ModelCollection ( $model )  ;
+            $model =  $this->ModelRepository->filterPaginate($request->sub_user_id,$request->age_group_id,$request->PerPage ? $request->PerPage : 10) ;
+                return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

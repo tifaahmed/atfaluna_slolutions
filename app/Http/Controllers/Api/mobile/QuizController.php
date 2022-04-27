@@ -15,7 +15,9 @@ use App\Http\Resources\Mobile\QuizAttempt\QuizAttemptResource ;
 
 // lInterfaces
 use App\Repository\QuizRepositoryInterface as ModelInterface;
+
 use App\Http\Requests\Api\Quiz\MobileQuizApiRequest;
+use App\Http\Requests\Api\Quiz\MobileAnswerQuizApiRequest;
 use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
@@ -85,7 +87,7 @@ class QuizController extends Controller
         }
     } 
 
-    public function answerQuestion(Request $request){
+    public function answerQuestion(MobileAnswerQuizApiRequest $request){
         try {
             $question_attempt = $this->ModelRepository->answerQuestion(
                  $request->sub_user_id,      

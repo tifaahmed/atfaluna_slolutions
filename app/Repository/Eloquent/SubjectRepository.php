@@ -5,6 +5,7 @@ namespace App\Repository\Eloquent;
 use App\Models\Subject as ModelName;
 use App\Repository\SubjectRepositoryInterface;
 use App\Models\Quiz;             // morphedByMany
+use Illuminate\Http\Response ;
 use App\Models\Certificate;             // morphedByMany
 use Illuminate\Support\Facades\Auth;
 
@@ -27,16 +28,20 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 
 	public function filterPaginate($sub_user_id,$age_group_id, int $itemsNumber)  
     {
-			if($sub_user_id && $age_group_id == null){
-				$sub_user = Auth::user()->sub_user()->find($sub_user_id);
-				$result = $sub_user->ActiveSubjectsFromActiveAgeGroup();
-				return $this->queryPaginate($result,$itemsNumber);
-			}else if($sub_user_id == null && $age_group_id){
-				$result = ModelName::where('age_group_id',$age_group_id);
-				return $this->queryPaginate($result,$itemsNumber);
+		if($sub_user_id && $age_group_id == null){
+			$sub_user = Auth::user()->sub_user()->find($sub_user_id);
+			$active_subjects_query = $sub_user->ActiveSubjectsFromActiveAgeGroup();
+			if ($active_subjects_query) {
+				return $this->queryPaginate($active_subjects_query,$itemsNumber);
 			}else{
-				return $this->collection( $itemsNumber)  ;
+				return abort( Response::HTTP_NOT_FOUND , 'there is no active_subjects for this child');
 			}
+		}else if($sub_user_id == null && $age_group_id){
+			$result = $this->model->where('age_group_id',$age_group_id);
+			return $this->queryPaginate($result,$itemsNumber);
+		}else{
+			return $this->collection( $itemsNumber)  ;
+		}
     }
 	public function filterAll($sub_user_id,$age_group_id)  
     {
@@ -45,7 +50,7 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 			$result = $sub_user->ActiveSubjectsFromActiveAgeGroup()->get();
 			return $result;
 		}else if($sub_user_id == null && $age_group_id){
-			$result = ModelName::where('age_group_id',$age_group_id)->get();
+			$result = $this->model->where('age_group_id',$age_group_id)->get();
 			return $result;
 		}
 		else{

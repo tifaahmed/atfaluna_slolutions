@@ -1,16 +1,31 @@
 <?php
 use Illuminate\Support\Facades\Route;
-
-// no middleware
-    Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
-        Route::post( '/login' ,   'authController@login'  ) -> name( 'login' ) ,
-        Route::post( '/login-social' ,   'authController@loginSocial'  ) -> name( 'loginSocial' ) ,
-        Route::post( '/register' ,  'authController@register' )  -> name( 'register' ) ,    
-    ]);
+// middleware
 //  LocalizationMiddleware : if parameter (language) exist change lange 
 //  auth : have to get the access token 
 //  IfAuthChild : if parameter (sub_user_id) check if he is the child of the authenticated parent   
 // IfPlayTime : if child not in play time
+
+
+// no middleware
+Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
+    Route::post( '/login' ,   'authController@login'  ) -> name( 'login' ) ,
+    Route::post( '/login-social' ,   'authController@loginSocial'  ) -> name( 'loginSocial' ) ,
+    Route::post( '/register' ,  'authController@register' )  -> name( 'register' ) ,    
+    Route::post( '/forget-password' ,  'authController@forget_password' )  -> name( 'forget_password' ) ,  
+    Route::post( '/check-pin-code' ,  'authController@check_pin_code' )  -> name( 'check_pin_code' ) ,  
+]);
+Route::post( 'auth/update-password' ,  'authController@update_password' )  -> name( 'update_password' )->middleware('auth:api') ;  
+
+Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild']], fn ( ) : array => [
+    //Subject
+    Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
+        Route::post('/attach'                   ,   'SubjectController@attach'              )->name('attach'),
+    ]),
+]);
+
+
+
 Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild','IfPlayTime']], fn ( ) : array => [
 
     //Subject
@@ -18,8 +33,6 @@ Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild'
         Route::get('/'                          ,   'SubjectController@all'                 )->name('all'),
         Route::get('/{id}/show'                 ,   'SubjectController@show'                )->name('show'),
         Route::get('/collection'                ,   'SubjectController@collection'          )->name('collection'),
-        Route::post('/attach'                   ,   'SubjectController@attach'              )->name('attach'),
-        Route::post('/detach'                   ,   'SubjectController@detach'              )->name('detach'),
     ]),
     // Lesson
     Route::name('lesson.')->prefix('/lesson')->group( fn ( ) : array => [

@@ -9,6 +9,8 @@ use App\Http\Resources\Mobile\Collections\CertificateCollection;
 use App\Http\Resources\Mobile\Collections\Quiz\QuizCollection;
 use App\Http\Resources\Mobile\Collections\Lesson\LessonCollection;
 use App\Http\Resources\Mobile\Collections\SubjectCollection;
+use App\Http\Resources\Mobile\Collections\PlayTimeCollection;
+use App\Http\Resources\Mobile\AvatarResource;
 
 
 class SubUserResource extends JsonResource
@@ -31,8 +33,10 @@ class SubUserResource extends JsonResource
 
             'accessories'    => new AccessoryCollection ($this->subUserAccessory)  ,
             'avatars'        => new AvatarCollection ($this->subUserAvatar)  ,
+            'avatar'        => new AvatarResource ($this->avatar)  ,
             'certificate'    => new CertificateCollection ($this->subUserCertificate)  ,
             'quizs'          => new QuizCollection ($this->subUserQuiz)  ,
+            'play_time'        => new PlayTimeCollection ($this->playTime)  ,
             'lessons'        => new LessonCollection ($this->subUserLesson)  ,
             'active_age_group'  => $this->ActiveAgeGroup() ? $this->ActiveAgeGroup()->first()  : null ,
             'active_subjects_from_active_age_group'  =>  $this->ActiveSubjectsFromActiveAgeGroup() ? $this->ActiveSubjectsFromActiveAgeGroup()->get() : []   ,
