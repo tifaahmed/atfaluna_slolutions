@@ -25,7 +25,8 @@ class Massage extends Model
     // relations
     public function conversation(){
         return $this->belongsTo(Conversation::class,'conversation_id');
-    }public function sub_user(){
+    }
+    public function sub_user(){
         return $this->belongsTo(Sub_user::class,'sub_user_id');
     }
     public function massagable()

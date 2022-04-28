@@ -9,6 +9,8 @@ use Illuminate\Http\Response ;
 use \Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use URL;
+use App\Models\Massage;
+
 
 class HeroRepository extends BaseRepository implements HeroRepositoryInterface
 {
@@ -118,7 +120,7 @@ class HeroRepository extends BaseRepository implements HeroRepositoryInterface
 			}
 			// third
 			if ( isset($lessson_ids) && $lessson_ids) {
-				 $heros =  ModelName::whereHas('herolesson',function (Builder $query) use($lessson_ids) {
+				$heros =  ModelName::whereHas('herolesson',function (Builder $query) use($lessson_ids) {
 					$query->whereIn('lesson_id',$lessson_ids);
 				});
 				return $this->queryPaginate($heros,$itemsNumber,null,URL::full());
@@ -137,7 +139,6 @@ class HeroRepository extends BaseRepository implements HeroRepositoryInterface
 		}	
 	}
 
-
     public function attachLessons($lesson_ids,$id)
 	{
 		if($lesson_ids && $id){
@@ -147,7 +148,17 @@ class HeroRepository extends BaseRepository implements HeroRepositoryInterface
 		}
 	}
 
+	public function attachMassage($massage_id, $id)
+	{
+		$hero = $this->findById($id);
 
-	
+		$hero_massages = $hero->massage()->get();
+
+		foreach ($hero_massages as $key => $value){
+			$value->massageable()->diassociate()->save();
+		}
+		$massage = Massage::find($massage_id);
+		$massage->massagable()->associate($hero)->save();
+	}
+
 }
-

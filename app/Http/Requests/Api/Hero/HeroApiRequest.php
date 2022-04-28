@@ -28,6 +28,8 @@ class HeroApiRequest extends FormRequest
         $all=[];
 
         $all += [ 'lesson_ids'         =>  [ 'sometimes' ,'array','exists:lessons,id'] ]  ;
+        
+        $all += [ 'massage_id'         =>  [ 'required' ,'integer','exists:massages,id'] ]  ;
 
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.title'   =>  [ 'required' ] ] ;
