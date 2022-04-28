@@ -24,6 +24,7 @@ class MassageImageApiRequest extends FormRequest
     {
         return [
             'image'   =>  [ 'required','max:50000' ] ,
+            'massage_id'  =>  [ 'required' ,'integer','exists:massages,id']   ,
 
         ];
     }
