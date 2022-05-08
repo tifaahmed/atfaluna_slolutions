@@ -22,7 +22,6 @@ class Age_group extends Model
     protected $table = 'age_groups';
 
     protected $fillable = [
-        // 'age',//required , integer
 
     ];
     // relations

@@ -14,6 +14,7 @@ use App\Models\Lesson;
 use App\Models\Subject;
 use App\Models\Age_group;
 use App\Models\Sub_user_quiz;
+use App\Models\Sub_user_certificate;
 use App\Models\Achievement;
 
 
@@ -69,12 +70,16 @@ class Sub_user extends Model
         public function subUserAgeGroup(){
             return $this->belongsToMany(Age_group::class, 'sub_user_age_groups', 'sub_user_id', 'age_group_id');
         }
+        public function subUserAgeGroupModel(){
+            return $this->hasMany(Sub_user_age_group::class);
+        }
         public function ActiveAgeGroup(){
             if ($this->subUserAgeGroup()) {
                 return $this->subUserAgeGroup()->wherePivot('active' ,1);
             }
         }
 
+        
         //Subject
         public function subUserSubject(){
             return $this->belongsToMany(Subject::class, 'sub_user_subjects', 'sub_user_id', 'subject_id');
@@ -84,12 +89,6 @@ class Sub_user extends Model
                 return $this->subUserSubject()->wherePivot('active' ,1);
             }
         }
-
-        //Certificate
-        public function subUserCertificate(){
-            return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_user_id', 'certificate_id');
-        }
-        
         public function ActiveSubjectsFromActiveAgeGroup(){
             $active_age_group = $this->ActiveAgeGroup()->first();
             $all_active_subjects = $this->ActiveSubject();
@@ -97,5 +96,15 @@ class Sub_user extends Model
                 return $all_active_subjects->where('age_group_id',$active_age_group->id);
             }
         }
+
+        //Certificate
+        public function subUserCertificate(){
+            return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_user_id', 'certificate_id');
+        }
+        public function subUserCertificateModel(){
+            return $this->hasMany(Sub_user_certificate::class);
+        }
+
+
 }
 // 
