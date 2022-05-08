@@ -27,8 +27,6 @@ class CertificateApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
-        $all += [ 'certificatable_id'     =>  ['nullable','exists:'.$this->certificatable_type.',id'] ]  ;
-        $all += [ 'certificatable_type'   =>  [ 'nullable' ] ] ;
         $all += [ 'image_one'   =>  [ 'required','max:50000' ] ] ;
         $all += [ 'image_two'   =>  [ 'required' ,'max:50000'] ] ;
         $all += [ 'min_point'   =>  [ 'required' ,'integer'] ] ;

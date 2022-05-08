@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Quiz_language;            // HasMany
 use App\Models\Quiz_questionable;             // HasMany
 use App\Models\Quiz_type;             // OneToMany
+use App\Models\Notification;
 
 use App\Models\True_false_question;      // morphedByMany
 use App\Models\Mcq_question;             // morphedByMany
@@ -57,7 +58,10 @@ class Quiz extends Model
             public function quizable(){
                 return $this->morphTo('quizable');
             }
-
+        // morphOne
+        public function notification(){
+            return $this->morphOne(Notification::class, 'notificable');
+        }
         // HasMany
             public function quiz_languages(){
                 return $this->HasMany(Quiz_language::class);
