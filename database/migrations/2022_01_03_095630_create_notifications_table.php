@@ -14,6 +14,7 @@ class CreateNotificationsTable extends Migration
     public function up()
     {
         Schema::create('notifications', function (Blueprint $table) {
+            $table->increments('id');//[pk]
             $table->uuid('id')->primary();
             $table->string('type');
             $table->morphs('notifiable');
@@ -23,6 +24,7 @@ class CreateNotificationsTable extends Migration
         });
     }
 
+// morph_id , subject_id , lesson_id , quiz_id , sub_subject_id                                                                                                                                         
     /**
      * Reverse the migrations.
      *

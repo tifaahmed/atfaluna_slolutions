@@ -10,6 +10,7 @@ use App\Models\Subject;                 // belongsTo
 
 use App\Models\Sub_subject_language;    // HasMany
 use App\Models\Lesson;                  // HasMany
+use App\Models\Notification;
 
 use App\Models\Quiz;                    //morphMany    
 
@@ -42,4 +43,8 @@ class Sub_subject extends Model
             public function quiz(){
                 return $this->morphOne(Quiz::class, 'quizable');
             }
+            // morphOne
+        public function notification(){
+            return $this->morphOne(Notification::class, 'notificable');
+        }
 }
