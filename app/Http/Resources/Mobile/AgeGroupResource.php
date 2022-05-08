@@ -4,7 +4,7 @@ namespace App\Http\Resources\Mobile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Mobile\Collections\SubjectCollection;
-
+use Auth;
 class AgeGroupResource extends JsonResource
 {
     /**
@@ -17,18 +17,20 @@ class AgeGroupResource extends JsonResource
     {
         $row=$this->age_group_languages()->Localization()->RelatedLanguage($this->id)->first();
 
-        return [
+        $all=[];
+        $all += [ 'id'     =>  $this->id ]  ;
+        $all += [ 'name'     =>  $row ? $row->name:'' ]  ;
+        $all += [ 'created_at'     =>  $this->created_at ?   $this->created_at->format('d/m/Y') : null ]  ;
+        $all += [ 'updated_at'     =>  $this->updated_at ?   $this->updated_at->format('d/m/Y') : null ]  ;
+        $all += [ 'deleted_at'     =>  $this->updated_at ?   $this->updated_at->format('d/m/Y') : null ]  ;
+        $all += [ 'subjects'     =>  new SubjectCollection ($this->subjects) ]  ;
 
-            'id'            => $this->id,
-            'name'          => $row ? $row->name:'',
-
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'subjects'      => new SubjectCollection ($this->subjects),
-
-                        
-        ];        
+        if (isset($request->sub_user_id) && $request->sub_user_id) {
+            $sub_user       = Auth::user()->sub_user()->find($request->sub_user_id);
+            $subUserCertificate   		= $sub_user->subUserAgeGroupModel()->where('age_group_id',$this->id)->first();
+                $all += [ 'taken'     =>  $subUserCertificate ? 1 :0 ]  ;
+        }
+        return $all  ; 
     }
 }
 

@@ -16,7 +16,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use URL;
 use Illuminate\Http\Response ;
 
-class LessonRepository extends BaseRepository implements LessonRepositoryInterface
+class LessonRepository extends BaseRepository  implements LessonRepositoryInterface
 {
 
 	/**
@@ -68,7 +68,6 @@ class LessonRepository extends BaseRepository implements LessonRepositoryInterfa
 			return abort( Response::HTTP_NOT_FOUND , 'there is no active_subjects for this child');			
 		}
 	}
-
 
 	public function filterAll($sub_user_id,$lesson_type_id,$hero_id)  
     {
@@ -143,7 +142,7 @@ class LessonRepository extends BaseRepository implements LessonRepositoryInterfa
 	}
 	public function attachQuiz($quiz_id,$id)  
     {
-		// if($quiz_id){
+		if($quiz_id){
 			$lesson = $this->findById($id); 
 			
 			$lesson_quizzes =  $lesson->quiz()->get();
@@ -153,48 +152,56 @@ class LessonRepository extends BaseRepository implements LessonRepositoryInterfa
 
 			$quiz =  Quiz::find($quiz_id);
 			$quiz->quizable()->associate($lesson)->save(); 
-		// }
+		}
 	}
 
 	public function attachLessson($sub_user_id,$lesson_id)  
     {
 		$sub_user =   Auth::user()->sub_user()->find($sub_user_id);
+		$lesson   = $this->findById($lesson_id); 
 
-	$subUserLesson =   $sub_user->subUserLesson()->where('lesson_id',$lesson_id)->first();
+		$subUserLesson =   $sub_user->subUserLesson()->where('lesson_id',$lesson->id)->first();
 
-	if (!$subUserLesson) {
-		$subUserLesson = $sub_user->subUserLesson()->syncWithoutDetaching($lesson_id);
-		$model = $this->ModelRepository->findById($lesson_id);
-		$sub_user->update(['points' => $sub_user->points + $model->points]);
+		// if subUser did not watch the lesson before
+		if (!$subUserLesson) {
+			$this->registerAsWatchedLesson($sub_user,$lesson); // add row in subUserLessons table 
+			$this->gaveChildLessonPoints($sub_user,$lesson);// gave the child (lesson points) in sub_users table 
+
+			$this->attachCertificate($sub_user,$lesson);
+		}
+
 	}
-	// $this->attachCertificate($sub_user_id,$lesson_id)
+
+	public function attachCertificate($sub_user,$lesson)  
+    {
+		$subSubject = $lesson->subSubject()->first();
+		$subject = $subSubject->subject()->first();
+		$certificate = $subject->certificate()->first();
+
+		$subUserCertificate =   $sub_user->subUserCertificate()->where('certificate_id',$certificate->id)->first();
+
+		// if subUser did not get the  Certificate before
+		if (!$subUserCertificate) {
+			$this->registerAsGivenCertificate($sub_user,$certificate); // add row in sub_user_certificates table 
+		}
+		$this->gaveChildCertificatePoints($sub_user,$certificate,$lesson);// gave the child (lesson points) in sub_user_certificates table 
 	}
-	// public function attachCertificate($sub_user_id,$lesson_type_id,$hero_id,)  
-    // {
-        // return ModelName::where('id',1)->get();
 
-
-
-
-
-	// 	$subjects = null;
-	// 	$lessons = null;
-	// 	if($sub_user_id){
-	// 		$sub_user       = Auth::user()->sub_user()->find($sub_user_id); // checked in middleware
-	// 		$subjects = $this->getActiveSubjectsFromChild($sub_user)  ;
-	// 		$lessons = $this->getFilteredLessonsFromSubjects($subjects,$lesson_type_id,$hero_id,)  ;
-
-	// 	}
-	// 	return  $lessons;
-		// if($certificate_id){
-			// $subject = $this->findById($id); 
-			
-			// $subject_certificates =  $subject->certificate()->get();
-			// foreach ($subject_certificates as $key => $value) {
-			// 	$value->certificatable()->dissociate()->save();
-			// }
-
-			// $certificate =  Certificate::find($certificate_id);
-			// $certificate->certificatable()->associate($subject)->save();
-		// }
+	public function registerAsWatchedLesson($sub_user,$lesson)  
+    {
+		$subUserLesson = $sub_user->subUserLesson()->syncWithoutDetaching($lesson->id);
 	}
+	public function gaveChildLessonPoints($sub_user,$lesson) {
+		$sub_user->update(['points' => $sub_user->points + $lesson->points]);
+	} 
+	public function registerAsGivenCertificate($sub_user,$certificate)  
+    {
+		$sub_user->subUserCertificate()->syncWithoutDetaching($certificate->id);
+	}
+	public function gaveChildCertificatePoints($sub_user,$certificate,$lesson)  {
+		$subUserCertificate =   $sub_user->subUserCertificateModel()->where('certificate_id',$certificate->id)->first();
+		$subUserCertificate->update(['points' => $subUserCertificate->points + $lesson->points]);
+	}
+
+	
+}

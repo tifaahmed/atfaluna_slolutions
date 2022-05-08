@@ -37,8 +37,8 @@ class IfPlayTimeMiddleware
                 return \Response::json( [
                     'message'   => 'now is not play time.' ,
                     'status'    => 'false.' ,
-                    'code'      => Response::HTTP_UNPROCESSABLE_ENTITY           ,
-                ] + [] , Response::HTTP_UNPROCESSABLE_ENTITY);
+                    'code'      => Response::HTTP_UNAUTHORIZED           ,
+                ] + [] , Response::HTTP_UNAUTHORIZED);
             }    
         }else{
             return $next($request);

@@ -10,6 +10,7 @@ use App\Http\Resources\Mobile\Collections\Quiz\QuizCollection;
 use App\Http\Resources\Mobile\Collections\Lesson\LessonCollection;
 use App\Http\Resources\Mobile\Collections\SubjectCollection;
 use App\Http\Resources\Mobile\Collections\PlayTimeCollection;
+use App\Http\Resources\Mobile\Collections\AgeGroupCollection;
 use App\Http\Resources\Mobile\AvatarResource;
 
 
@@ -38,6 +39,7 @@ class SubUserResource extends JsonResource
             'quizs'          => new QuizCollection ($this->subUserQuiz)  ,
             'play_time'        => new PlayTimeCollection ($this->playTime)  ,
             'lessons'        => new LessonCollection ($this->subUserLesson)  ,
+            'age_groups'         => new AgeGroupCollection  ($this->subUserAgeGroup ) ,
             'active_age_group'  => $this->ActiveAgeGroup() ? $this->ActiveAgeGroup()->first()  : null ,
             'active_subjects_from_active_age_group'  =>  $this->ActiveSubjectsFromActiveAgeGroup() ? $this->ActiveSubjectsFromActiveAgeGroup()->get() : []   ,
             'user'         => $this->user,

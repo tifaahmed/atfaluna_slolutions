@@ -19,6 +19,7 @@ use App\Http\Requests\Api\Lesson\MobileLessonApiRequest;
 
 class LessonController extends Controller
 {
+    
     private $Repository;
     public function __construct(ModelInterface $Repository)
     {

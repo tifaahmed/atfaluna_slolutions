@@ -20,7 +20,7 @@ class CreateUserSubscriptionsTable extends Migration
             $table->date('start')->default( date('Y-m-d') ); //[note:'1-1-2022']
             $table->date('end'); //[note:'1-2-2010']
             $table->integer('child_number')->default( 1 ); //[note:'2']
-            $table->decimal('price')->default( 0 );; //[note:'2']
+            $table->decimal('price')->default( 0 ); //[note:'2']
 
             $table->timestamps();
             $table->softDeletes();

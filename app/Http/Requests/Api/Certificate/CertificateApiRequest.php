@@ -29,14 +29,14 @@ class CertificateApiRequest extends FormRequest
         $all=[];
         $all += [ 'image_one'   =>  [ 'required','max:50000' ] ] ;
         $all += [ 'image_two'   =>  [ 'required' ,'max:50000'] ] ;
-        $all += [ 'min_point'   =>  [ 'required' ,'integer'] ] ;
-        $all += [ 'max_point'   =>  [ 'required','integer' ] ] ;
+        $all += [ 'min_point'   =>  [ 'integer'] ] ;
+        $all += [ 'max_point'   =>  [ 'integer' ] ] ;
 
         foreach ($Languages as $key => $value) {
-            $all += [ 'languages.'.$key.'.title_one'   =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.title_two'   =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.subject'   =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+            $all += [ 'languages.'.$key.'.title_one'    =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.title_two'    =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.subject'      =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.language'     =>  [ 'required' ,'exists:languages,name'] ] ;
         }
         return $all;
     }
