@@ -72,12 +72,13 @@ class LessonController extends Controller
     // relation
     public function attach(MobileLessonApiRequest $request){
         try {
-            // return Lesson::where('id',1)->first();
 
-        return  $this->ModelRepository->attachLessson($request->sub_user_id,$request->lesson_id,) ;
-        // return  $this->ModelRepository->attachCertificate($request->sub_user_id,$request->lesson_id,) ;
-
-            return $this->show($request->lesson_id);
+            $this->ModelRepository->attachLessson($request->sub_user_id,$request->lesson_id,) ;
+            return $this -> MakeResponseSuccessful( 
+                [ 'Successful' ],
+                'Successful'    ,
+                Response::HTTP_OK
+            ) ;
 
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  

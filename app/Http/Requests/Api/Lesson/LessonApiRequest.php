@@ -27,6 +27,12 @@ class LessonApiRequest extends FormRequest
 
         $all=[];
 
+        $all += [ 'notificate'           =>  [ 'required','boolean' ] ]  ;
+        // notification languages
+        foreach ($Languages as $key => $value) {
+            $all += [ 'notification.'.$key.'.title'          =>  [ 'required_if:notificate,1'] ]  ;
+            $all += [ 'notification.'.$key.'.subject'        =>  [ 'required_if:notificate,1'] ]  ;
+        }
         // lessons
         $all += [ 'points'           =>  [ 'integer'] ]  ;
         $all += [ 'sub_subject_id'   =>  [ 'required' ,'integer','exists:sub_subjects,id'] ]  ;

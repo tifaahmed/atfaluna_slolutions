@@ -19,6 +19,11 @@ use App\Http\Resources\Dashboard\Lesson\LessonResource as ModelResource;
 use App\Repository\LessonRepositoryInterface as ModelInterface;
 use App\Repository\LessonLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages
 
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewItemNotification;
+
+use App\Models\User;
+
 class LessonController extends Controller
 {
     private $Repository;
@@ -92,30 +97,35 @@ class LessonController extends Controller
         }
     }
     public function store(modelInsertRequest $request) {
-        try {
-            $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
 
-            // attach
-            if (isset($request->quiz_ids) && $request->quiz_ids) {
-                $this->ModelRepository->attachQuiz($request->quiz_ids,$model->id);
-            }
+        $users = User::all();
+        Notification::send($users, new NewItemNotification($request));
 
-            // languages
-            $this -> store_array_languages($request->languages,$model) ;
+        // try {
+
+        //     $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
+
+        //     // attach
+        //     if (isset($request->quiz_ids) && $request->quiz_ids) {
+        //         $this->ModelRepository->attachQuiz($request->quiz_ids,$model->id);
+        //     }
+
+        //     // languages
+        //     $this -> store_array_languages($request->languages,$model) ;
 
 
-            return $this -> MakeResponseSuccessful( 
-                [ $model ],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_BAD_REQUEST
-            );
-        }
+        //     return $this -> MakeResponseSuccessful( 
+        //         [ $model ],
+        //         'Successful'               ,
+        //         Response::HTTP_OK
+        //     ) ;
+        // } catch (\Exception $e) {
+        //     return $this -> MakeResponseErrors(  
+        //         [$e->getMessage()  ] ,
+        //         'Errors',
+        //         Response::HTTP_BAD_REQUEST
+        //     );
+        // }
     }
     public function update(modelUpdateRequest $request ,$id) {
         try {

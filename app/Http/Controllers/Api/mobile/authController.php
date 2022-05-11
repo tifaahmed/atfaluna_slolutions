@@ -51,6 +51,10 @@ class authController extends Controller {
         }
 
         if ( Auth::attempt(['email' => $user->email, 'password' => $request->password],$request->_token) ){
+            if ( isset($request->fcm_token) && $request->fcm_token ) {
+                // Auth::user()->tokens
+                Auth::user()->update([ 'fcm_token' => $request->fcm_token ])  ;  
+            }
             return $this -> MakeResponseSuccessful( 
                 [
                     'user'  =>   new UserResource ( Auth::user()   )   , 
@@ -60,6 +64,8 @@ class authController extends Controller {
                 Response::HTTP_OK
             ) ; 
         }
+
+        
     }
     public function loginSocial( Request $request ) {
 
@@ -84,7 +90,11 @@ class authController extends Controller {
             $all += array( 'email'      => $request -> get( 'email' ) );
             $all += array( 'phone'      => $request -> get( 'phone' ) );
             $all += array( 'login_type' => $request -> get( 'login_type' ) );
-            
+
+            if ( isset($request->fcm_token) && $request->fcm_token ) {
+                $all += array( 'fcm_token' => $request -> get( 'fcm_token' ) );
+            }
+
             $user  = User::create($all);
         }
 
@@ -110,7 +120,8 @@ class authController extends Controller {
             'email' => $request -> get( 'email' ),
             'phone' => $request -> get( 'phone' ),
             'country_id' => $request -> get( 'country_id' ),
-            
+            'fcm_token' => $request -> get( 'fcm_token' ),
+
             'remember_token' => Hash::make( Str::random(60) )  ,
             'token' => Hash::make( Str::random(60) )  ,
             // 'remember_token' =>  'token' => Auth::user() -> getToken( ) 
@@ -131,9 +142,9 @@ class authController extends Controller {
 
 
     public function logout( Request $request ) {
-        return Auth::user()->token()->revoke();
+        Auth::user()->token()->revoke();
         return $this -> MakeResponseSuccessful( 
-            ['user'  => null ],
+            ['user logout Successful'],
             'Successful' ,
             Response::HTTP_OK
          ) ;
@@ -160,7 +171,9 @@ class authController extends Controller {
         $user =  User::where('pin_code',$request->pin_code)->first();
         if ($user) {
             Auth::login($user);
-
+            if ( isset($request->fcm_token) && $request->fcm_token ) {
+                Auth::user()->update([ 'fcm_token' => $request->fcm_token ])  ;  
+            }
             return $this -> MakeResponseSuccessful( 
                 [
                     'user'  =>   new UserResource ( Auth::user()   )   , 

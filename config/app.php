@@ -178,6 +178,8 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         ZanySoft\Zip\ZipServiceProvider::class,
 
+        Laravel\Passport\PassportServiceProvider::class,
+
     ],
 
     /*

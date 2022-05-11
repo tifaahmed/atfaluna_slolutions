@@ -19,6 +19,8 @@ class CreateCertificatesTable extends Migration
             $table->string('certificatable_type')->nullable(); //[note: 'morphs_type (subject_model , age_group_model)']
             $table->string('image_one'); //[note: 'not null']
             $table->string('image_two'); //[note: 'not null']
+            $table->string('image_three'); //[note: 'not null']
+            
             $table->integer('min_point')->default( 0 );
             $table->integer('max_point')->default( 0 );
 
