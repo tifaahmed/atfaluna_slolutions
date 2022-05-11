@@ -36,6 +36,7 @@ class CreateOauthAccessTokensTable extends Migration
             $table->uuid('client_id');
             $table->string('name')->nullable();
             $table->text('scopes')->nullable();
+            $table->string('fcm_token')->nullable();
             $table->boolean('revoked');
             $table->timestamps();
             $table->dateTime('expires_at')->nullable();

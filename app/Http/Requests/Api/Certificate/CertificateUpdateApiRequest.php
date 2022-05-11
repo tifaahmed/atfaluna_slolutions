@@ -27,18 +27,17 @@ class CertificateUpdateApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
-        $all += [ 'certificatable_id'     =>  ['required','exists:'.$this->certificatable_type.',id'] ]  ;
-        $all += [ 'certificatable_type'   =>  [ 'required' ] ] ;
         $all += [ 'image_one'   =>  [ 'sometimes','max:50000' ] ] ;
         $all += [ 'image_two'   =>  [ 'sometimes' ,'max:50000'] ] ;
-        $all += [ 'min_point'   =>  [ 'required' ,'integer'] ] ;
-        $all += [ 'max_point'   =>  [ 'required','integer' ] ] ;
+        $all += [ 'image_three' =>  [ 'sometimes' ,'max:50000'] ] ;
+        $all += [ 'min_point'   =>  [ 'integer'  ,  'min:1'   ] ] ;
+        $all += [ 'max_point'   =>  [ 'integer'  , 'gt:min_point' ] ];
 
         foreach ($Languages as $key => $value) {
-            $all += [ 'languages.'.$key.'.title_one'   =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.title_two'   =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.subject'   =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+            $all += [ 'languages.'.$key.'.title_one'    =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.title_two'    =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.subject'      =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.language'     =>  [ 'required' ,'exists:languages,name'] ] ;
         }
         return $all;
     }

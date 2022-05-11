@@ -16,7 +16,9 @@ use App\Models\Sub_user;
 use App\Models\User_package;
 use App\Models\User_subscription;
 use App\Notifications\ResetPasswordNotification;
+use App\Notifications\NewItemNotification;
 use DB ;
+use Carbon\Carbon;
 class User extends Authenticatable {
 
     use
@@ -44,14 +46,18 @@ class User extends Authenticatable {
         'remember_token',
         'login_type',
         'latitude','longitude',
-        'pin_code'
+        'pin_code',
+        'fcm_token'
     ];
-    public function getToken( ) : array { return [
-        'token_type'    => 'Bearer'                                     ,
-        'expires_in'    => null                                         ,
-        'refresh_token' => null                                         ,
-        'access_token'  => $this -> createToken( '' ) -> accessToken ,
-    ] ; }
+    public function getToken( ) : array {
+        $token = $this -> createToken( $this->email )  ;
+        return [
+            'token_type'    => 'Bearer',
+            'expires_in'    =>  $token->token->expires_at->diffForHumans(),
+            'refresh_token' =>  null,
+            'access_token'  =>  $token->accessToken,
+        ] ; 
+    }
     protected static function boot()
     {
         parent::boot();
@@ -64,16 +70,21 @@ class User extends Authenticatable {
     }
     public function sendPasswordResetNotification($token)
     {
-        $data = [] ;
-
         $url = asset('api/auth/reset-password?token='.$token);
 
+        $data = [] ;
         $data += ['url' => $url];
         $data += ['pin_code' => $this->pin_code];
 
         $this->notify(new ResetPasswordNotification($data));
     }
+    public function sendNewItemNotification()
+    {
+        $all_user = User::all();
+        NewItemNotification::send($all_user, new MyNotification($param));
 
+        $this->notify(new NewItemNotification());
+    }
     //relations
         public function country(){
             return $this->belongsTo(Country::class);

@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Validation\Rules\Password as RulesPassword;
+
+use Laravel\Passport\TokenRepository;
+use Laravel\Passport\RefreshTokenRepository;
+
 class authController extends Controller {
  
 
@@ -31,6 +35,9 @@ class authController extends Controller {
         }
 
         if ( Auth()->attempt(['email' => $user->email, 'password' => $request->password],$request->_token) ){
+            if ( isset($request->fcm_token) && $request->fcm_token ) {
+                Auth::user()->update([ 'fcm_token' => $request->fcm_token ])  ;  
+            }
             return $this -> MakeResponseSuccessful( 
                 [
                     'user'  =>   new UserResource ( Auth::user()   )   , 
@@ -40,6 +47,7 @@ class authController extends Controller {
                 Response::HTTP_OK
             ) ; 
         }
+
     }
 
     public function register( RegisterApiRequest $request ) {
@@ -49,6 +57,7 @@ class authController extends Controller {
             'name' => $request -> get( 'name' ),
             'email' => $request -> get( 'email' ),
             'phone' => $request -> get( 'phone' ),
+            'fcm_token' => $request -> get( 'fcm_token' ),
 
             'remember_token' => Hash::make( Str::random(60) )  ,
             'token' => Hash::make( Str::random(60) )  ,
@@ -68,10 +77,13 @@ class authController extends Controller {
 
 
     public function logout( Request $request ) {
+        $tokenRepository = app(TokenRepository::class);
+        $tokenRepository->revokeAccessToken($tokenId);
+
         // Auth::guard('sanctum')->logout();
-        Auth::guard('api')->user()->token()->revoke();
+        Auth::user()->token()->revoke();
         return $this -> MakeResponseSuccessful( 
-            ['user'  => null ],
+            ['user logout Successful'],
             'Successful' ,
             Response::HTTP_OK
          ) ;

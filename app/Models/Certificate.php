@@ -21,6 +21,7 @@ class Certificate extends Model
         'certificatable_type',// subject age_group
         'image_one',//required
         'image_two',//required
+        'image_three',//required
         
         'min_point',//required integer
         'max_point',//required integer

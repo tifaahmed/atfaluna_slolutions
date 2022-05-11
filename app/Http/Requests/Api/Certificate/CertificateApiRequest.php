@@ -27,10 +27,11 @@ class CertificateApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
-        $all += [ 'image_one'   =>  [ 'required','max:50000' ] ] ;
+        $all += [ 'image_one'   =>  [ 'required' ,'max:50000' ] ] ;
         $all += [ 'image_two'   =>  [ 'required' ,'max:50000'] ] ;
-        $all += [ 'min_point'   =>  [ 'integer'] ] ;
-        $all += [ 'max_point'   =>  [ 'integer' ] ] ;
+        $all += [ 'image_three' =>  [ 'required' ,'max:50000'] ] ;
+        $all += [ 'min_point'   =>  [ 'integer'  ,  'min:1'   ] ] ;
+        $all += [ 'max_point'   =>  [ 'integer'  , 'gt:min_point' ] ];
 
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.title_one'    =>  [ 'required' ] ] ;

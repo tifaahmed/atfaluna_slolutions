@@ -55,7 +55,13 @@ class CertificateController extends Controller
                 $path= $this->HelperHandleFile($this->folder_name,$request->file($file_two),$file_two)  ;
                 $all += array( $file_two => $path );
             }
-            $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one,$file_two,)+$all ) );
+            $file_three = 'image_three';
+            if ($request->hasFile($file_three)) {            
+                $path= $this->HelperHandleFile($this->folder_name,$request->file($file_three),$file_three)  ;
+                $all += array( $file_three => $path );
+            }
+            
+            $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one,$file_two,$file_three)+$all ) );
             
             // // languages
             $this -> store_array_languages($request->languages,$model) ;
@@ -107,7 +113,7 @@ class CertificateController extends Controller
         try {
             $model = $this->ModelRepository->findTrashedById($id);
 
-            $file_key_names =['image_one','image_two'];
+            $file_key_names =['image_one','image_two','image_three'];
             foreach ($file_key_names as $value) {
                 //delete folder that has all this row files if exists
                 $this->HelperDeleteDirectory($this->HelperGetDirectory($model->$value));
@@ -150,12 +156,18 @@ class CertificateController extends Controller
 
             }
             $file_two = 'image_two';
-                if ($request->hasFile($file_two)) {            
-                    $path= $this->HelperHandleFile($this->folder_name,$request->file($file_two),$file_two)  ;
-                    $all += array( $file_two => $path );
-                }
-                $this->ModelRepository->update( $id,Request()->except($file_one,$file_two,)+$all) ;
-                $model = new ModelResource( $this->ModelRepository->findById($id) );
+            if ($request->hasFile($file_two)) {            
+                $path= $this->HelperHandleFile($this->folder_name,$request->file($file_two),$file_two)  ;
+                $all += array( $file_two => $path );
+            }
+            $file_three = 'image_three';
+            if ($request->hasFile($file_three)) {            
+                $path= $this->HelperHandleFile($this->folder_name,$request->file($file_three),$file_three)  ;
+                $all += array( $file_three => $path );
+            }
+            
+            $this->ModelRepository->update( $id,Request()->except($file_one,$file_two,)+$all) ;
+            $model = new ModelResource( $this->ModelRepository->findById($id) );
 
             //  request languages
             $this -> update_array_languages($request->languages,$model) ;
