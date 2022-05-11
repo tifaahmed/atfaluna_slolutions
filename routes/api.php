@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // no middleware
-Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
+Route::name( 'auth.') -> prefix( 'auth' ,'guest:api') -> group( fn ( ) => [
     Route::post( '/login' ,   'authController@login'  ) -> name( 'login' ) ,
     Route::post( '/login-social' ,   'authController@loginSocial'  ) -> name( 'loginSocial' ) ,
     Route::post( '/register' ,  'authController@register' )  -> name( 'register' ) ,    

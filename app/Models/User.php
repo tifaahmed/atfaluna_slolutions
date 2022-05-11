@@ -53,6 +53,8 @@ class User extends Authenticatable {
         $token = $this -> createToken( $this->email )  ;
         return [
             'token_type'    => 'Bearer',
+            'token'         =>  $token->token,
+            'fcm_token'     =>  $token->token->fcm_token,
             'expires_in'    =>  $token->token->expires_at->diffForHumans(),
             'refresh_token' =>  null,
             'access_token'  =>  $token->accessToken,

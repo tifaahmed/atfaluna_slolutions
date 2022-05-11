@@ -29,43 +29,48 @@ class authController extends Controller {
     }
 
     public function login( loginApiRequest $request ) {
-        if ( $request -> get( 'email' , false ) ) {
-            $user = User::where( 'email' , $request -> get( 'email' ) ) -> first( ) ;
-        }
-        if ( ! Hash::check( $request -> password , $user -> password ) ) {
 
-            if( $user->login_type ){
-                return $this -> MakeResponseErrors( 
-                    ['message' => $user->login_type ],  
-                    'google' ,
-                    Response::HTTP_UNAUTHORIZED
-                ) ;
-            }else{
+        // if(!auth('api')->check()){
+            if ( $request -> get( 'email' , false ) ) {
+                $user = User::where( 'email' , $request -> get( 'email' ) ) -> first( ) ;
+
+                \DB::table('oauth_access_tokens')
+                ->Where('name',$request -> email)
+                ->Where('revoked', 1 )
+                ->delete();
+            
+            }
+            if ( ! Hash::check( $request -> password , $user -> password ) ) {
                 return $this -> MakeResponseErrors( 
                     [ 'message' => 'InvalidCredentials' ],  
                     'InvalidCredentials' ,
                     Response::HTTP_UNAUTHORIZED
                 ) ; 
             }
-
-        }
-
-        if ( Auth::attempt(['email' => $user->email, 'password' => $request->password],$request->_token) ){
-            if ( isset($request->fcm_token) && $request->fcm_token ) {
-                // Auth::user()->tokens
-                Auth::user()->update([ 'fcm_token' => $request->fcm_token ])  ;  
+            Auth::loginUsingId($user->id);
+            
+             count(Auth::user()->tokens);
+            
+            $token = Auth::user() -> getToken( ) ;
+            if (isset($request->fcm_token )) {
+                $token['token']->update([ 'fcm_token' => $request->fcm_token ]);
             }
             return $this -> MakeResponseSuccessful( 
                 [
                     'user'  =>   new UserResource ( Auth::user()   )   , 
-                    'Token' => Auth::user() -> getToken( ) 
+                    'Token' =>  $token
                 ],  
                 'Successful' ,
                 Response::HTTP_OK
-            ) ; 
-        }
+            ) ;
+        // }else{
+        //     return $this -> MakeResponseErrors( 
+        //         [ 'message' => 'loggin in before' ],  
+        //         'InvalidCredentials' ,
+        //         Response::HTTP_UNAUTHORIZED
+        //     ) ; 
+        // } 
 
-        
     }
     public function loginSocial( Request $request ) {
 
@@ -99,14 +104,14 @@ class authController extends Controller {
         }
 
         Auth::loginUsingId($user->id);
-            return $this -> MakeResponseSuccessful( 
-                [
-                    'user'  =>   new UserResource ( Auth::user()   )   , 
-                    'Token' => Auth::user() -> getToken( ) 
-                ],  
-                'Successful' ,
-                Response::HTTP_OK
-            ) ; 
+        return $this -> MakeResponseSuccessful( 
+            [
+                'user'  =>   new UserResource ( Auth::user()   )   , 
+                'Token' => Auth::user() -> getToken( ) 
+            ],  
+            'Successful' ,
+            Response::HTTP_OK
+        ) ; 
         
             
         
@@ -120,24 +125,28 @@ class authController extends Controller {
             'email' => $request -> get( 'email' ),
             'phone' => $request -> get( 'phone' ),
             'country_id' => $request -> get( 'country_id' ),
-            'fcm_token' => $request -> get( 'fcm_token' ),
 
             'remember_token' => Hash::make( Str::random(60) )  ,
             'token' => Hash::make( Str::random(60) )  ,
-            // 'remember_token' =>  'token' => Auth::user() -> getToken( ) 
         ]);
-        // $user->save();
+
+
+
         
-        if ( Auth::attempt(['email' => $user->email, 'password' => $request->password],$request->_token) ){
-            return $this -> MakeResponseSuccessful( 
-                [
-                    'user'  =>   new UserResource ( Auth::user()   )   , 
-                    'Token' => Auth::user() -> getToken( ) 
-                ],  
-                'Successful' ,
-                Response::HTTP_OK
-            ) ; 
+        Auth::loginUsingId($user->id);
+        $token = Auth::user() -> getToken( ) ;
+        if (isset($request->fcm_token )) {
+            $token['token']->update([ 'fcm_token' => $request->fcm_token ]);
         }
+        return $this -> MakeResponseSuccessful( 
+            [
+                'user'  =>   new UserResource ( Auth::user()   )   , 
+                'Token' =>  $token
+            ],  
+            'Successful' ,
+            Response::HTTP_OK
+        ) ; 
+
     }
 
 
