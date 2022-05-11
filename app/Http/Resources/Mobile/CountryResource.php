@@ -21,11 +21,11 @@ class CountryResource extends JsonResource
         $basic = Basic::find(1);
 
         return [
-            'id'             => $this->id,
-            'name'             => $this->name,
+            'id'            => $this->id,
+            'name'          => $this->name,
             'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)),
-            'code'             => $this->code,
-
+            'code'          => $this->code,
+            'language'      =>$this->language,
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,

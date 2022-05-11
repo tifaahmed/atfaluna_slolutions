@@ -25,8 +25,5 @@ class Friend extends Model
         public function sub_user(){
             return $this->belongsTo(Sub_user::class,'sub_user_id');
         }
-        public function recevier(){
-            return $this->belongsTo(Sub_user::class,'recevier_id');
-        }
 }
 // 

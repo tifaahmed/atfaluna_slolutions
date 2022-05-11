@@ -14,9 +14,9 @@ class BasicResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'          => $this->id,
-            'item'        =>  $this->item,
-            'info'        =>  $this->info,
+            'id'            => $this->id,
+            'item'          =>  $this->item,
+            'info'          =>  $this->info,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

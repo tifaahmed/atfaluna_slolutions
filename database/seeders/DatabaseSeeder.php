@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder {
     public function run( ) {
         $this -> call ( basics::class );
-
+        $this -> call ( SubscriptionSeeder::class );
         $this -> call ( QuizType::class );
         $this -> call ( LessonType::class );
         $this -> call ( RolesAndPermissionsSeeder::class );

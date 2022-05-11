@@ -26,7 +26,7 @@ class AgeGroupResource extends JsonResource
             'languages'     => $this->age_group_languages,
             'name'          => $row ? $row->name:'',
             
-            'certificate'          =>   new CertificateResource ( $this->certificate )   ,
+            'certificate'   =>   new CertificateResource ( $this->certificate )   ,
 
         ];        
     }

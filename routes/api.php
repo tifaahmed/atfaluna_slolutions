@@ -222,12 +222,6 @@ Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild'
     
     // only language
     Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
-        // subscription
-        Route::name('subscription.')->prefix('/subscription')->group( fn ( ) : array => [
-            Route::get('/'              ,   'SubscriptionController@all'                 )->name('all'),
-            Route::get('/{id}/show'     ,   'SubscriptionController@show'                )->name('show'),
-            Route::get('/collection'    ,   'SubscriptionController@collection'          )->name('collection'),
-        ]),  
         // language
         Route::name('language.')->prefix('/language')->group( fn ( ) : array => [
             Route::get('/'              ,   'LanguageController@all'        )  ->name('all'),
