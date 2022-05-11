@@ -24,9 +24,9 @@ class ContactUsResource extends JsonResource
             'email'            =>  $this->email,
             'status'           =>  $this->status,
 
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            'created_at'       => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
+            'updated_at'       => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            'deleted_at'       => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
 
         ];        
     }

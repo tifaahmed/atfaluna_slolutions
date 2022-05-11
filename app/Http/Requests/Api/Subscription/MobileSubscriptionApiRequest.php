@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api\Country;
+namespace App\Http\Requests\Api\Subscription;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class CountryApiRequest extends FormRequest
+class MobileSubscriptionApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +25,8 @@ class CountryApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'       =>  [ 'required' ,'unique:countries,name'] ,
-            'image'      =>  [ 'required' ,'max:5000'] ,
-            'language'   =>  [ 'required'] ,
-            'code'       =>  [ 'required' ,'unique:countries,code'] ,
+            'subscription_ids'        =>  [ 'required' ,'array' ,'exists:subjects,id'] ,
+            'sub_user_id'       =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,
         ];
     }
 }

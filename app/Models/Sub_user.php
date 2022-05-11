@@ -16,6 +16,9 @@ use App\Models\Age_group;
 use App\Models\Sub_user_quiz;
 use App\Models\Sub_user_certificate;
 use App\Models\Achievement;
+use App\Models\Group_chat;
+use App\Models\Conversation;
+use App\Models\Friend;
 
 
 class Sub_user extends Model
@@ -104,7 +107,21 @@ class Sub_user extends Model
         public function subUserCertificateModel(){
             return $this->hasMany(Sub_user_certificate::class);
         }
-
-
+        // Groupchat
+        public function group_chat(){
+            return $this->hasMany(Group_chat::class);
+        }
+        // Massage
+        public function massages(){
+            return $this->hasMany(Massage::class);
+        }
+        // Conversation
+        public function conversation(){
+            return $this->hasMany(Conversation::class);
+        }
+        // Friend
+        public function friend(){
+            return $this->hasMany(Friend::class);
+        } 
 }
 // 

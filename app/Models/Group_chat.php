@@ -22,7 +22,7 @@ class Group_chat extends Model
         public function conversation(){
             return $this->belongsTo(Conversation::class,'conversation_id');
         }
-        public function recevier(){
+        public function subUser(){
             return $this->belongsTo(Sub_user::class,'recevier_id');
         }
 }

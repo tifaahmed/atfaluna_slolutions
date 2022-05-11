@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\Conversation;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 class ConversationUpdateApiRequest extends FormRequest
 {
@@ -23,7 +24,11 @@ class ConversationUpdateApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'                 =>  [  'required'] ,
+            'type'=>[
+                'nullable',
+                    Rule::in(['single', 'group']),
+                ],
+            'title'                 =>  [ 'nullable'] ,
             'read'                  =>  [ 'nullable','boolean'] ,
             'sub_user_id'           =>  [ 'required' ,'integer' , 'exists:sub_users,id'] ,
             'recevier_ids'           =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,

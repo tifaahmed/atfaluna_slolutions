@@ -23,11 +23,12 @@ class CountrySeeder extends Seeder
         
         File::copy(public_path('images/eg.png'),$folder.'\eg.png');
 
-
         $admin= Country::create( [
             'name' => 'egypt',
             'image' => 'country/eg.png',
             'code' => '02',
+            'language' => 'ar'
+
         ]);
     }
 }

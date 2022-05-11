@@ -16,9 +16,10 @@ class ConversationResource extends JsonResource
     {
 
         return [
-            'id'               => $this->id,
-            'title'            => $this->title,
-            'read'             => $this->read,
+            'id'            => $this->id,
+            'title'         => $this->title,
+            'read'          => $this->read,
+            'type'          =>  $this->type,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

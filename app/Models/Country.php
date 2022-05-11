@@ -19,6 +19,8 @@ class Country extends Model
         'name', //required unique
         'image',//required, max:5000
         'code', //required , unique
+        'language', //required , 
+
     ];
     //relation
         public function government(){
