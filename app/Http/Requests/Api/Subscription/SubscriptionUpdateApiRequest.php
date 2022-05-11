@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api\Hero;
+namespace App\Http\Requests\Api\Subscription;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Language;
-class HeroApiRequest extends FormRequest
+
+class SubscriptionUpdateApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,15 +27,12 @@ class HeroApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
-
-        $all += [ 'lesson_ids'         =>  [ 'sometimes' ,'array','exists:lessons,id'] ]  ;
-        
-        $all += [ 'massage_id'         =>  [ 'required' ,'integer','exists:massages,id'] ]  ;
+        $all += [ 'month_number'           =>  [ 'required' ,'integer'] ]  ;
+        $all += [ 'child_number'           =>  [ 'required' ,'integer'] ]  ;
+        $all += [ 'price'                  =>  [ 'required' ,'numeric','between:0,9999.99'] ]  ;
 
         foreach ($Languages as $key => $value) {
-            $all += [ 'languages.'.$key.'.title'   =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.description'   =>  [ 'required'] ] ;
-            $all += [ 'languages.'.$key.'.image'   =>  [ 'required' ,'max:50000'] ] ;
+            $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
             $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
         }
         return $all;

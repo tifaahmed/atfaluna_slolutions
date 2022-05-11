@@ -27,6 +27,7 @@ class CertificateUpdateApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
+
         $all += [ 'image_one'   =>  [ 'sometimes','max:50000' ] ] ;
         $all += [ 'image_two'   =>  [ 'sometimes' ,'max:50000'] ] ;
         $all += [ 'image_three' =>  [ 'sometimes' ,'max:50000'] ] ;

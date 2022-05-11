@@ -16,10 +16,10 @@ class FriendResource extends JsonResource
     {
 
         return [
-            'id'               => $this->id,
-            'online'           => $this->online,
-            'accept'           => $this->accept,
-            'block'            => $this->block,
+            'id'            => $this->id,
+            'online'        => $this->online,
+            'accept'        => $this->accept,
+            'block'         => $this->block,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

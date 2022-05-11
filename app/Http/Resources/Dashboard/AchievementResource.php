@@ -17,9 +17,9 @@ class AchievementResource extends JsonResource
     {
 
         return [
-            'id'               => $this->id,
-            'count'            => $this->count,
-            'image'        => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
+            'id'            => $this->id,
+            'count'         => $this->count,
+            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

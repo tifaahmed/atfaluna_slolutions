@@ -18,6 +18,7 @@ class CountriesTable extends Migration
             $table->string('name')->unique();
             $table->string('image')->nullable();
             $table->string('code')->unique(); //->notnull()
+            $table->string('language',2)->default('ar');//[note: "ex ( ar-en-it-...etc)"]
             $table->softDeletes();
             $table->timestamps();
         });

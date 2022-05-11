@@ -23,9 +23,9 @@ class FriendApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'online'                =>  [  'required','boolean' ] ,
-            'accept'                =>  [ 'required','boolean'] ,
-            'block'                 =>  [ 'required','boolean' ] ,
+            'online' => [ 'required' , 'boolean' ],
+            'accept' => [' required' , 'boolean' ],
+            'block'  => ['required' , 'boolean'  ],
             'sub_user_id'           =>  [ 'required' ,'integer' , 'exists:sub_users,id'] ,
             'recevier_id'           =>  [ 'required' ,'integer' , 'exists:sub_users,id'] ,
 

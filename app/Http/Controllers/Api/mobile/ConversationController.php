@@ -10,8 +10,8 @@ use Illuminate\Http\Response ;
 use App\Http\Requests\Api\Conversation\ConversationApiRequest as modelInsertRequest;
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\ConversationCollection as ModelCollection;
-use App\Http\Resources\Dashboard\ConversationResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\ConversationCollection as ModelCollection;
+use App\Http\Resources\Mobile\ConversationResource as ModelResource;
 
 // lInterfaces
 use App\Repository\ConversationRepositoryInterface as ModelInterface;
@@ -37,13 +37,21 @@ class ConversationController extends Controller
 
     public function store(modelInsertRequest $request) {
         try {
-            $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
+            if($request->type == 'single'){
 
-            return $this -> MakeResponseSuccessful( 
-                [ $model ],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
+                $flag =  $this->ModelRepository->store($request->sub_user_id,$request->recevier_ids,$request->type) ;
+
+                if (!$flag ) {
+                    $conversation = $this->ModelRepository->create( Request()->all() );
+                    $conversation -> group_chats()->create(['recevier_id'=>$request->recevier_ids[0]]);
+                }
+            }
+
+            // return $this -> MakeResponseSuccessful( 
+            //     [ $model ],
+            //     'Successful'               ,
+            //     Response::HTTP_OK
+            // ) ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

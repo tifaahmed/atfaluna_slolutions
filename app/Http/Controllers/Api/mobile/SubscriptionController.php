@@ -8,7 +8,7 @@ use Illuminate\Http\Response ;
 
 
 // Requests
-use App\Http\Requests\Api\SubscriptionApiRequest as modelInsertRequest;
+use App\Http\Requests\Api\Subscription\SubscriptionApiRequest as modelInsertRequest;
 
 
 // Resources
@@ -68,74 +68,5 @@ class SubscriptionController extends Controller
             );
         }
     }
-
-    public function store(modelInsertRequest $request) {
-        try {
-
-            $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ));
-
-            // // languages
-            $this -> update_store_language($request->languages,$modal->id) ;
-
-            return $this -> MakeResponseSuccessful( 
-                [ $modal ],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_BAD_REQUEST
-            );
-        }
-    }
-    public function destroy($id) {
-        try {
-            return $this -> MakeResponseSuccessful( 
-                [$this->ModelRepository->deleteById($id)] ,
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [ $e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-    // lang
-    public function update_store_language($requested_languages,$modal_id ) {
-        if (is_array($requested_languages) ) {
-            $this->destroyLanguage($this->related_language,$modal_id);
-            foreach ($requested_languages as $key => $language_sigle_row) {
-                $this ->storeLanguage(  $this->handleLanguageData($language_sigle_row,$this->related_language,$modal_id)  );
-            }
-        }
-    }
-    public function storeLanguage($language_array ) {
-        try {
-            $this->ModelRepositoryLanguage->create( $language_array ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_BAD_REQUEST
-            );
-        }
-    }
-    public function destroyLanguage($relation_coulmn,$id) {
-        try {
-        $this->ModelRepositoryLanguage->deleteByRelation($relation_coulmn,$id) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-// lang
 
 }

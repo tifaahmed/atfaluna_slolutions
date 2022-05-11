@@ -11,6 +11,8 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use URL;
 use Illuminate\Http\Response ;
+use App\Models\Massage;
+
 class AvatarRepository extends BaseRepository implements AvatarRepositoryInterface
 {
 
@@ -110,5 +112,17 @@ class AvatarRepository extends BaseRepository implements AvatarRepositoryInterfa
 		return $lap;
 	}
 
+	public function attachMassage($massage_id,$id)  
+    {
+			$avatar = $this->findById($id); 
+			
+			$avatar_massages =  $avatar->massage()->get();
+			
+			foreach ($avatar_massages as $key => $value) {
+				$value->massagable()->dissociate()->save();
+			}
+			$massage =  Massage::find($massage_id);
+			$massage->massagable()->associate($avatar)->save();
+	}
 }
 

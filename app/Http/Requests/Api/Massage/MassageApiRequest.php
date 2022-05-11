@@ -24,8 +24,8 @@ class MassageApiRequest extends FormRequest
     {
         return [
             'text'                  =>  [  'required' ] ,
-            'massagable_id'         =>  [ 'required' ,'integer' , 'exists:'.$this->massagable_type.',id'] ,
-            'massagable_type'       =>  [ 'required'] ,
+            'massagable_id'         =>  [ 'nullable' ,'integer' , 'exists:'.$this->massagable_type.',id'] ,
+            'massagable_type'       =>  [ 'nullable'] ,
             'sub_user_id'           =>  [ 'required' ,'integer' , 'exists:sub_users,id'] ,
             'conversation_id'       =>  [ 'required' ,'integer' , 'exists:conversation,id'] ,
         ];

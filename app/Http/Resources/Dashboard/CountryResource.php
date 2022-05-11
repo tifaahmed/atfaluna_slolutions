@@ -20,16 +20,17 @@ class CountryResource extends JsonResource
     {
         return [
             'id'             => $this->id,
-            'name'             => $this->name,
-            'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
-            'code'             => $this->code,
+            'name'           => $this->name,
+            'image'          => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
+            'code'           => $this->code,
+            'language'       =>$this->language,
 
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
+            'created_at'     => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
+            'updated_at'     => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            'deleted_at'     => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
             'governments'    => new GovernmentCollection ( $this->government ),
-            'cities'          => new CityCollection ( $this->city ),
+            'cities'         => new CityCollection ( $this->city ),
 
         ];
 

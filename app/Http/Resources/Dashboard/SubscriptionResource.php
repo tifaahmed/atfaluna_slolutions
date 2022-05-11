@@ -17,18 +17,19 @@ class SubscriptionResource extends JsonResource
 
         return [
             'id'            => $this->id,
+            'name'          => $row ? $row->name:'',
+
             'month_number'  => $this->month_number,
 
             'child_number'  => $this->child_number,
+
             'price'         => $this->price,
+
+            'languages'     => $this->subscription_languages,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-
-            'languages'     => $this->subscription_languages,
-            'name'          => $row ? $row->name:'',
-
 
         ];        
     }

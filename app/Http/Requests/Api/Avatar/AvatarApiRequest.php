@@ -31,6 +31,8 @@ class AvatarApiRequest extends FormRequest
             ],
             'image'      =>  [ 'required' ,'max:5000'] ,
             'price'      =>  [ 'numeric','between:0,9999.99'] ,
+            'massage_id'  =>  [ 'required' ,'integer','exists:massages,id']   ,
+
         ];
     }
 }
