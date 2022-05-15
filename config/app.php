@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'atfaluna'),
     'logo' => env('APP_LOGO', 'images/logo.png'),
 
     /*

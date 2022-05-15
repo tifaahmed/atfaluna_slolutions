@@ -6,9 +6,8 @@ use Illuminate\Support\Facades\Route;
 //  IfAuthChild : if parameter (sub_user_id) check if he is the child of the authenticated parent   
 // IfPlayTime : if child not in play time
 
-
 // no middleware
-Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
+Route::name( 'auth.') -> prefix( 'auth' ,'guest','guest:api') -> group( fn ( ) => [
     Route::post( '/login' ,   'authController@login'  ) -> name( 'login' ) ,
     Route::post( '/login-social' ,   'authController@loginSocial'  ) -> name( 'loginSocial' ) ,
     Route::post( '/register' ,  'authController@register' )  -> name( 'register' ) ,    

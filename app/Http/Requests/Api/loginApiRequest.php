@@ -14,7 +14,9 @@ class loginApiRequest extends FormRequest {
         return [
             'email'    => [ 'required_without:phone' , 'email:rfc' , 'exists:users,email' ] ,
             'phone'    => [ 'required_without:email' , 'string'    , 'exists:users,phone' ] ,
-            'password' => [ 'required']
+            'password' => [ 'required'],
+            'fcm_token'   => [ 'required'] ,
+
             // 'password' => [ 'required' , Password::min( 8 ) -> mixedCase( ) -> numbers( ) ]
         ];
     }
