@@ -67,14 +67,20 @@ class SubjectController extends Controller
             }
 
             $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
+
             
             // attach Quiz
             if (isset($request->quiz_id) && $request->quiz_id) {
                 $this->ModelRepository->attachQuiz($request->quiz_id,$model->id);
             }
+    
+            // attach sounds
+            $this->ModelRepository->attachSoundas($request->sound_id,$model->id);
+
             // attach Certificate
             $this->ModelRepository->attachCertificate($request->certificate_id,$model->id);
-                
+
+            
             // languages
             $this -> store_array_languages($request->languages,$model) ;
 

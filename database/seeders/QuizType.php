@@ -15,10 +15,10 @@ class QuizType extends Seeder
      */
     public function run()
     {
-        Quiz_type::create( [ 'name' => 'activity' ] )  ;
-        Quiz_type::create( [ 'name' => 'task'] )  ;
-        Quiz_type::create( [ 'name' => 'assignment'] )  ;
-        Quiz_type::create( [ 'name' => 'quiz'] )  ;
+        Quiz_type::create( [ 'id' => '1','name' => 'activity' ] )  ;
+        Quiz_type::create( [ 'id' => '2','name' => 'task'] )  ;
+        Quiz_type::create( [ 'id' => '3','name' => 'assignment'] )  ;
+        Quiz_type::create( [ 'id' => '4','name' => 'quiz'] )  ;
 
     }
 }

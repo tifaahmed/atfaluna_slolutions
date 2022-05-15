@@ -38,6 +38,7 @@ class SubjectApiRequest extends FormRequest
         $all += [ 'image'           =>  [ 'required' ,'max:5000','mimes:jpg,jpeg,webp,bmp,png' ] ] ;
         $all += [ 'points'          =>  [ 'integer' ] ]  ; //default:0
         $all += [ 'age_group_id'    =>  [ 'required' ,'integer','exists:age_groups,id'] ] ;
+        $all += [ 'sounds_id'  =>  [ 'sometimes' ,'integer','exists:sounds,id'] ]  ;
 
         // subject_languages
         foreach ($Languages as $key => $value) {

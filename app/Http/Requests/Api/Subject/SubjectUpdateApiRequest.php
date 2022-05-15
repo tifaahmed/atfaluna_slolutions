@@ -36,6 +36,7 @@ class SubjectUpdateApiRequest extends FormRequest
         $all += [ 'image'           =>  [ 'sometimes' ,'max:5000'] ]  ;
         $all += [ 'points'          =>  [ 'required' ,'integer' ] ]  ;
         $all += [ 'age_group_id'  =>  [ 'required' ,'integer','exists:age_groups,id'] ] ;
+        $all += [ 'sounds_id'  =>  [ 'sometimes' ,'integer','exists:sounds,id'] ]  ;
 
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.name'         =>  [ 'required' , 'max:255'  ] ] ;
