@@ -376,6 +376,15 @@ Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild'
                 Route::get('/{id}/show'                 ,   'IntroductionContentController@show'                )->name('show'),
                 Route::get('/collection'                ,   'IntroductionContentController@collection'          )->name('collection'),
             ]),
+            // sounds
+            Route::name('sounds.')->prefix('/sounds')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'SoundsController@all'                 )->name('all'),
+                Route::get('/collection'                ,   'SoundsController@collection'          )->name('collection'),
+            ]),
+            // soundable
+            Route::name('soundable.')->prefix('/soundable')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'SoundableController@all'                 )->name('all'),
+            ]),
         // age
             Route::name('age.')->prefix('/age')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'AgeController@all'                 )->name('all'),

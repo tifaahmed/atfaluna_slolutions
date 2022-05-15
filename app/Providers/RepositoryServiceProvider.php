@@ -82,6 +82,9 @@ namespace App\Providers;
     use App\Repository\Eloquent\AchievementRepository;
     use App\Repository\Eloquent\SubUserAchievementRepository;
 
+    use App\Repository\Eloquent\SoundsRepository;
+    use App\Repository\Eloquent\SoundableRepository;
+
     use App\Repository\Eloquent\FriendRepository;
     use App\Repository\Eloquent\GroupChatRepository;
     use App\Repository\Eloquent\MassageImageRepository;
@@ -177,6 +180,9 @@ namespace App\Providers;
 
     use App\Repository\SubUserAchievementRepositoryInterface;
     use App\Repository\AchievementRepositoryInterface;
+
+    use App\Repository\SoundsRepositoryInterface;
+    use App\Repository\SoundableRepositoryInterface;
 
     use App\Repository\FriendRepositoryInterface;
     use App\Repository\GroupChatRepositoryInterface;
@@ -290,6 +296,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(GroupChatRepositoryInterface::class,GroupChatRepository::class);
         $this->app->bind(FriendRepositoryInterface::class,FriendRepository::class);
         $this->app->bind(ConversationRepositoryInterface::class,ConversationRepository::class);
+
+        $this->app->bind(SoundableRepositoryInterface::class,SoundableRepository::class);
+        $this->app->bind(SoundsRepositoryInterface::class,SoundsRepository::class);
 
         // Role  Permission
         $this->app->bind(PermissionRepositoryInterface::class,PermissionRepository::class);

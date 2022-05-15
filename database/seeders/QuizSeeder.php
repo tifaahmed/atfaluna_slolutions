@@ -25,6 +25,7 @@ class QuizSeeder extends Seeder
         File::copy(public_path('images/quiz2.png'),$folder.'\quiz2.png');
 
         $quiz= Quiz::create( [
+            'id' => '1',
             'points' => '300',
             'minimum_requirements' => '200',
         ]);          
