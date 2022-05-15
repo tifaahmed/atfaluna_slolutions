@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\Api\loginApiRequest ;
 use App\Http\Requests\Api\RegisterApiRequest ;
+use App\Http\Requests\Api\Auth\ForgetPasswordByEmailApiRequest ;
+use App\Http\Requests\Api\Auth\CheckPinCodeRequest ;
+
 use App\Models\User ;
 
 use Illuminate\Http\Response ;
@@ -30,7 +33,7 @@ class authController extends Controller {
 
     public function login( loginApiRequest $request ) {
 
-        // if(!auth('api')->check()){
+        if(!auth('api')->check()){
             if ( $request -> get( 'email' , false ) ) {
                 $user = User::where( 'email' , $request -> get( 'email' ) ) -> first( ) ;
 
@@ -49,27 +52,17 @@ class authController extends Controller {
             }
             Auth::loginUsingId($user->id);
             
-             count(Auth::user()->tokens);
+            count(Auth::user()->tokens);
             
-            $token = Auth::user() -> getToken( ) ;
-            if (isset($request->fcm_token )) {
-                $token['token']->update([ 'fcm_token' => $request->fcm_token ]);
-            }
-            return $this -> MakeResponseSuccessful( 
-                [
-                    'user'  =>   new UserResource ( Auth::user()   )   , 
-                    'Token' =>  $token
-                ],  
-                'Successful' ,
-                Response::HTTP_OK
-            ) ;
-        // }else{
-        //     return $this -> MakeResponseErrors( 
-        //         [ 'message' => 'loggin in before' ],  
-        //         'InvalidCredentials' ,
-        //         Response::HTTP_UNAUTHORIZED
-        //     ) ; 
-        // } 
+            return $this ->loginRespons($request->fcm_token);
+
+        }else{
+            return $this -> MakeResponseErrors( 
+                [ 'message' => 'loggin in before' ],  
+                'InvalidCredentials' ,
+                Response::HTTP_UNAUTHORIZED
+            ) ; 
+        } 
 
     }
     public function loginSocial( Request $request ) {
@@ -130,22 +123,8 @@ class authController extends Controller {
             'token' => Hash::make( Str::random(60) )  ,
         ]);
 
-
-
-        
         Auth::loginUsingId($user->id);
-        $token = Auth::user() -> getToken( ) ;
-        if (isset($request->fcm_token )) {
-            $token['token']->update([ 'fcm_token' => $request->fcm_token ]);
-        }
-        return $this -> MakeResponseSuccessful( 
-            [
-                'user'  =>   new UserResource ( Auth::user()   )   , 
-                'Token' =>  $token
-            ],  
-            'Successful' ,
-            Response::HTTP_OK
-        ) ; 
+        return $this ->loginRespons($request->fcm_token);
 
     }
 
@@ -160,53 +139,76 @@ class authController extends Controller {
     }
 
 
-    public function forget_password(Request $request)
+    public function forget_password(ForgetPasswordByEmailApiRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-        ]);
 
         $status = Password::sendResetLink(
             $request->only('email')
         );
-
+        
         if ($status == Password::RESET_LINK_SENT) {
             return [
                 'status' => __($status)
             ];
         }
+        return $this -> MakeResponseSuccessful( 
+            ['send email Successfully'],
+            'Successful' ,
+            Response::HTTP_OK
+         ) ;
     }
-    public function check_pin_code(Request $request){
-        $user =  User::where('pin_code',$request->pin_code)->first();
-        if ($user) {
-            Auth::login($user);
-            if ( isset($request->fcm_token) && $request->fcm_token ) {
-                Auth::user()->update([ 'fcm_token' => $request->fcm_token ])  ;  
+    public function check_pin_code(CheckPinCodeRequest $request){
+        if(!auth('api')->check()){
+            $user =  User::where('pin_code',$request->pin_code)->first();
+            if ($user) {
+                Auth::login($user);
+
+                \DB::table('oauth_access_tokens')
+                ->Where('name',$user -> email)
+                ->delete();
+
+                return $this ->loginRespons($request->fcm_token);
+
+            }else{
+                return $this -> MakeResponseSuccessful( 
+                    [ 'message' => 'InvalidCredentials' ],  
+                    'InvalidCredentials' ,
+                    Response::HTTP_UNAUTHORIZED
+                ) ;  
             }
-            return $this -> MakeResponseSuccessful( 
-                [
-                    'user'  =>   new UserResource ( Auth::user()   )   , 
-                    'Token' => Auth::user() -> getToken( ) 
-                ], 
-                'Successful' ,
-                Response::HTTP_OK
-            ) ;
         }else{
-            return $this -> MakeResponseSuccessful( 
-                [ 'message' => 'InvalidCredentials' ],  
+            return $this -> MakeResponseErrors( 
+                [ 'message' => 'loggin in before' ],  
                 'InvalidCredentials' ,
                 Response::HTTP_UNAUTHORIZED
-            ) ;  
-        }
+            ) ; 
+        } 
     }
 
     public function update_password(Request $request)
     {
-        Auth::user()->update(['password'=>$request->password]);
+        Auth::user()->update(['password'=>Hash::make($request->password)]);
         return $this -> MakeResponseSuccessful( 
             ['message'=> 'Password reset successfully'],
             'Successful' ,
             Response::HTTP_OK
         ) ;
     }
+
+
+    public function loginRespons($fcm_token)
+    {
+        $token = Auth::user() -> getToken( ) ;
+            $token->token->update([ 'fcm_token' => $fcm_token ]);
+        return $this -> MakeResponseSuccessful( 
+            [
+                'user'  =>   new UserResource ( Auth::user()   )   , 
+                'Token' =>  Auth::user() -> perviewToken($token) 
+            ],  
+            'Successful' ,
+            Response::HTTP_OK
+        ) ;
+    }
+
+
 }

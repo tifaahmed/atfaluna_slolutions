@@ -32,7 +32,7 @@ class Mails extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->from('tifa.ahmed23@gmail.com','email_title')
+        return $this->from('atfaluna.solution@gmail.com','email_title')
                     ->subject('email_subject_title')
                     ->view('mails.clint-forgot-password');
     }

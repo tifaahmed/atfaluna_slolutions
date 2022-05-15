@@ -49,11 +49,12 @@ class User extends Authenticatable {
         'pin_code',
         'fcm_token'
     ];
-    public function getToken( ) : array {
-        $token = $this -> createToken( $this->email )  ;
+    public function getToken( )  {
+        return $token = $this -> createToken( $this->email )  ;
+    }
+    public function perviewToken($token) : array {
         return [
             'token_type'    => 'Bearer',
-            'token'         =>  $token->token,
             'fcm_token'     =>  $token->token->fcm_token,
             'expires_in'    =>  $token->token->expires_at->diffForHumans(),
             'refresh_token' =>  null,
