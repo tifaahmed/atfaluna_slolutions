@@ -248,17 +248,10 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
         // subscription
             Route::name('subscription.')->prefix('/subscription')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'SubscriptionController@all'                 )    ->name('all'),
-                Route::post(''                          ,   'SubscriptionController@store'               )->name('store'),
                 Route::get('/{id}/show'                 ,   'SubscriptionController@show'                )->name('show'),
                 Route::get('/collection'                ,   'SubscriptionController@collection'          )->name('collection'),
-                Route::DELETE('/{id}'                   ,   'SubscriptionController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'SubscriptionController@update'              )->name('update'),
-                Route::post('/{id}/restore'             ,   'SubscriptionController@restore'             )->name('restore'),
-
-                Route::DELETE('premanently-delete/{id}' ,   'SubscriptionController@premanently_delete'  )->name('premanently_delete'),
-                Route::get('/collection-trash'          ,   'SubscriptionController@collection_trash'    )->name('collection_trash'),
-                Route::get('/{id}/show-trash'           ,   'SubscriptionController@show_trash'          )->name('show_trash'),
-            ]),
+           ]),
         // accessory
             Route::name('accessory.')->prefix('/accessory')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'AccessoryController@all'                 )    ->name('all'),

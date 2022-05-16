@@ -1,57 +1,233 @@
 <?php
 use Illuminate\Support\Facades\Route;
 // middleware
-//  LocalizationMiddleware : if parameter (language) exist change lange 
-//  auth : have to get the access token 
-//  IfAuthChild : if parameter (sub_user_id) check if he is the child of the authenticated parent   
-// IfPlayTime : if child not in play time
+    //  LocalizationMiddleware : if parameter (language) exist change lange 
+    //  auth            : have to get the access token 
+    //  IfAuthChild     : if parameter (sub_user_id) check if he is the child of the authenticated parent   
+    //  IfSubscription  : if auth user  Subscription  not ended yet 
+    //  IfPlayTime      : if child not in play time
 
-// no middleware
-Route::name( 'auth.') -> prefix( 'auth' ,'guest','guest:api') -> group( fn ( ) => [
-    Route::post( '/login' ,   'authController@login'  ) -> name( 'login' ) ,
-    Route::post( '/login-social' ,   'authController@loginSocial'  ) -> name( 'loginSocial' ) ,
-    Route::post( '/register' ,  'authController@register' )  -> name( 'register' ) ,    
-    Route::post( '/forget-password' ,  'authController@forget_password' )  -> name( 'forget_password' ) ,  
-    Route::post( '/check-pin-code' ,  'authController@check_pin_code' )  -> name( 'check_pin_code' ) ,  
-]);
-Route::post( 'auth/update-password' ,  'authController@update_password' )  -> name( 'update_password' )->middleware('auth:api') ;  
+Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
 
-Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild']], fn ( ) : array => [
-    //Subject
-    Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
-        Route::post('/attach'                   ,   'SubjectController@attach'              )->name('attach'),
+
+    Route::group(['middleware' => []], fn ( ) : array => [
+        // auth
+        Route::name( 'auth.') -> prefix( 'auth' ,'guest','guest:api') -> group( fn ( ) => [
+            Route::post( '/login' ,   'authController@login'  ) -> name( 'login' ) ,
+            Route::post( '/login-social' ,   'authController@loginSocial'  ) -> name( 'loginSocial' ) ,
+            Route::post( '/register' ,  'authController@register' )  -> name( 'register' ) ,    
+            Route::post( '/forget-password' ,  'authController@forget_password' )  -> name( 'forget_password' ) ,  
+            Route::post( '/check-pin-code' ,  'authController@check_pin_code' )  -> name( 'check_pin_code' ) ,  
+        ]),
+        // language
+            Route::name('language.')->prefix('/language')->group( fn ( ) : array => [
+                Route::get('/'              ,   'LanguageController@all'        )  ->name('all'),
+                Route::get('/{id}/show'     ,   'LanguageController@show'       )  ->name('show'),
+                Route::get('/collection'    ,   'LanguageController@collection' )  ->name('collection'),
+            ]),
+        // store
+            Route::name('store.')->prefix('/store')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'StoreController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'StoreController@show'                )->name('show'),
+                Route::get('/collection'                ,   'StoreController@collection'          )->name('collection'),
+            ]),
+        // Country
+            Route::name('country.')->prefix('/country')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'CountryController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'CountryController@show'                )->name('show'),
+                Route::get('/collection'                ,   'CountryController@collection'          )->name('collection'),
+            ]),
+        // Government
+            Route::name('government.')->prefix('/government')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'GovernmentController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'GovernmentController@show'                )->name('show'),
+                Route::get('/collection'                ,   'GovernmentController@collection'          )->name('collection'),
+            ]),
+        // City
+            Route::name('city.')->prefix('/city')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'CityController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'CityController@show'                )->name('show'),
+                Route::get('/collection'                ,   'CityController@collection'          )->name('collection'),
+            ]),
+        // about_us
+            Route::name('about_us.')->prefix('/about_us')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'AboutUsController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'AboutUsController@show'                )->name('show'),
+                Route::get('/collection'                ,   'AboutUsController@collection'          )->name('collection'),
+            ]),
+        // contact_us
+            Route::name('contact_us.')->prefix('/contact_us')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'ContactUsController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'ContactUsController@show'                )->name('show'),
+                Route::get('/collection'                ,   'ContactUsController@collection'          )->name('collection'),
+                Route::post(''                          ,   'ContactUsController@store'               )->name('store'),
+                Route::DELETE('/{id}'                   ,   'ContactUsController@destroy'             )->name('destroy'),
+            ]),
+        // Introduction
+            Route::name('introduction.')->prefix('/introduction')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'IntroductionController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'IntroductionController@show'                )->name('show'),
+                Route::get('/collection'                ,   'IntroductionController@collection'          )->name('collection'),
+            ]),
+        // IntroductionContent
+            Route::name('introduction_content.')->prefix('/introduction_content')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'IntroductionContentController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'IntroductionContentController@show'                )->name('show'),
+                Route::get('/collection'                ,   'IntroductionContentController@collection'          )->name('collection'),
+            ]),
+        // age
+            Route::name('age.')->prefix('/age')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'AgeController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'AgeController@show'                )->name('show'),
+                Route::get('/collection'                ,   'AgeController@collection'          )->name('collection'),
+            ]),
+        // Basic
+            Route::name('basic.')->prefix('/basic')->group( fn ( ) : array => [
+                Route::get('/{id}/show'                 ,   'BasicController@show'                )  ->name('show'),
+            ]),
+        // LessonType
+            Route::name('lesson-type.')->prefix('/lesson-type')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'LessonTypeController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'LessonTypeController@show'                )->name('show'),
+                Route::get('/collection'                ,   'LessonTypeController@collection'          )->name('collection'),
+            ]),
+        // QuizType
+            Route::name('quiz-type.')->prefix('/quiz-type')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'QuizTypeController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'QuizTypeController@show'                )->name('show'),
+                Route::get('/collection'                ,   'QuizTypeController@collection'          )->name('collection'),
+            ]),
+        // McqAnswer
+            Route::name('mcq-answer.')->prefix('/mcq-answer')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'McqAnswerController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'McqAnswerController@show'                )->name('show'),
+                Route::get('/collection'                ,   'McqAnswerController@collection'          )->name('collection'),
+            ]),
+        //McqQuestion
+            Route::name('mcq-question.')->prefix('/mcq-question')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'McqQuestionController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'McqQuestionController@show'                )->name('show'),
+                Route::get('/collection'                ,   'McqQuestionController@collection'          )->name('collection'),
+            ]),  
+
+        // subscription
+            Route::name('subscription.')->prefix('/subscription')->group( fn ( ) : array => [
+                Route::get('/'              ,   'SubscriptionController@all'                 )->name('all'),
+                Route::get('/{id}/show'     ,   'SubscriptionController@show'                )->name('show'),
+                Route::get('/collection'    ,   'SubscriptionController@collection'          )->name('collection'),
+            ]),  
+        // language
+            Route::name('language.')->prefix('/language')->group( fn ( ) : array => [
+                Route::get('/'              ,   'LanguageController@all'        )  ->name('all'),
+                Route::get('/{id}/show'     ,   'LanguageController@show'       )  ->name('show'),
+                Route::get('/collection'    ,   'LanguageController@collection' )  ->name('collection'),
+            ]),
+        // store
+            Route::name('store.')->prefix('/store')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'StoreController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'StoreController@show'                )->name('show'),
+                Route::get('/collection'                ,   'StoreController@collection'          )->name('collection'),
+            ]),
+        // Country
+            Route::name('country.')->prefix('/country')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'CountryController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'CountryController@show'                )->name('show'),
+                Route::get('/collection'                ,   'CountryController@collection'          )->name('collection'),
+            ]),
+        // Government
+            Route::name('government.')->prefix('/government')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'GovernmentController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'GovernmentController@show'                )->name('show'),
+                Route::get('/collection'                ,   'GovernmentController@collection'          )->name('collection'),
+            ]),
+        // City
+            Route::name('city.')->prefix('/city')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'CityController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'CityController@show'                )->name('show'),
+                Route::get('/collection'                ,   'CityController@collection'          )->name('collection'),
+            ]),
+        // about_us
+            Route::name('about_us.')->prefix('/about_us')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'AboutUsController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'AboutUsController@show'                )->name('show'),
+                Route::get('/collection'                ,   'AboutUsController@collection'          )->name('collection'),
+            ]),
+        // contact_us
+            Route::name('contact_us.')->prefix('/contact_us')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'ContactUsController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'ContactUsController@show'                )->name('show'),
+                Route::get('/collection'                ,   'ContactUsController@collection'          )->name('collection'),
+                Route::post(''                          ,   'ContactUsController@store'               )->name('store'),
+                Route::DELETE('/{id}'                   ,   'ContactUsController@destroy'             )->name('destroy'),
+            ]),
+        // Introduction
+            Route::name('introduction.')->prefix('/introduction')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'IntroductionController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'IntroductionController@show'                )->name('show'),
+                Route::get('/collection'                ,   'IntroductionController@collection'          )->name('collection'),
+            ]),
+        // IntroductionContent
+            Route::name('introduction_content.')->prefix('/introduction_content')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'IntroductionContentController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'IntroductionContentController@show'                )->name('show'),
+                Route::get('/collection'                ,   'IntroductionContentController@collection'          )->name('collection'),
+            ]),
+        // age
+            Route::name('age.')->prefix('/age')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'AgeController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'AgeController@show'                )->name('show'),
+                Route::get('/collection'                ,   'AgeController@collection'          )->name('collection'),
+            ]),
+        // Basic
+            Route::name('basic.')->prefix('/basic')->group( fn ( ) : array => [
+                Route::get('/{id}/show'                 ,   'BasicController@show'                )  ->name('show'),
+            ]),
+        // LessonType
+            Route::name('lesson-type.')->prefix('/lesson-type')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'LessonTypeController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'LessonTypeController@show'                )->name('show'),
+                Route::get('/collection'                ,   'LessonTypeController@collection'          )->name('collection'),
+            ]),
+        // QuizType
+            Route::name('quiz-type.')->prefix('/quiz-type')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'QuizTypeController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'QuizTypeController@show'                )->name('show'),
+                Route::get('/collection'                ,   'QuizTypeController@collection'          )->name('collection'),
+            ]),
     ]),
-]);
 
-
-
-Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild','IfPlayTime']], fn ( ) : array => [
-
-    //Subject
-    Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
-        Route::get('/'                          ,   'SubjectController@all'                 )->name('all'),
-        Route::get('/{id}/show'                 ,   'SubjectController@show'                )->name('show'),
-        Route::get('/collection'                ,   'SubjectController@collection'          )->name('collection'),
+    Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
+        Route::post( 'auth/update-password' ,  'authController@update_password' )  -> name( 'update_password' ),
+        // subscription
+        Route::name('subscription.')->prefix('/subscription')->group( fn ( ) : array => [
+            Route::post('/attach'               ,   'SubscriptionController@attach'             )->name('attach'),
+        ]),
     ]),
-    // Lesson
-    Route::name('lesson.')->prefix('/lesson')->group( fn ( ) : array => [
-        Route::get('/'                          ,   'LessonController@all'                 )->name('all'),
-        Route::get('/{id}/show'                 ,   'LessonController@show'                )->name('show'),
-        Route::get('/collection'                ,   'LessonController@collection'          )->name('collection'),
-        Route::post('/attach'                   ,   'LessonController@attach'              )->name('attach'),
-    ]), 
-    //hero
-    Route::name('hero.')->prefix('/hero')->group( fn ( ) : array => [
-        Route::get('/'                          ,   'HeroController@all'                 )    ->name('all'),
-        Route::get('/{id}/show'                 ,   'HeroController@show'                )->name('show'),
-        Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
-    ]),
-]);
 
-//  LocalizationMiddleware : if parameter (language) exist change lange 
-//  auth : have to get the access token 
-//  IfAuthChild : if parameter (sub_user_id) check if he is the child of the authenticated parent
-    Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild']], fn ( ) : array => [
+    Route::group(['middleware' => ['auth:api','IfAuthChild']], fn ( ) : array => [
+        //Subject
+        Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
+            Route::post('/attach'                   ,   'SubjectController@attach'              )->name('attach'),
+        ]),
+    ]),
+
+    Route::group(['middleware' => ['auth:api','IfAuthChild','IfSubscription']], fn ( ) : array => [
+
+        //User_subscription
+        Route::name('user-subscription.')->prefix('/user-subscription')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'UserSubscriptionController@all'                 )->name('all'),
+            Route::get('/{id}/show'                 ,   'UserSubscriptionController@show'                )->name('show'),
+            Route::get('/collection'                ,   'UserSubscriptionController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'UserSubscriptionController@destroy'             )->name('destroy'),    
+        ]),  
+        // User_package
+        Route::name('user-package.')->prefix('/user-package')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'UserPackageController@all'                 )->name('all'),
+            Route::get('/{id}/show'                 ,   'UserPackageController@show'                )->name('show'),
+            Route::get('/collection'                ,   'UserPackageController@collection'          )->name('collection'),
+            Route::post('/store'        ,   'UserPackageController@store'    )->name('store'),
+        ]),
+    
         // QuizAttempt
         Route::name('quiz-attempt.')->prefix('/quiz-attempt')->group( fn ( ) : array => [
             Route::get('/'                          ,   'QuizAttemptController@all'                 )->name('all'),
@@ -64,7 +240,7 @@ Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild'
             Route::get('/'                          ,   'McqQuestionController@all'                 )->name('all'),
             Route::get('/{id}/show'                 ,   'McqQuestionController@show'                )->name('show'),
             Route::get('/collection'                ,   'McqQuestionController@collection'          )->name('collection'),
-            Route::post('/attach'                    ,   'McqQuestionController@attach'              )->name('attach'),
+            Route::post('/attach'                   ,   'McqQuestionController@attach'              )->name('attach'),
         ]),
         //True_false_question
         Route::name('true-false-question.')->prefix('/true-false-question')->group( fn ( ) : array => [
@@ -130,21 +306,6 @@ Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild'
             Route::get('/{id}/show'     ,   'AvatarController@show'                )->name('show'),
             Route::get('/collection'    ,   'AvatarController@collection'          )->name('collection'),
         ]),
-        // User_package
-        Route::name('user-package.')->prefix('/user-package')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'UserPackageController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'UserPackageController@show'                )->name('show'),
-            Route::get('/collection'                ,   'UserPackageController@collection'          )->name('collection'),
-            Route::post('/store'        ,   'UserPackageController@store'    )->name('store'),
-        ]),
-        //User_subscription
-        Route::name('user-subscription.')->prefix('/user-subscription')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'UserSubscriptionController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'UserSubscriptionController@show'                )->name('show'),
-            Route::get('/collection'                ,   'UserSubscriptionController@collection'          )->name('collection'),
-            Route::post('/store'                    ,   'UserSubscriptionController@store'               )->name('store'),
-            Route::DELETE('/{id}'                   ,   'UserSubscriptionController@destroy'             )->name('destroy'),
-        ]),
         // accessory
         Route::name('accessory.')->prefix('/accessory')->group( fn ( ) : array => [
             Route::get('/'              ,   'AccessoryController@all'                 )->name('all'),
@@ -155,10 +316,10 @@ Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild'
         ]), 
         // Achievement
         Route::name('achievement.')->prefix('/achievement')->group( fn ( ) : array => [
-        Route::get('/'              ,   'AchievementController@all'                 )->name('all'),
-        Route::get('/collection'    ,   'AchievementController@collection'          )->name('collection'),
-        Route::post('/attach'        ,   'AchievementController@attach'   )->name('attach'),
-        Route::post('/detach'        ,   'AchievementController@detach'   )->name('detach'),
+            Route::get('/'              ,   'AchievementController@all'                 )->name('all'),
+            Route::get('/collection'    ,   'AchievementController@collection'          )->name('collection'),
+            Route::post('/attach'        ,   'AchievementController@attach'   )->name('attach'),
+            Route::post('/detach'        ,   'AchievementController@detach'   )->name('detach'),
         ]),  
         // certificates
         Route::name('certificate.')->prefix('/certificate')->group( fn ( ) : array => [
@@ -196,7 +357,7 @@ Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild'
             Route::post(''                          ,   'PackageController@store'               )->name('store'),
             Route::DELETE('/{id}'                   ,   'PackageController@destroy'             )->name('destroy'),
         ]),
-         //Friend
+            //Friend
         Route::name('friend.')->prefix('/friend')->group( fn ( ) : array => [
             Route::get('/'                          ,   'FriendController@all'                 )    ->name('all'),
             Route::post(''                          ,   'FriendController@store'               )->name('store'),
@@ -217,210 +378,41 @@ Route::group(['middleware' => ['LocalizationMiddleware','auth:api','IfAuthChild'
             Route::get('/collection'                ,   'ConversationController@collection'          )->name('collection'),
             Route::DELETE('/{id}'                   ,   'ConversationController@destroy'             )->name('destroy'),
         ]),
-    ]);
-    
-    // only language
-    Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
-        // language
-        Route::name('language.')->prefix('/language')->group( fn ( ) : array => [
-            Route::get('/'              ,   'LanguageController@all'        )  ->name('all'),
-            Route::get('/{id}/show'     ,   'LanguageController@show'       )  ->name('show'),
-            Route::get('/collection'    ,   'LanguageController@collection' )  ->name('collection'),
-        ]),
-        // store
-        Route::name('store.')->prefix('/store')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'StoreController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'StoreController@show'                )->name('show'),
-            Route::get('/collection'                ,   'StoreController@collection'          )->name('collection'),
-        ]),
-        // Country
-        Route::name('country.')->prefix('/country')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'CountryController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'CountryController@show'                )->name('show'),
-            Route::get('/collection'                ,   'CountryController@collection'          )->name('collection'),
-        ]),
-        // Government
-        Route::name('government.')->prefix('/government')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'GovernmentController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'GovernmentController@show'                )->name('show'),
-            Route::get('/collection'                ,   'GovernmentController@collection'          )->name('collection'),
-        ]),
-        // City
-        Route::name('city.')->prefix('/city')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'CityController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'CityController@show'                )->name('show'),
-            Route::get('/collection'                ,   'CityController@collection'          )->name('collection'),
-        ]),
-        // about_us
-        Route::name('about_us.')->prefix('/about_us')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'AboutUsController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'AboutUsController@show'                )->name('show'),
-            Route::get('/collection'                ,   'AboutUsController@collection'          )->name('collection'),
-        ]),
-        // contact_us
-        Route::name('contact_us.')->prefix('/contact_us')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'ContactUsController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'ContactUsController@show'                )->name('show'),
-            Route::get('/collection'                ,   'ContactUsController@collection'          )->name('collection'),
-            Route::post(''                          ,   'ContactUsController@store'               )->name('store'),
-            Route::DELETE('/{id}'                   ,   'ContactUsController@destroy'             )->name('destroy'),
-        ]),
-        // Introduction
-        Route::name('introduction.')->prefix('/introduction')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'IntroductionController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'IntroductionController@show'                )->name('show'),
-            Route::get('/collection'                ,   'IntroductionController@collection'          )->name('collection'),
-        ]),
-        // IntroductionContent
-        Route::name('introduction_content.')->prefix('/introduction_content')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'IntroductionContentController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'IntroductionContentController@show'                )->name('show'),
-            Route::get('/collection'                ,   'IntroductionContentController@collection'          )->name('collection'),
-        ]),
-        // age
-        Route::name('age.')->prefix('/age')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'AgeController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'AgeController@show'                )->name('show'),
-            Route::get('/collection'                ,   'AgeController@collection'          )->name('collection'),
-        ]),
-        // Basic
-        Route::name('basic.')->prefix('/basic')->group( fn ( ) : array => [
-            Route::get('/{id}/show'                 ,   'BasicController@show'                )  ->name('show'),
-        ]),
-        // LessonType
-        Route::name('lesson-type.')->prefix('/lesson-type')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'LessonTypeController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'LessonTypeController@show'                )->name('show'),
-            Route::get('/collection'                ,   'LessonTypeController@collection'          )->name('collection'),
-        ]),
-        // QuizType
-        Route::name('quiz-type.')->prefix('/quiz-type')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'QuizTypeController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'QuizTypeController@show'                )->name('show'),
-            Route::get('/collection'                ,   'QuizTypeController@collection'          )->name('collection'),
-        ]),
-        // McqAnswer
-        Route::name('mcq-answer.')->prefix('/mcq-answer')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'McqAnswerController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'McqAnswerController@show'                )->name('show'),
-            Route::get('/collection'                ,   'McqAnswerController@collection'          )->name('collection'),
-        ]),
-        //McqQuestion
-        Route::name('mcq-question.')->prefix('/mcq-question')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'McqQuestionController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'McqQuestionController@show'                )->name('show'),
-            Route::get('/collection'                ,   'McqQuestionController@collection'          )->name('collection'),
-        ]),    
-        // only language
-        Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
-        // subscription
-        Route::name('subscription.')->prefix('/subscription')->group( fn ( ) : array => [
-            Route::get('/'              ,   'SubscriptionController@all'                 )->name('all'),
-            Route::get('/{id}/show'     ,   'SubscriptionController@show'                )->name('show'),
-            Route::get('/collection'    ,   'SubscriptionController@collection'          )->name('collection'),
-        ]),  
-        // language
-        Route::name('language.')->prefix('/language')->group( fn ( ) : array => [
-            Route::get('/'              ,   'LanguageController@all'        )  ->name('all'),
-            Route::get('/{id}/show'     ,   'LanguageController@show'       )  ->name('show'),
-            Route::get('/collection'    ,   'LanguageController@collection' )  ->name('collection'),
-        ]),
-        // store
-        Route::name('store.')->prefix('/store')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'StoreController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'StoreController@show'                )->name('show'),
-            Route::get('/collection'                ,   'StoreController@collection'          )->name('collection'),
-        ]),
-        // Country
-        Route::name('country.')->prefix('/country')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'CountryController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'CountryController@show'                )->name('show'),
-            Route::get('/collection'                ,   'CountryController@collection'          )->name('collection'),
-        ]),
-        // Government
-        Route::name('government.')->prefix('/government')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'GovernmentController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'GovernmentController@show'                )->name('show'),
-            Route::get('/collection'                ,   'GovernmentController@collection'          )->name('collection'),
-        ]),
-        // City
-        Route::name('city.')->prefix('/city')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'CityController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'CityController@show'                )->name('show'),
-            Route::get('/collection'                ,   'CityController@collection'          )->name('collection'),
-        ]),
-        // about_us
-            Route::name('about_us.')->prefix('/about_us')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'AboutUsController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'AboutUsController@show'                )->name('show'),
-                Route::get('/collection'                ,   'AboutUsController@collection'          )->name('collection'),
-            ]),
-        // contact_us
-            Route::name('contact_us.')->prefix('/contact_us')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'ContactUsController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'ContactUsController@show'                )->name('show'),
-                Route::get('/collection'                ,   'ContactUsController@collection'          )->name('collection'),
-                Route::post(''                          ,   'ContactUsController@store'               )->name('store'),
-                Route::DELETE('/{id}'                   ,   'ContactUsController@destroy'             )->name('destroy'),
-            ]),
-        // Introduction
-            Route::name('introduction.')->prefix('/introduction')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'IntroductionController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'IntroductionController@show'                )->name('show'),
-                Route::get('/collection'                ,   'IntroductionController@collection'          )->name('collection'),
-            ]),
-        // IntroductionContent
-            Route::name('introduction_content.')->prefix('/introduction_content')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'IntroductionContentController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'IntroductionContentController@show'                )->name('show'),
-                Route::get('/collection'                ,   'IntroductionContentController@collection'          )->name('collection'),
-            ]),
-        // age
-            Route::name('age.')->prefix('/age')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'AgeController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'AgeController@show'                )->name('show'),
-                Route::get('/collection'                ,   'AgeController@collection'          )->name('collection'),
-            ]),
-        // Basic
-            Route::name('basic.')->prefix('/basic')->group( fn ( ) : array => [
-                Route::get('/{id}/show'                 ,   'BasicController@show'                )  ->name('show'),
-            ]),
-        // LessonType
-            Route::name('lesson-type.')->prefix('/lesson-type')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'LessonTypeController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'LessonTypeController@show'                )->name('show'),
-                Route::get('/collection'                ,   'LessonTypeController@collection'          )->name('collection'),
-            ]),
-        // QuizType
-            Route::name('quiz-type.')->prefix('/quiz-type')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'QuizTypeController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'QuizTypeController@show'                )->name('show'),
-                Route::get('/collection'                ,   'QuizTypeController@collection'          )->name('collection'),
-            ]),
-        //Sub_user_lesson
-            Route::name('sub-user-lesson.')->prefix('/sub-user-lesson')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'SubUserLessonController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'SubUserLessonController@show'                )->name('show'),
-                Route::get('/collection'                ,   'SubUserLessonController@collection'          )->name('collection'),
-            ]),
-        // McqAnswer
-            Route::name('mcq-answer.')->prefix('/mcq-answer')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'McqAnswerController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'McqAnswerController@show'                )->name('show'),
-                Route::get('/collection'                ,   'McqAnswerController@collection'          )->name('collection'),
-            ]),
-        //Sub_user_lesson
-            Route::name('sub-user-lesson.')->prefix('/sub-user-lesson')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'SubUserLessonController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'SubUserLessonController@show'                )->name('show'),
-                Route::get('/collection'                ,   'SubUserLessonController@collection'          )->name('collection'),
-            ]),
-        //Sub_user_quiz
-            Route::name('sub-user-quiz.')->prefix('/sub-user-quiz')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'SubUserQuizController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'SubUserQuizController@show'                )->name('show'),
-                Route::get('/collection'                ,   'SubUserQuizController@collection'          )->name('collection'),
-            ]),
     ]),
+
+    Route::group(['middleware' => ['auth:api','IfAuthChild','IfSubscription','IfPlayTime']], fn ( ) : array => [
+        //Subject
+        Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'SubjectController@all'                 )->name('all'),
+            Route::get('/{id}/show'                 ,   'SubjectController@show'                )->name('show'),
+            Route::get('/collection'                ,   'SubjectController@collection'          )->name('collection'),
+        ]),
+        // Lesson
+        Route::name('lesson.')->prefix('/lesson')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'LessonController@all'                 )->name('all'),
+            Route::get('/{id}/show'                 ,   'LessonController@show'                )->name('show'),
+            Route::get('/collection'                ,   'LessonController@collection'          )->name('collection'),
+            Route::post('/attach'                   ,   'LessonController@attach'              )->name('attach'),
+        ]), 
+        //hero
+        Route::name('hero.')->prefix('/hero')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'HeroController@all'                 )    ->name('all'),
+            Route::get('/{id}/show'                 ,   'HeroController@show'                )->name('show'),
+            Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
+        ]),
+    ]),
+    
 ]);
+
+
+
+
+
+
+
+
+
+
+    
+
 
