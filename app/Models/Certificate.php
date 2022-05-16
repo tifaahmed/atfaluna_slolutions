@@ -30,6 +30,9 @@ class Certificate extends Model
         public function certificate_languages(){
         return $this->HasMany(Certificate_language::class);
         }
+        public function subUserCertificate(){
+            return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_user_id', 'certificate_id');
+        }
         public function certificatable()
         {
             return $this->morphTo();

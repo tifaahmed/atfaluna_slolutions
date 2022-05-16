@@ -20,15 +20,18 @@ class AccessoryResource extends JsonResource
         return [
             'id'            => $this->id,
 
+            'name'          => $row ? $row->name:'',
+
             'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
+
             'price'         => $this->price,
+            
+            'languages'     => $this->accessory_languages,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
 
-            'languages'     => $this->accessory_languages,
-            'name'          => $row ? $row->name:'',
         ];        
     }
 }
