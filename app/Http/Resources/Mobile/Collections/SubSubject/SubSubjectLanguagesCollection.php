@@ -4,7 +4,7 @@ namespace App\Http\Resources\Mobile\Collections\SubSubject;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Mobile\SubSubject\SubSubjectLanguagesResource as ModelResource;
+use App\Http\Resources\Mobile\SubSubject\SubSubjectResource as ModelResource;
 
 class SubSubjectLanguagesCollection  extends ResourceCollection{
 

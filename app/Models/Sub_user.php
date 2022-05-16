@@ -60,7 +60,10 @@ class Sub_user extends Model
         public function playTime(){
             return $this->hasMany(Play_time::class);
         }
-
+        //Certificate
+        public function subUserCertificate(){
+            return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_user_id', 'certificate_id');
+        }
         //Quiz
         public function subUserQuiz(){
             return $this->belongsToMany(Quiz::class, 'sub_user_quizzes', 'sub_user_id', 'quiz_id');
@@ -100,10 +103,6 @@ class Sub_user extends Model
             }
         }
 
-        //Certificate
-        public function subUserCertificate(){
-            return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_user_id', 'certificate_id');
-        }
         public function subUserCertificateModel(){
             return $this->hasMany(Sub_user_certificate::class);
         }
