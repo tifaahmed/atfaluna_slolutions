@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'IfSuperAdmin' => \App\Http\Middleware\IfSuperAdminMiddleware::class,
         'IfAuthChild' => \App\Http\Middleware\IfAuthChildMiddleware::class,
         'IfPlayTime' => \App\Http\Middleware\IfPlayTimeMiddleware::class,
+        'IfSubscription' => \App\Http\Middleware\IfSubscriptionMiddleware::class,
 
         
     ];

@@ -52,8 +52,6 @@ class authController extends Controller {
             }
             Auth::loginUsingId($user->id);
             
-            count(Auth::user()->tokens);
-            
             return $this ->loginRespons($request->fcm_token);
 
         }else{
@@ -97,17 +95,8 @@ class authController extends Controller {
         }
 
         Auth::loginUsingId($user->id);
-        return $this -> MakeResponseSuccessful( 
-            [
-                'user'  =>   new UserResource ( Auth::user()   )   , 
-                'Token' => Auth::user() -> getToken( ) 
-            ],  
-            'Successful' ,
-            Response::HTTP_OK
-        ) ; 
-        
-            
-        
+        return $this ->loginRespons($request->fcm_token);
+
     }
     
     public function register( RegisterApiRequest $request ) {
@@ -199,16 +188,19 @@ class authController extends Controller {
     public function loginRespons($fcm_token)
     {
         $token = Auth::user() -> getToken( ) ;
-            $token->token->update([ 'fcm_token' => $fcm_token ]);
+        $token->token->update([ 'fcm_token' => $fcm_token ]);
         return $this -> MakeResponseSuccessful( 
             [
-                'user'  =>   new UserResource ( Auth::user()   )   , 
+                'user'  =>   new UserResource ( User::find(Auth::user()->id)   )   , 
                 'Token' =>  Auth::user() -> perviewToken($token) 
             ],  
             'Successful' ,
             Response::HTTP_OK
         ) ;
     }
+    public function check()
+    {
 
+    }
 
 }
