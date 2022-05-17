@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 //AgeGroupController
 // Requests
@@ -29,9 +30,27 @@ class SubUserController extends Controller
 
     public function store(modelInsertRequest $request) {
         try {
-            $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ));
+            
+            $model = new ModelResource( $this->ModelRepository->create( Request()->all() ));
+                                //Avatar
+            $this->ModelRepository->attachAvatars($request->avatar_ids,$model->id);
+                                //Certificate
+            $this->ModelRepository->attachCertificates($request->certificate_ids,$model->id);
+                                //Accessory
+            $this->ModelRepository->attachAccessories($request->accessory_ids,$model->id);
+                                //Achievement
+            $this->ModelRepository->attachAchievements($request->achievement_ids,$model->id);
+                                //Subject
+            $this->ModelRepository->attachSubjects($request->subject_ids,$model->id);
+                                //Quiz
+            $this->ModelRepository->attachQuizs($request->quiz_ids,$model->id);
+                                //Lesson
+            $this->ModelRepository->attachLessons($request->lesson_ids,$model->id);
+                                //AgeGroup
+            $this->ModelRepository->attachAgeGroups($request->age_group_ids,$model->id);
+
             return $this -> MakeResponseSuccessful( 
-                [ $modal ],
+                [ $model ],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
@@ -55,6 +74,7 @@ class SubUserController extends Controller
             );
         }
     }
+
     public function collection(Request $request){
         try {
             return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
@@ -67,7 +87,6 @@ class SubUserController extends Controller
         }
     }
     
-
     public function destroy($id) {
         try {
             return $this -> MakeResponseSuccessful( 
@@ -99,6 +118,7 @@ class SubUserController extends Controller
             );
         }
     }
+    
     public function show($id) {
         try {
             return $this -> MakeResponseSuccessful( 
@@ -117,16 +137,22 @@ class SubUserController extends Controller
     
     public function update(modelInsertRequest $request ,$id) {
         try {
-            $this->ModelRepository->update( $id,Request()->all()) ;
-
-            $this->ModelRepository->attachAccessories($request->accessory_ids,$id);
+                        //Avatar
             $this->ModelRepository->attachAvatars($request->avatar_ids,$id);
-            $this->ModelRepository->attachCertificates($request->certificat_ids,$id);
+                        //Certificate
+            $this->ModelRepository->attachCertificates($request->certificate_ids,$id);
+                        //Accessory
+            $this->ModelRepository->attachAccessories($request->accessory_ids,$id);
+                        //Achievement
+            $this->ModelRepository->attachAchievements($request->achievement_ids,$id);
+                        //Subject
             $this->ModelRepository->attachSubjects($request->subject_ids,$id);
+                        //Quiz
+            $this->ModelRepository->attachQuizs($request->quiz_ids,$id);
+                        //Lesson
             $this->ModelRepository->attachLessons($request->lesson_ids,$id);
-            
+                        //AgeGroup
             $this->ModelRepository->attachAgeGroups($request->age_group_ids,$id);
-            $this->ModelRepository->attachAgeGroupByAge($sub_user->age,$sub_user->id) ;
 
             $modal = new ModelResource($this->ModelRepository->findById($id)); 
 
@@ -144,7 +170,6 @@ class SubUserController extends Controller
         }  
     }
 
-
     // trash
         public function collection_trash(Request $request){
             try {
@@ -157,6 +182,7 @@ class SubUserController extends Controller
                 );
             }
         }
+        
         public function show_trash($id) {
             try {
                 return $this -> MakeResponseSuccessful( 
@@ -172,6 +198,7 @@ class SubUserController extends Controller
                 );
             }
         }
+
         public function restore($id) {
             try {
                 return $this -> MakeResponseSuccessful( 

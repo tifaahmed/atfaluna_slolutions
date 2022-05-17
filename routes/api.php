@@ -403,16 +403,3 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
     ]),
     
 ]);
-
-
-
-
-
-
-
-
-
-
-    
-
-

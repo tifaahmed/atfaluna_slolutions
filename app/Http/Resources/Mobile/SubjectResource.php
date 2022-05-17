@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Mobile\CertificateResource;
 use App\Http\Resources\Mobile\Collections\SubSubject\SubSubjectCollection;
 use App\Http\Resources\Mobile\Quiz\QuizResource;
+use App\Http\Resources\Mobile\SoundsResource;
+
 use App\Models\Basic;
 class SubjectResource extends JsonResource
 {
@@ -20,6 +22,7 @@ class SubjectResource extends JsonResource
     {
         $row=$this->subject_languages()->Localization()->RelatedLanguage($this->id)->first();
         $basic = Basic::find(1);
+        $sound = $this->sounds()->Localization()->first();
 
         return [
             'id'            => $this->id,
@@ -32,13 +35,16 @@ class SubjectResource extends JsonResource
             
             'name'          => $row ? $row->name:'',
 
-            'sub_subjects'        => new SubSubjectCollection  ($this->sub_subjects),
+            'sub_subjects'       => new SubSubjectCollection  ($this->sub_subjects),
 
             'certificate'        =>  new CertificateResource  ($this->certificate),
 
-            'quiz'          =>   new QuizResource ( $this->quiz )   ,
+            'sound'              => new SoundsResource  ($sound),
+
+            'quiz'               =>   new QuizResource ( $this->quiz )   ,
+
             'age_group'          =>   $this->age_group,
-            
+
         ];        
     }
 }

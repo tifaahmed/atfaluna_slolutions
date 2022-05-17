@@ -24,18 +24,22 @@ class basics extends Seeder
         File::copy(public_path('images/logo.png'),$folder.'\logo.png');
 
         Basic::create( [
+            'id' => '1',
             'item' => 'basics/logo.png',
             'info' => 'logo',
         ]);
         Basic::create( [
+            'id' => '2',
             'item' => 'atfaluna',
             'info' => 'site name en',
         ]);
         Basic::create( [
+            'id' => '3',
             'item' => 'اطفانا',
             'info' => 'site name ar',
         ]);
         Basic::create( [
+            'id' => '4',
             'item' => '1000',
             'info' => 'one = points',
         ]);

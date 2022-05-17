@@ -16,7 +16,7 @@ class AgeGroupSeeder extends Seeder
     public function run()
     {
         // 1
-            $age_group= Age_group::create();
+            $age_group= Age_group::create(['id' => '1', ]);
             $age_group->age_group_languages()->create( [
                 'name' => 'تمهيدي اولى',
                 'language' => 'ar',
@@ -30,7 +30,7 @@ class AgeGroupSeeder extends Seeder
             $certificate->certificatable()->associate($age_group)->save();
             
         // 2
-            $age_group= Age_group::create();
+            $age_group= Age_group::create(['id' => '2', ]);
             $age_group->age_group_languages()->create( [
                 'name' => 'تمهيدي ثانى',
                 'language' => 'ar',
@@ -43,7 +43,7 @@ class AgeGroupSeeder extends Seeder
             $certificate = Certificate::find(4);
             $certificate->certificatable()->associate($age_group)->save();
         // 3
-            $age_group= Age_group::create();
+            $age_group= Age_group::create(['id' => '3', ]);
             $age_group->age_group_languages()->create( [
                 'name' => 'اولى ابتدائي',
                 'language' => 'ar',
@@ -56,7 +56,7 @@ class AgeGroupSeeder extends Seeder
             $certificate = Certificate::find(9);
             $certificate->certificatable()->associate($age_group)->save();
         // 4
-            $age_group= Age_group::create();
+            $age_group= Age_group::create(['id' => '4', ]);
             $age_group->age_group_languages()->create( [
                 'name' => 'ثانية ابتدائي',
                 'language' => 'ar',
@@ -69,7 +69,7 @@ class AgeGroupSeeder extends Seeder
             $certificate = Certificate::find(10);
             $certificate->certificatable()->associate($age_group)->save();  
         // 5
-            $age_group= Age_group::create();
+            $age_group= Age_group::create(['id' => '5', ]);
             $age_group->age_group_languages()->create( [
                 'name' => 'ثالثة ابتدائي',
                 'language' => 'ar',
@@ -82,7 +82,7 @@ class AgeGroupSeeder extends Seeder
             $certificate = Certificate::find(11);
             $certificate->certificatable()->associate($age_group)->save();    
         // 6
-            $age_group= Age_group::create();
+            $age_group= Age_group::create(['id' => '6', ]);
             $age_group->age_group_languages()->create( [
                 'name' => 'رابعة ابتدائي',
                 'language' => 'ar',

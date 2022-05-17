@@ -9,6 +9,8 @@ use App\Http\Resources\Dashboard\Collections\SubSubject\SubSubjectCollection;
 
 use App\Http\Resources\Dashboard\Quiz\QuizResource;
 
+use App\Http\Resources\Dashboard\Collections\SoundsCollection ;
+
 
 class SubjectResource extends JsonResource
 {
@@ -20,7 +22,7 @@ class SubjectResource extends JsonResource
      */
     public function toArray($request)
     {
-        $row=$this->subject_languages()->Localization()->RelatedLanguage($this->id)->first();
+        $row = $this->subject_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'            => $this->id,
@@ -32,15 +34,20 @@ class SubjectResource extends JsonResource
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
             'languages'     => $this->subject_languages,
+
             'name'          => $row ? $row->name:'',
 
             'age_group'     => $this->age_group,
+
             'sub_subjects'        => new SubSubjectCollection  ($this->sub_subjects),
 
             'certification' => new CertificateResource (  $this->certificate )  ,
+
             'quiz'          =>   new QuizResource ( $this->quiz )   ,
+
+            'sounds'        => new SoundsCollection($this->sounds),
 
         ];        
     }
 }
-//
+

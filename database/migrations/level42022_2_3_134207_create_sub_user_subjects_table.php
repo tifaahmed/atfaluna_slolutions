@@ -20,6 +20,7 @@ class CreateSubUserSubjectsTable extends Migration
             $table->foreign('sub_user_id')->references('id')->on('sub_users')->onDelete('cascade');
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+            $table->integer('points') -> default (0) ;
             $table->boolean('active') -> default (0) ;
         });
     }

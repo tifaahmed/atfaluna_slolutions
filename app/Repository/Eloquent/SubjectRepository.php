@@ -7,6 +7,8 @@ use App\Repository\SubjectRepositoryInterface;
 use App\Models\Quiz;             // morphedByMany
 use Illuminate\Http\Response ;
 use App\Models\Certificate;             // morphedByMany
+use App\Models\Sound;             // morphedByMany
+
 use Illuminate\Support\Facades\Auth;
 
 class SubjectRepository extends BaseRepository implements SubjectRepositoryInterface
@@ -57,6 +59,7 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 			return $this->all()  ;
 		}
 	}
+
 	public function attachQuiz($quiz_id,$id)  
     {
 		// if($quiz_id){
@@ -70,6 +73,7 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 			$quiz =  Quiz::find($quiz_id);
 			$quiz->quizable()->associate($subject)->save();
 	}
+
 	public function attachCertificate($certificate_id,$id)  
     {
 		// if($certificate_id){
@@ -83,6 +87,14 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 			$certificate =  Certificate::find($certificate_id);
 			$certificate->certificatable()->associate($subject)->save();
 		// }
+	}
+
+	public function attachSoundas($sound_id,$id)
+	{
+		if($sound_id){
+			$result = $this->findById($id); 
+			return $result->sounds()->sync($sound_id);
+		}
 	}
 }
 
