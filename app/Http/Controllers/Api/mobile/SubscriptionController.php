@@ -19,7 +19,8 @@ use App\Http\Resources\Dashboard\SubscriptionResource as ModelResource;
 // lInterfaces
 use App\Repository\SubscriptionRepositoryInterface as ModelInterface;
 use App\Repository\SubscriptionLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages
-
+use Carbon\Carbon;
+use Auth;
 class SubscriptionController extends Controller
 {
     private $Repository;
@@ -69,4 +70,34 @@ class SubscriptionController extends Controller
         }
     }
 
+    // relation
+    public function attach(Request $request){
+        try {
+
+            $user   =   Auth::user();
+            $model  =   $this->ModelRepository->findById($request->subscription_id) ;           
+            $start  =   Carbon::now();
+            $end    =   Carbon::now()->addMonths(3) ;
+            
+            $user->userSubscription()->delete();
+            $user->userSubscription()->create([
+                'start' => $start ,
+                'end' => $end ,
+                'child_number' => $model->child_number ,
+                'price' => $model->price ,
+            ]);
+
+            return $this -> MakeResponseSuccessful( 
+                [$user->userSubscription()->first()],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
 }
