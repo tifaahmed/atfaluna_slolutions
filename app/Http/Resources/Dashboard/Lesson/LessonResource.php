@@ -8,6 +8,8 @@ use App\Http\Resources\Dashboard\LessonTypeResource;
 
 use App\Http\Resources\Dashboard\Collections\Lesson\LessonLanguagesCollection;
 use App\Http\Resources\Dashboard\Collections\Quiz\QuizCollection;
+use App\Http\Resources\Dashboard\Collections\Skill\SkillCollection ;
+
 
 class LessonResource extends JsonResource
 {
@@ -34,6 +36,8 @@ class LessonResource extends JsonResource
             
             'sub_subject'   => $this->subSubject   ,
             'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
+
+            'skills'        => new SkillCollection($this->skills),
 
             'quiz'       =>   new QuizCollection ($this->quiz)   ,
 

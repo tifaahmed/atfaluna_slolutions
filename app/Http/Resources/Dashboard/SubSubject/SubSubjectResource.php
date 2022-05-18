@@ -4,9 +4,9 @@ namespace App\Http\Resources\Dashboard\SubSubject;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Resources\Dashboard\SubjectResource;
 use App\Http\Resources\Dashboard\Collections\SubSubject\SubSubjectLanguagesCollection;
 use App\Http\Resources\Dashboard\Collections\Lesson\LessonCollection;
+use App\Http\Resources\Dashboard\Collections\Skill\SkillCollection ;
 
 use App\Http\Resources\Dashboard\Quiz\QuizResource;
 
@@ -25,6 +25,7 @@ class SubSubjectResource extends JsonResource
         return [
             'id'            => $this->id,
             'name'          => $row ? $row->name:'',
+            'points'        => $this->points,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
@@ -34,6 +35,9 @@ class SubSubjectResource extends JsonResource
             'subject'       => $this->subject   ,
             'lessons'       => new LessonCollection ($this->lessons),
             'quiz'          =>   new QuizResource ($this->quiz)   ,
+            'skills'        => new SkillCollection($this->skills),
+
+
         ];        
     }
 }

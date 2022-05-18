@@ -10,6 +10,7 @@ use App\Http\Resources\Dashboard\Collections\CertificateCollection;
 use App\Http\Resources\Dashboard\Collections\Quiz\QuizCollection;
 use App\Http\Resources\Dashboard\Collections\Lesson\LessonCollection;
 use App\Http\Resources\Dashboard\Collections\SubjectCollection;
+use App\Http\Resources\Dashboard\Collections\SubSubject\SubSubjectCollection;
 use App\Http\Resources\Dashboard\Collections\AgeGroupCollection;
 use App\Http\Resources\Dashboard\Collections\AchievementCollection;
 
@@ -37,6 +38,8 @@ class SubUserResource extends JsonResource
             'accessories' => new AccessoryCollection ($this->subUserAccessory)  ,
         //Subject
             'subjects'     => new SubjectCollection ($this->subUserSubject)  ,
+        //Sub_Subject
+            'sub_subjects'     => new SubSubjectCollection ($this->subUserSubSubject)  ,
         //Lesson
             'lessons'      => new LessonCollection ($this->subUserLesson)  ,
         //Quiz

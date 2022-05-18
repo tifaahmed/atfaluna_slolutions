@@ -220,6 +220,13 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 			//add Lesson Point To that Certificate
 			$subUser_certificate->update(['points' => $subUser_certificate->points + $lesson->points  ]);
 		}
-
+		public function attachSkills($skill_id,$id)
+		{
+			if($skill_id){
+				$result = $this->findById($id); 
+				return $result->skills()->sync($skill_id);
+			
 	
 }
+		}
+	}
