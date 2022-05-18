@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Lesson_type;      // belongsTo
 use App\Models\Sub_subject;      // belongsTo
 use App\Models\Hero;             //belongsToMany
-
 use App\Models\Lesson_language;  // HasMany
-
 use App\Models\Quiz;             //morphMany    
 use App\Models\Notification;
+use App\Models\Skill;        //morphMany    
+
 class Lesson extends Model
 {
     use HasFactory,SoftDeletes;
@@ -50,6 +50,10 @@ class Lesson extends Model
             public function quiz(){
                 return $this->morphMany(Quiz::class, 'quizable'); // assignment
             }
+        //morphToMany
+        public function skills(){
+            return $this->morphToMany(Skill::class, 'skillable');
+        }
         // morphOne
         public function notification(){
             return $this->morphOne(Notification::class, 'notificable');

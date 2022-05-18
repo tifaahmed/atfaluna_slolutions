@@ -203,6 +203,24 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::post('/attach'               ,   'SubscriptionController@attach'             )->name('attach'),
         ]),
     ]),
+    //skill
+    Route::name('skill.')->prefix('/skill')->group( fn ( ) : array => [
+        Route::get('/'                          ,   'SkillController@all'                 )->name('all'),
+        Route::get('/{id}/show'                 ,   'SkillController@show'                )->name('show'),
+        Route::get('/collection'                ,   'SkillController@collection'          )->name('collection'),
+    ]),
+    // Lesson
+    Route::name('lesson.')->prefix('/lesson')->group( fn ( ) : array => [
+        Route::get('/'                          ,   'LessonController@all'                 )->name('all'),
+        Route::get('/{id}/show'                 ,   'LessonController@show'                )->name('show'),
+        Route::get('/collection'                ,   'LessonController@collection'          )->name('collection'),
+        Route::post('/attach'                   ,   'LessonController@attach'              )->name('attach'),
+    ]), 
+    //hero
+    Route::name('hero.')->prefix('/hero')->group( fn ( ) : array => [
+        Route::get('/'                          ,   'HeroController@all'                 )    ->name('all'),
+        Route::get('/{id}/show'                 ,   'HeroController@show'                )->name('show'),
+        Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
 
     Route::group(['middleware' => ['auth:api','IfAuthChild']], fn ( ) : array => [
         //Subject

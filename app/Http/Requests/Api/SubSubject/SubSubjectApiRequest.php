@@ -32,6 +32,10 @@ class SubSubjectApiRequest extends FormRequest
         // quiz
         $all += [ 'quiz_id'  =>  [ 'sometimes' ,'integer','exists:quizzes,id'] ]  ;
 
+        $all += [ 'skill_id'   =>  [ 'sometimes' ,'integer','exists:skills,id'] ] ;
+
+        $all += [ 'points'          =>  [ 'integer' ] ]  ; //default:0
+
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.name'        =>  [ 'required' , 'max:255' ] ] ;
             $all += [ 'languages.'.$key.'.description' =>  [ 'required' , 'max:255' ] ] ;

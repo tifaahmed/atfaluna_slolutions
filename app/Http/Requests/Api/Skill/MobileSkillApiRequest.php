@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Api\Skill;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class MobileSkillApiRequest extends FormRequest
 {
@@ -26,7 +25,7 @@ class MobileSkillApiRequest extends FormRequest
     {
         return [
             'skill_id'        =>  [ 'required' ,'integer' ,'exists:skills,id'] ,
-            'subject_id'       =>  [ 'required' ,'integer' ,'exists:subjects,id',] ,
+            'sub_user_id'       =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,
         ];
     }
 }

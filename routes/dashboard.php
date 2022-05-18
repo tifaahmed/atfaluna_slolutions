@@ -189,6 +189,34 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::get('/collection-trash'          ,   'AvatarController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'AvatarController@show_trash'          )->name('show_trash'),
         ]),
+        // skill
+        Route::name('skill.')->prefix('/skill')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'SkillController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'SkillController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'SkillController@show'                )->name('show'),
+            Route::get('/collection'                ,   'SkillController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'SkillController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'SkillController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'SkillController@restore'             )->name('restore'),
+
+            Route::DELETE('premanently-delete/{id}' ,   'AvatarController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'AvatarController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'AvatarController@show_trash'          )->name('show_trash'),
+        ]),
+        // skillable
+        Route::name('skillable.')->prefix('/skillable')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'SkillableController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'SkillableController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'SkillableController@show'                )->name('show'),
+            Route::get('/collection'                ,   'SkillableController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'SkillableController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'SkillableController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'SkillableController@restore'             )->name('restore'),
+
+            Route::DELETE('premanently-delete/{id}' ,   'SkillableController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'SkillableController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'SkillableController@show_trash'          )->name('show_trash'),
+        ]),
         // age_group
         Route::name('age-group.')->prefix('/age-group')->group( fn ( ) : array => [
             Route::get('/'                          ,   'AgeGroupController@all'                 )    ->name('all'),

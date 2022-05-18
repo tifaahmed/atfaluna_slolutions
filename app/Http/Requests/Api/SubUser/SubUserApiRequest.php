@@ -34,7 +34,6 @@ class SubUserApiRequest extends FormRequest
             'points'     =>  [ 'integer' ] ,
             'user_id'    =>  [ 'required','integer' ,'exists:users,id'] ,
             'avatar_ids' =>  [ 'sometimes','array','exists:avatars,id' ] ,
-            'avatar_id'  =>  [ 'sometimes','integer','exists:avatars,id' ] ,
 
         ];
     }

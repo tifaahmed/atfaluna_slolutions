@@ -32,6 +32,7 @@ class SubSubjectUpdateApiRequest extends FormRequest
 
         // quiz
         $all += [ 'quiz_id'  =>  [ 'sometimes' ,'integer','exists:quizzes,id'] ]  ;
+        $all += [ 'points'          =>  [ 'integer' ] ]  ; //default:0
 
         // sub_subject_languages
         foreach ($Languages as $key => $value) {

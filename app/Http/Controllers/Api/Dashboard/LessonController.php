@@ -101,31 +101,35 @@ class LessonController extends Controller
         $users = User::all();
         Notification::send($users, new NewItemNotification($request));
 
-        // try {
+        // attach skills
 
-        //     $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
+        try {
 
-        //     // attach
-        //     if (isset($request->quiz_ids) && $request->quiz_ids) {
-        //         $this->ModelRepository->attachQuiz($request->quiz_ids,$model->id);
-        //     }
+            $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
 
-        //     // languages
-        //     $this -> store_array_languages($request->languages,$model) ;
+            // attach
+            if (isset($request->quiz_ids) && $request->quiz_ids) {
+                $this->ModelRepository->attachQuiz($request->quiz_ids,$model->id);
+            }
+
+            $this->ModelRepository->attachSkills($request->skill_id,$model->id);
+
+            // languages
+            $this -> store_array_languages($request->languages,$model) ;
 
 
-        //     return $this -> MakeResponseSuccessful( 
-        //         [ $model ],
-        //         'Successful'               ,
-        //         Response::HTTP_OK
-        //     ) ;
-        // } catch (\Exception $e) {
-        //     return $this -> MakeResponseErrors(  
-        //         [$e->getMessage()  ] ,
-        //         'Errors',
-        //         Response::HTTP_BAD_REQUEST
-        //     );
-        // }
+            return $this -> MakeResponseSuccessful( 
+                [ $model ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_BAD_REQUEST
+            );
+        }
     }
     public function update(modelUpdateRequest $request ,$id) {
         try {
@@ -136,6 +140,7 @@ class LessonController extends Controller
             if (isset($request->quiz_ids) && $request->quiz_ids) {
                 $this->ModelRepository->attachQuiz($request->quiz_ids,$id);
             }
+            $this->ModelRepository->attachSkills($request->skill_id,$model->id);
 
             //  request languages
             $this -> update_array_languages($request->languages,$model) ;
