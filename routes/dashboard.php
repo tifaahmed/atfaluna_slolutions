@@ -199,9 +199,9 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::post('/{id}/update'              ,   'SkillController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'SkillController@restore'             )->name('restore'),
 
-            Route::DELETE('premanently-delete/{id}' ,   'AvatarController@premanently_delete'  )->name('premanently_delete'),
-            Route::get('/collection-trash'          ,   'AvatarController@collection_trash'    )->name('collection_trash'),
-            Route::get('/{id}/show-trash'           ,   'AvatarController@show_trash'          )->name('show_trash'),
+            Route::DELETE('premanently-delete/{id}' ,   'SkillController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'SkillController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'SkillController@show_trash'          )->name('show_trash'),
         ]),
         // skillable
         Route::name('skillable.')->prefix('/skillable')->group( fn ( ) : array => [
