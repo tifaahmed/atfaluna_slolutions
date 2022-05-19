@@ -53,5 +53,4 @@ class Sub_subject extends Model
         public function skills(){
             return $this->morphToMany(Skill::class, 'skillable');
         }
-
 }

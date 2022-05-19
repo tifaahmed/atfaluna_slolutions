@@ -47,25 +47,19 @@ class SubSubjectRepository extends BaseRepository implements SubSubjectRepositor
 	}
 	public function attachQuiz($quiz_id,$id)  
     {
-		// if($quiz_id){
-			$sub_subject = $this->findById($id); 
-			
+			$sub_subject = $this->findById($id); 	
 			$sub_subject_quizzes =  $sub_subject->quiz()->get();
 			foreach ($sub_subject_quizzes as $key => $value) {
 				$value->quizable()->dissociate()->save();
 			}
-
 			$quiz =  Quiz::find($quiz_id);
 			$quiz->quizable()->associate($sub_subject)->save(); 
-		// }
 	}
 	public function attachSkills($skill_id,$id)
 	{
 		if($skill_id){
 			$result = $this->findById($id); 
 			return $result->skills()->sync($skill_id);
-		
-}
-
+		}
 	}
 }

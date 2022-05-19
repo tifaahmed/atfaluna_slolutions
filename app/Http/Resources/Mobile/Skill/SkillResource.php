@@ -22,7 +22,6 @@ class SkillResource extends JsonResource
             'id'            => $this->id,
 
             'name'          => $row ? $row->name:'',
-            // 'languages'     => $this->skill_languages,
 
             'languages'     => new SkillLanguagesCollection ( $this->skill_languages ),
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,

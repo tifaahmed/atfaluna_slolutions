@@ -247,14 +247,23 @@ public function update(modelInsertRequest $request ,$id) {
     public function premanently_delete($id) {
         try {
             $model = $this->ModelRepository->findTrashedById($id);
-            $file_key_names =['image'];
-            foreach ($file_key_names as $value) {
-                //delete folder that has all this row files if exists
-                $this->HelperDeleteDirectory($this->HelperGetDirectory($model->$value));
+
+            // get all related language
+            $language_models = $model->skill_languages()->get();
+            $language_file_key_names =['image'];
+
+            foreach ($language_models as  $language_model) {
+                foreach ($language_file_key_names as $value) {
+                    //delete folder that has all this row files if exists
+                    $this->HelperDeleteDirectory($this->HelperGetDirectory($language_model->$value));
+                }
+                //delete all this row files if exists
+                $this->HandleFileDelete($language_model,$language_file_key_names);
             }
+            $this->ModelRepository->PremanentlyDeleteById($id);
 
             return $this -> MakeResponseSuccessful( 
-                [$this->ModelRepository->PremanentlyDeleteById($id)] ,
+                [$model] ,
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;

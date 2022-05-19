@@ -419,5 +419,8 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
         ]),
     ]),
+    ]),
+
     
 ]);
+    

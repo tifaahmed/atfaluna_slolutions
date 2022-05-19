@@ -65,6 +65,8 @@ class SubSubjectController extends Controller
             if (isset($request->quiz_id) && $request->quiz_id) {
                 $this->ModelRepository->attachQuiz($request->quiz_id,$model->id);
             }
+            // attach skills
+            $this->ModelRepository->attachSkills($request->skill_id,$model->id);
 
             // languages
             $this -> store_array_languages($request->languages,$model) ;
