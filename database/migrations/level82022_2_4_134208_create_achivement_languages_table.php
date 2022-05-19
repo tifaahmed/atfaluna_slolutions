@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubUserAchievementsTable extends Migration
+class CreateAchivementlanguagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreateSubUserAchievementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_user_achievements', function (Blueprint $table) {
+        Schema::create('achivement_languages', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->integer('points')->default('0');//[note: "ex ( 5 - 6)"]
-            $table->integer('sub_user_id')->unsigned();
-            $table->foreign('sub_user_id')->references('id')->on('sub_users');
+            $table->string('name');//[note: "ex (  arabic or english or italian -...etc)"]
+            $table->string('description')->nullable();//[note: "ex (  arabic or english or italian -...etc)"]
+            $table->string('language',2);//[note: "ex ( ar-en-it-...etc)"]
             $table->integer('achievement_id')->unsigned();
             $table->foreign('achievement_id')->references('id')->on('achievements');
         });
     }
-    
     /**
      * Reverse the migrations.
      *
@@ -30,6 +29,6 @@ class CreateSubUserAchievementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_user_achievements');
+        Schema::dropIfExists('achivement_languages');
     }
 }
