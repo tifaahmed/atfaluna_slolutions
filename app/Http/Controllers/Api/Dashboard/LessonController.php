@@ -97,7 +97,7 @@ class LessonController extends Controller
     public function store(modelInsertRequest $request) {
 
         try {
-
+            // create
             $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
 
             // attach

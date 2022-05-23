@@ -64,7 +64,7 @@ class Subject extends Model
         }
         // morphOne
         public function sounds(){
-            return $this->morphToMany(Sound::class, 'soundable');
+            return $this->morphToMany(Sound::class, 'soundables');
         }
 
 }
