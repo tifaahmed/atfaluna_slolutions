@@ -12,7 +12,10 @@ use App\Http\Requests\Api\SubUser\MobileStoreSubUserApiRequest ;
 
 // Resources
 use App\Http\Resources\Mobile\Collections\SubUserCollection as ModelCollection;
-use App\Http\Resources\Mobile\SubUserResource as ModelResource;
+// use App\Http\Resources\Mobile\SubUserResource as ModelResource;
+
+use App\Http\Resources\Mobile\ControllerResources\subuserController\SubUserResource as ModelResource;
+
 
 use Illuminate\Support\Facades\Auth;
 // lInterfaces
