@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Mobile\Collections;
+namespace App\Http\Resources\Mobile\Collections\ControllerResources\subuserController;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Mobile\AchievementResource as ModelResource;
+use App\Http\Resources\Mobile\ControllerResources\subuserController\AgeGroupResource as ModelResource;
 
-class AchievementCollection  extends ResourceCollection{
+class AgeGroupCollection  extends ResourceCollection{
 
     public function toArray( $request ) {
         return $this -> collection -> map( fn( $model ) => new ModelResource ( $model ) );
@@ -20,3 +20,4 @@ class AchievementCollection  extends ResourceCollection{
         ];
     }
 }
+

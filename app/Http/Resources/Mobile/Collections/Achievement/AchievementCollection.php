@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\Collections;
+namespace App\Http\Resources\Mobile\Collections\Achievement;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Dashboard\AchievementResource as ModelResource;
+use App\Http\Resources\Mobile\Achievement\AchievementResource as ModelResource;
 
 class AchievementCollection  extends ResourceCollection{
 

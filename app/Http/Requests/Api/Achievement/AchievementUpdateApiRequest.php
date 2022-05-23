@@ -3,7 +3,9 @@
 namespace App\Http\Requests\Api\Achievement;
 
 use Illuminate\Foundation\Http\FormRequest;
-class AchievementUpdateApiRequest extends FormRequest
+use App\Models\Language;
+
+class CertificateUpdateApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +24,15 @@ class AchievementUpdateApiRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'image'     =>  ['required','max:50000','mimes:jpg,jpeg,webp,bmp,png'] ,
-            'count'         =>  ['required']  ,
-        ];
+        $Languages=Language::get();
+
+        $all=[];
+
+        foreach ($Languages as $key => $value) {
+            $all += [ 'languages.'.$key.'.name'           =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.description'    =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.language'       =>  [ 'required' ,'exists:languages,name'] ] ;
+        }
+        return $all;
     }
 }

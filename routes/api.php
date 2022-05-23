@@ -191,6 +191,15 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
 
     Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
         Route::post( 'auth/update-password' ,  'authController@update_password' )  -> name( 'update_password' ),
+
+        //Sub_user
+        Route::name('sub-user.')->prefix('/sub-user')->group( fn ( ) : array => [
+            Route::get('/'              ,   'SubUserController@all'                     )->name('all'),
+            Route::post(''              ,   'SubUserController@store'                   )->name('store'),
+            Route::get('/{id}/show'     ,   'SubUserController@show'                    )->name('show'),
+            Route::get('/collection'    ,   'SubUserController@collection'              )->name('collection'),
+            Route::post('/{id}/update'  ,   'SubUserController@update'                  )->name('update'),
+        ]),
     ]),
 
 
@@ -204,14 +213,24 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::get('/collection'    ,   'SubscriptionController@collection'          )->name('collection'),
             Route::post('/attach'       ,   'SubscriptionController@attach'             )->name('attach'),
         ]),
-    
-    ]),
 
-    Route::group(['middleware' => ['auth:api','IfAuthChild','IfSubscription']], fn ( ) : array => [
+        //PlayTime
+        Route::name('play-time.')->prefix('/play-time')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'PlayTimeController@all'                 )->name('all'),
+            Route::get('/{id}/show'                 ,   'PlayTimeController@show'                )->name('show'),
+            Route::get('/collection'                ,   'PlayTimeController@collection'          )->name('collection'),
+        
+            Route::post('attatch-array'    ,   'PlayTimeController@attatchArray'          )->name('attatchArray'),
+            Route::post(''               ,   'PlayTimeController@store'               )->name('store'),
+        ]),  
+    
         //Subject
         Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
             Route::post('/attach'                   ,   'SubjectController@attach'              )->name('attach'),
         ]),
+    ]),
+
+    Route::group(['middleware' => ['auth:api','IfAuthChild','IfSubscription']], fn ( ) : array => [
         // User_package
         Route::name('user-package.')->prefix('/user-package')->group( fn ( ) : array => [
             Route::get('/'                          ,   'UserPackageController@all'                 )->name('all'),
@@ -253,15 +272,7 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::post('/attach'            ,   'AvatarController@attach'              )->name('attach'),
             Route::post('/detach'            ,   'AvatarController@detach'              )->name('detach'),
         ]),
-        //PlayTime
-        Route::name('play-time.')->prefix('/play-time')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'PlayTimeController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'PlayTimeController@show'                )->name('show'),
-            Route::get('/collection'                ,   'PlayTimeController@collection'          )->name('collection'),
-        
-            Route::post('attatch-array'    ,   'PlayTimeController@attatchArray'          )->name('attatchArray'),
-            Route::post(''               ,   'PlayTimeController@store'               )->name('store'),
-        ]),  
+
         // age_group
         Route::name('age-group.')->prefix('/age-group')->group( fn ( ) : array => [
             Route::get('/'                          ,   'AgeGroupController@all'                 )->name('all'),
@@ -281,17 +292,7 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::get('/collection'                ,   'UserController@collection'          )->name('collection'),
             Route::post('/{id}/update'              ,   'UserController@update'              )->name('update'),
         ]), 
-        //Sub_user
-        Route::name('sub-user.')->prefix('/sub-user')->group( fn ( ) : array => [
-            Route::get('/'              ,   'SubUserController@all'                     )->name('all'),
-            Route::post(''              ,   'SubUserController@store'                   )->name('store'),
-            Route::get('/{id}/show'     ,   'SubUserController@show'                    )->name('show'),
-            Route::get('/collection'    ,   'SubUserController@collection'              )->name('collection'),
-            Route::post('/{id}/update'  ,   'SubUserController@update'                  )->name('update'),
-            Route::DELETE('/{id}'       ,   'SubUserController@destroy'                 )->name('destroy'),
-            Route::post('/store'        ,   'SubUserController@store'    )->name('store'),
-            Route::DELETE('/{id}'       ,   'SubUserController@destroy'  )->name('destroy'),
-        ]),
+
         // Avatar
         Route::name('avatar.')->prefix('/avatar')->group( fn ( ) : array => [
             Route::get('/'              ,   'AvatarController@all'                 )->name('all'),
