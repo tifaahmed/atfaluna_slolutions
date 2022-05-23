@@ -17,7 +17,6 @@ class Subscription extends Model
 
     protected $fillable = [
         'month_number', //not_null integer
-        'child_number',  //not_null integer
         'price',        //unsignedDecimal
     ];
 

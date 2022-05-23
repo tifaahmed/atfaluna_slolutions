@@ -5,27 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\User;
+use App\Models\Sub_user;
 
-class User_subscription extends Model
+class Sub_user_subscription extends Model
 {
     use HasFactory,SoftDeletes;
     public $guarded = ['id'];
 
-    protected $table = 'user_subscriptions';
+    protected $table = 'sub_user_subscriptions';
 
 
     protected $fillable = [
+        
         'start',//required ,integer
         'end',//required ,integer
-        'child_number',//required ,integer,limit 2
-        'user_id',//unsigned
+        'sub_user_id',//unsigned
         'price',//required ,decimal
-
     ];
+
     // relations
-    public function user(){
-        return $this->belongsTo(User::class,'user_id');
+    public function subUser(){
+        return $this->belongsTo(Sub_user::class,'sub_user_id');
     }
 
 }

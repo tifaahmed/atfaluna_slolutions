@@ -11,14 +11,20 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use App\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 use App\Models\Role;
 use App\Models\Sub_user;
 use App\Models\User_package;
-use App\Models\User_subscription;
+use App\Models\Country;
+
+// Notification
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\NewItemNotification;
+
 use DB ;
 use Carbon\Carbon;
+
 class User extends Authenticatable {
 
     use
@@ -47,7 +53,6 @@ class User extends Authenticatable {
         'login_type',
         'latitude','longitude',
         'pin_code',
-        'fcm_token'
     ];
     public function getToken( )  {
         return $token = $this -> createToken( $this->email )  ;
@@ -81,12 +86,23 @@ class User extends Authenticatable {
 
         $this->notify(new ResetPasswordNotification($data));
     }
-    public function sendNewItemNotification()
+    public function sendNewItemNotification($notification_data)
     {
-        $all_user = User::all();
-        NewItemNotification::send($all_user, new MyNotification($param));
-
-        $this->notify(new NewItemNotification());
+        $all_users = $this->all();
+        foreach ($all_users as $key => $user) {
+            $user_country_lang = $user->country()->first()->language;
+            for ($i=0; $i < count($notification_data) ; $i++) { 
+                $check_lang =  array_search($user_country_lang,$notification_data[$i],true) ;
+                if ($check_lang) {
+                    foreach ($user->tokens as $key => $token) {
+                        if ($token->fcm_token) {
+                            $notification_data[$i]['fcm_token']    =  $token->fcm_token;
+                            $user->notify(new NewItemNotification($notification_data[$i]));
+                        }
+                    }
+                }
+            }
+        }
     }
     //relations
         public function country(){
@@ -100,9 +116,6 @@ class User extends Authenticatable {
         }
         public function sub_user(){
             return $this->hasMany(Sub_user::class);
-        }
-        public function userSubscription(){
-            return $this->hasOne(User_subscription::class);
         }
         public function userPackage(){
             return $this->hasMany(User_package::class);

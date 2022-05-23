@@ -19,10 +19,7 @@ use App\Http\Resources\Dashboard\Lesson\LessonResource as ModelResource;
 use App\Repository\LessonRepositoryInterface as ModelInterface;
 use App\Repository\LessonLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages
 
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\NewItemNotification;
 
-use App\Models\User;
 
 class LessonController extends Controller
 {
@@ -34,6 +31,7 @@ class LessonController extends Controller
         $this->ModelRepositoryLanguage = $RepositoryLanguage;
         $this->folder_name = 'lesson/'.Str::random(10).time();
         $this->related_language = 'lesson_id';
+        $this->notification_image_name = 'image_one';
     }
     public function all(){
         try {
@@ -98,13 +96,8 @@ class LessonController extends Controller
     }
     public function store(modelInsertRequest $request) {
 
-        $users = User::all();
-        Notification::send($users, new NewItemNotification($request));
-
-        // attach skills
-
         try {
-
+            // create
             $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
 
             // attach
@@ -112,12 +105,12 @@ class LessonController extends Controller
                 $this->ModelRepository->attachQuiz($request->quiz_ids,$model->id);
             }
 
-            $this->ModelRepository->attachSkills($request->skill_id,$model->id);
-
             // languages
             $this -> store_array_languages($request->languages,$model) ;
 
-
+            // notifications
+            $this -> notification($request->notificate,$request->notification,$model) ;
+            
             return $this -> MakeResponseSuccessful( 
                 [ $model ],
                 'Successful'               ,
@@ -131,6 +124,8 @@ class LessonController extends Controller
             );
         }
     }
+
+
     public function update(modelUpdateRequest $request ,$id) {
         try {
             $this->ModelRepository->update( $id,Request()->all()) ;
@@ -140,10 +135,12 @@ class LessonController extends Controller
             if (isset($request->quiz_ids) && $request->quiz_ids) {
                 $this->ModelRepository->attachQuiz($request->quiz_ids,$id);
             }
-            $this->ModelRepository->attachSkills($request->skill_id,$model->id);
 
             //  request languages
             $this -> update_array_languages($request->languages,$model) ;
+
+            // notifications
+            $this -> notification($request->notificate,$request->notification,$model) ;
 
             return $this -> MakeResponseSuccessful( 
                     [ $model],
@@ -326,4 +323,15 @@ class LessonController extends Controller
         }
     // trash
 
+    // notifications
+    public function notification($notificate = 0,$notification_data,$model) {
+        if ($notificate && $notification_data) {
+            $image_name = $this->notification_image_name ;
+            for ($i=0; $i < count($notification_data) ; $i++) { 
+                $image = asset($model->lesson_languages->where('language',$notification_data[$i]['lang'])->first()->$image_name);
+                $model_id = $model->id;
+            }
+            $this -> TraitNotification($notification_data,$priority='high',$image,$model_name='lesson',$model_id);
+        }
+    }
 }

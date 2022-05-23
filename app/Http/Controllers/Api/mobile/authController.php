@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Validation\Rules\Password as RulesPassword;
 use DB;
+use Carbon\Carbon;
 class authController extends Controller {
  
     public function __construct(){
@@ -37,10 +38,7 @@ class authController extends Controller {
             if ( $request -> get( 'email' , false ) ) {
                 $user = User::where( 'email' , $request -> get( 'email' ) ) -> first( ) ;
 
-                \DB::table('oauth_access_tokens')
-                ->Where('name',$request -> email)
-                ->Where('revoked', 1 )
-                ->delete();
+
             
             }
             if ( ! Hash::check( $request -> password , $user -> password ) ) {
@@ -50,9 +48,11 @@ class authController extends Controller {
                     Response::HTTP_UNAUTHORIZED
                 ) ; 
             }
+
             Auth::loginUsingId($user->id);
-            
-            return $this ->loginRespons($request->fcm_token);
+            return $this ->loginRespons($request->fcm_token); 
+
+
 
         }else{
             return $this -> MakeResponseErrors( 
@@ -87,11 +87,9 @@ class authController extends Controller {
             $all += array( 'phone'      => $request -> get( 'phone' ) );
             $all += array( 'login_type' => $request -> get( 'login_type' ) );
 
-            if ( isset($request->fcm_token) && $request->fcm_token ) {
-                $all += array( 'fcm_token' => $request -> get( 'fcm_token' ) );
-            }
-
             $user  = User::create($all);
+
+            
         }
 
         Auth::loginUsingId($user->id);
@@ -146,6 +144,7 @@ class authController extends Controller {
             Response::HTTP_OK
          ) ;
     }
+
     public function check_pin_code(CheckPinCodeRequest $request){
         if(!auth('api')->check()){
             $user =  User::where('pin_code',$request->pin_code)->first();
@@ -155,7 +154,8 @@ class authController extends Controller {
                 \DB::table('oauth_access_tokens')
                 ->Where('name',$user -> email)
                 ->delete();
-
+                
+                Auth::loginUsingId($user->id);
                 return $this ->loginRespons($request->fcm_token);
 
             }else{
@@ -186,7 +186,26 @@ class authController extends Controller {
 
 
     public function loginRespons($fcm_token)
-    {
+    {   
+        $sub_users = Auth::user()->sub_user()->get();
+
+
+        // if not first time &  child_number  more than  tokens (revoke tokens)
+        if ( Auth::user()->tokens()->count() > $sub_users->count() ){
+            Auth::user()->tokens()->last()->revoke();
+        }    
+
+
+        \DB::table('oauth_access_tokens')
+        ->Where('name',$request -> email)
+        ->Where('revoked', 1 )
+        ->delete();
+
+        \DB::table('oauth_access_tokens')
+        ->Where('fcm_token',$fcm_token)
+        ->delete();
+
+
         $token = Auth::user() -> getToken( ) ;
         $token->token->update([ 'fcm_token' => $fcm_token ]);
         return $this -> MakeResponseSuccessful( 
@@ -198,9 +217,6 @@ class authController extends Controller {
             Response::HTTP_OK
         ) ;
     }
-    public function check()
-    {
 
-    }
 
 }
