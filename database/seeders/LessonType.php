@@ -15,8 +15,8 @@ class LessonType extends Seeder
      */
     public function run()
     {
-        Lesson_type::create( [ 'name' => 'game' ] )  ;
-        Lesson_type::create( [ 'name' => 'video'] )  ;
+        Lesson_type::create( [ 'id' => '1', 'name' => 'game' ] )  ;
+        Lesson_type::create( [ 'id' => '2','name' => 'video'] )  ;
 
     }
 }

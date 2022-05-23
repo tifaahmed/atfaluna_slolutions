@@ -568,5 +568,33 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::get('/{id}/show'                 ,   'ConversationController@show'                )->name('show'),
                 Route::get('/collection'                ,   'ConversationController@collection'          )->name('collection'),
             ]),
+            // sounds
+        Route::name('sounds.')->prefix('/sounds')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'SoundsController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'SoundsController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'SoundsController@show'                )->name('show'),
+            Route::get('/collection'                ,   'SoundsController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'SoundsController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'SoundsController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'SoundsController@restore'             )->name('restore'),
+
+            Route::DELETE('premanently-delete/{id}' ,   'SoundsController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'SoundsController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'SoundsController@show_trash'          )->name('show_trash'),
+        ]),
+           // soundable
+        Route::name('soundable.')->prefix('/soundable')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'SoundableController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'SoundableController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'SoundableController@show'                )->name('show'),
+            Route::get('/collection'                ,   'SoundableController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'SoundableController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'SoundableController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'SoundableController@restore'             )->name('restore'),
+
+            Route::DELETE('premanently-delete/{id}' ,   'SoundableController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'SoundableController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'SoundableController@show_trash'          )->name('show_trash'),
+        ]),
     ]);
 

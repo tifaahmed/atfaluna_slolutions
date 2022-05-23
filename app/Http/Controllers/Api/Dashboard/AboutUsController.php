@@ -26,9 +26,9 @@ public function __construct(ModelInterface $Repository)
     $this->ModelRepository = $Repository;
     $this->folder_name = 'About_us/'.Str::random(10).time();
 }
-public function all(){
+public function all(Request $request){
     try {
-        return new ModelCollection (  $this->ModelRepository->all() )  ;
+        return new ModelResource (  $this->ModelRepository->filterFirst($request->language) );
     } catch (\Exception $e) {
         return $this -> MakeResponseErrors(  
             [$e->getMessage()  ] ,

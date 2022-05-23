@@ -23,7 +23,7 @@ class QuestionTag extends Model
     {
         return $this->morphedByMany(Mcq_question::class, 'question_tagables');
     }
- 
+
     /**
      * Get all of the videos that are assigned this tag.
      */

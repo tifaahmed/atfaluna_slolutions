@@ -27,6 +27,7 @@ class CertificateSeeder extends Seeder
             File::copy(public_path('images/age3.png'),$folder.'\age3.png');
             
             $certificate= Certificate::create( [
+                'id' => '1',
                 'image_one' => 'certificates/age1.jpg',
                 'image_two' => 'certificates/age2.jpg',
                 'image_three' => 'certificates/age3.png',
