@@ -35,7 +35,6 @@ class Sub_user extends Model
         'points',// integer
         'user_id',//unsigned  
         'avatar_id',//unsigned  
-
     ];
     // relations
         public function user(){
@@ -50,7 +49,6 @@ class Sub_user extends Model
         public function subUserAvatar(){
             return $this->belongsToMany(Avatar::class, 'sub_user_avatars', 'sub_user_id', 'avatar_id');
         }
-        
         public function subUserAchievement(){
             return $this->belongsToMany(Achievement::class, 'sub_user_achievements', 'sub_user_id', 'achievement_id');
         }
@@ -71,7 +69,6 @@ class Sub_user extends Model
         public function subUserQuizModel(){
             return $this->hasMany(Sub_user_quiz::class);
         }
-
         //Age_group
         public function subUserAgeGroup(){
             return $this->belongsToMany(Age_group::class, 'sub_user_age_groups', 'sub_user_id', 'age_group_id');
@@ -104,7 +101,6 @@ class Sub_user extends Model
                 return $all_active_subjects->where('age_group_id',$active_age_group->id);
             }
         }
-
         public function subUserCertificateModel(){
             return $this->hasMany(Sub_user_certificate::class);
         }

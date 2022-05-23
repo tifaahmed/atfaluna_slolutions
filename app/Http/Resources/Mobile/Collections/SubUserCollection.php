@@ -5,6 +5,8 @@ namespace App\Http\Resources\Mobile\Collections;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 use App\Http\Resources\Mobile\SubUserResource as ModelResource;
+// use App\Http\Resources\Mobile\ControllerResources\authController\SubUserResource;
+
 
 class SubUserCollection extends ResourceCollection{
 

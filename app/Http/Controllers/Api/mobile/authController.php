@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-use App\Http\Resources\Mobile\UserResource;
+use App\Http\Resources\Mobile\ControllerResources\authController\UserResource;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Password;

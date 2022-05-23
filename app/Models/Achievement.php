@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\AchievementImage;
 
 class Achievement extends Model
 {
@@ -14,9 +15,10 @@ class Achievement extends Model
     protected $table = 'achievements';
 
     protected $fillable = [
-        'image',//required , max:5000
-        'count',//required 
+    //
     ];
     // relations
-
+    public function achivementImages(){
+        return $this->HasMany(AchievementImage::class);
+    }
 }
