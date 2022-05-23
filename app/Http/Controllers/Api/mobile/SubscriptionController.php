@@ -74,7 +74,6 @@ class SubscriptionController extends Controller
     public function attach(Request $request){
         try {
 
-
             $model  =   $this->ModelRepository->findById($request->subscription_id) ;  
 
             $auth_created_at = new Carbon (Auth::user()->created_at);   

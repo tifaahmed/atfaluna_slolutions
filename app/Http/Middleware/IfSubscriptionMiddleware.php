@@ -21,18 +21,23 @@ class IfSubscriptionMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        // $user = Auth::user();
-        // $user_subscription = $user->userSubscription()->first();
-        // if ($user_subscription && $user_subscription->start <= Carbon::now() && $user_subscription->end >= Carbon::now()) {
+        if ($request->sub_user_id ) {
+            $sub_user = Auth::user()->sub_user()->find($request->sub_user_id);
+
+            $sub_user_subscription = $sub_user->SubUserSubscriptions()->first();
+            if ($sub_user_subscription && Carbon::now() >= $sub_user_subscription->start && Carbon::now() <= $sub_user_subscription->end) {
+                return $next($request);
+            }else {
+                return \Response::json( [
+                    'message'   => 'child subscription has ended' ,
+                    'status'    => 'false.' ,
+                    'code'      => Response::HTTP_UNAUTHORIZED           ,
+                ] + [] , Response::HTTP_UNAUTHORIZED);
+            
+        }
+        }else{
             return $next($request);
-        // }else {
-        //     return \Response::json( [
-        //         'message'   => 'user_subscription has ended' ,
-        //         'status'    => 'false.' ,
-        //         'code'      => Response::HTTP_UNAUTHORIZED           ,
-        //     ] + [] , Response::HTTP_UNAUTHORIZED);
-        // }
-        
+        }
 
     } 
 

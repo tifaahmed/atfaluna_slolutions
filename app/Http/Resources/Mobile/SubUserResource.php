@@ -25,7 +25,6 @@ class SubUserResource extends JsonResource
      */
     public function toArray($request)
     {
-        // $SubUserActiveAgeGroup = $this->SubUserActiveAgeGroup() 
 
         $SubUserSubscription = $this->SubUserSubscriptions()->first();
 

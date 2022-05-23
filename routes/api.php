@@ -192,53 +192,32 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
     Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
         Route::post( 'auth/update-password' ,  'authController@update_password' )  -> name( 'update_password' ),
     ]),
-    //skill
-    Route::name('skill.')->prefix('/skill')->group( fn ( ) : array => [
-        Route::get('/'                          ,   'SkillController@all'                 )->name('all'),
-        Route::get('/{id}/show'                 ,   'SkillController@show'                )->name('show'),
-        Route::get('/collection'                ,   'SkillController@collection'          )->name('collection'),
-    ]),
-    // Lesson
-    Route::name('lesson.')->prefix('/lesson')->group( fn ( ) : array => [
-        Route::get('/'                          ,   'LessonController@all'                 )->name('all'),
-        Route::get('/{id}/show'                 ,   'LessonController@show'                )->name('show'),
-        Route::get('/collection'                ,   'LessonController@collection'          )->name('collection'),
-        Route::post('/attach'                   ,   'LessonController@attach'              )->name('attach'),
-    ]), 
-    //hero
-    Route::name('hero.')->prefix('/hero')->group( fn ( ) : array => [
-        Route::get('/'                          ,   'HeroController@all'                 )    ->name('all'),
-        Route::get('/{id}/show'                 ,   'HeroController@show'                )->name('show'),
-        Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
 
+
+    
     Route::group(['middleware' => ['auth:api','IfAuthChild']], fn ( ) : array => [
-        //Subject
-        Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
-            Route::post('/attach'                   ,   'SubjectController@attach'              )->name('attach'),
-        ]),
-    ]),
 
-    Route::group(['middleware' => ['auth:api','IfAuthChild','IfSubscription']], fn ( ) : array => [
         // subscription
         Route::name('subscription.')->prefix('/subscription')->group( fn ( ) : array => [
             Route::get('/'              ,   'SubscriptionController@all'                 )->name('all'),
             Route::get('/{id}/show'     ,   'SubscriptionController@show'                )->name('show'),
             Route::get('/collection'    ,   'SubscriptionController@collection'          )->name('collection'),
-            Route::post('/attach'               ,   'SubscriptionController@attach'             )->name('attach'),
-        ]),  
-        //User_subscription
-        Route::name('user-subscription.')->prefix('/user-subscription')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'UserSubscriptionController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'UserSubscriptionController@show'                )->name('show'),
-            Route::get('/collection'                ,   'UserSubscriptionController@collection'          )->name('collection'),
-            Route::DELETE('/{id}'                   ,   'UserSubscriptionController@destroy'             )->name('destroy'),    
-        ]),  
+            Route::post('/attach'       ,   'SubscriptionController@attach'             )->name('attach'),
+        ]),
+    
+    ]),
+
+    Route::group(['middleware' => ['auth:api','IfAuthChild','IfSubscription']], fn ( ) : array => [
+        //Subject
+        Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
+            Route::post('/attach'                   ,   'SubjectController@attach'              )->name('attach'),
+        ]),
         // User_package
         Route::name('user-package.')->prefix('/user-package')->group( fn ( ) : array => [
             Route::get('/'                          ,   'UserPackageController@all'                 )->name('all'),
             Route::get('/{id}/show'                 ,   'UserPackageController@show'                )->name('show'),
             Route::get('/collection'                ,   'UserPackageController@collection'          )->name('collection'),
-            Route::post('/store'        ,   'UserPackageController@store'    )->name('store'),
+            Route::post('/store'                    ,   'UserPackageController@store'    )->name('store'),
         ]),
     
         // QuizAttempt
@@ -413,7 +392,26 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::get('/{id}/show'                 ,   'HeroController@show'                )->name('show'),
             Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
         ]),
-    ]),
+        //skill
+        Route::name('skill.')->prefix('/skill')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'SkillController@all'                 )->name('all'),
+            Route::get('/{id}/show'                 ,   'SkillController@show'                )->name('show'),
+            Route::get('/collection'                ,   'SkillController@collection'          )->name('collection'),
+        ]),
+        // Lesson
+        Route::name('lesson.')->prefix('/lesson')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'LessonController@all'                 )->name('all'),
+            Route::get('/{id}/show'                 ,   'LessonController@show'                )->name('show'),
+            Route::get('/collection'                ,   'LessonController@collection'          )->name('collection'),
+            Route::post('/attach'                   ,   'LessonController@attach'              )->name('attach'),
+        ]), 
+        //hero
+        Route::name('hero.')->prefix('/hero')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'HeroController@all'                 )    ->name('all'),
+            Route::get('/{id}/show'                 ,   'HeroController@show'                )->name('show'),
+            Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
+
+        ]),
     ]),
 
     

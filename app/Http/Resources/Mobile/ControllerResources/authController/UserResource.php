@@ -24,23 +24,6 @@ class UserResource extends JsonResource
     {
         $basic = Basic::find(1);
 
-
-        
-        $user_subscription = Auth::user()->userSubscription()->first();
-
-        $subscription_status = 0 ;
-        if (
-            $user_subscription && 
-            $user_subscription->start <= Carbon::now() && 
-            $user_subscription->end >= Carbon::now() 
-            // $user_subscription->child_number >= count(Auth::user()->tokens)
-        ) {
-            $subscription_status = 1 ;
-        }
-        
-
-
-
         return [
             'id'             => $this->id,
             'name'           => $this->name,
@@ -57,11 +40,7 @@ class UserResource extends JsonResource
                 'UserRoles'         => $this->UserRole,
                 'UserPermissions'   => $this->UserPermission,
                 'sub_user'          => new SubUserCollection ( $this->sub_user ),
-                // // // 'avatars'        => new AvatarCollection ($this->subUserAvatar)  ,
                 // 'country'           => new CountryResource ( $this->country ),
-
-                'subscription_status' =>    $subscription_status ,
-                'subscription' =>    $user_subscription ,
         ];
     }
 }
