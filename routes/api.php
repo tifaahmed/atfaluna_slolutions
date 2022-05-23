@@ -109,13 +109,6 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
                 Route::get('/{id}/show'                 ,   'McqQuestionController@show'                )->name('show'),
                 Route::get('/collection'                ,   'McqQuestionController@collection'          )->name('collection'),
             ]),  
-
-        // subscription
-            Route::name('subscription.')->prefix('/subscription')->group( fn ( ) : array => [
-                Route::get('/'              ,   'SubscriptionController@all'                 )->name('all'),
-                Route::get('/{id}/show'     ,   'SubscriptionController@show'                )->name('show'),
-                Route::get('/collection'    ,   'SubscriptionController@collection'          )->name('collection'),
-            ]),  
         // language
             Route::name('language.')->prefix('/language')->group( fn ( ) : array => [
                 Route::get('/'              ,   'LanguageController@all'        )  ->name('all'),
@@ -198,10 +191,6 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
 
     Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
         Route::post( 'auth/update-password' ,  'authController@update_password' )  -> name( 'update_password' ),
-        // subscription
-        Route::name('subscription.')->prefix('/subscription')->group( fn ( ) : array => [
-            Route::post('/attach'               ,   'SubscriptionController@attach'             )->name('attach'),
-        ]),
     ]),
 
     Route::group(['middleware' => ['auth:api','IfAuthChild']], fn ( ) : array => [
@@ -212,7 +201,13 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
     ]),
 
     Route::group(['middleware' => ['auth:api','IfAuthChild','IfSubscription']], fn ( ) : array => [
-
+        // subscription
+        Route::name('subscription.')->prefix('/subscription')->group( fn ( ) : array => [
+            Route::get('/'              ,   'SubscriptionController@all'                 )->name('all'),
+            Route::get('/{id}/show'     ,   'SubscriptionController@show'                )->name('show'),
+            Route::get('/collection'    ,   'SubscriptionController@collection'          )->name('collection'),
+            Route::post('/attach'               ,   'SubscriptionController@attach'             )->name('attach'),
+        ]),  
         //User_subscription
         Route::name('user-subscription.')->prefix('/user-subscription')->group( fn ( ) : array => [
             Route::get('/'                          ,   'UserSubscriptionController@all'                 )->name('all'),
@@ -403,16 +398,3 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
     ]),
     
 ]);
-
-
-
-
-
-
-
-
-
-
-    
-
-

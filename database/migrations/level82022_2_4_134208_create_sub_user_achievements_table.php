@@ -19,6 +19,8 @@ class CreateSubUserAchievementsTable extends Migration
             $table->foreign('sub_user_id')->references('id')->on('sub_users');
             $table->integer('achievement_id')->unsigned();
             $table->foreign('achievement_id')->references('id')->on('achievements');
+
+            $table->integer('score')->default('0');
         });
     }
     

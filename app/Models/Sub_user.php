@@ -19,6 +19,7 @@ use App\Models\Achievement;
 use App\Models\Group_chat;
 use App\Models\Conversation;
 use App\Models\Friend;
+use App\Models\Sub_user_subscription;
 
 
 class Sub_user extends Model
@@ -123,5 +124,9 @@ class Sub_user extends Model
         public function friend(){
             return $this->hasMany(Friend::class);
         } 
+
+        public function SubUserSubscriptions(){
+            return $this->hasMany(Sub_user_subscription::class);
+        }
 }
 // 

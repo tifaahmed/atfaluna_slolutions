@@ -13,6 +13,7 @@ use App\Http\Resources\Mobile\Collections\PlayTimeCollection;
 use App\Http\Resources\Mobile\Collections\AgeGroupCollection;
 use App\Http\Resources\Mobile\AvatarResource;
 
+use Carbon\Carbon;
 
 class SubUserResource extends JsonResource
 {
@@ -25,6 +26,19 @@ class SubUserResource extends JsonResource
     public function toArray($request)
     {
         // $SubUserActiveAgeGroup = $this->SubUserActiveAgeGroup() 
+
+        $SubUserSubscription = $this->SubUserSubscriptions()->first();
+
+        $subscription_status = 0 ;
+        if (
+            $SubUserSubscription && 
+            $SubUserSubscription->start <= Carbon::now() && 
+            $SubUserSubscription->end >= Carbon::now() 
+        ) {
+            $subscription_status = 1 ;
+        }
+        
+
         return [
             'id'            => $this->id,
             'name'          => $this->name,
@@ -48,6 +62,8 @@ class SubUserResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
+            'subscription_status' =>    $subscription_status ,
+            'subscription' =>    $SubUserSubscription ,
         ];        
     }
 }

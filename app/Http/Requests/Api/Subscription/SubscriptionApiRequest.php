@@ -28,7 +28,6 @@ class SubscriptionApiRequest extends FormRequest
 
         $all=[];
         $all += [ 'month_number'           =>  [ 'required' ,'integer'] ]  ;
-        $all += [ 'child_number'           =>  [ 'required' ,'integer'] ]  ;
         $all += [ 'price'                  =>  [ 'required' ,'numeric','between:0,9999.99'] ]  ;
 
         foreach ($Languages as $key => $value) {

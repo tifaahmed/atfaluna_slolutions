@@ -4,23 +4,24 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Notification;
 
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
+use Kutia\Larafirebase\Messages\FirebaseMessage;
 
 class NewItemNotification extends Notification
 {
     use Queueable;
-    public $data;
+    public $notification_data;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($notification_data)
     {
-        $this->data = $data;
+        $this->notification_data = $notification_data;
     }
 
     /**
@@ -31,7 +32,10 @@ class NewItemNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return [
+            'database',
+            'firebase'
+        ];
     }
 
     /**
@@ -51,9 +55,27 @@ class NewItemNotification extends Notification
 
     public function toDatabase($notifiable)
     {
-        return [
-           $this->data['notification'][0],
+        
+        // return dd($this->notification_data);
+        return
+        [
+            $this->notification_data,
         ];
+    }
+    public function toFirebase($notifiable)
+    {
+
+            return (new FirebaseMessage)
+            ->withTitle($this->notification_data['title'])
+            ->withBody($this->notification_data['subject'])
+            ->withImage($this->notification_data['image'])
+            ->withPriority($this->notification_data['priority'])
+            ->withAdditionalData([
+                'model_name' => $this->notification_data['model_name'],
+                'model_id' => $this->notification_data['model_id']
+            ])
+            ->asNotification($this->notification_data['fcm_token']);
+        
     }
     /**
      * Get the array representation of the notification.
