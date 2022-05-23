@@ -62,6 +62,14 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 			$sub_user->subUserSubject()->sync($subject_ids);
 		}
 	}
+//Subject
+public function attachSubSubjects($sub_subject_ids,$id)
+{
+	if($sub_subject_ids){
+		$sub_user =   Auth::user()->sub_user()->find($id);
+		$sub_user->subUserSubSubject()->sync($sub_subject_ids);
+	}
+}
 //Quiz
 	public function attachQuizs($quiz_ids,$id)
 	{

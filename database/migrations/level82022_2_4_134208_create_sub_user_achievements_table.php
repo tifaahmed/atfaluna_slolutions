@@ -15,6 +15,7 @@ class CreateSubUserAchievementsTable extends Migration
     {
         Schema::create('sub_user_achievements', function (Blueprint $table) {
             $table->increments('id');//[pk]
+            $table->integer('points')->default('0');//[note: "ex ( 5 - 6)"]
             $table->integer('sub_user_id')->unsigned();
             $table->foreign('sub_user_id')->references('id')->on('sub_users');
             $table->integer('achievement_id')->unsigned();

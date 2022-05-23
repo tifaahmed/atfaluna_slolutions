@@ -8,4 +8,6 @@ interface SubjectRepositoryInterface extends EloquentRepositoryInterface{
 	public function attachQuiz($quiz_id,$id)  ;
 	public function attachCertificate($certificate_id,$id)  ;
 	public function attachSoundas($sound_id,$id)  ;
+	public function attachSkills($skill_id,$id)  ;
+
 }

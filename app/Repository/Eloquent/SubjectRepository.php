@@ -96,5 +96,12 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 			return $result->sounds()->sync($sound_id);
 		}
 	}
+	public function attachSkills($skill_id,$id)
+	{
+		if($skill_id){
+			$result = $this->findById($id); 
+			return $result->skills()->sync($skill_id);
+		}
+	}
 }
 

@@ -21,12 +21,6 @@ class SoundsRepository extends BaseRepository implements SoundsRepositoryInterfa
 	{
 		$this->model =  $model;
 	}
-
-	// public function filterFirst($language)  
-    // {	
-	// 	$result=$this->model->Localization()->first();
-	// 	return $result;
-	// 	}
 	}
 
 

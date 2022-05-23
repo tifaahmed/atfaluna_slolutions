@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Skill;
 use Illuminate\Support\Facades\App;
 
-
 class Skill_language extends Model
 {
     use HasFactory;
@@ -16,11 +15,11 @@ class Skill_language extends Model
 
     protected $table = 'skill_languages';
 
-
     protected $fillable = [
         'name',//required
         'language',//required ,limit 2
         'skill_id',//unsigned cascade
+        'image',// required , max:5000
     ];
     public $timestamps = false;
     //relation
@@ -30,7 +29,6 @@ class Skill_language extends Model
     public function scopeRelatedLanguage($query,$id){
         return $query->where('skill_id', $id);
     }
-
     public function scopeLocalization($query){
         return $query->where('language', App::getLocale());
     }

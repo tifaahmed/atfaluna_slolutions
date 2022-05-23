@@ -16,7 +16,7 @@ use App\Models\Notification;
 
 use App\Models\Certificate;      //morphOne
 use App\Models\Quiz;             //morphMany    
-use App\Models\Soundable;      //morphOne
+use App\Models\Skillable;      //morphMany
 
 class Subject extends Model
 {
@@ -62,9 +62,13 @@ class Subject extends Model
         public function notification(){
             return $this->morphOne(Notification::class, 'notificable');
         }
-        // morphOne
+        // morph
         public function sounds(){
             return $this->morphToMany(Sound::class, 'soundables');
         }
+        public function skills(){
+            return $this->morphToMany(Skill::class, 'skillable');
+        }
+        
 
 }

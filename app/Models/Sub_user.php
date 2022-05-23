@@ -85,11 +85,13 @@ class Sub_user extends Model
                 return $this->subUserAgeGroup()->wherePivot('active' ,1);
             }
         }
-
-        
         //Subject
         public function subUserSubject(){
             return $this->belongsToMany(Subject::class, 'sub_user_subjects', 'sub_user_id', 'subject_id');
+        }
+        //sub_Subject
+        public function subUserSubSubject(){
+            return $this->belongsToMany(Sub_subject::class, 'sub_user_sub_subjects', 'sub_user_id', 'sub_subject_id');
         }
         public function ActiveSubject(){
             if ($this->subUserSubject()) {

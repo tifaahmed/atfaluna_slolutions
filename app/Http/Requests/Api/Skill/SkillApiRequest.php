@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Skill;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Language;
 
 class SkillApiRequest extends FormRequest
 {
@@ -23,9 +24,17 @@ class SkillApiRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-//
+            $Languages=Language::get();
 
-        ];
+            $all=[];
+    
+            foreach ($Languages as $key => $value) {
+
+                $all += [ 'languages.'.$key.'.image'        =>  [ 'required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ] ;
+                $all += [ 'languages.'.$key.'.name'         =>  [ 'required' ] ] ;
+                $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name'] ] ;
+            }
+            return $all;
+
     }
 }
