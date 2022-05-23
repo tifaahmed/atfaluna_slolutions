@@ -183,7 +183,8 @@ class authController extends Controller {
 
         // if not first time &  child_number  more than  tokens (revoke tokens)
         if ( Auth::user()->tokens()->count() > $sub_users->count() ){
-            Auth::user()->tokens()->last()->revoke();
+            // Auth::user()->tokens()->latest('created_at')->first()->revoke();
+            Auth::user()->tokens()->first('created_at')->revoke();
         }    
 
 
