@@ -42,6 +42,8 @@ class SubUserController extends Controller
             $this->ModelRepository->attachAchievements($request->achievement_ids,$model->id);
                                 //Subject
             $this->ModelRepository->attachSubjects($request->subject_ids,$model->id);
+                                //SubSubjects
+            $this->ModelRepository->attachSubSubjects($request->sub_subject_ids,$model->id);
                                 //Quiz
             $this->ModelRepository->attachQuizs($request->quiz_ids,$model->id);
                                 //Lesson
@@ -147,6 +149,8 @@ class SubUserController extends Controller
             $this->ModelRepository->attachAchievements($request->achievement_ids,$id);
                         //Subject
             $this->ModelRepository->attachSubjects($request->subject_ids,$id);
+                        //SubSubjects
+            $this->ModelRepository->attachSubSubjects($request->sub_subject_ids,$id);
                         //Quiz
             $this->ModelRepository->attachQuizs($request->quiz_ids,$id);
                         //Lesson

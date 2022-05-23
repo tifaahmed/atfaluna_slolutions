@@ -41,6 +41,8 @@ namespace App\Providers;
     use App\Repository\Eloquent\SubjectRepository;
     use App\Repository\Eloquent\SubjectLanguageRepository;
 
+    use App\Repository\Eloquent\SkillableRepository;
+
     use App\Repository\Eloquent\SkillRepository;
     use App\Repository\Eloquent\SkillLanguageRepository;
 
@@ -140,6 +142,7 @@ namespace App\Providers;
     use App\Repository\SubjectRepositoryInterface;
     use App\Repository\SubjectLanguageRepositoryInterface;
 
+    use App\Repository\SkillableRepositoryInterface;
     use App\Repository\SkillRepositoryInterface;
     use App\Repository\SkillLanguageRepositoryInterface;
 
@@ -253,6 +256,7 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(SkillRepositoryInterface::class,SkillRepository::class);
         $this->app->bind(SkillLanguageRepositoryInterface::class,SkillLanguageRepository::class);
+        $this->app->bind(SkillableRepositoryInterface::class,SkillableRepository::class);
 
         $this->app->bind(QuizRepositoryInterface::class,QuizRepository::class);
         $this->app->bind(QuizLanguageRepositoryInterface::class,QuizLanguageRepository::class);

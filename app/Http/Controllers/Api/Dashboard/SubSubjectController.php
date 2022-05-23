@@ -65,6 +65,8 @@ class SubSubjectController extends Controller
             if (isset($request->quiz_id) && $request->quiz_id) {
                 $this->ModelRepository->attachQuiz($request->quiz_id,$model->id);
             }
+            // attach skills
+            $this->ModelRepository->attachSkills($request->skill_id,$model->id);
 
             // languages
             $this -> store_array_languages($request->languages,$model) ;
@@ -119,12 +121,18 @@ class SubSubjectController extends Controller
     public function update(modelUpdateRequest $request ,$id) {
         try {
             $this->ModelRepository->update( $id,Request()->all()) ;
-            $model = new ModelResource( $this->ModelRepository->findById($id) ); 
+
+            $old_model = new ModelResource( $this->ModelRepository->findById($id) );
 
             // attach
             if (isset($request->quiz_id) && $request->quiz_id) {
                 $this->ModelRepository->attachQuiz($request->quiz_id,$id);
             }
+            // attach skills
+            $this->ModelRepository->attachSkills($request->skill_id,$old_model->id);
+            
+            // new model 
+            $model = new ModelResource( $this->ModelRepository->findById($id) );
             //  request languages
             $this -> update_array_languages($request->languages,$model) ;
 

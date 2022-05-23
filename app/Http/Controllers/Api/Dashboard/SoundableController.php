@@ -9,7 +9,6 @@ use Illuminate\Support\Str;
 
 // Requests
 use App\Http\Requests\Api\Soundable\SoundableApiRequest as modelInsertRequest;
-use App\Http\Requests\Api\Soundable\SoundableUpdateApiRequest as modelUpdateRequest;
 
 // Resources
 use App\Http\Resources\Dashboard\Collections\SoundableCollection as ModelCollection;
@@ -24,7 +23,7 @@ private $Repository;
 public function __construct(ModelInterface $Repository)
 {
     $this->ModelRepository = $Repository;
-    $this->folder_name = 'Soundable/'.Str::random(10).time();
+    $this->folder_name = 'soundable/'.Str::random(10).time();
 }
 public function all(){
     try {
@@ -127,7 +126,7 @@ public function show($id) {
     }
 }
 
-public function update(modelUpdateRequest $request ,$id) {
+public function update(modelInsertRequest $request ,$id) {
     try {
         $all = [ ];
         $file = 'record';

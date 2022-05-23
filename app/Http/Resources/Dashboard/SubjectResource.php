@@ -11,6 +11,7 @@ use App\Http\Resources\Dashboard\Quiz\QuizResource;
 
 use App\Http\Resources\Dashboard\Collections\SoundsCollection ;
 
+use App\Http\Resources\Dashboard\Collections\Skill\SkillCollection ;
 
 class SubjectResource extends JsonResource
 {
@@ -46,6 +47,8 @@ class SubjectResource extends JsonResource
             'quiz'          =>   new QuizResource ( $this->quiz )   ,
 
             'sounds'        => new SoundsCollection($this->sounds),
+
+            'skills'        => new SkillCollection($this->skills),
 
         ];        
     }

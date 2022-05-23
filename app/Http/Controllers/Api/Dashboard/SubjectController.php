@@ -77,6 +77,9 @@ class SubjectController extends Controller
             // attach sounds
             $this->ModelRepository->attachSoundas($request->sound_id,$model->id);
 
+            // attach skills
+            $this->ModelRepository->attachSkills($request->skill_id,$model->id);
+
             // attach Certificate
             $this->ModelRepository->attachCertificate($request->certificate_id,$model->id);
 
@@ -139,6 +142,9 @@ class SubjectController extends Controller
             if (isset($request->quiz_id) && $request->quiz_id) {
                 $this->ModelRepository->attachQuiz($request->quiz_id,$id);
             }
+            // attach skills
+            $this->ModelRepository->attachSkills($request->skill_id,$old_model->id);
+
             // attach Certificate
             $this->ModelRepository->attachCertificate($request->certificate_id,$old_model->id);
             // files

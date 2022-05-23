@@ -15,9 +15,11 @@ class CreateAchievementsTable extends Migration
     {
         Schema::create('achievements', function (Blueprint $table) {
             $table->increments('id');//[pk]
+
             // $table->integer('points');
             // $table->string('image_one');
             // $table->string('image_two');
+
             $table->timestamps();
             $table->softDeletes();
         });

@@ -24,7 +24,6 @@ class LessonApiRequest extends FormRequest
     public function rules()
     {
         $Languages=Language::get();
-
         $all=[];
 
         // notification 
@@ -39,7 +38,7 @@ class LessonApiRequest extends FormRequest
         $all += [ 'points'           =>  [ 'integer'] ]  ;
         $all += [ 'sub_subject_id'   =>  [ 'required' ,'integer','exists:sub_subjects,id'] ]  ;
         $all += [ 'lesson_type_id'   =>  [ 'required' ,'integer','exists:lesson_types,id'] ] ;
-
+        $all += [ 'skills_id'  =>  [ 'sometimes' ,'integer','exists:skills,id'] ]  ;
         // quiz
         $all += [ 'quiz_ids'  =>  [ 'sometimes' ,'array','exists:quizzes,id'] ]  ;
 
