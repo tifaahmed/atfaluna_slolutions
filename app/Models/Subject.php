@@ -64,7 +64,7 @@ class Subject extends Model
         }
         // morph
         public function sounds(){
-            return $this->morphToMany(Sound::class, 'soundable');
+            return $this->morphToMany(Sound::class, 'soundables');
         }
         public function skills(){
             return $this->morphToMany(Skill::class, 'skillable');

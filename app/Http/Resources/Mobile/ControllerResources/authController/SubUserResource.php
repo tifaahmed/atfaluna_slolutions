@@ -4,13 +4,6 @@ namespace App\Http\Resources\Mobile\ControllerResources\authController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Mobile\Collections\AvatarCollection;
-use App\Http\Resources\Mobile\Collections\AccessoryCollection;
-use App\Http\Resources\Mobile\Collections\CertificateCollection;
-use App\Http\Resources\Mobile\Collections\Quiz\QuizCollection;
-use App\Http\Resources\Mobile\Collections\Lesson\LessonCollection;
-use App\Http\Resources\Mobile\Collections\SubjectCollection;
-use App\Http\Resources\Mobile\Collections\PlayTimeCollection;
-use App\Http\Resources\Mobile\Collections\AgeGroupCollection;
 use App\Http\Resources\Mobile\ControllerResources\authController\AvatarResource;
 
 
