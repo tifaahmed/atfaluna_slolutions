@@ -49,10 +49,7 @@ class authController extends Controller {
                 ) ; 
             }
 
-            Auth::loginUsingId($user->id);
-            return $this ->loginRespons($request->fcm_token); 
-
-
+            return $this ->loginRespons($request->fcm_token,$user->email,$user->id);
 
         }else{
             return $this -> MakeResponseErrors( 
@@ -89,11 +86,9 @@ class authController extends Controller {
 
             $user  = User::create($all);
 
-            
         }
 
-        Auth::loginUsingId($user->id);
-        return $this ->loginRespons($request->fcm_token);
+        return $this ->loginRespons($request->fcm_token,$user->email,$user->id);
 
     }
     
@@ -110,8 +105,7 @@ class authController extends Controller {
             'token' => Hash::make( Str::random(60) )  ,
         ]);
 
-        Auth::loginUsingId($user->id);
-        return $this ->loginRespons($request->fcm_token);
+        return $this ->loginRespons($request->fcm_token,$user->email,$user->id);
 
     }
 
@@ -149,14 +143,12 @@ class authController extends Controller {
         if(!auth('api')->check()){
             $user =  User::where('pin_code',$request->pin_code)->first();
             if ($user) {
-                Auth::login($user);
 
                 \DB::table('oauth_access_tokens')
                 ->Where('name',$user -> email)
                 ->delete();
-                
-                Auth::loginUsingId($user->id);
-                return $this ->loginRespons($request->fcm_token);
+
+                return $this ->loginRespons($request->fcm_token,$user->email,$user->id);
 
             }else{
                 return $this -> MakeResponseSuccessful( 
@@ -184,11 +176,10 @@ class authController extends Controller {
         ) ;
     }
 
-
-    public function loginRespons($fcm_token)
+    public function loginRespons($fcm_token,$email,$user_id)
     {   
+        Auth::loginUsingId($user_id);
         $sub_users = Auth::user()->sub_user()->get();
-
 
         // if not first time &  child_number  more than  tokens (revoke tokens)
         if ( Auth::user()->tokens()->count() > $sub_users->count() ){
@@ -197,7 +188,7 @@ class authController extends Controller {
 
 
         \DB::table('oauth_access_tokens')
-        ->Where('name',$request -> email)
+        ->Where('name',$email)
         ->Where('revoked', 1 )
         ->delete();
 
