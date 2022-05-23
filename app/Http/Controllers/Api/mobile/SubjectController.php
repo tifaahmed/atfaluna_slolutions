@@ -8,8 +8,9 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\Mobile\Collections\SubjectCollection as ModelCollection;
-use App\Http\Resources\Mobile\SubjectResource as ModelResource;
+
+use App\Http\Resources\Mobile\Collections\ControllerResources\SubjectController\SubjectCollection as ModelCollection;
+use App\Http\Resources\Mobile\ControllerResources\SubjectController\SubjectResource as ModelResource;
 use App\Http\Requests\Api\Subject\MobileSubjectApiRequest;
 use Illuminate\Support\Facades\Auth;
 

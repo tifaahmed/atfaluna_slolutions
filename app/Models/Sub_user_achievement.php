@@ -18,6 +18,7 @@ class Sub_user_achievement extends Model
     protected $fillable = [
         'sub_user_id',
         'achievement_id',
+        'points',//default('0');//[note: "ex ( 5 - 6)"]
     ];
     // relations
     public function achievement(){
