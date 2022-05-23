@@ -14,11 +14,18 @@ class SubscriptionResource extends JsonResource
     public function toArray($request)
     {
         $row=$this->subscription_languages()->Localization()->RelatedLanguage($this->id)->first();
+        $auth_created_at = new Carbon (Auth::user()->created_at);
+        
+
+        $allowed = 1 ;
+        
+        if ($this->price <= 0  &&  Auth::user() && Carbon::now() >= $auth_created_at ->addMonths($this->month_number)   ) {
+            $allowed = 0;
+        }
 
         return [
             'id'            => $this->id,
             'month_number'  => $this->month_number,
-            'child_number'  => $this->child_number,
             'price'         => $this->price,
             
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
@@ -28,6 +35,7 @@ class SubscriptionResource extends JsonResource
             'languages'     => $this->subscription_languages,
             'name'          => $row ? $row->name:'',
 
-        ];        
+            'allowed'          => $allowed ,
+        ];          
     }
 }
