@@ -12,7 +12,7 @@ class Sub_user_subject extends Model
     use HasFactory;
     public $guarded = ['id'];
 
-    protected $table = 'sub_user_quizzes';
+    protected $table = 'sub_user_subjects';
     public $timestamps = false;
 
     protected $fillable = [

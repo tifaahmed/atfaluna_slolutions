@@ -47,7 +47,7 @@ class Subject extends Model
             }
 
         // hasManyThrough
-            public function lesssons(){
+            public function lessons(){
                 return $this->hasManyThrough(Lesson::class, Sub_subject::class);
             }
 

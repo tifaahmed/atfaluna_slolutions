@@ -22,13 +22,13 @@ class UserResource extends JsonResource
             'name'           => $this->name,
             'email'          => $this->email,
             'phone'          => $this->phone,
-            'avatar'         => Storage::disk('public')->exists($this->avatar) ? Storage::url($this->avatar)  : null,
+            // 'avatar'         => Storage::disk('public')->exists($this->avatar) ? Storage::url($this->avatar)  : null,
 
             'birthdate'        => $this->birthdate,
             // 'sub_user'          => $this->sub_user,
-            'sub_user'        => new SubUserCollection  ($this->sub_user),
+            // 'sub_user'        => new SubUserCollection  ($this->sub_user),
 
-            'country'          => new CountryResource ( $this->country ),
+            // 'country'          => new CountryResource ( $this->country ),
             'country_id'       => $this->country_id,
 
             'UserRoles'      => $this->UserRole,
