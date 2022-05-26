@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRegisterApiRequest extends FormRequest
+class MobileUserUpdateApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,10 @@ class UserRegisterApiRequest extends FormRequest
     public function rules()
     {
         return [
-                'name'      =>  [ 'required' ,'max:50'] ,
-                'email'     =>  [ 'required' , 'unique:users,email' ,'email'] ,
-                'phone'     =>  [ 'required' ,  'integer' ,'unique:users,phone' ,'max:15' ] ,
-
-                'password'  =>  [ 'required' , 'confirmed' ,  'min:8' , 'max:15' ],
-                'password_confirmation'  =>  [ 'required' , 'min:8' , 'max:15' ],
-
-                'avatar'    =>  [ 'sometimes', 'mimes:jpg,jpeg,png' , 'max:5000'] ,
-
+                'name'      =>  [  'required','max:50'] ,
+                'email'     =>  [  'required','unique:users,email,'.$this->id  ,'email'] ,
+                'phone'     =>  [  'required', 'integer' , 'unique:users,phone,'.$this->id  ,'max:15' ] ,
+                
                 'birthdate '=>  [  'date' ] ,
                 'country_id'=>  [  'required' , 'integer','exists:countries,id' ] ,
         ];

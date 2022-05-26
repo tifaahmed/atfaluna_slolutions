@@ -37,41 +37,47 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 			$result->true_false_questions()->syncWithoutDetaching($true_false_question_ids);
 		}
 	}
-	public function startQuiz(int $sub_user_id,int $id){
+	public function startQuiz(int $sub_user_id,int $quiz_id){
 
 		$sub_user =   Auth::user()->sub_user()->find($sub_user_id);
-		$sub_user->subUserQuiz()->syncWithoutDetaching($id);
-		$subUserQuiz = $sub_user->subUserQuizModel()->where('quiz_id',$id)->first();
-		// get all  quiz attempts
-		$quiz_attempts = $subUserQuiz->quiz_attempts();
-		// get the open  quiz attempt
-		$quiz_attempt = $quiz_attempts->QuizAttemptOpen()->first();
 
-		// get there no open quiz attempt : create new
-		if (!$quiz_attempt) {
+		// add new row in sub_user_quizzes 
+		$sub_user->subUserQuiz()->syncWithoutDetaching($quiz_id);
+
+		// get all  quiz attempts
+		$subUserQuiz = $sub_user->subUserQuizModel()->where('quiz_id',$quiz_id)->first();
+		$quiz_attempts = $subUserQuiz->quiz_attempts();
+		
+		// get the open quiz attempt
+		$quiz_attempt_open = $quiz_attempts->QuizAttemptOpen()->first();
+
+		// if there no open quiz attempt : create new
+		if (!$quiz_attempt_open) {
+
 			//first
 			// create quiz_attempt with default status:open
-			$quiz_attempt = $quiz_attempts->create();
+			$quiz_attempt_open_new = $quiz_attempts->create();
 
 			//second
-			// add all question of the quiz to the quiz_attempt with default status:open
-			$quiz = $this->findById($id);
+			// add all question_ids of the quiz to the quiz_attempt with default status:open
+			$quiz = $this->findById($quiz_id);
 			$quiz_questions = $quiz->quiz_questionable()->get();
 			foreach ($quiz_questions as $key => $value) {
-				$quiz_attempt->question_attempts()->create([
+				$quiz_attempt_open_new->question_attempts()->create([
 					'questionable_id'=> $value->questionable_id,
 					'questionable_type'=> $value->questionable_type
 					]
 				);
 			}
-			$quiz_attempt = $quiz_attempt->first();
+			$quiz_attempt_open = $quiz_attempt_open_new;
 
 		}
-		return $quiz_attempt;
+		return $quiz_attempt_open;
 	}
-    public function answerQuestion(int $sub_user_id,int $id,int $question_attempt_id ,$answer){
+    public function answerQuestion(int $sub_user_id,int $quiz_id,int $question_attempt_id ,$answer){
+
 		$sub_user =   Auth::user()->sub_user()->find($sub_user_id);
-		$sub_user_quiz = $sub_user->subUserQuizModel()->where('quiz_id',$id)->first();
+		$sub_user_quiz = $sub_user->subUserQuizModel()->where('quiz_id',$quiz_id)->first();
 		$quiz_attempt_open = $sub_user_quiz->quiz_attempts()->QuizAttemptOpen()->first();
 		
 		$question_attempt = $quiz_attempt_open->question_attempts()->QuestionAttemptOpen()->find($question_attempt_id);
@@ -85,11 +91,11 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 		return $question_attempt;
 	}
 
-	public function finishQuiz(int $sub_user_id,int $id){
+	public function finishQuiz(int $sub_user_id,int $quiz_id){
 	 	// 1- get the  child (first)
         $sub_user =   Auth::user()->sub_user()->find($sub_user_id);
         // 2- get the relation child to the quiz (first)
-        $sub_user_quiz = $sub_user->subUserQuizModel()->where('quiz_id',$id)->first();
+        $sub_user_quiz = $sub_user->subUserQuizModel()->where('quiz_id',$quiz_id)->first();
         // 3- get the quiz attempt (get)
         $quiz_attempts= $sub_user_quiz->quiz_attempts();
         // 4- get the open quiz attempt (first)
@@ -123,7 +129,7 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 
             //proces to get reword
             // 1-get the quiz  (first)
-            $quiz = $this->findById($id);
+            $quiz = $this->findById($quiz_id);
             // 2- chech if he not pass in the test before  && fit the minimum_requirements to pass
             if (!$sub_user_quiz->pass && $sub_user_quiz->score >= $quiz->minimum_requirements   ) {
                 // 3- pass in test
