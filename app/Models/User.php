@@ -59,11 +59,11 @@ class User extends Authenticatable {
     }
     public function perviewToken($token) : array {
         return [
-            'token_type'    => 'Bearer',
-            'fcm_token'     =>  $token->token->fcm_token,
-            'expires_in'    =>  $token->token->expires_at->diffForHumans(),
-            'refresh_token' =>  null,
-            'access_token'  =>  $token->accessToken,
+            'fcm_token'     => $token->token->fcm_token,
+            'token_type'    => 'Bearer'                                     ,
+            'expires_in'    => $token->token->expires_at                                         ,
+            'refresh_token' => null                                         ,
+            'access_token'  => $token->accessToken,
         ] ; 
     }
     protected static function boot()

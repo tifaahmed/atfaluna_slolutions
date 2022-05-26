@@ -23,7 +23,7 @@ export default class Quiz   extends Validation {
 
 		// points
 			this.required(RequestData.points,'points',this.PointsArray);
-			this.required(RequestData.points, ''
+			// this.required(RequestData.points, ''
 
 	}
 }

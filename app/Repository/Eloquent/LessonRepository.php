@@ -155,55 +155,112 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 		}
 	}
 	// 
-		public function attachLessson($sub_user_id,$lesson_id)  
-		{
-			$sub_user =   Auth::user()->sub_user()->find($sub_user_id);
-			$lesson   = $this->findById($lesson_id); 
 
-			$subUserLesson =   $sub_user->subUserLesson()->where('lesson_id',$lesson->id)->first();
+		public function handleLessson($sub_user_id,$lesson_id)  
+		{
+			$sub_user 	=   Auth::user()->sub_user()->find($sub_user_id);
+			
+			$lesson   		= 	$this			->findById($lesson_id); 
+			$sub_subject 	= 	$lesson			->subSubject()->first();
+			$subject 		= 	$sub_subject	->subject()->first();
+			$age_group 		=	$subject		->age_group()->first();
+
+			$subject_certificate = $subject->certificate()->first();
+			$age_group_certificate = $age_group->certificate()->first();
+
+
+			$subUserLesson =   $sub_user->subUserLesson()->where('lesson_id',$lesson_id)->first();
 
 			// if subUser did not watch the lesson before
 			if (!$subUserLesson) {
-				$this->registerAsWatchedLesson($sub_user,$lesson); // add row in subUserLessons table 
-				$this->gaveChildLessonPoints($sub_user,$lesson);// gave the child (lesson points) in sub_users table 
 
-				$this->attachCertificate($sub_user,$lesson);
+				// gave the child (lesson points) in sub_users table 
+				// run 1 F..
+				$this->gaveChildPoints($sub_user,$lesson->points);
+				
+				// add row in subUserCertificates table // attach & register points
+				// run 1 F..
+				$this->attachRegisterCertificate($sub_user,$lesson->points,$subject_certificate->id);
+				
+				// add row in subUserCertificates table // attach & register points
+				// run 1 F..
+				$this->attachRegisterCertificate($sub_user,$lesson->points,$age_group_certificate->id);
+				
+				// add row in subUserLessons table // attach & register points
+				// run 1 F..
+				$this->attachRegisterLessson($sub_user,$lesson->id,$lesson->points);
+				
+				// if sub Subject Condition is true run  attachRegisterSubSubject F..  (add sub subject row with point & gave sub subject point to the child)
+				// add the point in the subject & age_group Certification
+				// run 4 F..
+				$this->AttachRegisterSubSubjectCondition($sub_subject,$sub_user,$subject_certificate,$age_group_certificate);
+
+				// if SubjectCondition is true run RegisterSubject F.. (register point of subject to the child   & gave subject point to the child)
+				// add the point in the subject & age_group Certification
+				// run 4 F..
+				$this->RegisterSubjectCondition($subject,$sub_user,$subject_certificate,$age_group_certificate);
+
 			}
 
 		}
-
-		public function registerAsWatchedLesson($sub_user,$lesson)  
-		{
-			$subUserLesson = $sub_user->subUserLesson()->syncWithoutDetaching($lesson->id);
+		public function AttachRegisterSubSubjectCondition($sub_subject,$sub_user,$subject_certificate,$age_group_certificate) {
+			$sub_subject_lessons_ids = $sub_subject->lessons()->pluck('id');
+			$sub_subject_lessons_numbers = $sub_subject_lessons_ids->count();
+			$sub_subject_lessons_sub_user_number 	=   $sub_user->subUserLesson()->whereIn('lesson_id',$sub_subject_lessons_ids)->count();
+			if ($sub_subject_lessons_sub_user_number == $sub_subject_lessons_numbers) {
+				$this->gaveChildPoints($sub_user,$sub_subject->points);// gave the child (sub_subject points) in sub_users table 
+				$this->attachRegisterSubSubject($sub_user,$sub_subject->id,$sub_subject->points);// add row in sub_user_sub_subjects table // attach & register points
+				$this->attachRegisterCertificate($sub_user,$sub_subject->points,$subject_certificate->id);// add row in subUserCertificates table // attach & register points
+				$this->attachRegisterCertificate($sub_user,$sub_subject->points,$age_group_certificate->id);// add row in subUserCertificates table // attach & register points
+			}
 		}
-		
-		public function gaveChildLessonPoints($sub_user,$lesson) {
-			$sub_user->update(['points' => $sub_user->points + $lesson->points]);
+
+		public function RegisterSubjectCondition($subject,$sub_user,$subject_certificate,$age_group_certificate) {
+			$subject_sub_subject_ids = $subject->sub_subjects()->pluck('id');
+			$subject_sub_subjects_numbers = $subject_sub_subject_ids->count();
+			$subject_sub_subjects_sub_user_number 	=   $sub_user->subUserSubSubject()->whereIn('sub_subject_id',$subject_sub_subject_ids)->count();
+			if ($subject_sub_subjects_sub_user_number == $subject_sub_subjects_numbers) {
+				$this->gaveChildPoints($sub_user,$subject->points);// gave the child (subject points) in sub_users table 
+				$this->RegisterSubject($sub_user,$subject->id,$subject->points);// register points only
+				$this->attachRegisterCertificate($sub_user,$subject->points,$subject_certificate->id);// add row in subUserCertificates table // attach & register points
+				$this->attachRegisterCertificate($sub_user,$subject->points,$age_group_certificate->id);// add row in subUserCertificates table // attach & register points
+			}
+		}
+
+		public function gaveChildPoints($sub_user,$points) {
+			$sub_user->update(['points' => $sub_user->points + $points]);
 		} 
-
-	// 
-		public function attachCertificate($sub_user,$lesson)  
-		{
-			$subSubject = $lesson->subSubject()->first();
-			$subject = $subSubject->subject()->first();
-			$age_group = $subject->age_group()->first();
-
-			$certificate = $subject->certificate()->first();
-			$this->handelCertificate($sub_user,$certificate,$lesson);
-
-			$certificate = $age_group->certificate()->first();
-			$this->handelCertificate($sub_user,$certificate,$lesson);
+		public function attachRegisterLessson($sub_user,$lesson_id,$points){
+			$sub_user->subUserLesson()->syncWithoutDetaching($lesson_id);
+			$sub_user_lesson_model = $sub_user->subUserLessonModel()->where('lesson_id',$lesson_id)->first();
+			$sub_user_lesson_model->update(['points' =>  $points]);
 		}
+		public function attachRegisterCertificate($sub_user,$points,$certificate_id)  {
+			$sub_user->subUserCertificate()->syncWithoutDetaching($certificate_id);
+			$sub_user_certificate_model= $sub_user->subUserCertificateModel()->where('certificate_id',$certificate_id)->first();
+			$sub_user_certificate_model->update(['points' => $sub_user_certificate_model->points + $points  ]);
+		}
+
+		public function attachRegisterSubSubject($sub_user,$sub_subject_id,$points){
+			$sub_user->subUserSubSubject()->syncWithoutDetaching($sub_subject_id);
+			$sub_user_sub_subject_model = $sub_user->subUserSubSubjectModel()->where('sub_subject_id',$sub_subject_id)->first();
+			$sub_user_sub_subject_model->update(['points' =>  $points]);
+		}
+
+		public function RegisterSubject($sub_user,$subject_id,$points){
+			$sub_user_subject_model = $sub_user->subUserSubjectModel()->where('subject_id',$subject_id)->first();
+			$sub_user_subject_model->update(['points' =>  $points]);
+		}
+
 		
-		
-		public function handelCertificate($sub_user,$certificate,$lesson)  {
+		public function handelCertificate($sub_user,$certificate_id,$points)  {
 			$subUser_certificate = $this->getSubUserSubjectCertificate($sub_user,$certificate); // get sub_user_certificates table row 
 
 			// if subUser did not get this  Certificate before
 			if (!$subUser_certificate) {
 				$this->registerAsGivenCertificate($sub_user,$certificate); // add new row in sub_user_certificates table (syncWithoutDetaching) 
 			}
-			$this->addLessonPointToCertificate($sub_user,$certificate,$lesson);// update points in  sub_user_certificates row  
+			$this->addLessonPointToCertificate($sub_user,$certificate,$lesson->points);// update points in  sub_user_certificates row  
 		
 		}
 
@@ -211,22 +268,21 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 			return   $sub_user->subUserCertificateModel()->where('certificate_id',$certificate->id)->first();
 		}
 
-		public function registerAsGivenCertificate($sub_user,$subject_certificate)  {
+		public function registerAsGivenCertificate($sub_user,$subject_certificate)   {
 				$sub_user->subUserCertificate()->syncWithoutDetaching($subject_certificate->id);
 		}
 
-		public function addLessonPointToCertificate($sub_user,$subject_certificate,$lesson)  {
+		public function addLessonPointToCertificate($sub_user,$subject_certificate,$points) : void {
 			$subUser_certificate = $this->getSubUserSubjectCertificate($sub_user,$subject_certificate);  // get sub_user_certificates table row 
 			//add Lesson Point To that Certificate
-			$subUser_certificate->update(['points' => $subUser_certificate->points + $lesson->points  ]);
+			$subUser_certificate->update(['points' => $subUser_certificate->points + $points  ]);
 		}
+
 		public function attachSkills($skill_id,$id)
 		{
 			if($skill_id){
 				$result = $this->findById($id); 
-				return $result->skills()->sync($skill_id);
-			
-	
-}
+				return $result->skills()->sync($skill_id);	
+			}
 		}
 	}

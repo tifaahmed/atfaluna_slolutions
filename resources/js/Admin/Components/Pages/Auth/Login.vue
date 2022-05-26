@@ -48,7 +48,8 @@ window.Form = Form;
         data () { return {
             form: new Form({
               email: '',
-              password: ''
+              password: '',
+              fcm_token : 'jjjjjjjj'
             })
         }},  
 
@@ -67,17 +68,17 @@ window.Form = Form;
                     if(response.data.message == 'Successful') {
                         this.form.reset();
                         let user_data = response.data.data;
+                            console.log( user_data , '00000')
 
-                        let jwte =  jwt.login(user_data)  ;
+                        let jwt_ =  jwt.login(user_data)  ;
                         
 
-                        if ( jwt.Authorization !=null && !jwt.if_accessToken_expire ) {
-                            console.log( jwt.User )
+                        // if ( jwt_.Authorization !=null && !jwt_.if_accessToken_expire ) {
 
-                            RolePermision.SetUserRolesPermissions(jwt.User)
+                            // RolePermision.SetUserRolesPermissions(jwt_.User)
 
                             this.$router.push('/dashboard'); 
-                        }
+                        // }
 
                     }
 
