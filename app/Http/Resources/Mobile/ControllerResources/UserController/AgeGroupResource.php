@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Mobile;
+namespace App\Http\Resources\Mobile\ControllerResources\UserController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Mobile\Collections\SubjectCollection;
-use App\Http\Resources\Mobile\CertificateResource;
+
 use Illuminate\Support\Facades\Auth;
+
 class AgeGroupResource extends JsonResource
 {
     /**
@@ -24,8 +24,6 @@ class AgeGroupResource extends JsonResource
         $all += [ 'created_at'     =>  $this->created_at ?   $this->created_at->format('d/m/Y') : null ]  ;
         $all += [ 'updated_at'     =>  $this->updated_at ?   $this->updated_at->format('d/m/Y') : null ]  ;
         $all += [ 'deleted_at'     =>  $this->updated_at ?   $this->updated_at->format('d/m/Y') : null ]  ;
-        $all += [ 'subjects'     =>  new SubjectCollection ($this->subjects) ]  ;
-        $all += [ 'certifications'     =>  new CertificateResource ($this->certificate) ]  ;
 
         if (isset($request->sub_user_id) && $request->sub_user_id) {
             $sub_user       = Auth::user()->sub_user()->find($request->sub_user_id);

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\Achievement;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AchievementImageApiRequest extends FormRequest
+class AchievementImageUpdateApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

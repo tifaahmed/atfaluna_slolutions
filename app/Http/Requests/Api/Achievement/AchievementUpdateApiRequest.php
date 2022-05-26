@@ -5,7 +5,7 @@ namespace App\Http\Requests\Api\Achievement;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Language;
 
-class CertificateUpdateApiRequest extends FormRequest
+class AchievementUpdateApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

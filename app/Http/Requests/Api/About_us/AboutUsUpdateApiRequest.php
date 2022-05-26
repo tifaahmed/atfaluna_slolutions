@@ -25,13 +25,13 @@ class AboutUsUpdateApiRequest extends FormRequest
     {
 
         return [
-            'image_one'     =>  ['required','max:50000'] ,
-            'image_two'     =>  ['required' ,'max:50000' ],
-            'image_three'   =>  [ 'required','max:50000']  ,
-            'image_four'    =>  ['required' ,'max:50000'] ,
-            'title'         =>  ['required', 'required']  ,
-            'subject'       =>  ['required', 'required']  ,
-            'language'      =>  ['required','exists:languages,name']  ,
+            'image_one'     =>  ['required','max:50000','mimes:jpg,jpeg,webp,bmp,png'] ,
+            'image_two'     =>  ['required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png' ],
+            'image_three'   =>  [ 'required','max:50000','mimes:jpg,jpeg,webp,bmp,png']  ,
+            'image_four'    =>  ['required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ,
+            'title'         =>  ['required']  ,
+            'subject'       =>  ['required']  ,
+            'language'      =>  ['required'   , 'unique:about_us,language' ,'exists:languages,name']  ,
 
         ];
     }

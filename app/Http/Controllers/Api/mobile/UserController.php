@@ -11,7 +11,9 @@ use App\Http\Requests\Api\User\UserUpdateApiRequest  as modelUpdateRequest;
 use Illuminate\Http\Response ;
 
 use App\Http\Resources\Mobile\Collections\UserCollection as ModelCollection;
-use App\Http\Resources\Mobile\UserResource as ModelResource;
+use App\Http\Resources\Mobile\ControllerResources\UserController\UserResource as ModelResource;
+
+// use App\Http\Resources\Mobile\UserResource as ModelResource;
 
 use App\Repository\UserRepositoryInterface      as ModelInterface;
 use App\Repository\CountryRepositoryInterface   as CountryInterface;

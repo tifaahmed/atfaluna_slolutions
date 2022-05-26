@@ -12,7 +12,7 @@ use App\Http\Resources\Dashboard\Collections\Lesson\LessonCollection;
 use App\Http\Resources\Dashboard\Collections\SubjectCollection;
 use App\Http\Resources\Dashboard\Collections\SubSubject\SubSubjectCollection;
 use App\Http\Resources\Dashboard\Collections\AgeGroupCollection;
-use App\Http\Resources\Dashboard\Collections\AchievementCollection;
+use App\Http\Resources\Dashboard\Collections\Achievement\AchievementCollection;
 
 class SubUserResource extends JsonResource
 {
@@ -26,7 +26,6 @@ class SubUserResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-
             'name'          => $this->name,
             'age'           => $this->age,
             'gender'        => $this->gender,
