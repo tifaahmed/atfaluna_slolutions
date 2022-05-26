@@ -22,9 +22,8 @@ class AchievementResource extends JsonResource
             'name'          => $row ? $row->name:'',
             'description'   => $row ? $row->description:'',
             'language'      => $row ? $row->language:'',
-            'count'         => $this->count,
-            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
-            
+            'languages'      => $this->achievement_languages,
+
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

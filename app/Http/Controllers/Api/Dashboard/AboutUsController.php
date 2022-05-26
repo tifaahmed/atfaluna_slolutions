@@ -37,6 +37,22 @@ public function all(Request $request){
         );
     }
 }
+public function collection(Request $request){
+    try {
+        $model =  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10)   ;
+        if ( is_array($model) ) {
+            return new ModelCollection (  $model )  ;
+        }else{
+            return $model ;
+        }
+    } catch (\Exception $e) {
+        return $this -> MakeResponseErrors(  
+            [$e->getMessage()  ] ,
+            'Errors',
+            Response::HTTP_NOT_FOUND
+        );
+    }
+}
 
 public function store(modelInsertRequest $request) {
     try {
@@ -75,19 +91,6 @@ public function store(modelInsertRequest $request) {
         );
     }
 }
-
-public function collection(Request $request){
-    try {
-        return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
-    } catch (\Exception $e) {
-        return $this -> MakeResponseErrors(  
-            [$e->getMessage()  ] ,
-            'Errors',
-            Response::HTTP_NOT_FOUND
-        );
-    }
-}
-
 
 public function destroy($id) {
     try {

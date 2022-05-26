@@ -19,7 +19,7 @@ class RegisterApiRequest extends FormRequest {
             'password_confirmation'  =>  [ 'required' , 'min:6' , 'max:15' ],
 
             'avatar'    =>  [ 'sometimes', 'mimes:jpg,jpeg,png' , 'max:5000'] ,
-            'fcm_token'   => [ 'required'] ,
+            'fcm_token' => [ 'required'] ,
 
         ];
     }

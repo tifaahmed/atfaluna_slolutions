@@ -334,6 +334,20 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::get('/collection-trash'          ,   'AchievementController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'AchievementController@show_trash'          )->name('show_trash'),
             ]),
+             // AchievementImage
+            Route::name('achievementimage.')->prefix('/achievementimage')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'AchievementImageController@all'                 )    ->name('all'),
+                Route::post(''                          ,   'AchievementImageController@store'               )->name('store'),
+                Route::get('/{id}/show'                 ,   'AchievementImageController@show'                )->name('show'),
+                Route::get('/collection'                ,   'AchievementImageController@collection'          )->name('collection'),
+                Route::DELETE('/{id}'                   ,   'AchievementImageController@destroy'             )->name('destroy'),
+                Route::post('/{id}/update'              ,   'AchievementImageController@update'              )->name('update'),
+                Route::post('/{id}/restore'             ,   'AchievementImageController@restore'             )->name('restore'),
+
+                Route::DELETE('premanently-delete/{id}' ,   'AchievementImageController@premanently_delete'  )->name('premanently_delete'),
+                Route::get('/collection-trash'          ,   'AchievementImageController@collection_trash'    )->name('collection_trash'),
+                Route::get('/{id}/show-trash'           ,   'AchievementImageController@show_trash'          )->name('show_trash'),
+            ]),
         // QuizType
             Route::name('quiz-type.')->prefix('/quiz-type')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'QuizTypeController@all'                 )    ->name('all'),

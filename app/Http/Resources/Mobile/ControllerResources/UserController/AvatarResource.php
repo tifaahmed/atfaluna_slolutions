@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Dashboard;
+namespace App\Http\Resources\Mobile\ControllerResources\UserController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Basic;
 
-class SubUserAchievementResource extends JsonResource
+class AvatarResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,17 +16,19 @@ class SubUserAchievementResource extends JsonResource
      */
     public function toArray($request)
     {
+        $basic = Basic::find(1);
 
         return [
-            'id'                      => $this->id,
-            'sub_user_id'             => $this->sub_user_id,
-            'achievement_id'          => $this->achievement_id,
-            'points'                  => $this->points,
+            'id'            => $this->id,
+            'type'          =>  $this->type,
+            'price'         =>  $this->price,
+            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)),
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
         ];        
     }
 }
+//
