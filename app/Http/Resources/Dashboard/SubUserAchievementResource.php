@@ -20,6 +20,7 @@ class SubUserAchievementResource extends JsonResource
             'id'                      => $this->id,
             'sub_user_id'             => $this->sub_user_id,
             'achievement_id'          => $this->achievement_id,
+            'points'                  => $this->points,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

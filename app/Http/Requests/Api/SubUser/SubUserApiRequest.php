@@ -34,6 +34,14 @@ class SubUserApiRequest extends FormRequest
             'points'     =>  [ 'integer' ] ,
             'user_id'    =>  [ 'required','integer' ,'exists:users,id'] ,
             'avatar_ids' =>  [ 'sometimes','array','exists:avatars,id' ] ,
+            'certificate_ids' =>  [ 'sometimes','array','exists:certificates,id' ] ,
+            'subject_ids' =>  [ 'sometimes','array','exists:subjects,id' ] ,
+            'sub_subject_ids' =>  [ 'sometimes','array','exists:sub_subjects,id' ] ,
+            'lesson_ids' =>  [ 'sometimes','array','exists:lessons,id' ] ,
+            'quiz_ids' =>  [ 'sometimes','array','exists:quizzes,id' ] ,
+            'age_group_ids' =>  [ 'sometimes','array','exists:age_groups,id' ] ,
+            'accessory_ids' =>  [ 'sometimes','array','exists:accessorys,id' ] ,
+            'achievement_ids' =>  [ 'sometimes','array','exists:achievements,id' ] ,
 
         ];
     }

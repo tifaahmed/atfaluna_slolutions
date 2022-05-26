@@ -4,13 +4,13 @@ namespace App\Http\Resources\Mobile\ControllerResources\UserController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Resources\Mobile\CountryResource;
-use App\Http\Resources\Mobile\Collections\ControllerResources\UserController\SubUserCollection;
-
-use App\Models\Basic;
 
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+
+use App\Http\Resources\Mobile\ControllerResources\UserController\CountryResource;
+use App\Http\Resources\Mobile\Collections\ControllerResources\UserController\SubUserCollection;
+use App\Models\Basic;
 
 class UserResource extends JsonResource
 {

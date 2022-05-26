@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAchivementlanguagesTable extends Migration
+class CreateAchievementlanguagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAchivementlanguagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('achivement_languages', function (Blueprint $table) {
+        Schema::create('achievement_languages', function (Blueprint $table) {
             $table->increments('id');//[pk]
             $table->string('name');//[note: "ex (  arabic or english or italian -...etc)"]
             $table->string('description')->nullable();//[note: "ex (  arabic or english or italian -...etc)"]
@@ -29,6 +29,6 @@ class CreateAchivementlanguagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('achivement_languages');
+        Schema::dropIfExists('achievement_languages');
     }
 }

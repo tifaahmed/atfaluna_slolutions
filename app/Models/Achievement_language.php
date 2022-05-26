@@ -14,7 +14,7 @@ class Achievement_language extends Model
     public $guarded = ['id'];
 
     protected $table = 'achievement_languages';
-
+    
     protected $fillable = [
         'name',//required
         'description',//nullable

@@ -34,7 +34,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	public function attachAchievements($achievement_ids,$id)
 	{
 		if($achievement_ids){
-			$result = $this->findById($id); 
+			$result = Auth::user()->sub_user()->find($id); 
 			$result->subUserAchievement()->sync($achievement_ids);
 		}
 	}
