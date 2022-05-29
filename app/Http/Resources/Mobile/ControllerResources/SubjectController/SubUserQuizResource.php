@@ -3,9 +3,10 @@
 namespace App\Http\Resources\Mobile\ControllerResources\SubjectController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
 
-class SoundsResource extends JsonResource
+use App\Http\Resources\Mobile\Collections\ControllerResources\SubjectController\QuizAttemptCollection;
+
+class SubUserQuizResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,17 +16,18 @@ class SoundsResource extends JsonResource
      */
     public function toArray($request)
     {
-
+        $quiz_attempts = $this->quiz_attempts->where('status', 'closed')->sortBy('score');
         return [
-            'id'            => $this->id,
-            'name'          => $this->name,
-            'language'      => $this->language,
-            'record'        => Storage::disk('public')->exists($this->record) ? asset(Storage::url($this->record))  : null,
-
+            'id'          => $this->id,
+            'score'       => $this->score,
+            'pass'        => $this->pass,
+            'quiz_attempts'        => new QuizAttemptCollection ($quiz_attempts),
+            
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            // 'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            // 'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
         ];        
     }
 }
+//

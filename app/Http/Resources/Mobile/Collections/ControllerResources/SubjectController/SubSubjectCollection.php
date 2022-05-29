@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Mobile\Collections\ControllerResources\SubjectController\SubSubject;
+namespace App\Http\Resources\Mobile\Collections\ControllerResources\SubjectController;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 use App\Http\Resources\Mobile\ControllerResources\SubjectController\SubSubjectResource as ModelResource;
 
-class SubSubjectLanguagesCollection  extends ResourceCollection{
+class SubSubjectCollection  extends ResourceCollection{
 
     public function toArray( $request ) {
         return $this -> collection -> map( fn( $model ) => new ModelResource ( $model ) );
