@@ -12,8 +12,8 @@ use App\Http\Requests\Api\Hero\HeroApiRequest as modelInsertRequest;
 use App\Http\Requests\Api\Hero\HeroUpdateApiRequest as modelUpdateRequest;
 
 // Resources
-use App\Http\Resources\Mobile\Collections\Hero\HeroCollection as ModelCollection;
-use App\Http\Resources\Mobile\Hero\HeroResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\ControllerResources\HeroController\HeroCollection as ModelCollection;
+use App\Http\Resources\Mobile\ControllerResources\HeroController\HeroResource as ModelResource;
 
 // lInterfaces
 use App\Repository\HeroRepositoryInterface as ModelInterface;
