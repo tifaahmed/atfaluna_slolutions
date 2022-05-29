@@ -75,8 +75,11 @@ class SubUserController extends Controller
             // attach one age group and only one can be active
             $this->ModelRepository->attachAgeGroupByAge($sub_user->age,$sub_user->id) ;
 
-            return $sub_user;
-
+            return $this -> MakeResponseSuccessful( 
+                [$sub_user ],
+                'Successful',
+                Response::HTTP_OK
+            ) ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

@@ -18,6 +18,7 @@ class Sub_user_lesson extends Model
     protected $fillable = [
         'sub_user_id',
         'lesson_id',
+        'points'
     ];
     // relations
     public function lesson(){

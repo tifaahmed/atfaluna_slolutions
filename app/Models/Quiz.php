@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Quiz_language;            // HasMany
-use App\Models\Quiz_questionable;             // HasMany
+use App\Models\Quiz_questionable;        // HasMany
+use App\Models\Sub_user_quiz;            // HasMany
+
 use App\Models\Quiz_type;             // OneToMany
 use App\Models\Notification;
 
@@ -27,31 +29,7 @@ class Quiz extends Model
         'quizable_id',//   required , integer , exists / ex  lesson_id , sub subject_id  , subject_id 
         'quizable_type',// required / ex Lesson , Sub_subject , Subject
     ];
-    protected static function boot()
-    {
-        parent::boot();
 
-        // Quiz::creating(function ($model) {
-        //     if ($model->quizable_type == 'sub_subject') {
-        //         $model_name = 'App\Models\Sub_subject';
-        //     }else if ($model->quizable_type == 'subject'){
-        //         $model_name = 'App\Models\Subject';
-        //     }else if ($model->quizable_type == 'lesson'){
-        //         $model_name = 'App\Models\Lesson';
-        //     }
-        //     $model->quizable_type = $model_name;
-        // });
-        // Quiz::updating(function ($model) {
-        //     if ($model->quizable_type == 'sub_subject') {
-        //         $model_name = 'App\Models\Sub_subject';
-        //     }else if ($model->quizable_type == 'subject'){
-        //         $model_name = 'App\Models\Subject';
-        //     }else if ($model->quizable_type == 'lesson'){
-        //         $model_name = 'App\Models\Lesson';
-        //     }
-        //     $model->quizable_type = $model_name;
-        // });
-    }
     // relations
 
         // morphTo
@@ -69,7 +47,9 @@ class Quiz extends Model
             public function quiz_questionable(){
                 return $this->HasMany(Quiz_questionable::class,'quiz_id');
             }
-
+            public function sub_user_quizzes(){
+                return $this->HasMany(Sub_user_quiz::class);
+            }
         // morphedByMany    
             public function mcq_questions(){
                 return $this->morphedByMany(Mcq_question::class,'questionable','quiz_questionables');

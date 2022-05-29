@@ -1,15 +1,10 @@
 <?php
-
-namespace App\Http\Resources\Mobile\QuizAttempt;
+namespace App\Http\Resources\Mobile\ControllerResources\SubjectController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-// use App\Http\Resources\Mobile\Collections\McqQuestion\McqQuestionCollection;
-// use App\Http\Resources\Mobile\Collections\TrueFalseQuestion\TrueFalseQuestionCollection;
-use App\Http\Resources\Mobile\Collections\QuestionAttempt\QuestionAttemptCollection;
 
 use Illuminate\Support\Facades\Storage;
-use App\Models\Basic;
 
 class QuizAttemptResource extends JsonResource
 {
@@ -22,11 +17,16 @@ class QuizAttemptResource extends JsonResource
     public function toArray($request)
     {
 
+        // $sub_user_quiz = $this->sub_user_quiz;
+        // $sub_user_quiz =  Sub_user_quiz::where('id',3)->first();
+        $sub_user_quiz_array  =  $this->sub_user_quiz->quiz_attempts()->get()->pluck('id')->toArray();
+        $foundIndex = array_search($this->id, $sub_user_quiz_array);
+
         return [
-            'id'            => $this->id,
-            'score'        => $this->score,
-            'status'          => $this->status,
-            'question_attempts'          => new QuestionAttemptCollection( $this->question_attempts ),
+            'id'                => $this->id,
+            'quiz_attempts_count '             => $foundIndex+1 ,
+            'score'             => $this->score,
+            'status'            => $this->status,
         ];        
     }
 }

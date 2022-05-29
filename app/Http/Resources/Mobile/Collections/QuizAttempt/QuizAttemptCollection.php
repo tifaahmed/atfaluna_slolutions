@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Mobile\Collections\ControllerResources\UserController;
+namespace App\Http\Resources\Mobile\Collections\QuizAttempt;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-// use App\Http\Resources\Mobile\SubUserResource as ModelResource;
+use App\Http\Resources\Mobile\QuizAttempt\QuizAttemptResource as ModelResource;
 
-use App\Http\Resources\Mobile\ControllerResources\UserController\SubUserResource as ModelResource;
-
-
-class SubUserCollection extends ResourceCollection{
+class QuizAttemptCollection  extends ResourceCollection{
 
     public function toArray( $request ) {
         return $this -> collection -> map( fn( $model ) => new ModelResource ( $model ) );

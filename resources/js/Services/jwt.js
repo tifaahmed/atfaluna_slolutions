@@ -128,12 +128,13 @@ var jwt = /** @class */ (function () {
     };
     /* end destroy functions */
     jwt.setBearerTokenResponse = function (BearerToke) {
-        jwt.accessToken = BearerToke.access_token;
+        jwt.accessToken = BearerToke.accessToken;
         jwt.refreshToken = BearerToke.refresh_token;
         jwt.expiresIn = BearerToke.expires_in;
         jwt.tokenType = BearerToke.token_type;
     };
     jwt.login = function (AuthResponse) {
+        // return console.log(  AuthRsponse.Token.accessToken , 222333 );
         jwt.setBearerTokenResponse(AuthResponse.Token);
         jwt.User = AuthResponse.user;
     };
