@@ -33,8 +33,6 @@ class HeroResource extends JsonResource
             'languages'     => new HeroLanguagesCollection ( $this->hero_languages ),
             'lessons'        => new LessonCollection ($this->herolesson)  ,
 
-
-
         ];        
     }
 }
