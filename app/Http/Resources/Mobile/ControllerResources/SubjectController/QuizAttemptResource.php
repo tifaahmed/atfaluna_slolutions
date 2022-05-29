@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources\Mobile\ControllerResources\SubjectController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -17,6 +16,7 @@ class QuizAttemptResource extends JsonResource
      */
     public function toArray($request)
     {
+
         // $sub_user_quiz = $this->sub_user_quiz;
         // $sub_user_quiz =  Sub_user_quiz::where('id',3)->first();
         $sub_user_quiz_array  =  $this->sub_user_quiz->quiz_attempts()->get()->pluck('id')->toArray();

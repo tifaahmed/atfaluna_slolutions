@@ -46,7 +46,7 @@ class SubUserResource extends JsonResource
         //Certificate
             'certificates'  => new CertificateCollection ($this->subUserCertificate)  ,
         //Achievement
-            'achievements' => new AchievementCollection ($this->subUserAchievement)  ,
+            'achievements' => new AchievementCollection ($this->subUserAchievement)  ,            
         //AgeGroup
             'sub_user_age_group'  => new AgeGroupCollection ($this->subUserAgeGroup)  ,
 

@@ -18,6 +18,5 @@ class DatabaseSeeder extends Seeder {
         $this -> call ( CertificateSeeder::class );
         $this -> call ( AgeGroupSeeder::class );
         // $this -> call ( QuizSeeder::class );
-
     }
 }
