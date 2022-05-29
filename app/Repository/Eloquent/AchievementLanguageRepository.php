@@ -2,10 +2,10 @@
 
 namespace App\Repository\Eloquent;
 
-use App\Models\Sub_user_achievement as ModelName;
-use App\Repository\SubUserAchievementRepositoryInterface;
+use App\Models\Achievement_language as ModelName;
+use App\Repository\AchievementLanguageRepositoryInterface;
 
-class SubUserAchievementRepository extends BaseRepository implements SubUserAchievementRepositoryInterface
+class AchievementLanguageRepository extends BaseRepository implements AchievementLanguageRepositoryInterface
 {
 
 	/**
@@ -22,5 +22,6 @@ class SubUserAchievementRepository extends BaseRepository implements SubUserAchi
 		$this->model =  $model;
 	}
 
+	
 }
 

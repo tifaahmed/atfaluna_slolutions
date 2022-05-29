@@ -82,6 +82,8 @@ namespace App\Providers;
     use App\Repository\Eloquent\QuizTypeRepository;
 
     use App\Repository\Eloquent\AchievementRepository;
+    use App\Repository\Eloquent\AchievementLanguageRepository;
+    use App\Repository\Eloquent\AchievementImageRepository;
     use App\Repository\Eloquent\SubUserAchievementRepository;
 
     use App\Repository\Eloquent\SoundsRepository;
@@ -183,6 +185,8 @@ namespace App\Providers;
 
     use App\Repository\SubUserAchievementRepositoryInterface;
     use App\Repository\AchievementRepositoryInterface;
+    use App\Repository\AchievementLanguageRepositoryInterface;
+    use App\Repository\AchievementImageRepositoryInterface;
 
     use App\Repository\SoundsRepositoryInterface;
     use App\Repository\SoundableRepositoryInterface;
@@ -292,6 +296,8 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(SubUserAchievementRepositoryInterface::class,SubUserAchievementRepository::class);
         $this->app->bind(AchievementRepositoryInterface::class,AchievementRepository::class);
+        $this->app->bind(AchievementLanguageRepositoryInterface::class,AchievementLanguageRepository::class);
+        $this->app->bind(AchievementImageRepositoryInterface::class,AchievementImageRepository::class);
 
         $this->app->bind(QuestionTagRepositoryInterface::class,QuestionTagRepository::class);
 

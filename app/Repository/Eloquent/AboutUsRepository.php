@@ -25,8 +25,10 @@ class AboutUsRepository extends BaseRepository implements AboutUsRepositoryInter
 	public function filterFirst($language)  
     {	
 		$result=$this->model->Localization()->first();
-	return $result;
-		}
+		return $result;
 	}
-
-
+	public function filterPaginate($itemsNumber)  
+    {
+			return $this->collection( $itemsNumber)  ;
+		}
+    }

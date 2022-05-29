@@ -3,7 +3,6 @@
 namespace App\Http\Resources\Dashboard\Lesson;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Dashboard\SubjectResource;
 use App\Http\Resources\Dashboard\LessonTypeResource;
 
 use App\Http\Resources\Dashboard\Collections\Lesson\LessonLanguagesCollection;

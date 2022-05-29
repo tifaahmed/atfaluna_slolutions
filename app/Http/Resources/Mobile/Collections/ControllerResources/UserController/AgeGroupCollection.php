@@ -4,12 +4,9 @@ namespace App\Http\Resources\Mobile\Collections\ControllerResources\UserControll
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-// use App\Http\Resources\Mobile\SubUserResource as ModelResource;
+use App\Http\Resources\Mobile\ControllerResources\UserController\AgeGroupResource as ModelResource;
 
-use App\Http\Resources\Mobile\ControllerResources\UserController\SubUserResource as ModelResource;
-
-
-class SubUserCollection extends ResourceCollection{
+class AgeGroupCollection  extends ResourceCollection{
 
     public function toArray( $request ) {
         return $this -> collection -> map( fn( $model ) => new ModelResource ( $model ) );
@@ -23,3 +20,4 @@ class SubUserCollection extends ResourceCollection{
         ];
     }
 }
+
