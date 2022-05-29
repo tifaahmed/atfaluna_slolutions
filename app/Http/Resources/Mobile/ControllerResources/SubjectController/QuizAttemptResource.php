@@ -1,12 +1,9 @@
 <?php
 
-namespace App\Http\Resources\Mobile\QuizAttempt;
+namespace App\Http\Resources\Mobile\ControllerResources\SubjectController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-// use App\Http\Resources\Mobile\Collections\McqQuestion\McqQuestionCollection;
-// use App\Http\Resources\Mobile\Collections\TrueFalseQuestion\TrueFalseQuestionCollection;
-use App\Http\Resources\Mobile\Collections\QuestionAttempt\QuestionAttemptCollection;
 
 use Illuminate\Support\Facades\Storage;
 
@@ -30,7 +27,6 @@ class QuizAttemptResource extends JsonResource
             'quiz_attempts_count '             => $foundIndex+1 ,
             'score'             => $this->score,
             'status'            => $this->status,
-            'question_attempts' => new QuestionAttemptCollection( $this->question_attempts ),
         ];        
     }
 }

@@ -32,8 +32,8 @@ class SubSubjectResource extends JsonResource
             'image_two'     => ( $row && $row->image_two && Storage::disk('public')->exists($row->image_two) )? asset(Storage::url($row->image_two))  : asset(Storage::url($basic->item)),
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
+            // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            // 'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
             // 'subject'       => $this->subject   ,
             'lessons'       => new LessonCollection ($this->lessons),

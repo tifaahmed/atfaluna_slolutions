@@ -34,8 +34,8 @@ class LessonResource extends JsonResource
             'points'        =>  $this->points,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
+            // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            // 'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
             'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
             // 'sub_subject'   => $this->subSubject   ,
