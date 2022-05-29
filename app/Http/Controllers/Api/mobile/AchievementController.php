@@ -14,8 +14,8 @@ use App\Http\Requests\Api\Achievement\AchievementUpdateApiRequest as modelUpdate
 use App\Http\Requests\Api\Achievement\MobileAchievementApiRequest;
 
 // Resources
-use App\Http\Resources\Mobile\Collections\AchievementCollection as ModelCollection;
-use App\Http\Resources\Mobile\AchievementResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\Achievement\AchievementCollection as ModelCollection;
+use App\Http\Resources\Mobile\Achievement\AchievementResource as ModelResource;
 
 // lInterfaces
 use App\Repository\AchievementRepositoryInterface as ModelInterface;
@@ -60,24 +60,6 @@ class AchievementController extends Controller
             // }
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-    public function  detach(MobileAchievementApiRequest $request){
-        try {
-            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
-            $model->subUserAchievement()->detach($request->achievement_ids);
-
-            return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($request->achievement_ids) )  ],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
