@@ -14,7 +14,6 @@ use App\Http\Resources\Mobile\ControllerResources\UserController\UserResource as
 
 
 use App\Http\Resources\Mobile\Collections\UserCollection as ModelCollection;
-use App\Http\Resources\Mobile\ControllerResources\UserController\UserResource as ModelResource;
 
 // use App\Http\Resources\Mobile\UserResource as ModelResource;
 
