@@ -31,7 +31,7 @@ class QuizResource extends JsonResource
             'points'                => $this->points,
             'minimum_requirements'  => $this->minimum_requirements,
             
-            'sub_user_quizzes'      => new SubUserQuizCollection($sub_user_quizzes),
+            'sub_user_quizzes'      => $sub_user_quizzes ? new SubUserQuizCollection($sub_user_quizzes) : [] ,
 
             
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,

@@ -32,7 +32,11 @@ class SubscriptionRepository extends BaseRepository implements SubscriptionRepos
 		
 		$user 	= Auth::user();   
 		$user_created_at = new Carbon ($user->created_at);   
-		$end_date =  $model->price <= 0 ? $user_created_at->addMonths($model->month_number) :  Carbon::now()->addMonths($model->month_number) ;
+		$end_of_trial_period = $user_created_at ->addMonths($model->month_number);  
+		$end_of_paied_subscription =Carbon::now()->addMonths($model->month_number);  
+		$date_now =Carbon::now();  
+
+		$end_date =  $model->price <= 0 ? $end_of_trial_period :  $end_of_paied_subscription ;
 		
 		$sub_user   =   $user->sub_user()->find($sub_user_id);
 		$sub_user_subscription = $sub_user->SubUserSubscriptions()->first();
@@ -40,7 +44,7 @@ class SubscriptionRepository extends BaseRepository implements SubscriptionRepos
 
 		// ex/ old regestred user
 		// if its free subscription && user acount creation date is   older than the subscription end date will be 
-		if ($model->price <= 0  && Carbon::now() >= $user_created_at ->addMonths($model->month_number)   ) {
+		if ($model->price <= 0  && $date_now >= $end_of_trial_period   ) {
 			return abort( Response::HTTP_BAD_REQUEST , 'trial period has ended');
 		}  
 
