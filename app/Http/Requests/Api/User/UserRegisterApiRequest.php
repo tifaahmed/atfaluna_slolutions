@@ -33,7 +33,7 @@ class UserRegisterApiRequest extends FormRequest
 
                 'avatar'    =>  [ 'sometimes', 'mimes:jpg,jpeg,png' , 'max:5000'] ,
 
-                'birthdate '=>  [  'date' ] ,
+                'birthdate'=>  [  'date' ] ,
                 'country_id'=>  [  'required' , 'integer','exists:countries,id' ] ,
         ];
     }

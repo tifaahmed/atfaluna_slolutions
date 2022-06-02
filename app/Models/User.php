@@ -21,6 +21,7 @@ use App\Models\Country;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\NewItemNotification;
+use App\Notifications\ActiveEmailNotification;
 
 use DB ;
 use Carbon\Carbon;
@@ -53,6 +54,7 @@ class User extends Authenticatable {
         'login_type',
         'latitude','longitude',
         'pin_code',
+        'active'
     ];
     public function getToken( )  {
         return $token = $this -> createToken( $this->email )  ;
@@ -86,6 +88,13 @@ class User extends Authenticatable {
 
         $this->notify(new ResetPasswordNotification($data));
     }
+    public function sendActiveEmailNotification()
+    {
+        $data = ['pin_code' => $this->pin_code];
+
+        $this->notify(new ActiveEmailNotification($data));
+    }
+
     public function sendNewItemNotification($notification_data)
     {
         $all_users = $this->all();

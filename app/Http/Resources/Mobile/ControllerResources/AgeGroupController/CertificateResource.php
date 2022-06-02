@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Mobile;
+namespace App\Http\Resources\Mobile\ControllerResources\AgeGroupController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
@@ -43,20 +43,20 @@ class CertificateResource extends JsonResource
             // 
             $achive_level= 0;
             $achive_points= 0;
-            $end_point= 0;
+            $end_point = $this->min_point;
             $image= Storage::disk('public')->exists($this->image_one)  ? asset(Storage::url($this->image_one))     :  asset(Storage::url($basic->item)) ; ; 
             
             if ($subUserCertificate && $subUserCertificate->points ) {
 
                 if( $subUserCertificate->points >= $this -> min_point && $subUserCertificate->points < $this -> max_point){
                     $achive_level   = 1 ;
-                    $end_point      = $this->min_point ;
                     $image = Storage::disk('public')->exists($this->image_two)  ? asset(Storage::url($this->image_two))     :  asset(Storage::url($basic->item)) ;
                 }else if( $subUserCertificate->points >= $this -> max_point ){
                     $achive_level = 2 ;
                     $end_point      = $this->max_point ;
                     $image = Storage::disk('public')->exists($this->image_three) ? asset(Storage::url($this->image_three))  :  asset(Storage::url($basic->item)) ;
                 }
+                
                 $achive_points= $subUserCertificate->points ;
 
             }

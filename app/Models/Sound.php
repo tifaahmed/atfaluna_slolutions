@@ -26,6 +26,6 @@ class Sound extends Model
     
     public function subject()
     {
-        return $this->morphedByMany(Subject::class, 'soundables','soundables');
+        return $this->morphedByMany(Subject::class, 'soundable','soundables');
     }
 }

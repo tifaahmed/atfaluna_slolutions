@@ -43,6 +43,8 @@ class SubUserResource extends JsonResource
             // 'user'         => $this->user,
 
             'avatar'        => new AvatarResource ($this->avatar)  ,
+            'active_age_group'  => $this->ActiveAgeGroup() ? $this->ActiveAgeGroup()->first()  : null ,
+
             // 'age_groups'         => new AgeGroupCollection  ($this->subUserAgeGroup ) ,
             // 'active_age_group'  => $this->ActiveAgeGroup() ? $this->ActiveAgeGroup()->first()  : null ,
             // 'active_subjects_from_active_age_group'  =>  $this->ActiveSubjectsFromActiveAgeGroup() ? $this->ActiveSubjectsFromActiveAgeGroup()->get() : []   ,

@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Resources\Mobile;
+namespace App\Http\Resources\Mobile\ControllerResources\AgeGroupController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Mobile\Collections\SubjectCollection;
-use App\Http\Resources\Mobile\CertificateResource;
+use App\Http\Resources\Mobile\Collections\ControllerResources\AgeGroupController\SubjectCollection;
+use App\Http\Resources\Mobile\ControllerResources\AgeGroupController\CertificateResource;
+
 use Illuminate\Support\Facades\Auth;
+
 class AgeGroupResource extends JsonResource
 {
     /**
@@ -21,9 +23,9 @@ class AgeGroupResource extends JsonResource
         $all=[];
         $all += [ 'id'     =>  $this->id ]  ;
         $all += [ 'name'     =>  $row ? $row->name:'' ]  ;
-        $all += [ 'created_at'     =>  $this->created_at ?   $this->created_at->format('d/m/Y') : null ]  ;
-        $all += [ 'updated_at'     =>  $this->updated_at ?   $this->updated_at->format('d/m/Y') : null ]  ;
-        $all += [ 'deleted_at'     =>  $this->updated_at ?   $this->updated_at->format('d/m/Y') : null ]  ;
+        // $all += [ 'created_at'     =>  $this->created_at ?   $this->created_at->format('d/m/Y') : null ]  ;
+        // $all += [ 'updated_at'     =>  $this->updated_at ?   $this->updated_at->format('d/m/Y') : null ]  ;
+        // $all += [ 'deleted_at'     =>  $this->updated_at ?   $this->updated_at->format('d/m/Y') : null ]  ;
         $all += [ 'subjects'     =>  new SubjectCollection ($this->subjects) ]  ;
         $all += [ 'certification'     =>  new CertificateResource ($this->certificate) ]  ;
 

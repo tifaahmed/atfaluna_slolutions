@@ -209,7 +209,7 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
 
 
     
-    Route::group(['middleware' => ['auth:api','IfAuthChild']], fn ( ) : array => [
+    Route::group(['middleware' => ['auth:api','IfActiveUser','IfAuthChild']], fn ( ) : array => [
 
         // subscription
         Route::name('subscription.')->prefix('/subscription')->group( fn ( ) : array => [
@@ -235,7 +235,7 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
         ]),
     ]),
 
-    Route::group(['middleware' => ['auth:api','IfAuthChild','IfSubscription']], fn ( ) : array => [
+    Route::group(['middleware' => ['auth:api','IfActiveUser','IfAuthChild','IfSubscription']], fn ( ) : array => [
         // User_package
         Route::name('user-package.')->prefix('/user-package')->group( fn ( ) : array => [
             Route::get('/'                          ,   'UserPackageController@all'                 )->name('all'),
@@ -370,7 +370,7 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
         ]),
     ]),
 
-    Route::group(['middleware' => ['auth:api','IfAuthChild','IfSubscription','IfPlayTime']], fn ( ) : array => [
+    Route::group(['middleware' => ['auth:api','IfActiveUser','IfAuthChild','IfSubscription','IfPlayTime']], fn ( ) : array => [
         //Subject
         Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
             Route::get('/'                          ,   'SubjectController@all'                 )->name('all'),

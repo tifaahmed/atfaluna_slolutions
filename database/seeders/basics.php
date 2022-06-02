@@ -16,12 +16,14 @@ class basics extends Seeder
      */
     public function run()
     {
-        $folder =  storage_path('app/public/basics');
+        $folder =  storage_path('app/public/basics/');
         if (!file_exists($folder)) {
             File::makeDirectory($folder);
         }
 
-        File::copy(public_path('images/logo.png'),$folder.'\logo.png');
+        File::copy(public_path('images/logo.png'),$folder.'logo.png');
+
+        Basic::truncate(); 
 
         Basic::create( [
             'id' => '1',
