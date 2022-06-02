@@ -7,7 +7,6 @@ use App\Repository\SubjectRepositoryInterface;
 use App\Models\Quiz;             // morphedByMany
 use Illuminate\Http\Response ;
 use App\Models\Certificate;             // morphedByMany
-use App\Models\Sound;             // morphedByMany
 
 use Illuminate\Support\Facades\Auth;
 
@@ -89,13 +88,6 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 		// }
 	}
 
-	public function attachSoundas($sound_id,$id)
-	{
-		if($sound_id){
-			$result = $this->findById($id); 
-			return $result->sounds()->sync($sound_id);
-		}
-	}
 	public function attachSkills($skill_id,$id)
 	{
 		if($skill_id){

@@ -16,12 +16,12 @@ class CountrySeeder extends Seeder
      */
     public function run()
     {
-        $folder =  storage_path('app/public/country');
+        $folder =  storage_path('app/public/country/');
         if (!file_exists($folder)) {
             File::makeDirectory($folder);
         }
         
-        File::copy(public_path('images/eg.png'),$folder.'\eg.png');
+        File::copy(public_path('images/eg.png'),$folder.'eg.png');
 
         $admin= Country::create( [
             'name' => 'egypt',

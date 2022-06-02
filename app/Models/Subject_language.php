@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Subject;
 use Illuminate\Support\Facades\App;
-
+use App\Models\Sound;
 
 class Subject_language extends Model
 {
@@ -15,7 +15,6 @@ class Subject_language extends Model
     public $guarded = ['id'];
 
     protected $table = 'subject_languages';
-
 
     protected $fillable = [
         'name',//required
@@ -30,8 +29,12 @@ class Subject_language extends Model
     public function scopeRelatedLanguage($query,$id){
         return $query->where('subject_id', $id);
     }
-
     public function scopeLocalization($query){
         return $query->where('language', App::getLocale());
     }
+    // morph
+    public function sounds(){
+        return $this->morphToMany(Sound::class, 'soundable','soundables');
+    }
+
 }

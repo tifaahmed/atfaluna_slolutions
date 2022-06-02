@@ -62,10 +62,6 @@ class Subject extends Model
         public function notification(){
             return $this->morphOne(Notification::class, 'notificable');
         }
-        // morph
-        public function sounds(){
-            return $this->morphToMany(Sound::class, 'soundable','soundables');
-        }
         public function skills(){
             return $this->morphToMany(Skill::class, 'skillable');
         }

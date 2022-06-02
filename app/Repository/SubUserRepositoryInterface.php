@@ -21,5 +21,7 @@ interface SubUserRepositoryInterface extends EloquentRepositoryInterface{
     public function attachLessons($lesson_ids,$id);
                    //AgeGroup
     public function attachAgeGroups($age_group_ids,$id); 
+                   //Activity
+    public function attachActivities($activity_ids,$id);
 
 }

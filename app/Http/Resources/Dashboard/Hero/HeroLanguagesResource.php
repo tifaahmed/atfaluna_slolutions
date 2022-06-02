@@ -17,9 +17,9 @@ class HeroLanguagesResource extends JsonResource
     {
 
         return [
-            'image'             => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
+            'image'             => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
             'title'             => $this->title,
-            'description'        => $this->description,
+            'description'       => $this->description,
             'language'          => $this->language,
         ];        
     }

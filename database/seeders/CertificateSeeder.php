@@ -17,14 +17,14 @@ class CertificateSeeder extends Seeder
     {
 
         for ($i=0; $i < 6; $i++) { 
-            $folder =  storage_path('app/public/certificates');
+            $folder =  storage_path('app/public/certificates/');
             if (!file_exists($folder)) {
                 File::makeDirectory($folder);
             }
 
-            File::copy(public_path('images/age1.jpg'),$folder.'\age1.jpg');
-            File::copy(public_path('images/age2.jpg'),$folder.'\age2.jpg');
-            File::copy(public_path('images/age3.png'),$folder.'\age3.png');
+            File::copy(public_path('images/age1.jpg'),$folder.'age1.jpg');
+            File::copy(public_path('images/age2.jpg'),$folder.'age2.jpg');
+            File::copy(public_path('images/age3.png'),$folder.'age3.png');
             
             $certificate= Certificate::create( [
                 'id' => '1',

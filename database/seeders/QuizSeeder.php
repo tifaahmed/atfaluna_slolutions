@@ -17,12 +17,12 @@ class QuizSeeder extends Seeder
     {
         for ($i=0; $i < 6; $i++) { 
 
-        $folder =  storage_path('app/public/quiz');
+        $folder =  storage_path('app/public/quiz/');
         if (!file_exists($folder)) {
             File::makeDirectory($folder);
         }
-        File::copy(public_path('images/quiz1.png'),$folder.'\quiz1.png');
-        File::copy(public_path('images/quiz2.png'),$folder.'\quiz2.png');
+        File::copy(public_path('images/quiz1.png'),$folder.'quiz1.png');
+        File::copy(public_path('images/quiz2.png'),$folder.'quiz2.png');
 
         $quiz= Quiz::create( [
             'id' => '1',
