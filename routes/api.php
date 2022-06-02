@@ -191,7 +191,12 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
 
     Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
         Route::post( 'auth/update-password' ,  'authController@update_password' )  -> name( 'update_password' ),
-
+        // user
+        Route::name('user.')->prefix('/user')->group( fn ( ) : array => [
+            Route::get('/show'                 ,   'UserController@show'                )->name('show'),
+            Route::post('/update'              ,   'UserController@update'              )->name('update'),
+            Route::post('/apdate-password'     ,   'UserController@apdatePassword'      )->name('apdate_password'),
+        ]), 
         //Sub_user
         Route::name('sub-user.')->prefix('/sub-user')->group( fn ( ) : array => [
             Route::get('/'              ,   'SubUserController@all'                     )->name('all'),
@@ -285,14 +290,6 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
                 Route::post( '/logout' ,  'authController@logout' )  -> name( 'logout' ) ,
             ]),
-        // user
-        Route::name('user.')->prefix('/user')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'UserController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'UserController@show'                )->name('show'),
-            Route::get('/collection'                ,   'UserController@collection'          )->name('collection'),
-            Route::post('/{id}/update'              ,   'UserController@update'              )->name('update'),
-        ]), 
-
         // Avatar
         Route::name('avatar.')->prefix('/avatar')->group( fn ( ) : array => [
             Route::get('/'              ,   'AvatarController@all'                 )->name('all'),

@@ -4,9 +4,7 @@ namespace App\Http\Resources\Mobile\ControllerResources\SubjectController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-use App\Http\Resources\Mobile\Collections\McqQuestion\McqQuestionCollection;
-use App\Http\Resources\Mobile\Collections\TrueFalseQuestion\TrueFalseQuestionCollection;
-
+use App\Http\Resources\Mobile\Collections\ControllerResources\SubjectController\SubUserQuizCollection;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Basic;
 
@@ -22,20 +20,22 @@ class QuizResource extends JsonResource
     {
         $row=$this->quiz_languages()->Localization()->RelatedLanguage($this->id)->first();
         $basic = Basic::find(1); //logo
-
+        $sub_user_quizzes = isset($request->sub_user_id) ? $this->sub_user_quizzes->where('sub_user_id',$request->sub_user_id)->where('pass',1) : null ;
+        
         return [
             'id'            => $this->id,
 
-            'image_one'          =>( $row && $row->image_one && Storage::disk('public')->exists($row->image_one) )? asset(Storage::url($row->image_one))  : asset(Storage::url($basic->item)),
-            'image_two'          =>( $row && $row->image_two && Storage::disk('public')->exists($row->image_two) )? asset(Storage::url($row->image_two))  : asset(Storage::url($basic->item)),
-            'name'               => $row ? $row->name:'',
-            'points'             => $this->points,
+            'image_one'             =>( $row && $row->image_one && Storage::disk('public')->exists($row->image_one) )? asset(Storage::url($row->image_one))  : asset(Storage::url($basic->item)),
+            'image_two'             =>( $row && $row->image_two && Storage::disk('public')->exists($row->image_two) )? asset(Storage::url($row->image_two))  : asset(Storage::url($basic->item)),
+            'name'                  => $row ? $row->name:'',
+            'points'                => $this->points,
+            'minimum_requirements'  => $this->minimum_requirements,
+            
+            'sub_user_quizzes'      => new SubUserQuizCollection($sub_user_quizzes),
 
-            // 'mcq_questions'          => new McqQuestionCollection ($this->mcq_questions)  ,
-            // 'true_false_questions'   => new TrueFalseQuestionCollection ($this->true_false_questions)  ,
-
+            
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
 
         ];        
     }

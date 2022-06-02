@@ -11,6 +11,7 @@ use Illuminate\Http\Response ;
 use App\Http\Resources\Mobile\Collections\Quiz\QuizCollection as ModelCollection;
 use App\Http\Resources\Mobile\Quiz\QuizResource as ModelResource;
 use App\Http\Resources\Mobile\QuizAttempt\QuizAttemptResource ;
+use App\Http\Resources\Mobile\QuestionAttempt\QuestionAttemptResource ;
 
 
 // lInterfaces
@@ -89,14 +90,14 @@ class QuizController extends Controller
 
     public function answerQuestion(MobileAnswerQuizApiRequest $request){
         try {
-            $question_attempt = $this->ModelRepository->answerQuestion(
+            $answered_question = $this->ModelRepository->answerQuestion(
                  $request->sub_user_id,      
                  $request->quiz_id,
                  $request->question_attempt_id,
                  $request->answer
             );
             return $this -> MakeResponseSuccessful( 
-                [ $question_attempt   ],
+                [ new QuestionAttemptResource ($answered_question)   ],
                 'Successful',
                 Response::HTTP_OK
             ) ;
@@ -111,7 +112,12 @@ class QuizController extends Controller
 
     public function finishQuiz(MobileQuizApiRequest $request){
         try {
-            return $this->ModelRepository->finishQuiz($request->sub_user_id,$request->quiz_id);
+            $quiz_attempt = $this->ModelRepository->finishQuiz($request->sub_user_id,$request->quiz_id);
+            return $this -> MakeResponseSuccessful( 
+                [  new QuizAttemptResource ($quiz_attempt )  ],
+                'Successful',
+                Response::HTTP_OK
+            ) ; 
         } catch (\Exception $e) {
         return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

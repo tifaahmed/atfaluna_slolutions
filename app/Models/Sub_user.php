@@ -21,6 +21,9 @@ use App\Models\Conversation;
 use App\Models\Friend;
 use App\Models\Activity;
 use App\Models\Sub_user_subscription;
+use App\Models\Sub_user_lesson;
+use App\Models\Sub_user_sub_subject;
+use App\Models\Sub_user_subject;
 
 
 class Sub_user extends Model
@@ -57,14 +60,22 @@ class Sub_user extends Model
         public function subUserAchievement(){
             return $this->belongsToMany(Achievement::class, 'sub_user_achievements', 'sub_user_id', 'achievement_id');
         }
+<<<<<<< HEAD
     //Activity
         public function subUserActivity(){
             return $this->belongsToMany(Activity::class, 'sub_user_activities', 'sub_user_id', 'activity_id');
         }
     //Lesson
+=======
+
+>>>>>>> eb8905d6bed122634ee6b942b42687467ffee13d
         public function subUserLesson(){
             return $this->belongsToMany(Lesson::class, 'sub_user_lessons', 'sub_user_id', 'lesson_id');
         }
+        public function subUserLessonModel(){
+            return $this->hasMany(Sub_user_lesson::class);
+        }
+
         public function playTime(){
             return $this->hasMany(Play_time::class);
         }
@@ -95,10 +106,17 @@ class Sub_user extends Model
         public function subUserSubject(){
             return $this->belongsToMany(Subject::class, 'sub_user_subjects', 'sub_user_id', 'subject_id');
         }
+        public function subUserSubjectModel(){
+            return $this->hasMany(Sub_user_subject::class);
+        }
         //sub_Subject
         public function subUserSubSubject(){
             return $this->belongsToMany(Sub_subject::class, 'sub_user_sub_subjects', 'sub_user_id', 'sub_subject_id');
         }
+        public function subUserSubSubjectModel(){
+            return $this->hasMany(Sub_user_sub_subject::class);
+        }
+
         public function ActiveSubject(){
             if ($this->subUserSubject()) {
                 return $this->subUserSubject()->wherePivot('active' ,1);

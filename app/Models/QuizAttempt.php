@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\QuestionAttempt;
+use App\Models\Sub_user_quiz;
 
 class QuizAttempt extends Model
 {
@@ -23,7 +24,9 @@ class QuizAttempt extends Model
     public function scopeQuizAttemptOpen($query){
         return $query->where('status','open');
     }
-
+    public function sub_user_quiz(){
+        return $this->belongsTo(Sub_user_quiz::class,'sub_user_quiz_id');
+    }
     public function question_attempts(){
         return $this->HasMany(QuestionAttempt::class);
     }

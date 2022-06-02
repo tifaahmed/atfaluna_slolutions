@@ -19,8 +19,7 @@ use App\Http\Resources\Mobile\SubscriptionResource as ModelResource;
 // lInterfaces
 use App\Repository\SubscriptionRepositoryInterface as ModelInterface;
 use App\Repository\SubscriptionLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages
-use Carbon\Carbon;
-use Auth;
+
 class SubscriptionController extends Controller
 {
     private $Repository;
@@ -73,50 +72,18 @@ class SubscriptionController extends Controller
     // relation
     public function attach(Request $request){
         try {
-
-            $model  =   $this->ModelRepository->findById($request->subscription_id) ;  
-
-            $auth_created_at = new Carbon (Auth::user()->created_at);   
-            if ($model->price <= 0  && Carbon::now() >= $auth_created_at ->addMonths($model->month_number)   ) {
-                return $this -> MakeResponseSuccessful( 
-                    ['trial period has ended'],
-                    'Errors'               ,
-                    Response::HTTP_BAD_REQUEST
-                ) ;
-            }  
-
-            $sub_user   =   Auth::user()->sub_user()->find($request->sub_user_id);
-            $sub_user_subscription = $sub_user->SubUserSubscriptions()->first();
-            if ($sub_user_subscription &&  Carbon::now() > $sub_user_subscription->start &&  Carbon::now() < $sub_user_subscription->end) {
-                return $this -> MakeResponseSuccessful( 
-                    ['child have subscribed before'],
-                    'Errors'               ,
-                    Response::HTTP_BAD_REQUEST
-                ) ;
-            }else{
-                $sub_user_subscription = $sub_user->SubUserSubscriptions()->delete();
-                $start  =   Carbon::now();
-                $end    =   Carbon::now()->addMonths($model->month_number) ;
-                $sub_user_subscription = $sub_user->SubUserSubscriptions()->create([
-                    'start' => $start ,
-                    'end' => $end ,
-                    'price' => $model->price ,
-                ]);
-            }    
-
-
+            $sub_user_subscription =  $this->ModelRepository->attachSubscription($request->subscription_id,$request->sub_user_id)  ;
 
             return $this -> MakeResponseSuccessful( 
-                [$sub_user_subscription],
-                'Successful'               ,
+                [ $sub_user_subscription ],
+                'Successful',
                 Response::HTTP_OK
             ) ;
-
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
                 'Errors',
-                Response::HTTP_NOT_FOUND
+                Response::HTTP_BAD_REQUEST
             );
         }
     }

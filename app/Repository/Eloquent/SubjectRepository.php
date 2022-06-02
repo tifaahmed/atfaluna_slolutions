@@ -48,8 +48,12 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
     {
 		if($sub_user_id && $age_group_id == null){
 			$sub_user = Auth::user()->sub_user()->find($sub_user_id);
-			$result = $sub_user->ActiveSubjectsFromActiveAgeGroup()->get();
-			return $result;
+			$result = $sub_user->ActiveSubjectsFromActiveAgeGroup();
+			if ($result) {
+				return $result->get();
+			}else{
+				return abort( Response::HTTP_NOT_FOUND , 'there is no active_subjects for this child');
+			}
 		}else if($sub_user_id == null && $age_group_id){
 			$result = $this->model->where('age_group_id',$age_group_id)->get();
 			return $result;
