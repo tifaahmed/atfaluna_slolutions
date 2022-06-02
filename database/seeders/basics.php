@@ -7,7 +7,7 @@ use App\Models\Basic;
 use Illuminate\Support\Str;
 use File;
 
-class basics extends Seeder
+class Basics extends Seeder
 {
     /**
      * Run the database seeds.

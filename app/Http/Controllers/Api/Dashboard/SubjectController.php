@@ -15,11 +15,9 @@ use App\Http\Requests\Api\Subject\SubjectUpdateApiRequest as modelUpdateRequest;
 use App\Http\Resources\Dashboard\Collections\SubjectCollection as ModelCollection;
 use App\Http\Resources\Dashboard\SubjectResource as ModelResource;
 
-
 // lInterfaces
 use App\Repository\SubjectRepositoryInterface as ModelInterface;
 use App\Repository\SubjectLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages
-
 
 class SubjectController extends Controller
 {

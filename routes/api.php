@@ -309,7 +309,6 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::get('/'              ,   'AchievementController@all'                 )->name('all'),
             Route::get('/collection'    ,   'AchievementController@collection'          )->name('collection'),
             Route::post('/attach'        ,   'AchievementController@attach'   )->name('attach'),
-            Route::post('/detach'        ,   'AchievementController@detach'   )->name('detach'),
         ]),  
         // certificates
         Route::name('certificate.')->prefix('/certificate')->group( fn ( ) : array => [
@@ -325,6 +324,14 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
                 Route::get('/{id}/show'                 ,   'QuizController@show'                )->name('show'),
                 Route::get('/collection'                ,   'QuizController@collection'          )->name('collection'),
             ]), 
+             // Activity
+            Route::name('activity.')->prefix('/activity')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'ActivityController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'ActivityController@show'                )->name('show'),
+                Route::get('/collection'                ,   'ActivityController@collection'          )->name('collection'),
+                Route::post('/attach'                   ,   'ActivityController@attach'              )->name('attach'),
+
+            ]),
         //Sub-subject
         Route::name('sub-subject.')->prefix('/sub-subject')->group( fn ( ) : array => [
             Route::get('/'                          ,   'SubSubjectController@all'                 )->name('all'),

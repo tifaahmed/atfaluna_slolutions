@@ -62,7 +62,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 			$sub_user->subUserSubject()->sync($subject_ids);
 		}
 	}
-//Subject
+//SubSubject
 public function attachSubSubjects($sub_subject_ids,$id)
 {
 	if($sub_subject_ids){
@@ -86,7 +86,14 @@ public function attachSubSubjects($sub_subject_ids,$id)
 			$sub_user->subUserLesson()->sync($lesson_ids);
 		}
 	}
-
+//Activity
+public function attachActivities($activity_ids,$id)
+{
+	if($activity_ids){
+		$result = Auth::user()->sub_user()->find($id); 
+		$result->subUserActivity()->sync($activity_ids);
+	}
+}
 	// $age_group_ids : array of age group id
 	// $id  : integer sub user id
 	// action :  attach age group to sub user

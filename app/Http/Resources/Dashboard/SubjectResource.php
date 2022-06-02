@@ -47,7 +47,7 @@ class SubjectResource extends JsonResource
             'quiz'          =>   new QuizResource ( $this->quiz )   ,
 
             'sounds'        => new SoundsCollection($this->sounds),
-
+            
             'skills'        => new SkillCollection($this->skills),
 
         ];        

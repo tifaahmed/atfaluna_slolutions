@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder {
     public function run( ) {
-        $this -> call ( basics::class );
+        $this -> call ( Basics::class );
         $this -> call ( SoundSeeder::class );
         $this -> call ( SubscriptionSeeder::class );
         $this -> call ( QuizType::class );

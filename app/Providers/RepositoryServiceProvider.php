@@ -95,6 +95,10 @@ namespace App\Providers;
     use App\Repository\Eloquent\MassageRepository;
     use App\Repository\Eloquent\ConversationRepository;
 
+    use App\Repository\Eloquent\ActivityRepository;
+    use App\Repository\Eloquent\ActivityLanguageRepository;
+    use App\Repository\Eloquent\SubUserActivityRepository;
+
     // Role  Permission
         use App\Repository\Eloquent\RolePermissionRepository\PermissionRepository;
         use App\Repository\Eloquent\RolePermissionRepository\RoleRepository;
@@ -197,17 +201,17 @@ namespace App\Providers;
     use App\Repository\MassageRepositoryInterface;
     use App\Repository\ConversationRepositoryInterface;
 
-    // Role  Permission   
+    use App\Repository\ActivityRepositoryInterface;
+    use App\Repository\ActivityLanguageRepositoryInterface;
+    use App\Repository\SubUserActivityRepositoryInterface;
 
+    // Role  Permission   
     use App\Repository\RolePermissionInterface\PermissionRepositoryInterface;
     use App\Repository\RolePermissionInterface\RoleRepositoryInterface;
     use App\Repository\RolePermissionInterface\ModelHasPermissionRepositoryInterface;
     use App\Repository\RolePermissionInterface\ModelHasRoleRepositoryInterface;
     use App\Repository\RolePermissionInterface\RoleHasPermissionRepositoryInterface;
     // Role  Permission
-
-// Interface
-
 
 
 use Illuminate\Support\ServiceProvider;
@@ -221,92 +225,118 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Basic
         $this->app->bind(EloquentRepositoryInterface::class,BaseRepository::class);
         $this->app->bind(LanguageRepositoryInterface::class,LanguageRepository::class);
         $this->app->bind(BasicRepositoryInterface::class,BasicRepository::class);
 
+        // Country
         $this->app->bind(GovernmentRepositoryInterface::class,GovernmentRepository::class);
         $this->app->bind(CountryRepositoryInterface::class,CountryRepository::class);
         $this->app->bind(CityRepositoryInterface::class,CityRepository::class);
 
+        // Store
         $this->app->bind(StoreLanguageRepositoryInterface::class,StoreLanguageRepository::class);
         $this->app->bind(StoreRepositoryInterface::class,StoreRepository::class);
 
+        // User
         $this->app->bind(UserRepositoryInterface::class,UserRepository::class);
         $this->app->bind(UserSubscriptionRepositoryInterface::class,UserSubscriptionRepository::class);
         $this->app->bind(UserPackageRepositoryInterface::class,UserPackageRepository::class);
 
+        // SubUser
         $this->app->bind(SubUserRepositoryInterface::class,SubUserRepository::class);
         $this->app->bind(SubUserQuizRepositoryInterface::class,SubUserQuizRepository::class);
         $this->app->bind(SubUserLessonRepositoryInterface::class,SubUserLessonRepository::class);
 
+        // Avatar
         $this->app->bind(AvatarRepositoryInterface::class,AvatarRepository::class);
-        $this->app->bind(AboutUsRepositoryInterface::class,AboutUsRepository::class);
 
+        // Us
+        $this->app->bind(AboutUsRepositoryInterface::class,AboutUsRepository::class);
         $this->app->bind(ContactUsRepositoryInterface::class,ContactUsRepository::class);
 
+        // Age
         $this->app->bind(AgeRepositoryInterface::class,AgeRepository::class);
         $this->app->bind(AgeGroupLanguageRepositoryInterface::class,AgeGroupLanguageRepository::class);
         $this->app->bind(AgeGroupRepositoryInterface::class,AgeGroupRepository::class);
 
+        // TrueFalseQuestion
         $this->app->bind(TrueFalseQuestionRepositoryInterface::class,TrueFalseQuestionRepository::class);
         $this->app->bind(TrueFalseQuestionLanguageRepositoryInterface::class,TrueFalseQuestionLanguageRepository::class);
+        $this->app->bind(QuestionTagRepositoryInterface::class,QuestionTagRepository::class);
 
-        $this->app->bind(SubscriptionRepositoryInterface::class,SubscriptionRepository::class);
-        $this->app->bind(SubscriptionLanguageRepositoryInterface::class,SubscriptionLanguageRepository::class);
-
-        $this->app->bind(SubjectRepositoryInterface::class,SubjectRepository::class);
-        $this->app->bind(SubjectLanguageRepositoryInterface::class,SubjectLanguageRepository::class);
-
-        $this->app->bind(SkillRepositoryInterface::class,SkillRepository::class);
-        $this->app->bind(SkillLanguageRepositoryInterface::class,SkillLanguageRepository::class);
-        $this->app->bind(SkillableRepositoryInterface::class,SkillableRepository::class);
-
-        $this->app->bind(QuizRepositoryInterface::class,QuizRepository::class);
-        $this->app->bind(QuizLanguageRepositoryInterface::class,QuizLanguageRepository::class);
-        $this->app->bind(QuizTypeRepositoryInterface::class,QuizTypeRepository::class);
-
-        $this->app->bind(PlayTimeRepositoryInterface::class,PlayTimeRepository::class);
-
-        $this->app->bind(PackageRepositoryInterface::class,PackageRepository::class);
-        $this->app->bind(PackageLanguageRepositoryInterface::class,PackageLanguageRepository::class);
-
+        // Mcq
         $this->app->bind(McqQuestionRepositoryInterface::class,McqQuestionRepository::class);
         $this->app->bind(McqQuestionLanguageRepositoryInterface::class,McqQuestionLanguageRepository::class);
-
         $this->app->bind(McqAnswerRepositoryInterface::class,McqAnswerRepository::class);
         $this->app->bind(McqAnswerLanguageRepositoryInterface::class,McqAnswerLanguageRepository::class);
 
+        // Subscription
+        $this->app->bind(SubscriptionRepositoryInterface::class,SubscriptionRepository::class);
+        $this->app->bind(SubscriptionLanguageRepositoryInterface::class,SubscriptionLanguageRepository::class);
+
+        // Subject
+        $this->app->bind(SubjectRepositoryInterface::class,SubjectRepository::class);
+        $this->app->bind(SubjectLanguageRepositoryInterface::class,SubjectLanguageRepository::class);
+
+        // SubSubject
+        $this->app->bind(SubSubjectRepositoryInterface::class,SubSubjectRepository::class);
+        $this->app->bind(SubSubjectLanguageRepositoryInterface::class,SubSubjectLanguageRepository::class);
+
+        // Lesson
         $this->app->bind(LessonRepositoryInterface::class,LessonRepository::class);
         $this->app->bind(LessonTypeRepositoryInterface::class,LessonTypeRepository::class);
         $this->app->bind(LessonLanguageRepositoryInterface::class,LessonLanguageRepository::class);
 
+        // Quiz
+        $this->app->bind(QuizRepositoryInterface::class,QuizRepository::class);
+        $this->app->bind(QuizLanguageRepositoryInterface::class,QuizLanguageRepository::class);
+        $this->app->bind(QuizTypeRepositoryInterface::class,QuizTypeRepository::class);
+
+         // Activity
+        $this->app->bind(ActivityRepositoryInterface::class,ActivityRepository::class);
+        $this->app->bind(ActivityLanguageRepositoryInterface::class,ActivityLanguageRepository::class);
+        $this->app->bind(SubUserActivityRepositoryInterface::class,SubUserActivityRepository::class);
+        // Skill
+        $this->app->bind(SkillRepositoryInterface::class,SkillRepository::class);
+        $this->app->bind(SkillLanguageRepositoryInterface::class,SkillLanguageRepository::class);
+        $this->app->bind(SkillableRepositoryInterface::class,SkillableRepository::class);
+
+        // PlayTime
+        $this->app->bind(PlayTimeRepositoryInterface::class,PlayTimeRepository::class);
+
+        // Package
+        $this->app->bind(PackageRepositoryInterface::class,PackageRepository::class);
+        $this->app->bind(PackageLanguageRepositoryInterface::class,PackageLanguageRepository::class);
+
+        // Certificate
         $this->app->bind(CertificateRepositoryInterface::class,CertificateRepository::class);
         $this->app->bind(CertificateLanguageRepositoryInterface::class,CertificateLanguageRepository::class);
 
+        // Accessory
         $this->app->bind(AccessoryRepositoryInterface::class,AccessoryRepository::class);
         $this->app->bind(AccessoryLanguageRepositoryInterface::class,AccessoryLanguageRepository::class);
 
-        $this->app->bind(SubSubjectRepositoryInterface::class,SubSubjectRepository::class);
-        $this->app->bind(SubSubjectLanguageRepositoryInterface::class,SubSubjectLanguageRepository::class);
-
+        // Hero
         $this->app->bind(HeroRepositoryInterface::class,HeroRepository::class);
         $this->app->bind(HeroLanguageRepositoryInterface::class,HeroLanguageRepository::class);
         $this->app->bind(HeroLessonRepositoryInterface::class,HeroLessonRepository::class);
 
-        $this->app->bind(SubUserAchievementRepositoryInterface::class,SubUserAchievementRepository::class);
+        // Achievement
         $this->app->bind(AchievementRepositoryInterface::class,AchievementRepository::class);
         $this->app->bind(AchievementLanguageRepositoryInterface::class,AchievementLanguageRepository::class);
         $this->app->bind(AchievementImageRepositoryInterface::class,AchievementImageRepository::class);
+        $this->app->bind(SubUserAchievementRepositoryInterface::class,SubUserAchievementRepository::class);
 
-        $this->app->bind(QuestionTagRepositoryInterface::class,QuestionTagRepository::class);
-
+        // Conversation
         $this->app->bind(MassageRepositoryInterface::class,MassageRepository::class);
         $this->app->bind(MassageImageRepositoryInterface::class,MassageImageRepository::class);
         $this->app->bind(GroupChatRepositoryInterface::class,GroupChatRepository::class);
         $this->app->bind(FriendRepositoryInterface::class,FriendRepository::class);
         $this->app->bind(ConversationRepositoryInterface::class,ConversationRepository::class);
-
+    
+        // Sound
         $this->app->bind(SoundableRepositoryInterface::class,SoundableRepository::class);
         $this->app->bind(SoundsRepositoryInterface::class,SoundsRepository::class);
 
@@ -316,10 +346,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ModelHasPermissionRepositoryInterface::class,ModelHasPermissionRepository::class);
         $this->app->bind(ModelHasRoleRepositoryInterface::class,ModelHasRoleRepository::class);
         $this->app->bind(RoleHasPermissionRepositoryInterface::class,RoleHasPermissionRepository::class);
-        // Role  Permission
-
     }
-
     /**
      * Bootstrap services.
      *

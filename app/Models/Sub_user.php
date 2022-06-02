@@ -19,6 +19,7 @@ use App\Models\Achievement;
 use App\Models\Group_chat;
 use App\Models\Conversation;
 use App\Models\Friend;
+use App\Models\Activity;
 use App\Models\Sub_user_subscription;
 use App\Models\Sub_user_lesson;
 use App\Models\Sub_user_sub_subject;
@@ -47,16 +48,27 @@ class Sub_user extends Model
         public function avatar(){
             return $this->belongsTo(Avatar::class,'avatar_id');
         }
+    //Accessory
         public function subUserAccessory(){
             return $this->belongsToMany(Accessory::class, 'sub_user_accessories', 'sub_user_id', 'accessory_id');
         }
+    //Avatar
         public function subUserAvatar(){
             return $this->belongsToMany(Avatar::class, 'sub_user_avatars', 'sub_user_id', 'avatar_id');
         }
+    //Achievement
         public function subUserAchievement(){
             return $this->belongsToMany(Achievement::class, 'sub_user_achievements', 'sub_user_id', 'achievement_id');
         }
+<<<<<<< HEAD
+    //Activity
+        public function subUserActivity(){
+            return $this->belongsToMany(Activity::class, 'sub_user_activities', 'sub_user_id', 'activity_id');
+        }
+    //Lesson
+=======
 
+>>>>>>> eb8905d6bed122634ee6b942b42687467ffee13d
         public function subUserLesson(){
             return $this->belongsToMany(Lesson::class, 'sub_user_lessons', 'sub_user_id', 'lesson_id');
         }
@@ -67,11 +79,11 @@ class Sub_user extends Model
         public function playTime(){
             return $this->hasMany(Play_time::class);
         }
-        //Certificate
+    //Certificate
         public function subUserCertificate(){
             return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_user_id', 'certificate_id');
         }
-        //Quiz
+    //Quiz
         public function subUserQuiz(){
             return $this->belongsToMany(Quiz::class, 'sub_user_quizzes', 'sub_user_id', 'quiz_id');
         }

@@ -20,8 +20,7 @@ class SoundSeeder extends Seeder
             File::makeDirectory($folder);
         }
         
-        // File::makeDirectory(public_path('images/records/arabic.MP3'));
-        
+        // File::makeDirectory(public_path('images/records/arabic.MP3'));    
         File::copy(public_path('images/records/arabic.mp3'),$folder.'arabic.mp3');
         File::copy(public_path('images/records/arabic_en.ogg'),$folder.'arabic_en.ogg');
         File::copy(public_path('images/records/math.mp3'),$folder.'math.mp3');

@@ -279,7 +279,7 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::get('/{id}/show'                 ,   'SubscriptionController@show'                )->name('show'),
                 Route::get('/collection'                ,   'SubscriptionController@collection'          )->name('collection'),
                 Route::post('/{id}/update'              ,   'SubscriptionController@update'              )->name('update'),
-           ]),
+    ]),
         // accessory
             Route::name('accessory.')->prefix('/accessory')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'AccessoryController@all'                 )    ->name('all'),
@@ -417,6 +417,20 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('premanently-delete/{id}' ,   'McqQuestionController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'McqQuestionController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'McqQuestionController@show_trash'          )->name('show_trash'),
+            ]),
+        // Activity
+            Route::name('activity.')->prefix('/activity')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'ActivityController@all'                 )    ->name('all'),
+                Route::post(''                          ,   'ActivityController@store'               )->name('store'),
+                Route::get('/{id}/show'                 ,   'ActivityController@show'                )->name('show'),
+                Route::get('/collection'                ,   'ActivityController@collection'          )->name('collection'),
+                Route::DELETE('/{id}'                   ,   'ActivityController@destroy'             )->name('destroy'),
+                Route::post('/{id}/update'              ,   'ActivityController@update'              )->name('update'),
+                Route::post('/{id}/restore'             ,   'ActivityController@restore'             )->name('restore'),
+
+                Route::DELETE('premanently-delete/{id}' ,   'ActivityController@premanently_delete'  )->name('premanently_delete'),
+                Route::get('/collection-trash'          ,   'ActivityController@collection_trash'    )->name('collection_trash'),
+                Route::get('/{id}/show-trash'           ,   'ActivityController@show_trash'          )->name('show_trash'),
             ]),
         //Package
             Route::name('package.')->prefix('/package')->group( fn ( ) : array => [
