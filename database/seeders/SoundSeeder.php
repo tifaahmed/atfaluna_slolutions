@@ -15,21 +15,24 @@ class SoundSeeder extends Seeder
      */
     public function run()
     {
-        $folder =  storage_path('app/public/sounds');
+        $folder =  storage_path('app/public/sounds/');
         if (!file_exists($folder)) {
             File::makeDirectory($folder);
         }
         
-        File::copy(public_path('images/records/arabic.MP3'),$folder.'\arabic.MP3');
-        File::copy(public_path('images/records/arabic_en.Ogg'),$folder.'\arabic_en.Ogg');
-        File::copy(public_path('images/records/math.MP3'),$folder.'\math.MP3');
-        File::copy(public_path('images/records/math_en.Ogg'),$folder.'\math_en.Ogg');
-        File::copy(public_path('images/records/games.MP3'),$folder.'\games.MP3');
-        File::copy(public_path('images/records/games_en.Ogg'),$folder.'\games_en.Ogg');
-        File::copy(public_path('images/records/science.MP3'),$folder.'\science.MP3');
-        File::copy(public_path('images/records/science_en.Ogg'),$folder.'\science_en.Ogg');
-        File::copy(public_path('images/records/stories_en.Ogg'),$folder.'\stories_en.Ogg');
-
+        // File::makeDirectory(public_path('images/records/arabic.MP3'));
+        
+        File::copy(public_path('images/records/arabic.mp3'),$folder.'arabic.mp3');
+        File::copy(public_path('images/records/arabic_en.ogg'),$folder.'arabic_en.ogg');
+        File::copy(public_path('images/records/math.mp3'),$folder.'math.mp3');
+        File::copy(public_path('images/records/math_en.ogg'),$folder.'math_en.ogg');
+        File::copy(public_path('images/records/games.mp3'),$folder.'games.mp3');
+        File::copy(public_path('images/records/games_en.ogg'),$folder.'games_en.ogg');
+        File::copy(public_path('images/records/science.mp3'),$folder.'science.mp3');
+        File::copy(public_path('images/records/science_en.ogg'),$folder.'science_en.ogg');
+        File::copy(public_path('images/records/stories_en.ogg'),$folder.'stories_en.ogg');
+        
+        Sound::truncate(); 
         // 1
         $sounds= Sound::create([
             'id' => '1',

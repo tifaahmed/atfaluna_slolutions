@@ -20,7 +20,7 @@ class QuizResource extends JsonResource
     {
         $row=$this->quiz_languages()->Localization()->RelatedLanguage($this->id)->first();
         $basic = Basic::find(1); //logo
-        $sub_user_quizzes = isset($request->sub_user_id) ? $this->sub_user_quizzes->where('sub_user_id',$request->sub_user_id)->where('pass',1) : null ;
+        $sub_user_quizzes = isset($request->sub_user_id) ? $this->sub_user_quizzes->where('sub_user_id',$request->sub_user_id) : null ;
         
         return [
             'id'            => $this->id,
@@ -34,7 +34,7 @@ class QuizResource extends JsonResource
             'sub_user_quizzes'      => $sub_user_quizzes ? new SubUserQuizCollection($sub_user_quizzes) : [] ,
 
             
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
+            // 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
 
         ];        

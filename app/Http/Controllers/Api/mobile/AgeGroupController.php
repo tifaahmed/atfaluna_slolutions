@@ -12,8 +12,8 @@ use App\Http\Requests\Api\AgeGroup\MobileAgeGroupApiRequest;
 use App\Http\Requests\Api\AgeGroup\MobileActiveAgeGroupApiRequest;
 
 // Resources
-use App\Http\Resources\Mobile\Collections\AgeGroupCollection as ModelCollection;
-use App\Http\Resources\Mobile\AgeGroupResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\ControllerResources\AgeGroupController\AgeGroupCollection as ModelCollection;
+use App\Http\Resources\Mobile\ControllerResources\AgeGroupController\AgeGroupResource as ModelResource;
 
 
 // lInterfaces

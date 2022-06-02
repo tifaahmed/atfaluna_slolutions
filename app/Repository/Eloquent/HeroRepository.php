@@ -33,36 +33,26 @@ class HeroRepository extends BaseRepository implements HeroRepositoryInterface
 	{
 		if($sub_user_id ){
 			$sub_user       = Auth::user()->sub_user()->find($sub_user_id);
+
 			// first
 			$all_sub_user_age_group =  $sub_user->subUserAgeGroup()->get();// check only
 			if ($all_sub_user_age_group->count() ) {
 				$active_subjects      =$sub_user->ActiveSubjectsFromActiveAgeGroup()->get();
 			}else{
-                return Response()->json( 
-                    [
-                        'message' => 'there is no age_group for this child' ,
-                        'check' => 'false.' ,
-                        'code'   => Response::HTTP_NOT_FOUND           ,
-                    ],
-                );			
+				return abort( Response::HTTP_NOT_FOUND , 'there is no age group for this child');			
 			}
+			
 			// second
 			if ( isset($active_subjects) && $active_subjects) {
 				$result = new Collection; // to collect all lessons
 				foreach ($active_subjects as $key => $value) {
-					$lesssons = $value->lesssons()->get();
-					$result = $result->merge( $lesssons );
+					$lessons = $value->lessons()->get();
+					$result = $result->merge( $lessons );
 				}	
 				$lessson_ids = $result->pluck('id')->toArray();
 		
 			}else{
-				return Response()->json( 
-					[
-						'message' => 'there is no active_subjects for this child' ,
-						'check' => 'false.' ,
-						'code'   => Response::HTTP_NOT_FOUND           ,
-					],
-				);	
+				return abort( Response::HTTP_NOT_FOUND , 'there is no active subjects for this child');			
 			}
 			// third
 			if ( isset($lessson_ids) && $lessson_ids) {
@@ -70,13 +60,8 @@ class HeroRepository extends BaseRepository implements HeroRepositoryInterface
 					$query->whereIn('lesson_id',$lessson_ids);
 				})->get();
 			}else{
-				return Response()->json( 
-					[
-						'message' => 'there is no lessons' ,
-						'check' => 'false.' ,
-						'code'   => Response::HTTP_NOT_FOUND           ,
-					],
-				);	
+				return abort( Response::HTTP_NOT_FOUND , 'there is no lessons');			
+
 			}
 		}else{
 			return $this->all()  ;
@@ -98,8 +83,8 @@ class HeroRepository extends BaseRepository implements HeroRepositoryInterface
 			if ( isset($active_subjects) && $active_subjects) {
 				$result = new Collection; // to collect all lessons
 				foreach ($active_subjects as $key => $value) {
-					$lesssons = $value->lesssons()->get();
-					$result = $result->merge( $lesssons );
+					$lessons = $value->lessons()->get();
+					$result = $result->merge( $lessons );
 				}	
 				$lessson_ids = $result->pluck('id')->toArray();
 		

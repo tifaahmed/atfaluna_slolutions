@@ -18,9 +18,9 @@ class LessonTypeResource extends JsonResource
             'id'          => $this->id,
             'name'        =>  $this->name,
 
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
+            // 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
+            // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            // 'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
         ];        
     }

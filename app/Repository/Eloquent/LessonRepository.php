@@ -47,21 +47,21 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 		if ($subjects) {
 			$result = new Collection() ;
 			foreach ($subjects as $key => $value) {
-				$lesssons = $value->lesssons();
+				$lessons = $value->lessons();
 
 				if($lesson_type_id){
-					$lesssons = $lesssons->whereHas('lesson_type',function (Builder $query) use($lesson_type_id) {
+					$lessons = $lessons->whereHas('lesson_type',function (Builder $query) use($lesson_type_id) {
 						$query->where('id',$lesson_type_id);
 					});
 				}	
 				if($hero_id){
-					$lesssons = $lesssons->whereHas('herolesson',function (Builder $query) use($hero_id) {
+					$lessons = $lessons->whereHas('herolesson',function (Builder $query) use($hero_id) {
 						$query->where('hero_id',$hero_id);
 					});
 				}	
 
-				$lesssons = $lesssons ->get();
-				$result = $result->merge( $lesssons );
+				$lessons = $lessons ->get();
+				$result = $result->merge( $lessons );
 			}
 			return $result ;
 		}else{
@@ -180,11 +180,11 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 				
 				// add row in subUserCertificates table // attach & register points
 				// run 1 F..
-				$this->attachRegisterCertificate($sub_user,$lesson->points,$subject_certificate->id);
+				$subject_certificate ? $this->attachRegisterCertificate($sub_user,$lesson->points,$subject_certificate->id) : null;
 				
 				// add row in subUserCertificates table // attach & register points
 				// run 1 F..
-				$this->attachRegisterCertificate($sub_user,$lesson->points,$age_group_certificate->id);
+				$age_group_certificate ? $this->attachRegisterCertificate($sub_user,$lesson->points,$age_group_certificate->id) : null;
 				
 				// add row in subUserLessons table // attach & register points
 				// run 1 F..
@@ -222,8 +222,11 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 			if ($subject_sub_subjects_sub_user_number == $subject_sub_subjects_numbers) {
 				$this->gaveChildPoints($sub_user,$subject->points);// gave the child (subject points) in sub_users table 
 				$this->RegisterSubject($sub_user,$subject->id,$subject->points);// register points only
-				$this->attachRegisterCertificate($sub_user,$subject->points,$subject_certificate->id);// add row in subUserCertificates table // attach & register points
-				$this->attachRegisterCertificate($sub_user,$subject->points,$age_group_certificate->id);// add row in subUserCertificates table // attach & register points
+
+				// add row in subUserCertificates table // attach & register points
+				$subject_certificate ? $this->attachRegisterCertificate($sub_user,$subject->points,$subject_certificate->id) : null;
+				// add row in subUserCertificates table // attach & register points
+				$age_group_certificate ? $this->attachRegisterCertificate($sub_user,$subject->points,$age_group_certificate->id) : null;
 			}
 		}
 
