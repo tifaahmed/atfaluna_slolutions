@@ -31,6 +31,7 @@ class SubjectController extends Controller
         $this->ModelRepositoryLanguage = $RepositoryLanguage;
         $this->folder_name = 'subject/'.Str::random(10).time();
         $this->related_language = 'subject_id';
+        $this->notification_image_name = 'image';
     }
     public function all(){
         try {
@@ -86,6 +87,9 @@ class SubjectController extends Controller
             
             // languages
             $this -> store_array_languages($request->languages,$model) ;
+
+            // notifications
+            $this -> notification($request->notificate,$request->notification,$model) ;
 
             return $this -> MakeResponseSuccessful( 
                 [ $model ],
@@ -171,6 +175,9 @@ class SubjectController extends Controller
 
             //  request languages
             $this -> update_array_languages($request->languages,$model) ;
+
+            // notifications
+            $this -> notification($request->notificate,$request->notification,$model) ;
 
             return $this -> MakeResponseSuccessful( 
                     [ $model],
@@ -315,4 +322,15 @@ class SubjectController extends Controller
         }
     // trash
 
+    // notifications
+    public function notification($notificate = 0,$notification_data,$model) {
+        if ($notificate && $notification_data) {
+            $image_name = $this->notification_image_name ;
+            for ($i=0; $i < count($notification_data) ; $i++) { 
+                $image = asset($model->$image_name);
+                $model_id = $model->id;
+            }
+            $this -> TraitNotification($notification_data,$priority='high',$image,$model_name='lesson',$model_id);
+        }
+    }
 }
