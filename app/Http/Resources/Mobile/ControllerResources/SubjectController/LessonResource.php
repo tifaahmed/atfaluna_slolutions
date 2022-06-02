@@ -4,10 +4,10 @@ namespace App\Http\Resources\Mobile\ControllerResources\SubjectController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Resources\Mobile\SubjectResource;
+
 use App\Http\Resources\Mobile\LessonTypeResource;
-// use App\Http\Resources\Mobile\ControllerResources\SubjectController\QuizResource;
-use App\Http\Resources\Dashboard\Collections\Quiz\QuizCollection;
+
+use App\Http\Resources\Mobile\Collections\ControllerResources\SubjectController\QuizCollection;
 
 use App\Models\Basic;
 
@@ -33,7 +33,7 @@ class LessonResource extends JsonResource
 
             'points'        =>  $this->points,
 
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
+            // 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             // 'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 

@@ -25,11 +25,17 @@ class QuizAttemptResource extends JsonResource
         $sub_user_quiz_array  =  $this->sub_user_quiz->quiz_attempts()->get()->pluck('id')->toArray();
         $foundIndex = array_search($this->id, $sub_user_quiz_array);
 
+        $full_mark = 0;
+        foreach ($this->question_attempts as $key => $question_attempt) {
+            $full_mark =  $full_mark + $question_attempt->questionable->degree;
+        }
+
         return [
             'id'                => $this->id,
             'quiz_attempts_count '             => $foundIndex+1 ,
             'score'             => $this->score,
             'status'            => $this->status,
+            'full_mark'            => $full_mark,
             'question_attempts' => new QuestionAttemptCollection( $this->question_attempts ),
         ];        
     }

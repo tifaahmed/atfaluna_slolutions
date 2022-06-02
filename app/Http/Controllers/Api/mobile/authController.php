@@ -38,7 +38,6 @@ class authController extends Controller {
             if ( $request -> get( 'email' , false ) ) {
                 $user = User::where( 'email' , $request -> get( 'email' ) ) -> first( ) ;
 
-
             
             }
             if ( ! Hash::check( $request -> password , $user -> password ) ) {
@@ -83,6 +82,7 @@ class authController extends Controller {
             $all += array( 'email'      => $request -> get( 'email' ) );
             $all += array( 'phone'      => $request -> get( 'phone' ) );
             $all += array( 'login_type' => $request -> get( 'login_type' ) );
+            $all += array( 'active' => 1 );
 
             $user  = User::create($all);
 
@@ -100,11 +100,13 @@ class authController extends Controller {
             'email' => $request -> get( 'email' ),
             'phone' => $request -> get( 'phone' ),
             'country_id' => $request -> get( 'country_id' ),
-
+            'birthdate' => $request -> get( 'birthdate' ),
+            
             'remember_token' => Hash::make( Str::random(60) )  ,
             'token' => Hash::make( Str::random(60) )  ,
         ]);
 
+        
         return $this ->loginRespons($request->fcm_token,$user->email,$user->id);
 
     }
@@ -143,7 +145,8 @@ class authController extends Controller {
         if(!auth('api')->check()){
             $user =  User::where('pin_code',$request->pin_code)->first();
             if ($user) {
-
+                 
+                $user->update([ 'active' => 1 ]);
                 \DB::table('oauth_access_tokens')
                 ->Where('name',$user -> email)
                 ->delete();
@@ -178,7 +181,10 @@ class authController extends Controller {
 
     public function loginRespons($fcm_token,$email,$user_id)
     {   
+
         Auth::loginUsingId($user_id);
+        Auth::user()->active ? null : Auth::user()->sendActiveEmailNotification();
+
         $sub_users = Auth::user()->sub_user()->get();
 
         // if not first time &  child_number  more than  tokens (revoke tokens)

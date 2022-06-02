@@ -2,9 +2,12 @@
 
 namespace App\Http\Resources\Mobile\ControllerResources\HeroController;
 use App\Http\Resources\Mobile\Collections\ControllerResources\HeroController\LessonCollection;
-use App\Http\Resources\Mobile\Collections\ControllerResources\HeroController\HeroLanguagesCollection;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Basic;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class HeroResource extends JsonResource
 {
@@ -17,17 +20,30 @@ class HeroResource extends JsonResource
     public function toArray($request)
     {
     $row=$this->hero_languages()->Localization()->RelatedLanguage($this->id)->first();
+    $basic = Basic::find(1);
 
+    $sub_user       = Auth::user()->sub_user()->find($request->sub_user_id);
+    $active_subjects = $sub_user->ActiveSubjectsFromActiveAgeGroup()->get() ;
+    $result = new Collection; // to collect all lessons
+    foreach ($active_subjects as $key => $value) {
+        $lessons = $value->lessons()->get();
+        $result = $result->merge( $lessons );
+    }	
+    $lessson_ids = $result->pluck('id')->toArray();
+
+
+    $herolesson =  $this->herolesson->whereIn('id',$lessson_ids);
         return [
             'id'            => $this->id,
-            'title'          => $row ? $row->title:'',
+            'title'         => $row ? $row->title:'',
+            'image'         =>( $row && $row->image && Storage::disk('public')->exists($row->image) )? asset(Storage::url($row->image))  : asset(Storage::url($basic->item)),
+            'description'   => $row ? $row->description:'',
 
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
+            // 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
+            // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            // 'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            'languages'     => new HeroLanguagesCollection ( $this->hero_languages ),
-            'lessons'        => new LessonCollection ($this->herolesson)  ,
+            'lessons'        => new LessonCollection ($herolesson)  ,
 
         ];        
     }

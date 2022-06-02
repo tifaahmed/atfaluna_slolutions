@@ -26,9 +26,9 @@ class CountryResource extends JsonResource
             'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)),
             'code'          => $this->code,
             'language'      =>$this->language,
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
+            // 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
+            // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            // 'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
             'government'    => new GovernmentCollection ( $this->government ),
             'city'          => new CityCollection ( $this->city ),

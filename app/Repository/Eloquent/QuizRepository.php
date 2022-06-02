@@ -112,60 +112,89 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 			//close all Quiz Attempt Questions  ( update question_attempts rows )
 			$this->RegisterQuizAttemptScoreAndCloseQuestions($quiz_attempt_open);
 
-			//get the max score from all Quiz Attempt  ( update sub_user_quizs row )
+			//get the max score from all Quiz Attempt  ( update sub_user_quizs row  score column)
 			$this->RegisterQuizMaxScore($sub_user_quiz);
 
 
-            //proces to mark the Quiz to get reword ( update sub_user_quizs row && sub_user row)
+            //proces to mark the Quiz to get reword ( update sub_user_quizs row pass column && sub_user row point column)
 			$this->markQuizGaveReword($quiz,$sub_user_quiz,$sub_user);
 
-			
+			// if child pass in the quiz
+			if ($sub_user_quiz->pass) {
+				//proces to add point to certificate
+				$this->RegisterCertificationsPoints($quiz,$sub_user);
+			}
 
-			//proces to add point to certificate
 
-        }
+		}
+
         return $sub_user_quiz->quiz_attempts()->get()->last();
 
 	}
+	public function RegisterCertificationsPoints($quiz,$sub_user){
+		// if morph to quizable(App\Models\Subject)
+		if ($quiz->quizable->certificate) {
+			$subject = $quiz->quizable;
+		}
+		// if morph to quizable(App\Models\subSubject)
+		else if($quiz->quizable->subject){
+			$subject = $quiz->quizable->subject;
+		}
+		// if morph to quizable(App\Models\Lesson)
+		else if($quiz->quizable->subSubject){
+			$subject = $quiz->quizable->subSubject->subject;
+		}
+		$subject_certificate_id = $subject->certificate->id ;
+		$age_group_certificate_id = $subject->age_group->certificate->id ;
+		$points = $quiz->points ;
+
+		$this->attachRegisterCertificate($sub_user,$points,$subject_certificate_id);  
+		$this->attachRegisterCertificate($sub_user,$points,$age_group_certificate_id);  
+	}
+
 	public function RegisterQuizAttemptScoreAndCloseQuestions($quiz_attempt_open){
       
-		// 5- get the open quiz attempt . questions     (get)
+		//  get the open quiz attempt . questions     (get)
 		$all_question_attempts = $quiz_attempt_open->question_attempts();
-		// 6- get the open quiz attempt .correct questions   (get) 
+		//  get the open quiz attempt .correct questions   (get) 
 		$correct_question_attempts = $all_question_attempts->QuestionAttemptCorrect()->get();
 
-		// 7- get the open quiz attempt .correct questions  . collect score  
+		//  get the open quiz attempt .correct questions  . collect score  
 		$score = 0;
 		foreach ($correct_question_attempts as $key => $value) {
 			$score = $score +  $value->questionable->degree;
 		}
-		// 8- put the quiz attempt score && close it
+		//  put the quiz attempt score && close it
 		$quiz_attempt_open->update([
 			'score'=> $score,
 			'status'=>'closed',
 		]);
 
-		// 10- close all quiz attempt questions . if any of them still open 
+		//  close all quiz attempt questions . if any of them still open 
 		$quiz_attempt_open->question_attempts()->update(['status'=>'closed']);
 
 	}
 	public function RegisterQuizMaxScore($sub_user_quiz){
-            // 9- get max quiz attempt score
+            //  get max quiz attempt score
 			$max_score = $sub_user_quiz->quiz_attempts()->max('score');
 			$sub_user_quiz->update([                
                 'score'=>$max_score,
             ]);
 	}
 	public function markQuizGaveReword($quiz,$sub_user_quiz,$sub_user){
-            // 2- if he not pass in the test before  && fit the minimum_requirements to pass
+            //  if he not pass in the test before  && fit the minimum_requirements to pass
             if (!$sub_user_quiz->pass && $sub_user_quiz->score >= $quiz->minimum_requirements   ) {
-                // 3- pass in test
+                //  pass in test
                 $sub_user_quiz->update(['pass'=>true ]);
-                // 4- get the point of the quiz
+                //  get the point of the quiz
                 $sub_user->update(['points' => $sub_user->points + $quiz->points]);
             }
 	}
-
+	public function attachRegisterCertificate($sub_user,$points,$certificate_id)  {
+		$sub_user->subUserCertificate()->syncWithoutDetaching($certificate_id);
+		$sub_user_certificate_model= $sub_user->subUserCertificateModel()->where('certificate_id',$certificate_id)->first();
+		$sub_user_certificate_model->update(['points' => $sub_user_certificate_model->points + $points  ]);
+	}
 	
 	
 }

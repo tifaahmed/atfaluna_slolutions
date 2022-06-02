@@ -111,20 +111,20 @@ class QuizController extends Controller
     } 
 
     public function finishQuiz(MobileQuizApiRequest $request){
-        try {
-            $quiz_attempt = $this->ModelRepository->finishQuiz($request->sub_user_id,$request->quiz_id);
-            return $this -> MakeResponseSuccessful( 
-                [  new QuizAttemptResource ($quiz_attempt )  ],
-                'Successful',
-                Response::HTTP_OK
-            ) ; 
-        } catch (\Exception $e) {
-        return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
+        // try {
+            return $quiz_attempt = $this->ModelRepository->finishQuiz($request->sub_user_id,$request->quiz_id);
+            // return $this -> MakeResponseSuccessful( 
+            //     [  new QuizAttemptResource ($quiz_attempt )  ],
+            //     'Successful',
+            //     Response::HTTP_OK
+            // ) ; 
+    //     } catch (\Exception $e) {
+    //     return $this -> MakeResponseErrors(  
+    //             [$e->getMessage()  ] ,
+    //             'Errors',
+    //             Response::HTTP_NOT_FOUND
+    //         );
+    //     }
     }
 
 

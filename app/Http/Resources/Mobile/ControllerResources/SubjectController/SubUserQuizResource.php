@@ -23,7 +23,7 @@ class SubUserQuizResource extends JsonResource
             'pass'        => $this->pass,
             'quiz_attempts'        => new QuizAttemptCollection ($quiz_attempts),
             
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
+            // 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             // 'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
