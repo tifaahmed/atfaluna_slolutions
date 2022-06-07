@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Lesson;
 use App\Models\Activity_language;
+use App\Models\Sub_user_activity;
 
 class Activity extends Model
 {
@@ -20,14 +21,17 @@ class Activity extends Model
         'points',//required default('0')
         'lesson_id',//unsigned 
     ];
+
     // relations
     public function lesson(){
         return $this->belongsTo(Lesson::class,'lesson_id');
     }
-    //relation
+
     public function activity_languages(){
         return $this->HasMany(Activity_language::class);
     }
-
+    public function sub_user_activity(){
+        return $this->HasMany(Sub_user_activity::class);
+    }
 }
 

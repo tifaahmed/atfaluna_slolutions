@@ -22,28 +22,26 @@ class SubjectResource extends JsonResource
     {
         $row=$this->subject_languages()->Localization()->RelatedLanguage($this->id)->first();
         $basic = Basic::find(1);
-        $sound = $this->sounds()->Localization()->first();
 
         return [
-            'id'            => $this->id,
-            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  :  asset(Storage::url($basic->item)),
-            'points'        => $this->points,
+            // 'id'            => $this->id,
+            // 'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  :  asset(Storage::url($basic->item)),
+            // 'points'        => $this->points,
             
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
+            // 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
+            // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            // 'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
             
-            'name'          => $row ? $row->name:'',
+            // 'name'          => $row ? $row->name:'',
 
-            'sub_subjects'       => new SubSubjectCollection  ($this->sub_subjects),
+            // 'sub_subjects'       => new SubSubjectCollection  ($this->sub_subjects),
 
-            'certification'     =>  new CertificateResource ($this->certificate)  , 
+            // 'certification'     =>  new CertificateResource ($this->certificate)  , 
 
-            'sound'              => new SoundsResource  ($sound),
 
-            'quiz'               =>   new QuizResource ( $this->quiz )   ,
+            // 'quiz'               =>   new QuizResource ( $this->quiz )   ,
 
-            'age_group'          =>   $this->age_group,
+            // 'age_group'          =>   $this->age_group,
 
         ];        
     }

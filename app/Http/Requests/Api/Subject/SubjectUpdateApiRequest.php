@@ -32,6 +32,12 @@ class SubjectUpdateApiRequest extends FormRequest
         // quiz
         $all += [ 'quiz_id'  =>  [ 'required' ,'integer','exists:quizzes,id'] ]  ;
 
+        // certificate
+        $all += [ 'certificate_id'  =>  [ 'required' ,'integer','exists:certificates,id'] ]  ;
+
+        // skill
+        $all += [ 'skill_ids'  =>  [ 'sometimes' ,'array','exists:skills,id'] ]  ;
+
         // subjects        
         $all += [ 'image'           =>  [ 'sometimes' ,'max:5000'] ]  ;
         $all += [ 'points'          =>  [ 'required' ,'integer' ] ]  ;

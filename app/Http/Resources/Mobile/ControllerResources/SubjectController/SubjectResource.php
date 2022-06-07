@@ -5,11 +5,10 @@ namespace App\Http\Resources\Mobile\ControllerResources\SubjectController;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 // Resource
-use App\Http\Resources\Mobile\ControllerResources\SubjectController\SoundsResource;
 use App\Http\Resources\Mobile\ControllerResources\SubjectController\QuizResource;
 
 // Collection
-use App\Http\Resources\Mobile\Collections\ControllerResources\SubjectController\SubSubjectCollection;
+use App\Http\Resources\Mobile\ControllerResources\SubjectController\SubSubjectResource;
 
 use App\Models\Basic;
 class SubjectResource extends JsonResource
@@ -24,7 +23,6 @@ class SubjectResource extends JsonResource
     {
         $row=$this->subject_languages()->Localization()->RelatedLanguage($this->id)->first();
         $basic = Basic::find(1);
-        $sound = $this->sounds()->Localization()->first();
 
         return [
             'id'                 => $this->id,
@@ -36,13 +34,11 @@ class SubjectResource extends JsonResource
             // 'deleted_at'         => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
             
             'name'               => $row ? $row->name:'',
+            'sound'               =>  ( $row && $row->sound->count() && Storage::disk('public')->exists($row->sound[0]->record) ) ? asset(Storage::url($row->sound[0]->record))  :  null ,
 
-            'sub_subjects'       => new SubSubjectCollection  ($this->sub_subjects),
-
-            'sound'              => new SoundsResource  ($sound),
+            'sub_subjects'       =>  SubSubjectResource::collection($this->sub_subjects),
 
             'quiz'               =>   new QuizResource ( $this->quiz )   ,
-
 
         ];        
     }

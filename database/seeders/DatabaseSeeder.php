@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder {
         $this -> call ( UserSeeder::class );
         $this -> call ( LanguageSeeder::class );
         $this -> call ( CertificateSeeder::class );
+        $this -> call ( QuizSeeder::class );
         $this -> call ( AgeGroupSeeder::class );
-        // $this -> call ( QuizSeeder::class );
     }
 }

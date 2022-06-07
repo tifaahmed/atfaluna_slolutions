@@ -13,10 +13,12 @@ class QuizType extends Seeder
      *
      * @return void
      */
+    
     public function run()
     {
-        Quiz_type::create( [ 'id' => '1','name' => 'task' ] )  ;
-        Quiz_type::create( [ 'id' => '2','name' => 'assignment'] )  ;
-        Quiz_type::create( [ 'id' => '3','name' => 'quiz'] )  ;
+        Quiz_type::query()->forceDelete();
+
+        Quiz_type::create( [ 'id' => '1','name' => 'assignment'] )  ;
+        Quiz_type::create( [ 'id' => '2','name' => 'quiz'] )  ;
     }
 }

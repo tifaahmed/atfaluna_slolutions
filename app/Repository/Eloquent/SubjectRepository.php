@@ -99,5 +99,7 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 			return $result->skills()->sync($skill_id);
 		}
 	}
+
+	
 }
 

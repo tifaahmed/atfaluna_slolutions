@@ -15,7 +15,9 @@ class QuizSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 6; $i++) { 
+        Quiz::query()->forceDelete();
+
+        for ($i=1; $i <= 6; $i++) { 
 
         $folder =  storage_path('app/public/quiz/');
         if (!file_exists($folder)) {
@@ -25,9 +27,10 @@ class QuizSeeder extends Seeder
         File::copy(public_path('images/quiz2.png'),$folder.'quiz2.png');
 
         $quiz= Quiz::create( [
-            'id' => '1',
+            'id' => $i,
             'points' => '300',
             'minimum_requirements' => '200',
+            'quiz_type_id'  => '2',
         ]);          
         $quiz->quiz_languages()->create( [
             'name' => 'امتحان  ',

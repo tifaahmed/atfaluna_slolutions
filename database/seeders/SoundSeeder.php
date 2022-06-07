@@ -15,6 +15,7 @@ class SoundSeeder extends Seeder
      */
     public function run()
     {
+        
         $folder =  storage_path('app/public/sounds/');
         if (!file_exists($folder)) {
             File::makeDirectory($folder);
@@ -31,7 +32,7 @@ class SoundSeeder extends Seeder
         File::copy(public_path('images/records/science_en.ogg'),$folder.'science_en.ogg');
         File::copy(public_path('images/records/stories_en.ogg'),$folder.'stories_en.ogg');
         
-        Sound::truncate(); 
+        Sound::query()->forceDelete();
         // 1
         $sounds= Sound::create([
             'id' => '1',

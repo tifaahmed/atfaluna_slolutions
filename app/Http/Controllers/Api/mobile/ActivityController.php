@@ -12,8 +12,8 @@ use App\Http\Requests\Api\Activity\ActivityApiRequest as modelInsertRequest;
 use App\Http\Requests\Api\Activity\ActivityUpdateApiRequest as modelUpdateRequest;
 use App\Http\Requests\Api\Activity\MobileActivityApiRequest;
 // Resources
-use App\Http\Resources\Mobile\Collections\Activity\ActivityCollection as ModelCollection;
-use App\Http\Resources\Mobile\Activity\ActivityResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\ControllerResources\ActivityController\ActivityCollection as ModelCollection;
+use App\Http\Resources\Mobile\ControllerResources\ActivityController\ActivityResource as ModelResource;
 
 // lInterfaces
 use App\Repository\ActivityRepositoryInterface as ModelInterface;
@@ -25,9 +25,10 @@ class ActivityController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model = $this->ModelRepository->filterAll($request->lesson_id);
+            return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -39,7 +40,8 @@ class ActivityController extends Controller
 
     public function collection(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
+            $model = $this->ModelRepository->filterPaginate( $request->lesson_id , $request->PerPage ? $request->PerPage : 10 );
+            return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -69,7 +71,8 @@ class ActivityController extends Controller
     public function attach(MobileActivityApiRequest $request){
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            $model->subUserActivity()->syncWithoutDetaching($request->activity_ids);
+            $model->subUserActivity()->syncWithoutDetaching([   $request->sub_user_id => ['points' => $request->points] ]);
+
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
                 'Successful'               ,
