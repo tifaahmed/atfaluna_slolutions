@@ -36,5 +36,8 @@ class Sub_subject_language extends Model
         public function scopeLocalization($query){
             return $query->where('language', App::getLocale());
         }
-
+    // morph
+    public function sound(){
+        return $this->morphToMany(Sound::class, 'soundable','soundables');
+    }
 }

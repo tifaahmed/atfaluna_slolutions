@@ -60,15 +60,12 @@ class Sub_user extends Model
         public function subUserAchievement(){
             return $this->belongsToMany(Achievement::class, 'sub_user_achievements', 'sub_user_id', 'achievement_id');
         }
-<<<<<<< HEAD
     //Activity
         public function subUserActivity(){
             return $this->belongsToMany(Activity::class, 'sub_user_activities', 'sub_user_id', 'activity_id');
         }
     //Lesson
-=======
 
->>>>>>> eb8905d6bed122634ee6b942b42687467ffee13d
         public function subUserLesson(){
             return $this->belongsToMany(Lesson::class, 'sub_user_lessons', 'sub_user_id', 'lesson_id');
         }

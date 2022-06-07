@@ -14,12 +14,13 @@ class SubscriptionSeeder extends Seeder
      */
     public function run()
     {
+        Subscription::query()->forceDelete();
+
         // 1 
             $subscription= Subscription::create([
                 'id' => '1',
-                'month_number' => '4',
-                'child_number' => '3',
-                'price' => '500',
+                'month_number' => 4,
+                'price' => 500,
 
             ]);
             $subscription->subscription_languages()->create( [
@@ -33,9 +34,8 @@ class SubscriptionSeeder extends Seeder
         // 2
             $subscription= Subscription::create([
                 'id' => '2',
-                'month_number' => '6',
-                'child_number' => '4',
-                'price' => '1000',
+                'month_number' => 6,
+                'price' => 1000,
 
             ]);
             $subscription->subscription_languages()->create( [
@@ -49,9 +49,8 @@ class SubscriptionSeeder extends Seeder
         // 3
             $subscription= Subscription::create([
                 'id' => '3',
-                'month_number' => '7',
-                'child_number' => '5',
-                'price' => '2000',
+                'month_number' => 7,
+                'price' => 2000,
 
             ]);
             $subscription->subscription_languages()->create( [

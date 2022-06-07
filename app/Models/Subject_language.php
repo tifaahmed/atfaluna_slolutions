@@ -33,7 +33,7 @@ class Subject_language extends Model
         return $query->where('language', App::getLocale());
     }
     // morph
-    public function sounds(){
+    public function sound(){
         return $this->morphToMany(Sound::class, 'soundable','soundables');
     }
 

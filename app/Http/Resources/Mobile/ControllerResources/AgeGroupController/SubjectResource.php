@@ -20,7 +20,6 @@ class SubjectResource extends JsonResource
     {
         $row=$this->subject_languages()->Localization()->RelatedLanguage($this->id)->first();
         $basic = Basic::find(1);
-        $sound = $this->sounds()->Localization()->first();
 
         return [
             'id'            => $this->id,

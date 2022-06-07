@@ -11,9 +11,7 @@ use App\Http\Requests\Api\SubUser\MobileStoreSubUserApiRequest ;
 // use App\Http\Requests\Api\User\MobileDeleteSubUserApiRequest ;
 
 // Resources
-use App\Http\Resources\Mobile\Collections\SubUserCollection as ModelCollection;
-// use App\Http\Resources\Mobile\SubUserResource as ModelResource;
-
+use App\Http\Resources\Mobile\Collections\ControllerResources\subuserController\SubUserCollection as ModelCollection;
 use App\Http\Resources\Mobile\ControllerResources\subuserController\SubUserResource as ModelResource;
 
 
@@ -76,7 +74,7 @@ class SubUserController extends Controller
             $this->ModelRepository->attachAgeGroupByAge($sub_user->age,$sub_user->id) ;
 
             return $this -> MakeResponseSuccessful( 
-                [$sub_user ],
+                [new ModelResource ( $sub_user )  ],
                 'Successful',
                 Response::HTTP_OK
             ) ;

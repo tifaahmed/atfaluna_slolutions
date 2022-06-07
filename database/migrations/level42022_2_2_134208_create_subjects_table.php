@@ -19,7 +19,7 @@ class CreateSubjectsTable extends Migration
             $table->integer('points')->default('0');//[note: "ex ( 5 - 6)"]
 
             $table->integer('age_group_id')->unsigned();
-            $table->foreign('age_group_id')->references('id')->on('age_groups');
+            $table->foreign('age_group_id')->references('id')->on('age_groups')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();
