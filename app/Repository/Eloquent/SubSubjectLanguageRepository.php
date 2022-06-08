@@ -22,7 +22,13 @@ class  SubSubjectLanguageRepository extends BaseRepository implements SubSubject
 		$this->model =  $model;
 	}
 
-
+	public function attachSoundas($sound_id,$subject_language_id)
+	{
+		if($sound_id){
+			$result = $this->findById($subject_language_id); 
+			return $result->sound()->sync($sound_id);
+		}
+	}
 
 
 	

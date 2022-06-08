@@ -26,21 +26,20 @@ class LessonApiRequest extends FormRequest
         $Languages=Language::get();
         $all=[];
 
-        // notification 
-        $all += [ 'notificate'           =>  [ 'required','boolean' ] ]  ;
-        foreach ($Languages as $key => $value) {
-            $all += [ 'notification.'.$key.'.title'          =>  [ 'required_if:notificate,1' , 'max:255' ] ]  ;
-            $all += [ 'notification.'.$key.'.subject'        =>  [ 'required_if:notificate,1' , 'max:255' ] ]  ;
-            $all += [ 'notification.'.$key.'.lang'           =>  [ 'required_if:notificate,1' , 'max:2' , 'exists:languages,name' ] ]  ;
-        }
+        // sub_subjects
+        $all += [ 'sub_subject_id'   =>  [ 'required' ,'integer','exists:sub_subjects,id'] ]  ;
+
+        // lesson_types
+        $all += [ 'lesson_type_id'   =>  [ 'required' ,'integer','exists:lesson_types,id'] ] ;
+
+        // quiz
+        $all += [ 'quiz_ids'  =>  [ 'sometimes' ,'array','exists:quizzes,id'] ]  ;
+
+        // skill
+        $all += [ 'skill_ids'  =>  [ 'sometimes' ,'array','exists:skills,id'] ]  ;
 
         // lessons
         $all += [ 'points'           =>  [ 'integer'] ]  ;
-        $all += [ 'sub_subject_id'   =>  [ 'required' ,'integer','exists:sub_subjects,id'] ]  ;
-        $all += [ 'lesson_type_id'   =>  [ 'required' ,'integer','exists:lesson_types,id'] ] ;
-        $all += [ 'skills_id'  =>  [ 'sometimes' ,'integer','exists:skills,id'] ]  ;
-        // quiz
-        $all += [ 'quiz_ids'  =>  [ 'sometimes' ,'array','exists:quizzes,id'] ]  ;
 
         // lesson_languages
         foreach ($Languages as $key => $value) {
@@ -48,9 +47,19 @@ class LessonApiRequest extends FormRequest
             $all += [ 'languages.'.$key.'.url'         =>  [ 'required' , 'max:100000','mimes:zip,mp4' ] ] ;
             $all += [ 'languages.'.$key.'.image_one'   =>  [ 'required' , 'max:50000' ,'mimes:jpg,jpeg,webp,bmp,png' ] ] ;
             $all += [ 'languages.'.$key.'.image_two'   =>  [ 'required' , 'max:50000' ,'mimes:jpg,jpeg,webp,bmp,png' ] ] ;
-            $all += [ 'languages.'.$key.'.language'    =>  [ 'required' , 'max:2', 'exists:languages,name' ] ] ;
+            
+            // language
+            $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name'] ] ;
         }
 
+        // notification 
+        $all += [ 'notificate'           =>  [ 'sometimes','boolean' ] ]  ;
+        foreach ($Languages as $key => $value) {
+            $all += [ 'notification.'.$key.'.title'          =>  [ 'required_if:notificate,1' , 'max:255' ] ]  ;
+            $all += [ 'notification.'.$key.'.subject'        =>  [ 'required_if:notificate,1' , 'max:255' ] ]  ;
+            $all += [ 'notification.'.$key.'.lang'           =>  [ 'required_if:notificate,1' , 'max:2' , 'exists:languages,name' ] ]  ;
+        }
+        
         return $all;
     }
 }

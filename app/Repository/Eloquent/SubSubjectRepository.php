@@ -55,11 +55,11 @@ class SubSubjectRepository extends BaseRepository implements SubSubjectRepositor
 			$quiz =  Quiz::find($quiz_id);
 			$quiz->quizable()->associate($sub_subject)->save(); 
 	}
-	public function attachSkills($skill_id,$id)
+	public function attachSkills($skill_ids,$id)
 	{
-		if($skill_id){
+		if($skill_ids){
 			$result = $this->findById($id); 
-			return $result->skills()->sync($skill_id);
+			return $result->skills()->sync($skill_ids);
 		}
 	}
 }

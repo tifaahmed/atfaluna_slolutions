@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             'name' => 'super admin',
             'email' => 'admin@admin.com',
             'phone' => '01000011000',
-            'password' => Hash::make('123456'),
+            'password' => Hash::make('12345678'),
             'token' => Hash::make('123456'),
             'birthdate' => '2022-02-14 15:30:36',
             'country_id' =>  Country::first()->id,

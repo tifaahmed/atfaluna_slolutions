@@ -100,10 +100,11 @@ class LessonController extends Controller
             // create
             $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
 
-            // attach
-            if (isset($request->quiz_ids) && $request->quiz_ids) {
-                $this->ModelRepository->attachQuiz($request->quiz_ids,$model->id);
-            }
+            // quiz
+            $this->ModelRepository->attachQuiz($request->quiz_ids,$model->id);
+            
+            // skills
+            $this->ModelRepository->attachSkills($request->skill_ids,$model->id);
 
             // languages
             $this -> store_array_languages($request->languages,$model) ;
@@ -131,12 +132,13 @@ class LessonController extends Controller
             $this->ModelRepository->update( $id,Request()->all()) ;
             $model = new ModelResource( $this->ModelRepository->findById($id) ); 
 
-            // attach
-            if (isset($request->quiz_ids) && $request->quiz_ids) {
-                $this->ModelRepository->attachQuiz($request->quiz_ids,$id);
-            }
-
-            //  request languages
+            // quiz
+            $this->ModelRepository->attachQuiz($request->quiz_ids,$id);
+            
+            // skills
+            $this->ModelRepository->attachSkills($request->skill_ids,$model->id);
+            
+            // languages
             $this -> update_array_languages($request->languages,$model) ;
 
             // notifications
