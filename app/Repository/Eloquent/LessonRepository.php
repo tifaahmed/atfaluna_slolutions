@@ -140,20 +140,7 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 
 		return $lap;
 	}
-	public function attachQuiz($quiz_id,$id)  
-    {
-		if($quiz_id){
-			$lesson = $this->findById($id); 
-			
-			$lesson_quizzes =  $lesson->quiz()->get();
-			foreach ($lesson_quizzes as $key => $value) {
-				$value->quizable()->dissociate()->save();
-			}
 
-			$quiz =  Quiz::find($quiz_id);
-			$quiz->quizable()->associate($lesson)->save(); 
-		}
-	}
 	// handleLessson
 
 		public function handleLessson($sub_user_id,$lesson_id,$received_lesson_points)  
@@ -256,12 +243,26 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 		}
 
 		
-
-		public function attachSkills($skill_id,$id)
+		public function attachQuiz($quiz_ids,$id)  
 		{
-			if($skill_id){
+			if($quiz_ids){
+				$lesson = $this->findById($id); 
+				
+				$lesson_quizzes =  $lesson->quiz()->get();
+				foreach ($lesson_quizzes as $key => $value) {
+					$value->quizable()->dissociate()->save();
+				}
+				foreach ($quiz_ids as $quiz_key => $quiz_id) {
+					$quiz =  Quiz::find($quiz_id);
+					$quiz->quizable()->associate($lesson)->save(); 
+				}
+			}
+		}
+		public function attachSkills($skill_ids,$id)
+		{
+			if($skill_ids){
 				$result = $this->findById($id); 
-				return $result->skills()->sync($skill_id);	
+				return $result->skills()->sync($skill_ids);	
 			}
 		}
 	}

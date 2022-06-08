@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 // Resource
 use App\Http\Resources\Mobile\ControllerResources\SubjectController\QuizResource;
 
+
 // Collection
 use App\Http\Resources\Mobile\ControllerResources\SubjectController\SubSubjectResource;
 
@@ -35,6 +36,7 @@ class SubjectResource extends JsonResource
             
             'name'               => $row ? $row->name:'',
             'sound'               =>  ( $row && $row->sound->count() && Storage::disk('public')->exists($row->sound[0]->record) ) ? asset(Storage::url($row->sound[0]->record))  :  null ,
+            'sound_id'            =>  ( $row && $row->sound->count() ) ?  $row->sound[0]->id : null ,
 
             'sub_subjects'       =>  SubSubjectResource::collection($this->sub_subjects),
 

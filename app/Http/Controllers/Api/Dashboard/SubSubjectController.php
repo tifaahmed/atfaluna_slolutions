@@ -67,7 +67,7 @@ class SubSubjectController extends Controller
                 $this->ModelRepository->attachQuiz($request->quiz_id,$model->id);
             }
             // attach skills
-            $this->ModelRepository->attachSkills($request->skill_id,$model->id);
+            $this->ModelRepository->attachSkills($request->skill_ids,$model->id);
 
             // languages
             $this -> store_array_languages($request->languages,$model) ;
@@ -125,20 +125,15 @@ class SubSubjectController extends Controller
     public function update(modelUpdateRequest $request ,$id) {
         try {
             $this->ModelRepository->update( $id,Request()->all()) ;
+            $model = new ModelResource( $this->ModelRepository->findById($id) ); 
 
-            $old_model = new ModelResource( $this->ModelRepository->findById($id) );
-
-            // attach
-            if (isset($request->quiz_id) && $request->quiz_id) {
-                $this->ModelRepository->attachQuiz($request->quiz_id,$id);
-            }
-            // attach skills
-            $this->ModelRepository->attachSkills($request->skill_id,$old_model->id);
+            // quiz
+            $this->ModelRepository->attachQuiz($request->quiz_id,$id);
             
-            // new model 
-            $model = new ModelResource( $this->ModelRepository->findById($id) );
-
-            //  request languages
+            // skills
+            $this->ModelRepository->attachSkills($request->skill_ids,$model->id);
+            
+            // languages
             $this -> update_array_languages($request->languages,$model) ;
 
             // notifications
@@ -189,7 +184,9 @@ class SubSubjectController extends Controller
                         $all += array( $key => $value );
                     }
                 }
-                $this->ModelRepositoryLanguage->create( $all ) ;
+                $created_lang = $this->ModelRepositoryLanguage->create( $all ) ;
+                // attach sound
+                $this->ModelRepositoryLanguage->attachSoundas($all['sound_id'],$created_lang->id);
             }
         // lang create
 
@@ -244,7 +241,10 @@ class SubSubjectController extends Controller
                 }else{
                     $this->ModelRepositoryLanguage->create( $all ) ;
                 }
-                
+                $new_lang_row  = $this->ModelRepositoryLanguage->findById($language_model->id) ;
+                // attach sound
+                $this->ModelRepositoryLanguage->attachSoundas($all['sound_id'],$new_lang_row->id);
+
             }
         // lang update
 

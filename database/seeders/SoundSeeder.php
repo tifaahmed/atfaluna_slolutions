@@ -97,11 +97,11 @@ class SoundSeeder extends Seeder
             'record' =>'sounds/stories_en.Ogg',
         ]);  
         // // 10
-        // $sounds= Sound::create([
-        //     'id' => '5',
-        //     'name' => ' قصص',
-        //     'language' => 'ar',
-        //     'record' => 'sounds/stories.MP3',
-        // ]);      
+        $sounds= Sound::create([
+            'id' => '10',
+            'name' => ' قصص',
+            'language' => 'ar',
+            'record' => 'sounds/stories.MP3',
+        ]);      
     }
 }

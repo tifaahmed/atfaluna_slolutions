@@ -4,6 +4,7 @@ namespace App\Http\Resources\Dashboard\SubSubject;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Dashboard\SoundsResource;
 
 class SubSubjectLanguagesResource extends JsonResource
 {
@@ -22,6 +23,7 @@ class SubSubjectLanguagesResource extends JsonResource
             'name'              => $this->name,
             'description'       => $this->description,
             'language'          => $this->language,
+            'sound'          => SoundsResource::collection($this->sound),
         ];        
     }
 }

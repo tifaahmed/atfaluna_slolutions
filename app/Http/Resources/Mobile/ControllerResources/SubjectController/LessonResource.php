@@ -42,9 +42,8 @@ class LessonResource extends JsonResource
             'seen'          => ( $sub_user_lesson && $sub_user_lesson->count() ) > 0 ? 1 : 0,
 
             'have_activities' => ( $this->activities && $this->activities->count() > 0 ) ? 1 : 0 ,
-            
             'have_quizs' => $have_quizs ,
-            'have_quizs' => $have_assigments ,
+            'have_assigments' => $have_assigments ,
 
             'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
 

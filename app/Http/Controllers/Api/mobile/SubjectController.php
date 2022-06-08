@@ -77,7 +77,7 @@ class SubjectController extends Controller
                 $model->subUserSubject()->updateExistingPivot( $subject_id , ['active'=> isset($request->active[$key]) ? $request->active[$key] : 0 ] );
             }
             return $this -> MakeResponseSuccessful( 
-                [$model],
+                ['Successful'],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;

@@ -38,6 +38,7 @@ class SubSubjectResource extends JsonResource
 
             'seen'          =>  ($sub_user_sub_subject && $sub_user_sub_subject->count()) > 0 ? 1 : 0,
             'sound'               =>  ( $row && $row->sound->count() &&   Storage::disk('public')->exists($row->sound[0]->record) ) ? asset(Storage::url($row->sound[0]->record))  :  null ,
+            'sound_id'            =>  ( $row && $row->sound->count() ) ?  $row->sound[0]->id : null ,
 
             
         ];        
