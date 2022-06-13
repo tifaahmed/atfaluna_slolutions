@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Lesson;
 use App\Models\Activity_language;
 use App\Models\Sub_user_activity;
+use App\Models\Sub_user;
 
 class Activity extends Model
 {
@@ -30,8 +31,9 @@ class Activity extends Model
     public function activity_languages(){
         return $this->HasMany(Activity_language::class);
     }
-    public function sub_user_activity(){
-        return $this->HasMany(Sub_user_activity::class);
+
+    public function subUserActivity(){
+        return $this->belongsToMany(Sub_user::class, 'sub_user_activities', 'activity_id', 'sub_user_id');
     }
 }
 

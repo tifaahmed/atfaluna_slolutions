@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Mobile;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
-use Illuminate\Support\Facades\Auth;
 
 // Requests
 use App\Http\Requests\Api\Activity\ActivityApiRequest as modelInsertRequest;
@@ -70,9 +69,7 @@ class ActivityController extends Controller
     // relation
     public function attach(MobileActivityApiRequest $request){
         try {
-            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            $model->subUserActivity()->syncWithoutDetaching([   $request->sub_user_id => ['points' => $request->points] ]);
-
+            $this->ModelRepository->handleActivity($request->sub_user_id,$request->activity_id,$request->percentage) ;
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
                 'Successful'               ,
