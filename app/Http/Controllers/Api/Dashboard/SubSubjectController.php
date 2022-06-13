@@ -252,7 +252,6 @@ class SubSubjectController extends Controller
     public function collection_trash(Request $request){
         try {
             return new ModelCollection (  $this->ModelRepository->collection_trash( $request->PerPage ? $request->PerPage : 10 ) ) ;
-
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

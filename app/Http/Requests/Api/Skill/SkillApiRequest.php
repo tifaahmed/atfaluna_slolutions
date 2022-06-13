@@ -30,8 +30,10 @@ class SkillApiRequest extends FormRequest
     
             foreach ($Languages as $key => $value) {
 
-                $all += [ 'languages.'.$key.'.image'        =>  [ 'required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ] ;
-                $all += [ 'languages.'.$key.'.name'         =>  [ 'required' , 'unique:skill_languages,name' ] ] ;
+                $all += [ 'languages.'.$key.'.image_one'        =>  [ 'required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ] ;
+                $all += [ 'languages.'.$key.'.image_two'        =>  [ 'required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ] ;
+                $all += [ 'languages.'.$key.'.name'         =>  [ 'required' ] ] ;
+
                 $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name'] ] ;
             }
             return $all;

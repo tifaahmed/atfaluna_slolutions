@@ -155,7 +155,7 @@ public function update(modelInsertRequest $request ,$id) {
             public function storeLanguage($language_array ) {
                 $all = [ ];
                 foreach ($language_array as $key => $value) {
-                    if ( $key == 'image') {
+                    if ( $key == 'image_one'|| $key == 'image_two') {
                         if (isset($language_array[$key]) && $language_array[$key]) {    
                             // store the gevin file or image
                             // if zip store in folder & axtract (else) just store   
@@ -193,12 +193,19 @@ public function update(modelInsertRequest $request ,$id) {
                     $language_model  = $language_models->where('language',$language_array['language'])->first() ;
                 $all = [ ];
                 foreach ($language_array as $key => $value) {
-                    if ( $value && $key == 'image'  ) {
-
-                        $this->HelperDelete($language_model->$key); 
-
-                        if (isset($language_array[$key]) && $language_array[$key]) {            
-                            $path =  $this->HelperHandleFile($this->folder_name,$language_array[$key],$key)  ;
+                    if ( $value && $key == 'image_one' || $key == 'image_two' ) {
+                        // check file value
+                        if (isset($language_array[$key]) && $language_array[$key]) {
+                            // get the old directory
+                            if ( isset($language_model->$key) && $language_model->$key ) {
+                                $old_folder_location = $this->HelperGetDirectory($language_model->$key); 
+                                // delete the old file or image
+                                $this->HelperDelete($language_model->$key); 
+                            }
+                            $folder_location = $old_folder_location ? $old_folder_location : $this->folder_name;
+                            
+                            // store the gevin file or image
+                            $path =  $this->HelperHandleFile($folder_location,$language_array[$key],$key)  ;
                             $all += array( $key => $path );
                         }
                     }else{
@@ -250,7 +257,7 @@ public function update(modelInsertRequest $request ,$id) {
 
             // get all related language
             $language_models = $model->skill_languages()->get();
-            $language_file_key_names =['image'];
+            $language_file_key_names =['image_one','image_two'];
 
             foreach ($language_models as  $language_model) {
                 foreach ($language_file_key_names as $value) {
