@@ -19,7 +19,9 @@ class Skill_language extends Model
         'name',//required
         'language',//required ,limit 2
         'skill_id',//unsigned cascade
-        'image',// required , max:5000
+        'image_one',// required , max:5000
+        'image_two',// required , max:5000
+
     ];
     public $timestamps = false;
     //relation
