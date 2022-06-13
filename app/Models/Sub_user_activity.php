@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use App\Models\Sub_user;
 use App\Models\Activity;
 
-class Sub_user_activity extends Model
+class Sub_user_activity extends Pivot
 {
     use HasFactory;
 
