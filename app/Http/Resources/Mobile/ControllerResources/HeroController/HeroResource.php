@@ -19,20 +19,25 @@ class HeroResource extends JsonResource
      */
     public function toArray($request)
     {
-    $row=$this->hero_languages()->Localization()->RelatedLanguage($this->id)->first();
-    $basic = Basic::find(1);
+        $row=$this->hero_languages()->Localization()->RelatedLanguage($this->id)->first();
+        $basic = Basic::find(1);
 
-    $sub_user       = Auth::user()->sub_user()->find($request->sub_user_id);
-    $active_subjects = $sub_user->ActiveSubjectsFromActiveAgeGroup()->get() ;
-    $result = new Collection; // to collect all lessons
-    foreach ($active_subjects as $key => $value) {
-        $lessons = $value->lessons()->get();
-        $result = $result->merge( $lessons );
-    }	
-    $lessson_ids = $result->pluck('id')->toArray();
-
-
-    $herolesson =  $this->herolesson->whereIn('id',$lessson_ids);
+        if ($request->sub_user_id) {
+            $sub_user       = Auth::user()->sub_user()->find($request->sub_user_id);
+            $active_subjects = $sub_user->ActiveSubjectsFromActiveAgeGroup()->get() ;
+            $result = new Collection; // to collect all lessons
+            foreach ($active_subjects as $key => $value) {
+                $lessons = $value->lessons()->get();
+                $result = $result->merge( $lessons );
+            }	
+            $lessson_ids = $result->pluck('id')->toArray();
+    
+    
+            $herolesson =  $this->herolesson->whereIn('id',$lessson_ids);
+        }else {
+            $herolesson = $this->herolesson;
+        }
+       
         return [
             'id'            => $this->id,
             'title'         => $row ? $row->title:'',

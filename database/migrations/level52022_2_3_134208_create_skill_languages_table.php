@@ -15,7 +15,7 @@ class CreateSkilllanguagesTable extends Migration
     {
         Schema::create('skill_languages', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->string('name');//[note: "ex (  arabic or english or italian -...etc)"]
+            $table->string('name')->unique();//[note: "ex (  arabic or english or italian -...etc)"]
             $table->string('language');//[note: "ex ( ar-en-it-...etc)"]
             $table->string('image_one')->nullable();  // off
             $table->string('image_two')->nullable();  // on

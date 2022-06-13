@@ -15,8 +15,10 @@ class CertificateSeeder extends Seeder
      */
     public function run()
     {
+        Certificate::query()->forceDelete();
 
-        for ($i=0; $i < 6; $i++) { 
+
+        for ($i=1; $i <= 6; $i++) { 
             $folder =  storage_path('app/public/certificates/');
             if (!file_exists($folder)) {
                 File::makeDirectory($folder);
@@ -27,7 +29,7 @@ class CertificateSeeder extends Seeder
             File::copy(public_path('images/age3.png'),$folder.'age3.png');
             
             $certificate= Certificate::create( [
-                'id' => '1',
+                'id' => $i,
                 'image_one' => 'certificates/age1.jpg',
                 'image_two' => 'certificates/age2.jpg',
                 'image_three' => 'certificates/age3.png',

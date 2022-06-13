@@ -16,6 +16,8 @@ class CountrySeeder extends Seeder
      */
     public function run()
     {
+        Country::query()->forceDelete();
+
         $folder =  storage_path('app/public/country/');
         if (!file_exists($folder)) {
             File::makeDirectory($folder);

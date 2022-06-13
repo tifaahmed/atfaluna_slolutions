@@ -65,7 +65,7 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 
 	public function attachQuiz($quiz_id,$id)  
     {
-		// if($quiz_id){
+		if($quiz_id){
 			$subject = $this->findById($id); 
 			
 			$subject_quizzes =  $subject->quiz()->get();
@@ -75,6 +75,7 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 
 			$quiz =  Quiz::find($quiz_id);
 			$quiz->quizable()->associate($subject)->save();
+		}
 	}
 
 	public function attachCertificate($certificate_id,$id)  
@@ -92,12 +93,14 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 		// }
 	}
 
-	public function attachSkills($skill_id,$id)
+	public function attachSkills($skill_ids,$id)
 	{
-		if($skill_id){
+		if($skill_ids){
 			$result = $this->findById($id); 
-			return $result->skills()->sync($skill_id);
+			return $result->skills()->sync($skill_ids);
 		}
 	}
+
+	
 }
 

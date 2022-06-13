@@ -10,7 +10,8 @@ use App\Models\Quiz_language;            // HasMany
 use App\Models\Quiz_questionable;        // HasMany
 use App\Models\Sub_user_quiz;            // HasMany
 
-use App\Models\Quiz_type;             // OneToMany
+use App\Models\Quiz_type;                // belongsTo
+
 use App\Models\Notification;
 
 use App\Models\True_false_question;      // morphedByMany
@@ -28,6 +29,7 @@ class Quiz extends Model
         'minimum_requirements', // integer / default 0
         'quizable_id',//   required , integer , exists / ex  lesson_id , sub subject_id  , subject_id 
         'quizable_type',// required / ex Lesson , Sub_subject , Subject
+        'quiz_type_id'
     ];
 
     // relations
@@ -50,6 +52,10 @@ class Quiz extends Model
             public function sub_user_quizzes(){
                 return $this->HasMany(Sub_user_quiz::class);
             }
+            public function quiz_type(){
+                return $this->belongsTo(Quiz_type::class,'quiz_type_id');
+            }
+            
         // morphedByMany    
             public function mcq_questions(){
                 return $this->morphedByMany(Mcq_question::class,'questionable','quiz_questionables');

@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\SubSubject;
+namespace App\Http\Resources\Dashboard\Subject;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Dashboard\SoundsResource;
-
-class SubSubjectLanguagesResource extends JsonResource
+class SubjectLanguagesResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,10 +17,8 @@ class SubSubjectLanguagesResource extends JsonResource
     {
 
         return [
-            'image_one'             => Storage::disk('public')->exists($this->image_one) ? asset(Storage::url($this->image_one))  : null,
-            'image_two'             => Storage::disk('public')->exists($this->image_two) ? asset(Storage::url($this->image_two))  : null,
-            'name'              => $this->name,
-            'description'       => $this->description,
+            'id' => $this->id,
+            'name'             => $this->name,
             'language'          => $this->language,
             'sound'          => SoundsResource::collection($this->sound),
         ];        

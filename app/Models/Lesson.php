@@ -8,11 +8,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Lesson_type;      // belongsTo
 use App\Models\Sub_subject;      // belongsTo
+
 use App\Models\Hero;             //belongsToMany
+
 use App\Models\Lesson_language;  // HasMany
+use App\Models\Activity;         //HasMany    
+use App\Models\Sub_user_lesson;      // HasMany
+
 use App\Models\Quiz;             //morphMany    
+use App\Models\Skill;            //morphMany    
+
 use App\Models\Notification;
-use App\Models\Skill;        //morphMany    
 
 class Lesson extends Model
 {
@@ -35,7 +41,7 @@ class Lesson extends Model
             public function lesson_type(){
                 return $this->belongsTo(Lesson_type::class,'lesson_type_id');
             }
-
+            
         // belongsToMany
             public function herolesson(){
                 return $this->belongsToMany(Hero::class, 'hero_lessons', 'lesson_id','hero_id' );
@@ -45,19 +51,25 @@ class Lesson extends Model
             public function lesson_languages(){
                 return $this->HasMany(Lesson_language::class);
             }
-
+            public function activities(){
+                return $this->HasMany(Activity::class);
+            }
+            public function sub_user_lesson(){
+                return $this->HasMany(Sub_user_lesson::class);
+            }
+            
         // morphMany    
             public function quiz(){
                 return $this->morphMany(Quiz::class, 'quizable'); // assignment
             }
         //morphToMany
-        public function skills(){
-            return $this->morphToMany(Skill::class, 'skillable');
-        }
+            public function skills(){
+                return $this->morphToMany(Skill::class, 'skillable');
+            }
         // morphOne
-        public function notification(){
-            return $this->morphOne(Notification::class, 'notificable');
-        }
+            public function notification(){
+                return $this->morphOne(Notification::class, 'notificable');
+            }
 }
 
 

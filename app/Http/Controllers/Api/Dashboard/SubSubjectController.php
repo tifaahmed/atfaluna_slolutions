@@ -32,6 +32,7 @@ class SubSubjectController extends Controller
         $this->ModelRepositoryLanguage = $RepositoryLanguage;
         $this->folder_name = 'sub-subject/'.Str::random(10).time();
         $this->related_language = 'sub_subject_id';
+        $this->notification_image_name = 'image_one';
     }
     public function all(){
         try {
@@ -66,10 +67,13 @@ class SubSubjectController extends Controller
                 $this->ModelRepository->attachQuiz($request->quiz_id,$model->id);
             }
             // attach skills
-            $this->ModelRepository->attachSkills($request->skill_id,$model->id);
+            $this->ModelRepository->attachSkills($request->skill_ids,$model->id);
 
             // languages
             $this -> store_array_languages($request->languages,$model) ;
+
+            // notifications
+            $this -> notification($request->notificate,$request->notification,$model) ;
 
             return $this -> MakeResponseSuccessful( 
                 [ $model ],
@@ -121,20 +125,19 @@ class SubSubjectController extends Controller
     public function update(modelUpdateRequest $request ,$id) {
         try {
             $this->ModelRepository->update( $id,Request()->all()) ;
+            $model = new ModelResource( $this->ModelRepository->findById($id) ); 
 
-            $old_model = new ModelResource( $this->ModelRepository->findById($id) );
-
-            // attach
-            if (isset($request->quiz_id) && $request->quiz_id) {
-                $this->ModelRepository->attachQuiz($request->quiz_id,$id);
-            }
-            // attach skills
-            $this->ModelRepository->attachSkills($request->skill_id,$old_model->id);
+            // quiz
+            $this->ModelRepository->attachQuiz($request->quiz_id,$id);
             
-            // new model 
-            $model = new ModelResource( $this->ModelRepository->findById($id) );
-            //  request languages
+            // skills
+            $this->ModelRepository->attachSkills($request->skill_ids,$model->id);
+            
+            // languages
             $this -> update_array_languages($request->languages,$model) ;
+
+            // notifications
+            $this -> notification($request->notificate,$request->notification,$model) ;
 
             return $this -> MakeResponseSuccessful( 
                     [ $model],
@@ -181,7 +184,9 @@ class SubSubjectController extends Controller
                         $all += array( $key => $value );
                     }
                 }
-                $this->ModelRepositoryLanguage->create( $all ) ;
+                $created_lang = $this->ModelRepositoryLanguage->create( $all ) ;
+                // attach sound
+                $this->ModelRepositoryLanguage->attachSoundas($all['sound_id'],$created_lang->id);
             }
         // lang create
 
@@ -236,7 +241,10 @@ class SubSubjectController extends Controller
                 }else{
                     $this->ModelRepositoryLanguage->create( $all ) ;
                 }
-                
+                $new_lang_row  = $this->ModelRepositoryLanguage->findById($language_model->id) ;
+                // attach sound
+                $this->ModelRepositoryLanguage->attachSoundas($all['sound_id'],$new_lang_row->id);
+
             }
         // lang update
 
@@ -315,5 +323,15 @@ class SubSubjectController extends Controller
             }
         }
     // trash
-
+    // notifications
+    public function notification($notificate = 0,$notification_data,$model) {
+        if ($notificate && $notification_data) {
+            $image_name = $this->notification_image_name ;
+            for ($i=0; $i < count($notification_data) ; $i++) { 
+                $image = asset($model->subSubject_languages->where('language',$notification_data[$i]['lang'])->first()->$image_name);
+                $model_id = $model->id;
+            }
+            $this -> TraitNotification($notification_data,$priority='high',$image,$model_name='lesson',$model_id);
+        }
+    }
 }

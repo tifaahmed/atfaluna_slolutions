@@ -23,11 +23,11 @@ class SubjectLanguageRepository extends BaseRepository implements SubjectLanguag
 		$this->model =  $model;
 	}
 
-	public function attachSoundas($sound_id,$id)
+	public function attachSoundas($sound_id,$subject_language_id)
 	{
 		if($sound_id){
-			$result = $this->findById($id); 
-			return $result->sounds()->sync($sound_id);
+			$result = $this->findById($subject_language_id); 
+			return $result->sound()->sync($sound_id);
 		}
 	}
 

@@ -13,7 +13,7 @@ use App\Http\Requests\Api\Subject\SubjectUpdateApiRequest as modelUpdateRequest;
 
 // Resources
 use App\Http\Resources\Dashboard\Collections\SubjectCollection as ModelCollection;
-use App\Http\Resources\Dashboard\SubjectResource as ModelResource;
+use App\Http\Resources\Dashboard\Subject\SubjectResource as ModelResource;
 
 // lInterfaces
 use App\Repository\SubjectRepositoryInterface as ModelInterface;
@@ -29,6 +29,7 @@ class SubjectController extends Controller
         $this->ModelRepositoryLanguage = $RepositoryLanguage;
         $this->folder_name = 'subject/'.Str::random(10).time();
         $this->related_language = 'subject_id';
+        $this->notification_image_name = 'image';
     }
     public function all(){
         try {
@@ -72,18 +73,17 @@ class SubjectController extends Controller
                 $this->ModelRepository->attachQuiz($request->quiz_id,$model->id);
             }
     
-            // attach sounds
-            $this->ModelRepository->attachSoundas($request->sound_id,$model->id);
-
             // attach skills
-            $this->ModelRepository->attachSkills($request->skill_id,$model->id);
+            $this->ModelRepository->attachSkills($request->skill_ids,$model->id);
 
             // attach Certificate
             $this->ModelRepository->attachCertificate($request->certificate_id,$model->id);
 
-            
             // languages
             $this -> store_array_languages($request->languages,$model) ;
+
+            // notifications
+            $this -> notification($request->notificate,$request->notification,$model) ;
 
             return $this -> MakeResponseSuccessful( 
                 [ $model ],
@@ -141,7 +141,7 @@ class SubjectController extends Controller
                 $this->ModelRepository->attachQuiz($request->quiz_id,$id);
             }
             // attach skills
-            $this->ModelRepository->attachSkills($request->skill_id,$old_model->id);
+            $this->ModelRepository->attachSkills($request->skill_ids,$old_model->id);
 
             // attach Certificate
             $this->ModelRepository->attachCertificate($request->certificate_id,$old_model->id);
@@ -169,6 +169,9 @@ class SubjectController extends Controller
 
             //  request languages
             $this -> update_array_languages($request->languages,$model) ;
+
+            // notifications
+            $this -> notification($request->notificate,$request->notification,$model) ;
 
             return $this -> MakeResponseSuccessful( 
                     [ $model],
@@ -204,7 +207,10 @@ class SubjectController extends Controller
                 foreach ($language_array as $key => $value) {
                         $all += array( $key => $value );
                 }
-                $this->ModelRepositoryLanguage->create( $all ) ;
+                $created_lang = $this->ModelRepositoryLanguage->create( $all ) ;
+                // attach sound
+                $this->ModelRepositoryLanguage->attachSoundas($all['sound_id'],$created_lang->id);
+
             }
         // lang create
 
@@ -239,10 +245,14 @@ class SubjectController extends Controller
                 // for safty
                 if($language_model ){
                     $this->ModelRepositoryLanguage->update( $language_model->id,$all ) ;
+
                 }else{
                     $this->ModelRepositoryLanguage->create( $all ) ;
                 }
-                
+                $new_lang_row  = $this->ModelRepositoryLanguage->findById($language_model->id) ;
+                // attach sound
+                $this->ModelRepositoryLanguage->attachSoundas($all['sound_id'],$new_lang_row->id);
+
             }
         // lang update
 
@@ -313,4 +323,15 @@ class SubjectController extends Controller
         }
     // trash
 
+    // notifications
+    public function notification($notificate = 0,$notification_data,$model) {
+        if ($notificate && $notification_data) {
+            $image_name = $this->notification_image_name ;
+            for ($i=0; $i < count($notification_data) ; $i++) { 
+                $image = asset($model->$image_name);
+                $model_id = $model->id;
+            }
+            $this -> TraitNotification($notification_data,$priority='high',$image,$model_name='lesson',$model_id);
+        }
+    }
 }

@@ -38,7 +38,7 @@ class LessonResource extends JsonResource
 
             'skills'        => new SkillCollection($this->skills),
 
-            'quiz'       =>   new QuizCollection ($this->quiz)   ,
+            'quiz'       =>    $this->quiz    ,
 
             
         ];        

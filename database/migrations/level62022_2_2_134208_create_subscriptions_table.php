@@ -16,7 +16,6 @@ class CreateSubscriptionsTable extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->increments('id');//[pk]
             $table->integer('month_number'); //[note:'1 -3 - 6']
-            $table->integer('child_number');//[note:'1 -2 - 3']
             $table->unsignedDecimal('price');// [note:'300,5']
             $table->timestamps();
             $table->softDeletes();

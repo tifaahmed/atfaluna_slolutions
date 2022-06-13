@@ -16,6 +16,7 @@ class Basics extends Seeder
      */
     public function run()
     {
+        
         $folder =  storage_path('app/public/basics/');
         if (!file_exists($folder)) {
             File::makeDirectory($folder);
@@ -23,7 +24,7 @@ class Basics extends Seeder
 
         File::copy(public_path('images/logo.png'),$folder.'logo.png');
 
-        Basic::truncate(); 
+        Basic::query()->forceDelete();
 
         Basic::create( [
             'id' => '1',

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Age_group;
 use App\Models\Certificate;
+use App\Models\Quiz;
 
 class AgeGroupSeeder extends Seeder
 {
@@ -15,6 +16,8 @@ class AgeGroupSeeder extends Seeder
      */
     public function run()
     {
+        Age_group::query()->forceDelete();
+
         // 1
             $age_group= Age_group::create(['id' => '1', ]);
             $age_group->age_group_languages()->create( [
@@ -26,9 +29,9 @@ class AgeGroupSeeder extends Seeder
                 'language' => 'en',
             ]);
             $age_group->age()->create( [ 'age' => '3' ]); 
-            $certificate = Certificate::find(3);
+            $certificate = Certificate::find(1);
             $certificate->certificatable()->associate($age_group)->save();
-            
+
         // 2
             $age_group= Age_group::create(['id' => '2', ]);
             $age_group->age_group_languages()->create( [
@@ -40,8 +43,9 @@ class AgeGroupSeeder extends Seeder
                 'language' => 'en',
             ]);
             $age_group->age()->create( [ 'age' => '4' ]); 
-            $certificate = Certificate::find(4);
+            $certificate = Certificate::find(2);
             $certificate->certificatable()->associate($age_group)->save();
+
         // 3
             $age_group= Age_group::create(['id' => '3', ]);
             $age_group->age_group_languages()->create( [
@@ -53,8 +57,9 @@ class AgeGroupSeeder extends Seeder
                 'language' => 'en',
             ]);
             $age_group->age()->create( [ 'age' => '5' ]); 
-            $certificate = Certificate::find(9);
+            $certificate = Certificate::find(3);
             $certificate->certificatable()->associate($age_group)->save();
+
         // 4
             $age_group= Age_group::create(['id' => '4', ]);
             $age_group->age_group_languages()->create( [
@@ -66,8 +71,9 @@ class AgeGroupSeeder extends Seeder
                 'language' => 'en',
             ]);
             $age_group->age()->create( ['age' => '6' ]); 
-            $certificate = Certificate::find(10);
+            $certificate = Certificate::find(4);
             $certificate->certificatable()->associate($age_group)->save();  
+ 
         // 5
             $age_group= Age_group::create(['id' => '5', ]);
             $age_group->age_group_languages()->create( [
@@ -79,8 +85,9 @@ class AgeGroupSeeder extends Seeder
                 'language' => 'en',
             ]);
             $age_group->age()->create( ['age' => '7' ]); 
-            $certificate = Certificate::find(11);
-            $certificate->certificatable()->associate($age_group)->save();    
+            $certificate = Certificate::find(5);
+            $certificate->certificatable()->associate($age_group)->save();   
+
         // 6
             $age_group= Age_group::create(['id' => '6', ]);
             $age_group->age_group_languages()->create( [
@@ -92,8 +99,10 @@ class AgeGroupSeeder extends Seeder
                 'language' => 'en',
             ]);
             $age_group->age()->create( ['age' => '8' ]);
-            $certificate = Certificate::find(12);
+
+            $certificate = Certificate::find(6);
             $certificate->certificatable()->associate($age_group)->save();  
+
     }
 
 }

@@ -32,16 +32,39 @@ class SubjectUpdateApiRequest extends FormRequest
         // quiz
         $all += [ 'quiz_id'  =>  [ 'required' ,'integer','exists:quizzes,id'] ]  ;
 
-        // subjects        
-        $all += [ 'image'           =>  [ 'sometimes' ,'max:5000'] ]  ;
-        $all += [ 'points'          =>  [ 'required' ,'integer' ] ]  ;
-        $all += [ 'age_group_id'  =>  [ 'required' ,'integer','exists:age_groups,id'] ] ;
-        $all += [ 'sounds_id'  =>  [ 'sometimes' ,'integer','exists:sounds,id'] ]  ;
+        // certificate
+        $all += [ 'certificate_id'  =>  [ 'required' ,'integer','exists:certificates,id'] ]  ;
 
+        // skill
+        $all += [ 'skill_ids'  =>  [ 'sometimes' ,'array','exists:skills,id'] ]  ;
+
+        // age_group
+        $all += [ 'age_group_id'    =>  [ 'required' ,'integer','exists:age_groups,id'] ] ;
+
+        // subject      
+        $all += [ 'image'           =>  [ 'sometimes' ,'max:5000','mimes:jpg,jpeg,webp,bmp,png' ] ] ;
+        $all += [ 'points'          =>  [ 'required' ,'integer' ] ]  ;
+
+        // subject_languages
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.name'         =>  [ 'required' , 'max:255'  ] ] ;
+            
+            // language
             $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name'] ] ;
+            
+            // sound
+            $all += [ 'languages.'.$key.'.sound_id'  =>  [ 'required' ,'integer','exists:sounds,id'] ]  ;
         }
+
+        // notification 
+        $all += [ 'notificate'           =>  [ 'sometimes','boolean' ] ]  ;
+        foreach ($Languages as $key => $value) {
+            $all += [ 'notification.'.$key.'.title'          =>  [ 'required_if:notificate,1' , 'max:255' ] ]  ;
+            $all += [ 'notification.'.$key.'.subject'        =>  [ 'required_if:notificate,1' , 'max:255' ] ]  ;
+            $all += [ 'notification.'.$key.'.lang'           =>  [ 'required_if:notificate,1' , 'max:2' , 'exists:languages,name' ] ]  ;
+        }
+
+        
         return $all;
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\Collections;
+namespace App\Http\Resources\Mobile\Collections\ControllerResources\ActivityController;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Dashboard\Subject\SubjectResource as ModelResource;
+use App\Http\Resources\Mobile\ControllerResources\ActivityController\ActivityResource as ModelResource;
 
-class SubjectCollection  extends ResourceCollection{
+class ActivityCollection  extends ResourceCollection{
 
     public function toArray( $request ) {
         return $this -> collection -> map( fn( $model ) => new ModelResource ( $model ) );
@@ -20,4 +20,3 @@ class SubjectCollection  extends ResourceCollection{
         ];
     }
 }
-//

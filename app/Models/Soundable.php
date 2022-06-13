@@ -18,8 +18,8 @@ class Soundable extends Model
         'soundable_id',// integer ,required , exists //  ex: subjects.id 
         'soundable_type',// string , required // ex: Subjects
     ];
-    // public function soundable()
-    // {
-    //     return $this->morphTo('soundable');
-    // }
+    public function soundable()
+    {
+        return $this->morphTo('soundable');
+    }
 }

@@ -10,6 +10,7 @@ use Spatie\Permission\PermissionRegistrar;
 class RolesAndPermissionsSeeder extends Seeder {
 
     public function run( ) {
+        Role::query()->forceDelete();
 
         app( )[ PermissionRegistrar::class ] -> forgetCachedPermissions( );
 
