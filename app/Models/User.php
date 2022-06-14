@@ -93,6 +93,7 @@ class User extends Authenticatable {
         $data = ['pin_code' => $this->pin_code];
 
         $this->notify(new ActiveEmailNotification($data));
+        
     }
 
     public function sendNewItemNotification($notification_data)
