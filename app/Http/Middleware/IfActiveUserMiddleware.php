@@ -26,8 +26,8 @@ class IfActiveUserMiddleware
             return \Response::json( [
                 'message'   => 'this acount not active.' ,
                 'status'    => 'false.' ,
-                'code'      => Response::HTTP_UNAUTHORIZED           ,
-            ] + [] , Response::HTTP_UNAUTHORIZED);
+                'code'      => Response::HTTP_BAD_REQUEST           ,
+            ] + [] , Response::HTTP_BAD_REQUEST);
         }    
     }
 }

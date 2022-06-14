@@ -25,7 +25,7 @@ class TrueFalseQuestionController extends Controller
     }
     public function all(Request $request){
         try {
-            return $model = $this->ModelRepository->filterAll($request->quiz_id,$request->sub_user_id);
+            $model = $this->ModelRepository->filterAll($request->quiz_id,$request->sub_user_id);
 
             return new ModelCollection (  $model )  ;
         } catch (\Exception $e) {
@@ -39,7 +39,6 @@ class TrueFalseQuestionController extends Controller
 
 
     public function collection(Request $request){
-        // return $request->language;
         try {
             return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
 

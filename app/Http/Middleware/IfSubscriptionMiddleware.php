@@ -31,8 +31,8 @@ class IfSubscriptionMiddleware
                 return \Response::json( [
                     'message'   => 'child subscription has ended' ,
                     'status'    => 'false.' ,
-                    'code'      => Response::HTTP_UNAUTHORIZED           ,
-                ] + [] , Response::HTTP_UNAUTHORIZED);
+                    'code'      => Response::HTTP_BAD_REQUEST           ,
+                ] + [] , Response::HTTP_BAD_REQUEST);
             
         }
         }else{
