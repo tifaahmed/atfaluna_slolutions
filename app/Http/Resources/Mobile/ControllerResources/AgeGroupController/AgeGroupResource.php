@@ -23,9 +23,6 @@ class AgeGroupResource extends JsonResource
         $all=[];
         $all += [ 'id'     =>  $this->id ]  ;
         $all += [ 'name'     =>  $row ? $row->name:'' ]  ;
-        // $all += [ 'created_at'     =>  $this->created_at ?   $this->created_at->format('d/m/Y') : null ]  ;
-        // $all += [ 'updated_at'     =>  $this->updated_at ?   $this->updated_at->format('d/m/Y') : null ]  ;
-        // $all += [ 'deleted_at'     =>  $this->updated_at ?   $this->updated_at->format('d/m/Y') : null ]  ;
         $all += [ 'subjects'     =>  new SubjectCollection ($this->subjects) ]  ;
         $all += [ 'certification'     =>  new CertificateResource ($this->certificate) ]  ;
 
