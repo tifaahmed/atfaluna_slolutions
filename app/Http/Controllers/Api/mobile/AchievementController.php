@@ -14,8 +14,8 @@ use App\Http\Requests\Api\Achievement\AchievementUpdateApiRequest as modelUpdate
 use App\Http\Requests\Api\Achievement\MobileAchievementApiRequest;
 
 // Resources
-use App\Http\Resources\Mobile\Collections\Achievement\AchievementCollection as ModelCollection;
-use App\Http\Resources\Mobile\Achievement\AchievementResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\ControllerResources\AchievementController\AchievementCollection as ModelCollection;
+use App\Http\Resources\Mobile\ControllerResources\AchievementController\AchievementResource as ModelResource;
 
 // lInterfaces
 use App\Repository\AchievementRepositoryInterface as ModelInterface;

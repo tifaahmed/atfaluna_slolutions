@@ -210,7 +210,12 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
 
     
     Route::group(['middleware' => ['auth:api','IfActiveUser','IfAuthChild']], fn ( ) : array => [
-
+        //skill
+        Route::name('skill.')->prefix('/skill')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'SkillController@all'                 )->name('all'),
+            Route::get('/{id}/show'                 ,   'SkillController@show'                )->name('show'),
+            Route::get('/collection'                ,   'SkillController@collection'          )->name('collection'),
+        ]),
         // subscription
         Route::name('subscription.')->prefix('/subscription')->group( fn ( ) : array => [
             Route::get('/'              ,   'SubscriptionController@all'                 )->name('all'),
@@ -376,12 +381,6 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::get('/'                          ,   'HeroController@all'                 )    ->name('all'),
             Route::get('/{id}/show'                 ,   'HeroController@show'                )->name('show'),
             Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
-        ]),
-        //skill
-        Route::name('skill.')->prefix('/skill')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'SkillController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'SkillController@show'                )->name('show'),
-            Route::get('/collection'                ,   'SkillController@collection'          )->name('collection'),
         ]),
         // Lesson
         Route::name('lesson.')->prefix('/lesson')->group( fn ( ) : array => [

@@ -21,12 +21,6 @@ class AchievementResource extends JsonResource
             'id'            => $this->id,
             'name'          => $row ? $row->name:'',
             'description'   => $row ? $row->description:'',
-            'language'      => $row ? $row->language:'',
-            'languages'      => $this->achievement_languages,
-
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
 
         ];        
     }
