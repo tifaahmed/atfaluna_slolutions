@@ -62,7 +62,7 @@ class CertificateResource extends JsonResource
             }
 
             $all += [ 'achive_level'    =>  $achive_level   ]  ;
-            $all += [ 'achive_points'   => $achive_points   ]  ;
+            $all += [ 'achive_points'   => ( $achive_points >= $this->max_point ) ? $this->max_point : $achive_points   ]  ;
             $all += [ 'end_point'       => $end_point       ]  ;
             $all += [ 'image'           =>  $image          ]  ;
 

@@ -12,7 +12,6 @@ class QuestionAttempt extends Model
     public $guarded = ['id'];
 
     protected $table = 'question_attempts';
-    public $timestamps = false;
 
     protected $fillable = [
         'quiz_attempt_id',//required integer

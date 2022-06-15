@@ -13,7 +13,6 @@ class QuizAttempt extends Model
     public $guarded = ['id'];
 
     protected $table = 'quiz_attempts';
-    public $timestamps = false;
 
     protected $fillable = [
         'sub_user_quiz_id',//required integer

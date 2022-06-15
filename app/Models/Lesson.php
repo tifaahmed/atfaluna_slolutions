@@ -10,10 +10,10 @@ use App\Models\Lesson_type;      // belongsTo
 use App\Models\Sub_subject;      // belongsTo
 
 use App\Models\Hero;             //belongsToMany
+use App\Models\Sub_user;         // belongsToMany
 
 use App\Models\Lesson_language;  // HasMany
 use App\Models\Activity;         //HasMany    
-use App\Models\Sub_user_lesson;      // HasMany
 
 use App\Models\Quiz;             //morphMany    
 use App\Models\Skill;            //morphMany    
@@ -54,10 +54,10 @@ class Lesson extends Model
             public function activities(){
                 return $this->HasMany(Activity::class);
             }
-            public function sub_user_lesson(){
-                return $this->HasMany(Sub_user_lesson::class);
+            public function subUserLesson(){
+                return $this->belongsToMany(Sub_user::class, 'sub_user_lessons', 'lesson_id', 'sub_user_id');
             }
-            
+
         // morphMany    
             public function quiz(){
                 return $this->morphMany(Quiz::class, 'quizable'); // assignment

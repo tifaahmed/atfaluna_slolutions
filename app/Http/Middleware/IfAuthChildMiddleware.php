@@ -26,8 +26,8 @@ class IfAuthChildMiddleware
                 return \Response::json( [
                     'message'   => 'not child for the authenticated parent.' ,
                     'status'    => 'false.' ,
-                    'code'      => Response::HTTP_UNPROCESSABLE_ENTITY           ,
-                ] + [] , Response::HTTP_UNPROCESSABLE_ENTITY);
+                    'code'      => Response::HTTP_BAD_REQUEST           ,
+                ] + [] , Response::HTTP_BAD_REQUEST);
             }
         }else{
             return $next($request);

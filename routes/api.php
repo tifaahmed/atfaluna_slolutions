@@ -251,27 +251,21 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::get('/collection'                ,   'QuizAttemptController@collection'          )->name('collection'),
             Route::DELETE('/{id}'                   ,   'SubUserController@destroy'                 )->name('destroy'),
         ]),
-        //McqQuestion
-        Route::name('mcq-question.')->prefix('/mcq-question')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'McqQuestionController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'McqQuestionController@show'                )->name('show'),
-            Route::get('/collection'                ,   'McqQuestionController@collection'          )->name('collection'),
-            Route::post('/attach'                   ,   'McqQuestionController@attach'              )->name('attach'),
-        ]),
-        //True_false_question
-        Route::name('true-false-question.')->prefix('/true-false-question')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'TrueFalseQuestionController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'TrueFalseQuestionController@show'                )->name('show'),
-            Route::get('/collection'                ,   'TrueFalseQuestionController@collection'          )->name('collection'),
-            Route::post('/attach'                    ,   'TrueFalseQuestionController@attach'              )->name('attach'),
-        ]),
-        // quiz
+        // //McqQuestion
+        // Route::name('mcq-question.')->prefix('/mcq-question')->group( fn ( ) : array => [
+        //     Route::get('/'                          ,   'McqQuestionController@all'                 )->name('all'),
+        //     Route::get('/{id}/show'                 ,   'McqQuestionController@show'                )->name('show'),
+        //     Route::get('/collection'                ,   'McqQuestionController@collection'          )->name('collection'),
+        //     Route::post('/attach'                   ,   'McqQuestionController@attach'              )->name('attach'),
+        // ]),
+        // //True_false_question
+        // Route::name('true-false-question.')->prefix('/true-false-question')->group( fn ( ) : array => [
+        //     Route::get('/'                          ,   'TrueFalseQuestionController@all'                 )->name('all'),
+        //     Route::get('/{id}/show'                 ,   'TrueFalseQuestionController@show'                )->name('show'),
+        //     Route::get('/collection'                ,   'TrueFalseQuestionController@collection'          )->name('collection'),
+        //     Route::post('/attach'                    ,   'TrueFalseQuestionController@attach'              )->name('attach'),
+        // ]),
 
-        Route::name('quiz.')->prefix('/quiz')->group( fn ( ) : array => [
-            Route::post('/start-quiz'                   ,   'QuizController@startQuiz'              )->name('start-quiz'),
-            Route::post('/answer-question'                   ,   'QuizController@answerQuestion'              )->name('start-question'),
-            Route::post('/finish-quiz'                   ,   'QuizController@finishQuiz'              )->name('finish-question'),
-        ]), 
         // avatar
         Route::name('avatar.')->prefix('/avatar')->group( fn ( ) : array => [
             Route::post('/attach'            ,   'AvatarController@attach'              )->name('attach'),
@@ -318,20 +312,6 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::post('/attach'       ,   'CertificateController@attach'   )->name('attach'),
             Route::post('/detach'       ,   'CertificateController@detach'   )->name('detach'),
         ]),   
-        //Quiz
-            Route::name('quiz.')->prefix('/quiz')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'QuizController@all'                 )->name('all'),
-                Route::get('/{id}/show'                 ,   'QuizController@show'                )->name('show'),
-                Route::get('/collection'                ,   'QuizController@collection'          )->name('collection'),
-            ]), 
-        // Activity
-        Route::name('activity.')->prefix('/activity')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'ActivityController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'ActivityController@show'                )->name('show'),
-            Route::get('/collection'                ,   'ActivityController@collection'          )->name('collection'),
-            Route::post('/attach'                   ,   'ActivityController@attach'              )->name('attach'),
-
-        ]),
         //Sub-subject
         Route::name('sub-subject.')->prefix('/sub-subject')->group( fn ( ) : array => [
             Route::get('/'                          ,   'SubSubjectController@all'                 )->name('all'),
@@ -415,7 +395,23 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::get('/'                          ,   'HeroController@all'                 )    ->name('all'),
             Route::get('/{id}/show'                 ,   'HeroController@show'                )->name('show'),
             Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
+        ]),
+        //Quiz
+        Route::name('quiz.')->prefix('/quiz')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'QuizController@all'                 )->name('all'),
+            Route::get('/{id}/show'                 ,   'QuizController@show'                )->name('show'),
+            Route::get('/collection'                ,   'QuizController@collection'          )->name('collection'),
 
+            Route::post('/start-quiz'                   ,   'QuizController@startQuiz'              )->name('start-quiz'),
+            Route::post('/answer-question'                   ,   'QuizController@answerQuestion'              )->name('start-question'),
+            Route::post('/finish-quiz'                   ,   'QuizController@finishQuiz'              )->name('finish-question'),
+        ]), 
+        // Activity
+        Route::name('activity.')->prefix('/activity')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'ActivityController@all'                 )->name('all'),
+            Route::get('/{id}/show'                 ,   'ActivityController@show'                )->name('show'),
+            Route::get('/collection'                ,   'ActivityController@collection'          )->name('collection'),
+            Route::post('/attach'                   ,   'ActivityController@attach'              )->name('attach'),
         ]),
     ]),
 
