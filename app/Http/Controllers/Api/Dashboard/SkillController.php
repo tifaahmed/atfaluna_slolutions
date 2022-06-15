@@ -197,6 +197,7 @@ public function update(modelInsertRequest $request ,$id) {
                         // check file value
                         if (isset($language_array[$key]) && $language_array[$key]) {
                             // get the old directory
+                            $old_folder_location = null ;
                             if ( isset($language_model->$key) && $language_model->$key ) {
                                 $old_folder_location = $this->HelperGetDirectory($language_model->$key); 
                                 // delete the old file or image

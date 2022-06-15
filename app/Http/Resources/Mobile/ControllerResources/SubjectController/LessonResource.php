@@ -22,7 +22,7 @@ class LessonResource extends JsonResource
         $row=$this->lesson_languages()->Localization()->RelatedLanguage($this->id)->first();
         $basic = Basic::find(1);
 
-        $sub_user_lesson = isset($request->sub_user_id) ? $this->sub_user_lesson->where('sub_user_id',$request->sub_user_id) : null ;
+        $sub_user_lesson = isset($request->sub_user_id) ? $this->subUserLesson()->where('sub_user_id',$request->sub_user_id)->withPivot('points')->first() : null ;
         
         $have_assigments = 0;
         $have_quizs = 0;
@@ -34,12 +34,13 @@ class LessonResource extends JsonResource
         return [
             'id'            => $this->id,
             'name'          => $row ? $row->name:'',
-            'points'        =>  $this->points,
 
             'image'         =>( $row && $row->image_one && Storage::disk('public')->exists($row->image_one) )? asset(Storage::url($row->image_one))  : asset(Storage::url($basic->item)),
             'url'           =>( $row && $row->url       && Storage::disk('public')->exists($row->url) )? asset(Storage::url($row->url))  : asset(Storage::url($basic->item)),
-
-            'seen'          => ( $sub_user_lesson && $sub_user_lesson->count() ) > 0 ? 1 : 0,
+            
+            'points'        =>  $this->points,
+            'achive_points' =>  ( $sub_user_lesson  && $sub_user_lesson->pivot ) ? $sub_user_lesson->pivot->points : 0  ,
+            'seen'          =>  $sub_user_lesson  ? 1 : 0,
 
             'have_activities' => ( $this->activities && $this->activities->count() > 0 ) ? 1 : 0 ,
             'have_quizs' => $have_quizs ,
