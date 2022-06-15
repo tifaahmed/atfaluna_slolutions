@@ -45,7 +45,7 @@ class SkillResource extends JsonResource
             'name'               => $row ? $row->name:'',
 
             'image'          => 
-                ( $seen ) ? 
+                ( !$seen ) ? 
                     ( 
                         ( $row && $row->image_one && Storage::disk('public')->exists($row->image_one) )? 
                         asset(Storage::url($row->image_one))  
@@ -60,7 +60,7 @@ class SkillResource extends JsonResource
                         asset(Storage::url($basic->item)) 
                     ) 
             ,
-           
+            'taken'               => $seen ? 1:0,
             // 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             // 'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,

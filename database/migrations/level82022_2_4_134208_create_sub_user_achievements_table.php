@@ -17,9 +17,9 @@ class CreateSubUserAchievementsTable extends Migration
             $table->increments('id');//[pk]
             $table->integer('points')->default('0');//[note: "ex ( 5 - 6)"]
             $table->integer('sub_user_id')->unsigned();
-            $table->foreign('sub_user_id')->references('id')->on('sub_users');
+            $table->foreign('sub_user_id')->references('id')->on('sub_users')->onDelete('cascade');
             $table->integer('achievement_id')->unsigned();
-            $table->foreign('achievement_id')->references('id')->on('achievements');
+            $table->foreign('achievement_id')->references('id')->on('achievements')->onDelete('cascade');
         });
     }
     

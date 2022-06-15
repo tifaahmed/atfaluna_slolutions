@@ -19,7 +19,7 @@ class CreateAchievementlanguagesTable extends Migration
             $table->string('description')->nullable();//[note: "ex (  arabic or english or italian -...etc)"]
             $table->string('language',2);//[note: "ex ( ar-en-it-...etc)"]
             $table->integer('achievement_id')->unsigned();
-            $table->foreign('achievement_id')->references('id')->on('achievements');
+            $table->foreign('achievement_id')->references('id')->on('achievements')->onDelete('cascade');
         });
     }
     /**

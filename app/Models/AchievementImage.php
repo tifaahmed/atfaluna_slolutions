@@ -12,14 +12,13 @@ class AchievementImage extends Model
     use HasFactory,SoftDeletes;
     public $guarded = ['id'];
 
-    protected $table = 'achivement_images';
+    protected $table = 'achievement_images';
 
     protected $fillable = [
     'image_one',//nullable , max:5000
     'image_two',//nullable , max:5000
     'points',//default('0');//[note: "ex ( 5 - 6)"]
     'achievement_id', //unsigned cascade 
-
     ];
 
     // relations

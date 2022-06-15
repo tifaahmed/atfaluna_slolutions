@@ -1,11 +1,9 @@
 <?php
-
-namespace App\Http\Resources\Dashboard\Achievement;
+namespace App\Http\Resources\Mobile\ControllerResources\AchievementController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-
-use App\Http\Resources\Dashboard\Achievement\AchievementImageResource;
+use App\Http\Resources\Mobile\ControllerResources\AchievementController\AchievementImageResource ;
 
 class AchievementResource extends JsonResource
 {
@@ -24,13 +22,8 @@ class AchievementResource extends JsonResource
             'name'          => $row ? $row->name:'',
             'description'   => $row ? $row->description:'',
             'language'      => $row ? $row->language:'',
-            'languages'      => $this->achievement_languages,
-            'achivement_images'       => AchievementImageResource::collection($this->achivementImages),
 
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-
+            'achivement_images'      => AchievementImageResource::collection($this->achivementImages),
         ];        
     }
 }
