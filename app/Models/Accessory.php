@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Accessory_language;
+use App\Models\Sub_user_accessory;
 
 class Accessory extends Model
 {
@@ -21,5 +22,7 @@ class Accessory extends Model
     public function accessory_languages(){
         return $this->HasMany(Accessory_language::class);
     }
-
+    public function Sub_user_accessory(){
+        return $this->HasMany(Sub_user_accessory::class);
+    }
 }

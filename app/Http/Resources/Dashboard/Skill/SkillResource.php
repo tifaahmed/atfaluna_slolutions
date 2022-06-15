@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\Skill;
+namespace App\Http\Resources\Dashboard\Lesson;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Dashboard\Collections\Lesson\LessonCollection;
+use App\Http\Resources\Dashboard\LessonTypeResource;
 
-use App\Http\Resources\Dashboard\Collections\Skill\SkillLanguagesCollection;
+use App\Http\Resources\Dashboard\Collections\Lesson\LessonLanguagesCollection;
+use App\Http\Resources\Dashboard\Collections\Quiz\QuizCollection;
+use App\Http\Resources\Dashboard\Collections\Skill\SkillCollection ;
 
-class SkillResource extends JsonResource
+
+class LessonResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,21 +20,29 @@ class SkillResource extends JsonResource
      */
     public function toArray($request)
     {
-    $row=$this->skill_languages()->Localization()->RelatedLanguage($this->id)->first();
+    $row=$this->lesson_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'            => $this->id,
+            'points'        =>  $this->points,
 
-            'name'          => $row ? $row->name:'',
-            // 'languages'     => $this->skill_languages,
-
-            'languages'     => new SkillLanguagesCollection ( $this->skill_languages ),
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            // 'lessons'        => new LessonCollection ($this->herolesson)  ,
+            'languages'     => new LessonLanguagesCollection ( $this->lesson_languages ),
+            'name'          => $row ? $row->name:'',
+            
+            'sub_subject'   => $this->subSubject   ,
+            'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
+            'skill'         => $this->skill  ,
 
+
+            'skills'        => new SkillCollection($this->skills),
+
+            'quiz'       =>    $this->quiz    ,
+
+            
         ];        
     }
 }

@@ -4,6 +4,7 @@ namespace App\Repository\Eloquent;
 
 use App\Models\Accessory as ModelName;
 use App\Repository\AccessoryRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 class AccessoryRepository extends BaseRepository implements AccessoryRepositoryInterface
 {
@@ -21,10 +22,5 @@ class AccessoryRepository extends BaseRepository implements AccessoryRepositoryI
 	{
 		$this->model =  $model;
 	}
-
-
-
-
 	
 }
-

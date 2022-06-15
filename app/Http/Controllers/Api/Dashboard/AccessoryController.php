@@ -20,8 +20,6 @@ use Illuminate\Support\Str;
     use App\Repository\AccessoryRepositoryInterface as ModelInterface;
     use App\Repository\AccessoryLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages
 
-
-
     class AccessoryController extends Controller
     {
         private $Repository;

@@ -4,7 +4,6 @@ namespace App\Http\Resources\Mobile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-
 use App\Models\Basic;
 
 class AccessoryResource extends JsonResource
@@ -19,7 +18,6 @@ class AccessoryResource extends JsonResource
     {
         $basic = Basic::find(1);
         $row=$this->accessory_languages()->Localization()->RelatedLanguage($this->id)->first();
-    
         return [
 
             'id'            => $this->id,

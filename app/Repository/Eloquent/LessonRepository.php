@@ -155,7 +155,6 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 			$subject_certificate = $subject->certificate()->first();
 			$age_group_certificate = $age_group->certificate()->first();
 
-
 			$subUserLesson =   $sub_user->subUserLesson()->where('lesson_id',$lesson_id)->first();
 
 			// if subUser did not watch the lesson before

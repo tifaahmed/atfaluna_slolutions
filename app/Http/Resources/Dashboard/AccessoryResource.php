@@ -21,8 +21,8 @@ class AccessoryResource extends JsonResource
             'id'            => $this->id,
 
             'name'          => $row ? $row->name:'',
-
-            'image'         => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
+            
+            'image'        => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
 
             'price'         => $this->price,
             
