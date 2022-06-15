@@ -154,6 +154,39 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 			$subject_certificate = $subject->certificate()->first();
 			$age_group_certificate = $age_group->certificate()->first();
 
+<<<<<<< HEAD
+			$subUserLesson =   $sub_user->subUserLesson()->where('lesson_id',$lesson_id)->first();
+
+			// if subUser did not watch the lesson before
+			if (!$subUserLesson) {
+
+				// gave the child (lesson points) in sub_users table 
+				// run 1 F..
+				$this->gaveChildPoints($sub_user,$received_lesson_points);
+				
+				// add row in subUserCertificates table // attach & register points
+				// run 1 F..
+				$subject_certificate ? $this->attachRegisterCertificate($sub_user,$received_lesson_points,$subject_certificate->id) : null;
+				
+				// add row in subUserCertificates table // attach & register points
+				// run 1 F..
+				$age_group_certificate ? $this->attachRegisterCertificate($sub_user,$received_lesson_points,$age_group_certificate->id) : null;
+				
+				// add row in subUserLessons table // attach & register points
+				// run 1 F..
+				$this->attachRegisterLessson($sub_user,$lesson->id,$received_lesson_points);
+				
+				// if sub Subject Condition is true run  attachRegisterSubSubject F..  (add sub subject row with point & gave sub subject point to the child)
+				// add the point in the subject & age_group Certification
+				// run 4 F..
+				$this->AttachRegisterSubSubjectCondition($sub_subject,$sub_user,$subject_certificate,$age_group_certificate);
+
+				// if SubjectCondition is true run RegisterSubject F.. (register point of subject to the child   & gave subject point to the child)
+				// add the point in the subject & age_group Certification
+				// run 4 F..
+				$this->RegisterSubjectCondition($subject,$sub_user,$subject_certificate,$age_group_certificate);
+
+=======
 			// calculate lesson point from percentage to number ( 00.0% to 0 )
 			$lesson_points = $this->calculateFromPercentageToPoints($lesson->points,$percentage); 
 
@@ -211,6 +244,7 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 					$this->attachRegisterLessson($sub_user,$lesson->id,$lesson_points);
 					
 				}
+>>>>>>> 6a3b69adfc5ecb834b2a89bda4a5302e20cbb38a
 			}
 		}
 

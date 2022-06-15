@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Api\Accessory\MobileAccessoryApiRequest;
 
 // Resources
-use App\Http\Resources\Mobile\Collections\AccessoryCollection as ModelCollection;
-use App\Http\Resources\Mobile\AccessoryResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\ControllerResources\AccessoryController\AccessoryCollection as ModelCollection;
 
 // lInterfaces
 use App\Repository\AccessoryRepositoryInterface as ModelInterface;
@@ -48,28 +47,11 @@ class AccessoryController extends Controller
             );
         }
     }
-    public function show($id) {
-        try {
-            return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($id) )  ],
-                'Successful',
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
         // relation
     public function attach(MobileAccessoryApiRequest $request){
         try {
             $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            // foreach ($request->accessory_id as $key => $value) {
-                $model->subUserAccessory()->syncWithoutDetaching($request->accessory_ids);
-            // }
+                $model->subUserAccessory()->syncWithoutDetaching($request->accessory_id);
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
                 'Successful'               ,
@@ -83,23 +65,5 @@ class AccessoryController extends Controller
             );
         }
     }
-    public function  detach(MobileAccessoryApiRequest $request){
-        try {
-            $model = Auth::user()->sub_user()->find($request->sub_user_id); 
-            $model->subUserAccessory()->detach($request->accessory_id);
 
-            return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($request->accessory_id) )  ],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
     }
-
-}
