@@ -22,5 +22,5 @@ class AccessoryRepository extends BaseRepository implements AccessoryRepositoryI
 	{
 		$this->model =  $model;
 	}
-	
+
 }

@@ -121,6 +121,12 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
                 Route::get('/{id}/show'                 ,   'StoreController@show'                )->name('show'),
                 Route::get('/collection'                ,   'StoreController@collection'          )->name('collection'),
             ]),
+            // skin
+            Route::name('skin.')->prefix('/skin')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'SkinController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'SkinController@show'                )->name('show'),
+                Route::get('/collection'                ,   'SkinController@collection'          )->name('collection'),
+            ]),
         // Country
             Route::name('country.')->prefix('/country')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'CountryController@all'                 )->name('all'),

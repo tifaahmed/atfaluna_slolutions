@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Mobile;
+namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
-class SubUserAchievementResource extends JsonResource
+class AccessoryTypeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,11 +15,10 @@ class SubUserAchievementResource extends JsonResource
      */
     public function toArray($request)
     {
-
         return [
-            'id'                      => $this->id,
-            'sub_user_id'             => $this->sub_user_id,
-            'achievement_id'          => $this->achievement_id,
+            'id'            => $this->id,
+
+            'name'         => $this->name,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

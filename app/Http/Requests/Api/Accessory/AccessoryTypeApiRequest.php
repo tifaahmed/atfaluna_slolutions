@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api\SubUserAchievement;
+namespace App\Http\Requests\Api\Accessory;
 
 use Illuminate\Foundation\Http\FormRequest;
-class SubUserAchievementUpdateApiRequest extends FormRequest
+use Illuminate\Validation\Rule;
+
+class AccessoryTypeApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +25,7 @@ class SubUserAchievementUpdateApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'achievement_ids'       =>  [ 'required' ,'array' ,'exists:achievements,id'] ,
-            'sub_user_id'           =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,
+            'name'       =>  [ 'required' ] ,
         ];
     }
 }

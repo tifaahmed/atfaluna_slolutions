@@ -38,7 +38,7 @@ class SubUserResource extends JsonResource
         //Subject
             'subjects'     => new SubjectCollection ($this->subUserSubject)  ,
         //Sub_Subject
-            'sub_subjects'     => new SubSubjectCollection ($this->subUserSubSubject)  ,
+            'sub_subjects'  => new SubSubjectCollection ($this->subUserSubSubject)  ,
         //Lesson
             'lessons'      => new LessonCollection ($this->subUserLesson)  ,
         //Quiz

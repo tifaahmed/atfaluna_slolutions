@@ -17,6 +17,7 @@ class CreateSkilllanguagesTable extends Migration
             $table->increments('id');//[pk]
             $table->string('name')->unique();//[note: "ex (  arabic or english or italian -...etc)"]
             $table->string('language');//[note: "ex ( ar-en-it-...etc)"]
+            $table->string('description');//[note: "ex ( ar-en-it-...etc) , 'not null'"]
             $table->string('image_one')->nullable();  // off
             $table->string('image_two')->nullable();  // on
             $table->integer('skill_id')->unsigned();

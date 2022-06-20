@@ -17,6 +17,9 @@ class Accessory extends Model
     protected $fillable = [
         'image',//required , max:5000
         'price',//required , unsignedDecimal
+        'gender',//required , enum ,['girl','boy','both']
+        'type',//required 
+
     ];
     //relation
     public function accessory_languages(){

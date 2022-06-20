@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubUseravatarsTable extends Migration
+class CreateSkinsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,17 @@ class CreateSubUseravatarsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_user_avatars', function (Blueprint $table) {
+        Schema::create('skins', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->integer('sub_user_id')->unsigned();
-            $table->foreign('sub_user_id')->references('id')->on('sub_users')->onDelete('cascade');
+            $table->string('image');
+            $table->unsignedDecimal('price') -> default (0); //[not null]
+            $table->boolean('original') -> default (0) ;
+
             $table->integer('avatar_id')->unsigned();
             $table->foreign('avatar_id')->references('id')->on('avatars')->onDelete('cascade');
+
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
     /**
@@ -28,8 +33,7 @@ class CreateSubUseravatarsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_user_avatars');
+        Schema::dropIfExists('skins');
     }
 
 }
-

@@ -2,10 +2,10 @@
 
 namespace App\Repository\Eloquent;
 
-use App\Models\Sub_user_achievement as ModelName;
-use App\Repository\SubUserAchievementRepositoryInterface;
+use App\Models\AccessoryType as ModelName;
+use App\Repository\AccessoryTypeRepositoryInterface;
 
-class SubUserAchievementRepository extends BaseRepository implements SubUserAchievementRepositoryInterface
+class AccessoryTypeRepository extends BaseRepository implements AccessoryTypeRepositoryInterface
 {
 
 	/**
@@ -23,4 +23,3 @@ class SubUserAchievementRepository extends BaseRepository implements SubUserAchi
 	}
 
 }
-

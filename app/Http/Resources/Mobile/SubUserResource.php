@@ -47,7 +47,6 @@ class SubUserResource extends JsonResource
             'user'         => $this->user,
 
             'accessories'    => new AccessoryCollection ($this->subUserAccessory)  ,
-            'avatars'        => new AvatarCollection ($this->subUserAvatar)  ,
             'avatar'        => new AvatarResource ($this->avatar)  ,
             'certificates'    => new CertificateCollection ($this->subUserCertificate)  ,
             'quizs'          => new QuizCollection ($this->subUserQuiz)  ,

@@ -65,5 +65,4 @@ class AccessoryController extends Controller
             );
         }
     }
-
-    }
+}

@@ -91,7 +91,6 @@ class AvatarRepository extends BaseRepository implements AvatarRepositoryInterfa
 			return $this->paginate($result,$itemsNumber,null,URL::full());
 		}
 		
-
     }
 
     public function paginate($items, $perPage = 10, $page = null, $baseUrl = null, $options = [])
