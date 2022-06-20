@@ -175,7 +175,7 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 	}
 
 	public function RegisterQuizAttemptScoreAndCloseQuestions($quiz_attempt_open){
-      
+	
 		//  get the open quiz attempt . questions     (get)
 		$all_question_attempts = $quiz_attempt_open->question_attempts();
 		//  get the open quiz attempt .correct questions   (get) 

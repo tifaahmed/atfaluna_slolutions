@@ -99,6 +99,12 @@ namespace App\Providers;
     use App\Repository\Eloquent\ActivityLanguageRepository;
     use App\Repository\Eloquent\SubUserActivityRepository;
 
+    use App\Repository\Eloquent\SkinRepository;
+    use App\Repository\Eloquent\SkinLanguageRepository;
+    use App\Repository\Eloquent\SubUserSkinRepository;
+    use App\Repository\Eloquent\AccessorySkinRepository;
+    use App\Repository\Eloquent\AccessoryTypeRepository;
+
     // Role  Permission
         use App\Repository\Eloquent\RolePermissionRepository\PermissionRepository;
         use App\Repository\Eloquent\RolePermissionRepository\RoleRepository;
@@ -204,6 +210,12 @@ namespace App\Providers;
     use App\Repository\ActivityRepositoryInterface;
     use App\Repository\ActivityLanguageRepositoryInterface;
     use App\Repository\SubUserActivityRepositoryInterface;
+
+    use App\Repository\SkinRepositoryInterface;
+    use App\Repository\SkinLanguageRepositoryInterface;
+    use App\Repository\SubUserSkinRepositoryInterface;
+    use App\Repository\AccessorySkinRepositoryInterface;
+    use App\Repository\AccessoryTypeRepositoryInterface;
 
     // Role  Permission   
     use App\Repository\RolePermissionInterface\PermissionRepositoryInterface;
@@ -340,6 +352,14 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(SoundableRepositoryInterface::class,SoundableRepository::class);
         $this->app->bind(SoundsRepositoryInterface::class,SoundsRepository::class);
 
+        // Skin
+        $this->app->bind(SkinRepositoryInterface::class,SkinRepository::class);
+        $this->app->bind(SkinLanguageRepositoryInterface::class,SkinLanguageRepository::class);
+        $this->app->bind(SubUserSkinRepositoryInterface::class,SubUserSkinRepository::class);
+        $this->app->bind(AccessorySkinRepositoryInterface::class,AccessorySkinRepository::class);
+        $this->app->bind(AccessoryTypeRepositoryInterface::class,AccessoryTypeRepository::class);
+
+    
         // Role  Permission
         $this->app->bind(PermissionRepositoryInterface::class,PermissionRepository::class);
         $this->app->bind(RoleRepositoryInterface::class,RoleRepository::class);

@@ -15,9 +15,7 @@ class CreateAvatarsTable extends Migration
     {
         Schema::create('avatars', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->enum('type',['girl','boy']); //[note: 'boys or girls or animals '] 
-            $table->string('image');
-            $table->unsignedDecimal('price', 8, 2)->default(0);
+            $table->enum('type',['girl','boy','both']); //[note: 'boys or girls or both '] 
             $table->timestamps();
             $table->softDeletes();
         });

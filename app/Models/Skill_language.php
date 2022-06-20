@@ -18,6 +18,7 @@ class Skill_language extends Model
     protected $fillable = [
         'name',//required
         'language',//required ,limit 2
+        'description',
         'skill_id',//unsigned cascade
         'image_one',// required , max:5000
         'image_two',// required , max:5000

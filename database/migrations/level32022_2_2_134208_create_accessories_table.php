@@ -17,6 +17,8 @@ class CreateAccessoriesTable extends Migration
             $table->increments('id');//[pk]
             $table->string('image'); //[not null]
             $table->unsignedDecimal('price'); //[not null]
+            $table->string('type'); //[not null]
+            $table->enum('gender',['girl','boy','both']); //[note: 'boys or girls or both '] 
             $table->timestamps();
             $table->softDeletes();
         });

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api\SubUserAchievement;
+namespace App\Http\Requests\Api\Skin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class SubUserAchievementApiRequest extends FormRequest
+class MobileSkinApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +25,8 @@ class SubUserAchievementApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'achievement_ids'       =>  [ 'required' ,'array' ,'exists:achievements,id'] ,
-            'sub_user_id'           =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,
+            'skin_id'            =>  [ 'required' ,'integer' ,'exists:skins,id'] ,
+            'sub_user_id'        =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,
         ];
     }
-
 }
-

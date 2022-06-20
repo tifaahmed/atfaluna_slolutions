@@ -65,45 +65,14 @@ class AvatarRepository extends BaseRepository implements AvatarRepositoryInterfa
 			if($free == '0'){
 				$model = $model->HasPrice();
 			}
-			if($sub_user_id ){
-				$model = $model->whereHas('subUserAvatar', function (Builder $query) use($sub_user_id) {
-					$query->where('id',$sub_user_id);
-				});
-			}
-		} 
-		return $model->paginate($itemsNumber)->appends(request()->query());
-	
-    }
-
-    public function paginate($items, $perPage = 10, $page = null, $baseUrl = null, $options = [])
-	{
-		$page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-
-		$items = $items instanceof Collection ? 
-					$items : Collection::make($items);
-
-		$lap = new LengthAwarePaginator($items->forPage($page, $perPage), 
-						$items->count(),
-						$perPage, $page, $options);
-
-		if ($baseUrl) {
-			$lap->setPath($baseUrl);
+			$query = $query->get();
+			$result = $result->merge( $query );		
 		}
-
-		return $lap;
-	}
-
-	public function attachMassage($massage_id,$id)  
-    {
-			$avatar = $this->findById($id); 
-			
-			$avatar_massages =  $avatar->massage()->get();
-			
-			foreach ($avatar_massages as $key => $value) {
-				$value->massagable()->dissociate()->save();
-			}
-			$massage =  Massage::find($massage_id);
-			$massage->massagable()->associate($avatar)->save();
-	}
+		if (!$result->count()) {
+			return $result = $this->collection( $itemsNumber)  ;
+		}else{
+			return $this->paginate($result,$itemsNumber,null,URL::full());
+		}
+		
 }
 

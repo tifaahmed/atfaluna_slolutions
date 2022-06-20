@@ -21,8 +21,6 @@ class AvatarResource extends JsonResource
         return [
             'id'            => $this->id,
             'type'          =>  $this->type,
-            'price'         =>  $this->price,
-            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)),
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

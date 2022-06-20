@@ -25,7 +25,13 @@ class AccessoryResource extends JsonResource
             'image'        => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
 
             'price'         => $this->price,
+
+            'gender'        =>  $this->gender,
             
+            'type'         =>  $this->type,
+
+            'description'   => $row ? $row->description:'' ,
+
             'languages'     => $this->accessory_languages,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,

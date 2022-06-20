@@ -4,9 +4,9 @@ namespace App\Http\Resources\Dashboard\Collections;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Dashboard\SubUserAchievementResource as ModelResource;
+use App\Http\Resources\Dashboard\AccessoryTypeResource as ModelResource;
 
-class SubUserAchievementCollection  extends ResourceCollection{
+class AccessoryTypeCollection  extends ResourceCollection{
 
     public function toArray( $request ) {
         return $this -> collection -> map( fn( $model ) => new ModelResource ( $model ) );

@@ -15,7 +15,6 @@ use App\Models\Subject;
 use App\Models\Age_group;
 use App\Models\Sub_user_quiz;
 use App\Models\Sub_user_certificate;
-use App\Models\Achievement;
 use App\Models\Group_chat;
 use App\Models\Conversation;
 use App\Models\Friend;
@@ -39,14 +38,10 @@ class Sub_user extends Model
         'gender',// enum ,['girl','boy']
         'points',// integer
         'user_id',//unsigned  
-        'avatar_id',//unsigned  
     ];
     // relations
         public function user(){
             return $this->belongsTo(User::class,'user_id');
-        }
-        public function avatar(){
-            return $this->belongsTo(Avatar::class,'avatar_id');
         }
     //Accessory
         public function subUserAccessory(){
@@ -55,10 +50,6 @@ class Sub_user extends Model
     //Avatar
         public function subUserAvatar(){
             return $this->belongsToMany(Avatar::class, 'sub_user_avatars', 'sub_user_id', 'avatar_id');
-        }
-    //Achievement
-        public function subUserAchievement(){
-            return $this->belongsToMany(Achievement::class, 'sub_user_achievements', 'sub_user_id', 'achievement_id');
         }
     //Activity
         public function subUserActivity(){

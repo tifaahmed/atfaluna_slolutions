@@ -21,7 +21,7 @@ class CountryResource extends JsonResource
         return [
             'id'             => $this->id,
             'name'           => $this->name,
-            'image'          => Storage::disk('public')->exists($this->image) ? Storage::url($this->image)  : null,
+            'image'        =>  Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
             'code'           => $this->code,
             'language'       =>$this->language,
 

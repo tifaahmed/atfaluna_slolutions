@@ -18,10 +18,12 @@ class Accessory_language extends Model
     protected $fillable = [
         'name',//required
         'language',//required ,limit 2
+        'description',
         'accessory_id', //unsigned cascade 
     ];
     public $timestamps = false;
     //relation
+
     public function accessory(){
         return $this->belongsTo(Accessory::class,'accessory_id');
     }
@@ -29,6 +31,7 @@ class Accessory_language extends Model
     public function scopeRelatedLanguage($query,$id){
         return $query->where('accessory_id', $id);
     }
+
     public function scopeLocalization($query){
         return $query->where('language', App::getLocale());
     }

@@ -19,7 +19,7 @@ class AchievementSeeder extends Seeder
         if (!file_exists($folder)) {
             File::makeDirectory($folder);
         }
-        // Achievement::query()->forceDelete();
+        Achievement::query()->forceDelete();
 
         File::copy(public_path('images/achievement/achievementlv1.png'),$folder.'achievementlv1.png');
         File::copy(public_path('images/achievement/lv1.png'),$folder.'lv1.png');
@@ -155,27 +155,27 @@ class AchievementSeeder extends Seeder
             ]);
 
             $achievement->achivementImages()->create([
-                'points' => '100',
+                'points' => '1',
                 'image_one' => 'achievement/achievementlv1.png',
                 'image_two'  => 'achievement/lv1.png',
             ]);            
             $achievement->achivementImages()->create([
-                'points' => '200',
+                'points' => '2',
                 'image_one' => 'achievement/achievementlv2.png',
                 'image_two'  => 'achievement/lv2.png',
             ]);  
             $achievement->achivementImages()->create([
-                'points' => '300',
+                'points' => '3',
                 'image_one' => 'achievement/achievementlv3.png',
                 'image_two'  => 'achievement/lv3.png',
             ]);  
             $achievement->achivementImages()->create([
-                'points' => '400',
+                'points' => '4',
                 'image_one' => 'achievement/achievementlv4.png',
                 'image_two'  => 'achievement/lv4.png',
             ]);  
             $achievement->achivementImages()->create([
-                'points' => '500',
+                'points' => '5',
                 'image_one' => 'achievement/achievementlv5.png',
                 'image_two'  => 'achievement/lv5.png',
             ]); 

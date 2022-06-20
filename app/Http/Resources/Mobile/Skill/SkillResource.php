@@ -41,6 +41,7 @@ class SkillResource extends JsonResource
             'id'            => $this->id,
 
             'name'               => $row ? $row->name:'',
+            'description'       =>$row ? $row->description:'',
 
             'image'          => 
                 ( !$seen ) ? 

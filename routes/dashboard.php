@@ -652,5 +652,33 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::get('/collection-trash'          ,   'SoundableController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'SoundableController@show_trash'          )->name('show_trash'),
         ]),
+        //Skin
+        Route::name('skin.')->prefix('/skin')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'SkinController@all'                 )->name('all'),
+            Route::post(''                          ,   'SkinController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'SkinController@show'                )->name('show'),
+            Route::get('/collection'                ,   'SkinController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'SkinController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'SkinController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'SkinController@restore'             )->name('restore'),
+        
+            Route::DELETE('premanently-delete/{id}' ,   'SkinController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'SkinController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'SkinController@show_trash'          )->name('show_trash'),
+        ]),
+        //AccessoryType
+        Route::name('accessory-type.')->prefix('/accessory-type')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'AccessoryTypeController@all'                 )->name('all'),
+            Route::post(''                          ,   'AccessoryTypeController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'AccessoryTypeController@show'                )->name('show'),
+            Route::get('/collection'                ,   'AccessoryTypeController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'AccessoryTypeController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'AccessoryTypeController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'AccessoryTypeController@restore'             )->name('restore'),
+        
+            Route::DELETE('premanently-delete/{id}' ,   'AccessoryTypeController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'AccessoryTypeController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'AccessoryTypeController@show_trash'          )->name('show_trash'),
+        ]),
     ]);
 
