@@ -12,6 +12,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use URL;
 use Illuminate\Http\Response ;
 use App\Models\Massage;
+use Illuminate\Database\Eloquent\Builder;
 
 class AvatarRepository extends BaseRepository implements AvatarRepositoryInterface
 {
@@ -31,56 +32,38 @@ class AvatarRepository extends BaseRepository implements AvatarRepositoryInterfa
 	}
 	public function filterAll($gender,$free,$sub_user_id)  
     {
-		$result = null ;
-
-		if ($sub_user_id) {
-			$sub_user       = Auth::user()->sub_user()->find($sub_user_id);
-			$sub_user_avatars =  $sub_user->subUserAvatar()->get();	
-			$result = $this->model->merge( $sub_user_avatars );
-		}
-
-		if ($gender || $free) {
-			$query =   $this->model;
+		$model =   $this->model;
+		if ($gender || $free || $sub_user_id) {
 			if ($gender) {
-				$query = $query->Gender($gender);
+				$model = $model->Gender($gender);
 			}
 			if($free == '1'){
-				$query = $query->Free();
+				$model = $model->Free();
 			}
 			if($free == '0'){
-				$query = $query->HasPrice();
+				$model = $model->HasPrice();
 			}
-			$query = $query->get();
-			$result = $result->merge( $query );	
-
-		} if (!$result->count()) {
-			return $result ;
-		}
-		else{
-			return $this->all()  ;
-		}	
+			if($sub_user_id ){
+				$model = $model->whereHas('subUserAvatar', function (Builder $query) use($sub_user_id) {
+					$query->where('id',$sub_user_id);
+				});
+			}
+		} 
+		return $model->get()  ;
     }
 	public function filterPaginate($gender,$free,$sub_user_id,int $itemsNumber)  
     {
-		
-		$result = new Collection() ;
+		$model =   $this->model;
 
-		if ($sub_user_id) {
-			$sub_user       = Auth::user()->sub_user()->find($sub_user_id);
-			$sub_user_avatars =  $sub_user->subUserAvatar()->get();	
-			$result = $result->merge( $sub_user_avatars );
-		}
-
-		if ($gender || $free) {
-			$query =   $this->model;
+		if ($gender || $free || $sub_user_id) {
 			if ($gender) {
-				$query = $query->Gender($gender);
+				$model = $model->Gender($gender);
 			}
 			if($free == '1'){
-				$query = $query->Free();
+				$model = $model->Free();
 			}
 			if($free == '0'){
-				$query = $query->HasPrice();
+				$model = $model->HasPrice();
 			}
 			$query = $query->get();
 			$result = $result->merge( $query );		
@@ -91,37 +74,5 @@ class AvatarRepository extends BaseRepository implements AvatarRepositoryInterfa
 			return $this->paginate($result,$itemsNumber,null,URL::full());
 		}
 		
-    }
-
-    public function paginate($items, $perPage = 10, $page = null, $baseUrl = null, $options = [])
-	{
-		$page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-
-		$items = $items instanceof Collection ? 
-					$items : Collection::make($items);
-
-		$lap = new LengthAwarePaginator($items->forPage($page, $perPage), 
-						$items->count(),
-						$perPage, $page, $options);
-
-		if ($baseUrl) {
-			$lap->setPath($baseUrl);
-		}
-
-		return $lap;
-	}
-
-	public function attachMassage($massage_id,$id)  
-    {
-			$avatar = $this->findById($id); 
-			
-			$avatar_massages =  $avatar->massage()->get();
-			
-			foreach ($avatar_massages as $key => $value) {
-				$value->massagable()->dissociate()->save();
-			}
-			$massage =  Massage::find($massage_id);
-			$massage->massagable()->associate($avatar)->save();
-	}
 }
 

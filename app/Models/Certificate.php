@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Certificate_language;
 
+use App\Models\Age_group;
+use App\Models\Subject;
+
 
 class Certificate extends Model
 {
@@ -31,12 +34,13 @@ class Certificate extends Model
         return $this->HasMany(Certificate_language::class);
         }
         public function subUserCertificate(){
-            return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_user_id', 'certificate_id');
+            return $this->belongsToMany(Sub_user::class, 'sub_user_certificates', 'certificate_id', 'sub_user_id');
         }
         public function certificatable()
         {
             return $this->morphTo();
         }
+
 }
 
 

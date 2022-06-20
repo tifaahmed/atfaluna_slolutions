@@ -29,7 +29,6 @@ class AvatarApiRequest extends FormRequest
             'required',
                 Rule::in(['boy', 'girl','both']),
             ],
-
         ];
     }
 }

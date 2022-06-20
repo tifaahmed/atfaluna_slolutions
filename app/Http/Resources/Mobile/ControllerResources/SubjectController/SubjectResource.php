@@ -6,9 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 // Resource
 use App\Http\Resources\Mobile\ControllerResources\SubjectController\QuizResource;
-
-
-// Collection
+use App\Http\Resources\Mobile\ControllerResources\SubjectController\CertificateResource;
 use App\Http\Resources\Mobile\ControllerResources\SubjectController\SubSubjectResource;
 
 use App\Models\Basic;
@@ -30,10 +28,6 @@ class SubjectResource extends JsonResource
             'image'              => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  :  asset(Storage::url($basic->item)),
             'points'             => $this->points,
             
-            // 'created_at'         => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            // 'updated_at'         => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            // 'deleted_at'         => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
-            
             'name'               => $row ? $row->name:'',
             'sound'               =>  ( $row && $row->sound->count() && Storage::disk('public')->exists($row->sound[0]->record) ) ? asset(Storage::url($row->sound[0]->record))  :  null ,
             'sound_id'            =>  ( $row && $row->sound->count() ) ?  $row->sound[0]->id : null ,
@@ -41,7 +35,9 @@ class SubjectResource extends JsonResource
             'sub_subjects'       =>  SubSubjectResource::collection($this->sub_subjects),
 
             'quiz'               =>   new QuizResource ( $this->quiz )   ,
-
+            'certificate'        =>   new CertificateResource ( $this->certificate )   ,
+            
+            
         ];        
     }
 }
