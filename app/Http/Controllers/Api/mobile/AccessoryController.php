@@ -50,18 +50,37 @@ class AccessoryController extends Controller
         // relation
     public function attach(MobileAccessoryApiRequest $request){
         try {
-            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-                $model->subUserAccessory()->syncWithoutDetaching($request->accessory_id);
-            return $this -> MakeResponseSuccessful( 
-                ['Successful'],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
+            $accessory = $this->ModelRepository->findById($request->accessory_id);
+            $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
+            $sub_user_accessory = $sub_user->subUserAccessory()->where('accessory_id',$request->accessory_id)->first();
+            if (!$sub_user_accessory) {
+                if ($sub_user->points > $accessory->price) {
+                    $sub_user->subUserAccessory()->syncWithoutDetaching($request->accessory_id);
+                    $sub_user->update(['points'=> $sub_user->points - $accessory->price]) ;
+                    return $this -> MakeResponseSuccessful( 
+                        ['Successful'],
+                        'Successful'               ,
+                        Response::HTTP_OK
+                    ) ;
+                }else{
+                    return $this -> MakeResponseSuccessful( 
+                        ['child does not have enough points'],
+                        'Errors'               ,
+                        Response::HTTP_BAD_REQUEST
+                    ) ;
+                }
+            }else{
+                return $this -> MakeResponseSuccessful( 
+                    ['child has bought this before'],
+                    'Errors'               ,
+                    Response::HTTP_BAD_REQUEST
+                ) ;
+            }
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
                 'Errors',
-                Response::HTTP_NOT_FOUND
+                Response::HTTP_BAD_REQUEST
             );
         }
     }

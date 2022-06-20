@@ -26,7 +26,7 @@ class ActivityResource extends JsonResource
 
         $all=[];
         $all += [ 'id'     =>  $this->id ]  ;
-        if ($sub_user_activity ) {
+        if (!$sub_user_activity ) {
             $all += [ 'image'     =>  ( $row && $row->image_one && Storage::disk('public')->exists($row->image_one) )? asset(Storage::url($row->image_one))  : asset(Storage::url($basic->item)) ]  ;
         }else{
             $all += [ 'image'     =>  ( $row && $row->image_two && Storage::disk('public')->exists($row->image_two) )? asset(Storage::url($row->image_two))  : asset(Storage::url($basic->item)) ]  ;

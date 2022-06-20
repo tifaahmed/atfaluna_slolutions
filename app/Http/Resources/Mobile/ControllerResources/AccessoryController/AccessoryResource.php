@@ -24,12 +24,15 @@ class AccessoryResource extends JsonResource
         $all += [ 'name'     =>  $row ? $row->name:'' ]  ;
         $all += [ 'price'     =>  $this->price ]  ;
         $all += ['image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item))];
-
+        
+        $taken = 0 ; 
         if (isset($request->sub_user_id) && $request->sub_user_id) {
             $sub_user       = Auth::user()->sub_user()->find($request->sub_user_id);
             $Sub_user_accessory    = $sub_user->subUserAccessory()->where('accessory_id',$this->id)->first();
-            $all += [ 'taken'     =>  $Sub_user_accessory ? 1 :0 ]  ;
+            $taken =  $Sub_user_accessory ? 1 :0 ;
         }
+        $all += [ 'taken'     =>  $taken ]  ;
+
         return $all  ;      
     }
 }
