@@ -20,6 +20,7 @@ class AchievementImageResource extends JsonResource
         if (isset($request->sub_user_id) && $request->sub_user_id) {
             $sub_user       = Auth::user()->sub_user()->find($request->sub_user_id);
             $reached = 0 ;
+            $reached_points = 0; 
             if ($this->achievement->id == 1 ) {
                 $reached_points    = $sub_user->subUserLesson()->where('lesson_type_id',1)->count();
                 if ($reached_points >=$this->points ) {
@@ -45,13 +46,13 @@ class AchievementImageResource extends JsonResource
                 }
             }
             if ($this->achievement->id == 5 ) {
-                $reached_points    = $sub_user->subUserQuiz()->where('quiz_type',1)->count();
+                $reached_points    = $sub_user->subUserQuiz()->where('quiz_type_id',1)->count();
                 if ($reached_points >=$this->points ) {
                     $reached     =  1  ;
                 }
             }
             if ($this->achievement->id == 6 ) {
-                $reached_points    = $sub_user->subUserQuiz()->where('quiz_type',2)->count();
+                $reached_points    = $sub_user->subUserQuiz()->where('quiz_type_id',2)->count();
                 if ($reached_points >=$this->points ) {
                     $reached     =  1  ;
                 }
@@ -71,7 +72,7 @@ class AchievementImageResource extends JsonResource
             'reached_points'            =>  $reached_points,
 
             'image'          => 
-                ( $reached ) ? 
+                ( !$reached ) ? 
                     ( 
                         ( Storage::disk('public')->exists($this->image_one) )? 
                         asset(Storage::url($this->image_one))  

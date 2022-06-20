@@ -8,9 +8,8 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\Mobile\Collections\CertificateCollection as ModelCollection;
-
-use App\Http\Resources\Mobile\CertificateResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\ControllerResources\CertificateController\CertificateCollection as ModelCollection;
+use App\Http\Resources\Mobile\ControllerResources\CertificateController\CertificateResource as ModelResource;
 
 
 // lInterfaces
@@ -27,9 +26,14 @@ class CertificateController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model = $this->ModelRepository->filterAll(
+                $request->sub_user_id,
+                $request->age_group_id,
+                $request->type
+            );
+            return new ModelCollection (  $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -41,7 +45,13 @@ class CertificateController extends Controller
 
     public function collection(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
+            $model = $this->ModelRepository->filterPaginate(
+                $request->sub_user_id,
+                $request->age_group_id,
+                $request->type,
+                $request->PerPage ? $request->PerPage : 10
+            );
+            return new ModelCollection ( $model )  ;
 
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  

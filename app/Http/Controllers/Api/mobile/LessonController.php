@@ -33,7 +33,7 @@ class LessonController extends Controller
                 $request->hero_id,
                 $request->seen
                 ) ;
-                
+
                 return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
@@ -47,7 +47,12 @@ class LessonController extends Controller
 
     public function collection(Request $request){
         try {
-            $model = $this->ModelRepository->filterPaginate($request->sub_user_id,$request->lesson_type_id,$request->hero_id, $request->prepage ? $request->prepage : 10);
+            $model = $this->ModelRepository->filterPaginate(
+                $request->sub_user_id,
+                $request->lesson_type_id,
+                $request->hero_id, 
+                $request->seen,
+                $request->prepage ? $request->prepage : 10);
                 return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
