@@ -19,7 +19,7 @@ class Certificate_language extends Model
     protected $fillable = [
         'title_one',//required
         'title_two',//required
-        'subject',//required
+        'description',//required
         'language',//required ,limit 2
         'certificate_id',//unsigned cascade
     ];
