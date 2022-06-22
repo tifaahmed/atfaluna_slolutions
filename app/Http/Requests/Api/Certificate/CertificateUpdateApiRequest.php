@@ -37,7 +37,7 @@ class CertificateUpdateApiRequest extends FormRequest
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.title_one'    =>  [ 'required' ] ] ;
             $all += [ 'languages.'.$key.'.title_two'    =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.subject'      =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.description'      =>  [ 'required' ] ] ;
             $all += [ 'languages.'.$key.'.language'     =>  [ 'required' ,'exists:languages,name'] ] ;
         }
         return $all;

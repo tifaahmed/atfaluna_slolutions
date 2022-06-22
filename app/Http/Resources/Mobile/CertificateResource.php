@@ -28,7 +28,7 @@ class CertificateResource extends JsonResource
 
         $all += [ 'title_one'     =>  $row ? $row->title_one:'' ]  ;
         $all += [ 'title_two'     =>  $row ? $row->title_two:'' ]  ;
-        $all += [ 'subject'       =>  $row ? $row->subject:'' ]  ;
+        $all += [ 'description'       =>  $row ? $row->description:'' ]  ;
 
         // $all += [ 'created_at'    =>  $this->created_at ?   $this->created_at->format('d/m/Y') : null ]  ;
         // $all += [ 'updated_at'    =>  $this->updated_at ?   $this->updated_at->format('d/m/Y') : null ]  ;

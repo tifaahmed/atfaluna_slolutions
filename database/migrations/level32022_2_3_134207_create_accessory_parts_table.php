@@ -1,10 +1,11 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccessoryTypesTable extends Migration
+class CreateAccessoryPartsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +14,15 @@ class CreateAccessoryTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('accessory_types', function (Blueprint $table) {
+        Schema::create('accessory_parts', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->string('name'); //[fullset - headset]
+            $table->string('name'); //[eye - leg - hand]
+            $table->integer('accessory_id')->unsigned();
+            $table->foreign('accessory_id')->references('id')->on('accessories');
             $table->timestamps();
-            $table->softDeletes();
+
         });
     }
-    
     /**
      * Reverse the migrations.
      *
@@ -28,6 +30,6 @@ class CreateAccessoryTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('accessory_types');
+        Schema::dropIfExists('accessory_parts');
     }
 }

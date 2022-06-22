@@ -680,5 +680,19 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::get('/collection-trash'          ,   'AccessoryTypeController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'AccessoryTypeController@show_trash'          )->name('show_trash'),
         ]),
+        //AccessoryPart
+        Route::name('accessory-part.')->prefix('/accessory-part')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'AccessoryPartController@all'                 )->name('all'),
+            Route::post(''                          ,   'AccessoryPartController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'AccessoryPartController@show'                )->name('show'),
+            Route::get('/collection'                ,   'AccessoryPartController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'AccessoryPartController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'AccessoryPartController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'AccessoryPartController@restore'             )->name('restore'),
+        
+            Route::DELETE('premanently-delete/{id}' ,   'AccessoryPartController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'AccessoryPartController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'AccessoryPartController@show_trash'          )->name('show_trash'),
+        ]),
     ]);
 

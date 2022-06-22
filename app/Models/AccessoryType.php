@@ -13,7 +13,7 @@ class AccessoryType extends Model
 
     protected $table = 'accessory_types';
     protected $fillable = [
-        'name',//required , ['eye','leg','hand']
+        'name',//required , [fullset - headset]
 
     ];
 }

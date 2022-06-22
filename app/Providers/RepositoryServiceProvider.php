@@ -104,7 +104,7 @@ namespace App\Providers;
     use App\Repository\Eloquent\SubUserSkinRepository;
     use App\Repository\Eloquent\AccessorySkinRepository;
     use App\Repository\Eloquent\AccessoryTypeRepository;
-
+    use App\Repository\Eloquent\AccessoryPartRepository;
     // Role  Permission
         use App\Repository\Eloquent\RolePermissionRepository\PermissionRepository;
         use App\Repository\Eloquent\RolePermissionRepository\RoleRepository;
@@ -216,6 +216,7 @@ namespace App\Providers;
     use App\Repository\SubUserSkinRepositoryInterface;
     use App\Repository\AccessorySkinRepositoryInterface;
     use App\Repository\AccessoryTypeRepositoryInterface;
+    use App\Repository\AccessoryPartRepositoryInterface;
 
     // Role  Permission   
     use App\Repository\RolePermissionInterface\PermissionRepositoryInterface;
@@ -356,8 +357,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(SkinRepositoryInterface::class,SkinRepository::class);
         $this->app->bind(SkinLanguageRepositoryInterface::class,SkinLanguageRepository::class);
         $this->app->bind(SubUserSkinRepositoryInterface::class,SubUserSkinRepository::class);
+
         $this->app->bind(AccessorySkinRepositoryInterface::class,AccessorySkinRepository::class);
         $this->app->bind(AccessoryTypeRepositoryInterface::class,AccessoryTypeRepository::class);
+        $this->app->bind(AccessoryPartRepositoryInterface::class,AccessoryPartRepository::class);
 
     
         // Role  Permission

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccessoryTypesTable extends Migration
+class CreateDurationLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateAccessoryTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('accessory_types', function (Blueprint $table) {
+        Schema::create('duration_logs', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->string('name'); //[fullset - headset]
-            $table->timestamps();
-            $table->softDeletes();
+            $table->date('start');
+            $table->integer('sub_user_id')->unsigned();
+            $table->foreign('sub_user_id')->references('id')->on('sub_users')->onDelete('cascade');
         });
     }
-    
     /**
      * Reverse the migrations.
      *
@@ -28,6 +27,7 @@ class CreateAccessoryTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('accessory_types');
+        Schema::dropIfExists('duration_logs');
     }
 }
+
