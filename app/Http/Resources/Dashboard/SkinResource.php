@@ -5,7 +5,7 @@ namespace App\Http\Resources\Dashboard;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Dashboard\AvatarResource;
-use App\Http\Resources\Dashboard\Collections\SkinLanguagesCollection ;
+use App\Http\Resources\Dashboard\SkinLanguageResource ;
 
 class SkinResource extends JsonResource
 {
@@ -32,7 +32,7 @@ class SkinResource extends JsonResource
 
             // 'languages'     => $this->skin_languages,
 
-            'languages'     => new SkinLanguagesCollection ( $this->skin_languages ),
+            'languages'     => SkinLanguageResource::collection( $this->skin_languages ),
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

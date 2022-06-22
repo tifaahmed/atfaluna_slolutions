@@ -4,6 +4,7 @@ namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Dashboard\SkinResource;
 
 class AvatarResource extends JsonResource
 {
@@ -18,6 +19,7 @@ class AvatarResource extends JsonResource
         return [
             'id'           => $this->id,
             'type'         =>  $this->type,
+            'skin'         =>  SkinResource::collection($this->skin),
 
             'created_at'   => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'   => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

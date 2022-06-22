@@ -19,6 +19,7 @@ class CreateSubUserAccessoriesTable extends Migration
             $table->foreign('sub_user_id')->references('id')->on('sub_users');
             $table->integer('accessory_id')->unsigned();
             $table->foreign('accessory_id')->references('id')->on('accessories');
+            $table->integer('active')->default(0);
         });
     }
     
