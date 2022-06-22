@@ -22,32 +22,37 @@ class AchievementResource extends JsonResource
         $main_achivement_image = null ; 
         if ($this->id == 1 ) {
             $reached_points    = $sub_user->subUserLesson()->where('lesson_type_id',1)->count();
-            $main_achivement_image = $this->achivementImages->where('points',">=",$reached_points)->first();
         }
         if ($this->id == 2 ) {
             $reached_points    = $sub_user->subUserLesson()->where('lesson_type_id',2)->count();
-            $main_achivement_image = $this->achivementImages->where('points',">=",$reached_points)->first();
         }
         if ($this->id == 3 ) {
             $reached_points    = $sub_user->subUserActivity()->count();
-            $main_achivement_image = $this->achivementImages->where('points',">=",$reached_points)->first();
         }
         if ($this->id == 4 ) {
             $reached_points    = $sub_user->subUserAvatar()->count();
-            $main_achivement_image = $this->achivementImages->where('points',">=",$reached_points)->first();
         }
         if ($this->id == 5 ) {
             $reached_points    = $sub_user->subUserQuiz()->where('quiz_type_id',1)->count();
-            $main_achivement_image = $this->achivementImages->where('points',">=",$reached_points)->first();
         }
         if ($this->id == 6 ) {
             $reached_points    = $sub_user->subUserQuiz()->where('quiz_type_id',2)->count();
-            $main_achivement_image = $this->achivementImages->where('points',">=",$reached_points)->first();
         }
         if ($this->id == 7 ) {
             $reached_points    = $sub_user->subUserAccessory()->count();
-            $main_achivement_image = $this->achivementImages->where('points',">=",$reached_points)->first();
         }
+
+        $max_achivement_image_points = $this->achivementImages->max('points');
+        if ($reached_points > $max_achivement_image_points  ) {
+            $main_achivement_image = $this->achivementImages()->orderBy('points', 'desc')->first();
+        }else{
+            $main_achivement_image = $this->achivementImages()->where('points',">=",$reached_points)->first();
+        }
+
+
+
+
+
 
 
         return [

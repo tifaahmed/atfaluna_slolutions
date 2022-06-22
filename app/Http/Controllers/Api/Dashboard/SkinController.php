@@ -50,12 +50,14 @@ class SkinController extends Controller
                 $all += array( $file_one => $path );
             }
 
-            $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
+            $model =$this->ModelRepository->create( Request()->except($file_one)+$all ) ;
+
+            $this->ModelRepository->OnlyOneOriginal($model->id);
 
             // languages
             $this -> store_array_languages($request->languages,$model) ;
             return $this -> MakeResponseSuccessful( 
-                [ $model ],
+                [  new ModelResource( $model ) ],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
@@ -156,12 +158,15 @@ class SkinController extends Controller
                 $all += array( $file_one => $path );
             }
             $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
-            $model = new ModelResource( $this->ModelRepository->findById($id) );
+            $model =  $this->ModelRepository->findById($id) ;
+
+            $this->ModelRepository->OnlyOneOriginal($model->id);
+
             //  request languages
             $this -> update_array_languages($request->languages,$model) ;
 
                 return $this -> MakeResponseSuccessful( 
-                        [ $model],
+                        [ new ModelResource( $model ) ],
                         'Successful'               ,
                         Response::HTTP_OK
                 ) ;

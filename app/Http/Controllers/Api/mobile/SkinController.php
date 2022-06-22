@@ -29,7 +29,7 @@ class SkinController extends Controller
         $this->related_language = 'skin_id';
     }
     
-    public function all(){
+    public function all(Request $request){
         try {
             return new ModelCollection (  $this->ModelRepository->all() )  ;
         } catch (\Exception $e) {

@@ -103,5 +103,22 @@ class SkinRepository extends BaseRepository implements SkinRepositoryInterface
 
 	// 	return $lap;
 	// }
+
+
+    public function OnlyOneOriginal($skin_id)
+	{
+		$skin = $this->findById($skin_id);
+
+		if ( $skin->original == 1 ) {
+			$this->model
+			->where('avatar_id', $skin->avatar_id)
+			->where('id','!=',$skin->id)
+			->where('original',1)
+			->update(['original'=>0]);		
+		}
+
+	}
+
+	
 }
 
