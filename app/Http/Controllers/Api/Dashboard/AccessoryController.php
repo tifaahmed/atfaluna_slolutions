@@ -51,14 +51,21 @@ use Illuminate\Support\Str;
                     $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
                     $all += array( $file_one => $path );
                 }
+                // create (1) accessory row
+                $model = $this->ModelRepository->create( Request()->except($file_one)+$all ) ;
     
-                $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
-    
-                // // languages
+                // attach (1) accessory to (m) Activities (sync)
+                $this->ModelRepository->attachActivities($request->activity_ids,$model->id);
+                // attach (1) accessory to (m) Lessons  (sync)
+                $this->ModelRepository->attachLessons($request->lesson_ids,$model->id);
+                // attach (1) accessory to (m) Skins (sync)
+                $this->ModelRepository->attachSkins($request->skin_ids,$model->id);
+                
+                // languages
                 $this -> store_array_languages($request->languages,$model) ;
     
                 return $this -> MakeResponseSuccessful( 
-                    [ $model ],
+                    [ new ModelResource( $model ) ],
                     'Successful'               ,
                     Response::HTTP_OK
                 ) ;
@@ -126,19 +133,28 @@ use Illuminate\Support\Str;
                     $all += array( $file_one => $path );
                 }
                 $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
-                $model = new ModelResource( $this->ModelRepository->findById($id) );
-                    return $this -> MakeResponseSuccessful( 
-                            [ $model],
-                            'Successful'               ,
-                            Response::HTTP_OK
-                    ) ;
-                    } catch (\Exception $e) {
-                    return $this -> MakeResponseErrors(  
-                        [$e->getMessage()  ] ,
-                        'Errors',
-                        Response::HTTP_NOT_FOUND
-                    );
-                } 
+                $model =  $this->ModelRepository->findById($id);
+
+                // attach (1) accessory to (m) Activities (sync)
+                $this->ModelRepository->attachActivities($request->activity_ids,$model->id);
+                // attach (1) accessory to (m) Lessons  (sync)
+                $this->ModelRepository->attachLessons($request->lesson_ids,$model->id);
+                // attach (1) accessory to (m) Skins (sync)
+                $this->ModelRepository->attachSkins($request->skin_ids,$model->id);
+
+
+                return $this -> MakeResponseSuccessful( 
+                        [ new ModelResource( $model ) ],
+                        'Successful'               ,
+                        Response::HTTP_OK
+                ) ;
+                } catch (\Exception $e) {
+                return $this -> MakeResponseErrors(  
+                    [$e->getMessage()  ] ,
+                    'Errors',
+                    Response::HTTP_NOT_FOUND
+                );
+            } 
         }
         
        // lang create

@@ -72,6 +72,7 @@ class SubUserController extends Controller
             $sub_user = Auth::user()->sub_user()->create( $request->all() );
             // attach one age group and only one can be active
             $this->ModelRepository->attachAgeGroupByAge($sub_user->age,$sub_user->id) ;
+            $this->ModelRepository->attachAvatar($request->avatar_id,$sub_user->id) ;
 
             return $this -> MakeResponseSuccessful( 
                 [new ModelResource ( $sub_user )  ],

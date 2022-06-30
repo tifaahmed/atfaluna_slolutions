@@ -6,6 +6,7 @@ use App\Models\Lesson as ModelName;
 use App\Repository\LessonRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Quiz;
+use App\Models\Age_group;
 
 use \Illuminate\Database\Eloquent\Collection;
 
@@ -32,114 +33,50 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 	{
 		$this->model =  $model;
 	}
-	
-	public function getActiveSubjectsFromChild($sub_user)  {
-		$all_sub_user_age_group =  $sub_user->subUserAgeGroup()->get();
-		if ($all_sub_user_age_group->count() ) {
-			// active_subjects
-			return $subjects = $sub_user->ActiveSubjectsFromActiveAgeGroup()->get();
-		}else{
-			return abort( Response::HTTP_NOT_FOUND , 'there is no age_group for this child');			
+	public function filter($sub_user_id,$lesson_type_id,$hero_id,$seen,$age_group_id)  {
+		$model =   $this->model;
+		if($seen){
+			$model = $model->whereHas('subUserLesson', function (Builder $query) use($sub_user_id) {
+				if($sub_user_id){
+					$query->where('sub_user_id',$sub_user_id);
+				}
+			});
 		}
-	}
-
-	public function getFilteredLessonsFromSubjects($subjects,$lesson_type_id,$hero_id)  {
-		if ($subjects) {
-			$result = new Collection() ;
-			foreach ($subjects as $key => $value) {
-				$lessons = $value->lessons();
-
-				if($lesson_type_id){
-					$lessons = $lessons->whereHas('lesson_type',function (Builder $query) use($lesson_type_id) {
-						$query->where('id',$lesson_type_id);
+		if($age_group_id){
+			$model = $model->whereHas('subSubject', function (Builder $sub_subject_query) use($age_group_id) {
+				$sub_subject_query->whereHas('subject', function (Builder $subject_query) use($age_group_id) {
+					$subject_query->whereHas('age_group', function (Builder $age_group_query) use($age_group_id) {
+						$age_group_query->where('age_group_id','!=',$age_group_id);
 					});
-				}	
-				if($hero_id){
-					$lessons = $lessons->whereHas('herolesson',function (Builder $query) use($hero_id) {
-						$query->where('hero_id',$hero_id);
-					});
-				}	
-
-				$lessons = $lessons ->get();
-				$result = $result->merge( $lessons );
-			}
-			return $result ;
-		}else{
-			return abort( Response::HTTP_NOT_FOUND , 'there is no active_subjects for this child');			
+				});
+			});
 		}
+		if($hero_id){
+			$model = $model->whereHas('herolesson',function (Builder $query) use($hero_id) {
+				$query->where('hero_id',$hero_id);
+			});
+		}
+		if($lesson_type_id){
+			$model = $model->whereHas('lesson_type',function (Builder $query) use($lesson_type_id) {
+				$query->where('id',$lesson_type_id);
+			});
+		}
+		return 	$model;
 	}
 
-	public function filterAll($sub_user_id,$lesson_type_id,$hero_id,$seen)  
+
+
+	public function filterAll($sub_user_id,$lesson_type_id,$hero_id,$seen,$age_group_id)  
     {
-		$subjects = null;
-		$lessons = null;
-		// check if child_id exist (or) return all lessons
-		if($sub_user_id ){
-			$sub_user       = Auth::user()->sub_user()->find($sub_user_id); // checked in middleware
-
-			// check if child has any Age Group (or) return error message
-			// get the active_subjects (get) from first active_age_group (first)
-			$subjects = $this->getActiveSubjectsFromChild($sub_user)  ;
-
-			// check if child has active subjects (or) return error message
-			// get all lessons (get) from all active subjects (get)
-			$lessons = $this->getFilteredLessonsFromSubjects($subjects,$lesson_type_id,$hero_id)  ;
-			if ( $lessons ) {
-				return $lessons ;
-			}else{
-				return abort( Response::HTTP_NOT_FOUND , 'there is no lessons');			
-			}
-		}
-		else{
-			return $this->all()  ;
-		}
+		$model = $this->filter($sub_user_id,$lesson_type_id,$hero_id,$seen,$age_group_id)  ;
+		return $model->get();
 	}
-	public function filterPaginate($sub_user_id,$lesson_type_id,$hero_id,$seen,$itemsNumber)  
+	public function filterPaginate($sub_user_id,$lesson_type_id,$hero_id,$seen,$age_group_id,$itemsNumber)  
     {
-		$subjects = null;
-		$lessons = null;
-		// check if child_id exist (or) return all lessons
-		if($sub_user_id){
-			$sub_user       = Auth::user()->sub_user()->find($sub_user_id); // checked in middleware
-
-			// check if child has any Age Group (or) return error message
-			// get the active_subjects (get) from first active_age_group (first)
-			$subjects = $this->getActiveSubjectsFromChild($sub_user)  ;
-
-			// check if child has active subjects (or) return error message
-			// get all lessons (get) from all active subjects (get)
-			$lessons = $this->getFilteredLessonsFromSubjects($subjects,$lesson_type_id,$hero_id)  ;
-
-
-			// check if lessons not bull then pagenate(or) return error message
-			if ( $lessons ) {
-				return $this->paginate($lessons,$itemsNumber,null,URL::full());
-			}else{
-				return abort( Response::HTTP_NOT_FOUND , 'there is no lessons');			
-			}
-
-		}
-		else{
-			return $this->collection( $itemsNumber)  ;
-		}
+		$model = $this->filter($sub_user_id,$lesson_type_id,$hero_id,$seen,$age_group_id)  ;
+		return $model->paginate($itemsNumber)->appends(request()->query());
     }
-    public function paginate($items, $perPage = 10, $page = null, $baseUrl = null, $options = [])
-	{
-		$page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
 
-		$items = $items instanceof Collection ? 
-					$items : Collection::make($items);
-
-		$lap = new LengthAwarePaginator($items->forPage($page, $perPage), 
-						$items->count(),
-						$perPage, $page, $options);
-
-		if ($baseUrl) {
-			$lap->setPath($baseUrl);
-		}
-
-		return $lap;
-	}
 
 	// handleLessson
 		public function handleLessson($sub_user_id,$lesson_id,$percentage)  

@@ -22,5 +22,28 @@ class AccessoryRepository extends BaseRepository implements AccessoryRepositoryI
 	{
 		$this->model =  $model;
 	}
-
+    public function attachActivities($activity_ids,$accessory_id)
+	{
+		if($activity_ids && $accessory_id){
+			$accessory = $this->findById($accessory_id); 
+			$accessory->AccessoryActivity()->sync($activity_ids);
+			return 'success';
+		}
+	}
+	public function attachLessons($lesson_ids,$accessory_id)
+	{
+		if($lesson_ids && $accessory_id){
+			$accessory = $this->findById($accessory_id); 
+			$accessory->AccessoryLesson()->sync($lesson_ids);
+			return 'success';
+		}
+	}
+	public function attachSkins($skin_ids,$accessory_id)
+	{
+		if($skin_ids && $accessory_id){
+			$accessory = $this->findById($accessory_id); 
+			$accessory->AccessorySkin()->sync($skin_ids);
+			return 'success';
+		}
+	}
 }

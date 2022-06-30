@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Dashboard;
+namespace App\Http\Resources\Mobile\ControllerResources\AvatarController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Basic;
 
-class AccessoryPartResource extends JsonResource
+class SkinResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,13 +16,16 @@ class AccessoryPartResource extends JsonResource
      */
     public function toArray($request)
     {
+        $basic = Basic::find(1);
+
         return [
             'id'            => $this->id,
+            
+            'image'        => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)) ,
 
-            'name'         => $this->name,
-
-            'accessory'  => $this->accessory,
-
+            
         ];        
     }
 }
+
+

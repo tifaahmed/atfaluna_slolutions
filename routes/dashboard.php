@@ -667,32 +667,32 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::get('/{id}/show-trash'           ,   'SkinController@show_trash'          )->name('show_trash'),
         ]),
         //AccessoryType
-        Route::name('accessory-type.')->prefix('/accessory-type')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'AccessoryTypeController@all'                 )->name('all'),
-            Route::post(''                          ,   'AccessoryTypeController@store'               )->name('store'),
-            Route::get('/{id}/show'                 ,   'AccessoryTypeController@show'                )->name('show'),
-            Route::get('/collection'                ,   'AccessoryTypeController@collection'          )->name('collection'),
-            Route::DELETE('/{id}'                   ,   'AccessoryTypeController@destroy'             )->name('destroy'),
-            Route::post('/{id}/update'              ,   'AccessoryTypeController@update'              )->name('update'),
-            Route::post('/{id}/restore'             ,   'AccessoryTypeController@restore'             )->name('restore'),
+        Route::name('body-suit.')->prefix('/body-suit')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'BodySuitController@all'                 )->name('all'),
+            Route::post(''                          ,   'BodySuitController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'BodySuitController@show'                )->name('show'),
+            Route::get('/collection'                ,   'BodySuitController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'BodySuitController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'BodySuitController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'BodySuitController@restore'             )->name('restore'),
         
-            Route::DELETE('premanently-delete/{id}' ,   'AccessoryTypeController@premanently_delete'  )->name('premanently_delete'),
-            Route::get('/collection-trash'          ,   'AccessoryTypeController@collection_trash'    )->name('collection_trash'),
-            Route::get('/{id}/show-trash'           ,   'AccessoryTypeController@show_trash'          )->name('show_trash'),
+            Route::DELETE('premanently-delete/{id}' ,   'BodySuitController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'BodySuitController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'BodySuitController@show_trash'          )->name('show_trash'),
         ]),
         //AccessoryPart
-        Route::name('accessory-part.')->prefix('/accessory-part')->group( fn ( ) : array => [
-            Route::get('/'                          ,   'AccessoryPartController@all'                 )->name('all'),
-            Route::post(''                          ,   'AccessoryPartController@store'               )->name('store'),
-            Route::get('/{id}/show'                 ,   'AccessoryPartController@show'                )->name('show'),
-            Route::get('/collection'                ,   'AccessoryPartController@collection'          )->name('collection'),
-            Route::DELETE('/{id}'                   ,   'AccessoryPartController@destroy'             )->name('destroy'),
-            Route::post('/{id}/update'              ,   'AccessoryPartController@update'              )->name('update'),
-            Route::post('/{id}/restore'             ,   'AccessoryPartController@restore'             )->name('restore'),
+        Route::name('human-part.')->prefix('/human-part')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'HumanPartController@all'                 )->name('all'),
+            Route::post(''                          ,   'HumanPartController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'HumanPartController@show'                )->name('show'),
+            Route::get('/collection'                ,   'HumanPartController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'HumanPartController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'HumanPartController@update'              )->name('update'),
+            Route::post('/{id}/restore'             ,   'HumanPartController@restore'             )->name('restore'),
         
-            Route::DELETE('premanently-delete/{id}' ,   'AccessoryPartController@premanently_delete'  )->name('premanently_delete'),
-            Route::get('/collection-trash'          ,   'AccessoryPartController@collection_trash'    )->name('collection_trash'),
-            Route::get('/{id}/show-trash'           ,   'AccessoryPartController@show_trash'          )->name('show_trash'),
+            Route::DELETE('premanently-delete/{id}' ,   'HumanPartController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'HumanPartController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'HumanPartController@show_trash'          )->name('show_trash'),
         ]),
     ]);
 

@@ -41,9 +41,10 @@ class AvatarController extends Controller
     }
     public function store(modelInsertRequest $request) {
         try {
-            $model = new ModelResource( $this->ModelRepository->create( $request->all() ) );
+            $model =  $this->ModelRepository->create( $request->all() ) ;
+            
             return $this -> MakeResponseSuccessful( 
-                [ $model ],
+                [ new ModelResource( $model ) ],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;

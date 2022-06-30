@@ -5,7 +5,7 @@ namespace App\Http\Resources\Dashboard;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
-class AccessoryTypeResource extends JsonResource
+class BodySuitResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

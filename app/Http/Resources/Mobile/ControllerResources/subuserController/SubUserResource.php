@@ -39,7 +39,7 @@ class SubUserResource extends JsonResource
             'gender'        => $this->gender,
             'points'        => $this->points,
 
-            'avatar'        => new AvatarResource ($this->avatar)  ,
+            'avatar'        => $this->subUserAvatarActive()->first()->skin()->Original()->first()->accessorySkins()   ,
             'play_time'        =>  PlayTimeResource::collection($this->playTime)  ,
             'age_groups'         =>  AgeGroupResource::collection($this->subUserAgeGroup ) ,
             'active_age_group'  => $this->ActiveAgeGroup() ? $this->ActiveAgeGroup()->first()  : null ,

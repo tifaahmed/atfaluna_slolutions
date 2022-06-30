@@ -5,7 +5,7 @@ namespace App\Http\Requests\Api\Accessory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class AccessoryTypeApiRequest extends FormRequest
+class HumanPartApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class AccessoryTypeApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'       =>  [ 'required' ] ,
+            'name'       =>  [ 'required' , 'unique:human_parts,name'] ,
         ];
     }
 }

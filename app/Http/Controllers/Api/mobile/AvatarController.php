@@ -10,8 +10,8 @@ use Illuminate\Http\Response ;
 use App\Http\Requests\Api\Avatar\MobileAvatarApiRequest;
 
 // Resources
-use App\Http\Resources\Mobile\Collections\AvatarCollection as ModelCollection;
-use App\Http\Resources\Mobile\AvatarResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\ControllerResources\AvatarController\AvatarCollection as ModelCollection;
+use App\Http\Resources\Mobile\ControllerResources\AvatarController\AvatarResource as ModelResource;
 
 
 // lInterfaces
@@ -28,7 +28,12 @@ class AvatarController extends Controller
     }
     public function all(Request $request){
         try {
-            $model = $this->ModelRepository->filterAll($request->Gender);
+            $model = $this->ModelRepository->filterAll(
+                $request->sub_user_id,
+                $request->gender,
+                $request->free,
+                $request->bought
+            );
             return new ModelCollection (  $model  );
 
         } catch (\Exception $e) {
@@ -41,7 +46,13 @@ class AvatarController extends Controller
     }
     public function collection(Request $request){
         try {
-            $model =  $this->ModelRepository->filterPaginate($request->Gender,$request->PerPage ? $request->PerPage : 10) ;             
+            $model =  $this->ModelRepository->filterPaginate(
+                $request->sub_user_id,
+                $request->gender,
+                $request->free,
+                $request->bought,
+                $request->PerPage ? $request->PerPage : 10
+            ) ;             
             return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
@@ -56,6 +67,25 @@ class AvatarController extends Controller
             return $this -> MakeResponseSuccessful( 
                 [new ModelResource ( $this->ModelRepository->findById($id) )  ],
                 'Successful',
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
+    public function attach(MobileAvatarApiRequest $request){
+        try {
+            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
+            $model->subUserAvatar()->where('sub_user_id',$request->sub_user_id)->update(['active'=> 0]);
+            $model->subUserAvatar()->syncWithoutDetaching([$request->avatar_id => ['active' =>  1]]);
+            
+            return $this -> MakeResponseSuccessful( 
+                ['Successful'],
+                'Successful'               ,
                 Response::HTTP_OK
             ) ;
         } catch (\Exception $e) {

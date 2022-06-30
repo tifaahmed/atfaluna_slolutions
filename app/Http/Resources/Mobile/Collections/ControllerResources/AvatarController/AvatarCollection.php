@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Mobile\Collections\Duration;
+namespace App\Http\Resources\Mobile\Collections\ControllerResources\AvatarController;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Mobile\Duration\DurationLogResource as ModelResource;
+use App\Http\Resources\Mobile\ControllerResources\AvatarController\AvatarResource as ModelResource;
 
-class DurationLogCollection  extends ResourceCollection{
+class AvatarCollection  extends ResourceCollection{
 
     public function toArray( $request ) {
         return $this -> collection -> map( fn( $model ) => new ModelResource ( $model ) );
@@ -20,4 +20,4 @@ class DurationLogCollection  extends ResourceCollection{
         ];
     }
 }
-//
+//AvatarCollection 
