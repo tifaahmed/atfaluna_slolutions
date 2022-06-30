@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 interface AvatarRepositoryInterface extends EloquentRepositoryInterface{
-	public function filterAll($gender)  ;
-	public function filterPaginate($gender,int $itemsNumber)  ;
+	public function filterAll($sub_user_id,$gender,$free,$bought)  ;
+	public function filterPaginate($sub_user_id,$gender,$free,$bought,int $itemsNumber)  ;
 
 }

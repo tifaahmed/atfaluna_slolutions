@@ -7,17 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
 
     // Requests
-    use App\Http\Requests\Api\Accessory\AccessoryPartApiRequest as modelInsertRequest;
+    use App\Http\Requests\Api\Accessory\HumanPartApiRequest as modelInsertRequest;
 
     // Resources
-    use App\Http\Resources\Dashboard\Collections\AccessoryPartCollection as ModelCollection;
-    use App\Http\Resources\Dashboard\AccessoryPartResource as ModelResource;
+    use App\Http\Resources\Dashboard\Collections\HumanPartCollection as ModelCollection;
+    use App\Http\Resources\Dashboard\HumanPartResource as ModelResource;
 
 
     // lInterfaces
-    use App\Repository\AccessoryPartRepositoryInterface as ModelInterface;
+    use App\Repository\HumanPartRepositoryInterface as ModelInterface;
 
-    class AccessoryPartController extends Controller
+    class HumanPartController extends Controller
     {
         private $Repository;
         public function __construct(ModelInterface $Repository)

@@ -9,6 +9,7 @@ use App\Models\Lesson;
 use App\Models\Activity_language;
 use App\Models\Sub_user_activity;
 use App\Models\Sub_user;
+use App\Models\Accessory;
 
 class Activity extends Model
 {
@@ -24,16 +25,22 @@ class Activity extends Model
     ];
 
     // relations
-    public function lesson(){
-        return $this->belongsTo(Lesson::class,'lesson_id');
-    }
+        // belongsTo
+        public function lesson(){
+            return $this->belongsTo(Lesson::class,'lesson_id');
+        }
 
-    public function activity_languages(){
-        return $this->HasMany(Activity_language::class);
-    }
+        // HasMany
+        public function activity_languages(){
+            return $this->HasMany(Activity_language::class);
+        }
 
-    public function subUserActivity(){
-        return $this->belongsToMany(Sub_user::class, 'sub_user_activities', 'activity_id', 'sub_user_id');
-    }
+        // belongsToMany
+        public function subUserActivity(){
+            return $this->belongsToMany(Sub_user::class, 'sub_user_activities', 'activity_id', 'sub_user_id');
+        }
+        public function AccessoryActivity(){
+            return $this->belongsToMany(Accessory::class, 'accessory_activities', 'activity_id', 'accessory_id');
+        }
 }
 

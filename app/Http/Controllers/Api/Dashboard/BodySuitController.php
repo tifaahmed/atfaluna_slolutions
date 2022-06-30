@@ -7,17 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
 
     // Requests
-    use App\Http\Requests\Api\Accessory\AccessoryTypeApiRequest as modelInsertRequest;
+    use App\Http\Requests\Api\Accessory\BodySuitApiRequest as modelInsertRequest;
 
     // Resources
-    use App\Http\Resources\Dashboard\Collections\AccessoryTypeCollection as ModelCollection;
-    use App\Http\Resources\Dashboard\AccessoryTypeResource as ModelResource;
+    use App\Http\Resources\Dashboard\Collections\BodySuitCollection as ModelCollection;
+    use App\Http\Resources\Dashboard\BodySuitResource as ModelResource;
 
 
     // lInterfaces
-    use App\Repository\AccessoryTypeRepositoryInterface as ModelInterface;
+    use App\Repository\BodySuitRepositoryInterface as ModelInterface;
 
-    class AccessoryTypeController extends Controller
+    class BodySuitController extends Controller
     {
         private $Repository;
         public function __construct(ModelInterface $Repository)
@@ -38,9 +38,13 @@ use Illuminate\Http\Response ;
     
         public function store(modelInsertRequest $request) {
             try {
-                $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ));
+                $model = $this->ModelRepository->create( Request()->all() );
+                
+                // attach (1) accessory to (m) human_parts (sync)
+                $this->ModelRepository->attachHumanPart($request->human_part_ids,$model->id);
+
                 return $this -> MakeResponseSuccessful( 
-                    [ $modal ],
+                    [ new ModelResource( $model ) ],
                     'Successful'               ,
                     Response::HTTP_OK
                 ) ;

@@ -26,8 +26,9 @@ class AvatarUpdateApiRequest extends FormRequest
         return [
             'type'=>[
                 'required',
-                    Rule::in(['boy', 'girl','both']),
-                ],
-            ];
+                Rule::in(['boy', 'girl','both']),
+            ],
+
+        ];
     }
 }

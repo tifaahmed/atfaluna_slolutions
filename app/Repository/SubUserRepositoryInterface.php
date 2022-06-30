@@ -9,6 +9,7 @@ interface SubUserRepositoryInterface extends EloquentRepositoryInterface{
     public function attachAchievements($achievement_ids,$id);
                     //Avatar
     public function attachAvatars($avatar_ids,$id);
+    public function attachAvatar($avatar_id,$id);
                     //Certificate
     public function attachCertificates($certificate_ids,$id);
                     //Subject

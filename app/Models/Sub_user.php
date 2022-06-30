@@ -23,6 +23,7 @@ use App\Models\Sub_user_subscription;
 use App\Models\Sub_user_lesson;
 use App\Models\Sub_user_sub_subject;
 use App\Models\Sub_user_subject;
+use App\Models\Duration_time;
 
 
 class Sub_user extends Model
@@ -50,6 +51,9 @@ class Sub_user extends Model
     //Avatar
         public function subUserAvatar(){
             return $this->belongsToMany(Avatar::class, 'sub_user_avatars', 'sub_user_id', 'avatar_id');
+        }
+        public function subUserAvatarActive(){
+            return $this->subUserAvatar()->wherePivot('active',1);
         }
     //Activity
         public function subUserActivity(){
@@ -140,5 +144,9 @@ class Sub_user extends Model
         public function SubUserSubscriptions(){
             return $this->hasMany(Sub_user_subscription::class);
         }
+        public function durationTime(){
+            return $this->hasMany(Duration_time::class);
+        }
+        
 }
 // 

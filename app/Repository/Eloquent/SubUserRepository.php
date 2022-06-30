@@ -46,6 +46,14 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 			$result->subUserAvatar()->sync($avatar_ids);
 		}
 	}
+	public function attachAvatar($avatar_id,$sub_user_id)
+	{
+		if($avatar_id){
+			$result = $this->findById($sub_user_id); 
+			$result->subUserAvatar()->where('sub_user_id',$sub_user_id)->update(['active'=> 0]);
+			$result->subUserAvatar()->syncWithoutDetaching([$avatar_id => ['active' =>  1]]);
+		}
+	}
 //Certificate
 	public function attachCertificates($certificate_ids,$id)
 	{
