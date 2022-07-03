@@ -11,6 +11,7 @@ use App\Models\Sub_subject;      // belongsTo
 
 use App\Models\Hero;             //belongsToMany
 use App\Models\Sub_user;         // belongsToMany
+use App\Models\Accessory;         // belongsToMany
 
 use App\Models\Lesson_language;  // HasMany
 use App\Models\Activity;         //HasMany    
@@ -45,6 +46,9 @@ class Lesson extends Model
         // belongsToMany
             public function herolesson(){
                 return $this->belongsToMany(Hero::class, 'hero_lessons', 'lesson_id','hero_id' );
+            }
+            public function AccessoryLesson(){
+                return $this->belongsToMany(Accessory::class, 'accessory_lessons', 'lesson_id', 'accessory_id');
             }
 
         // HasMany

@@ -2,10 +2,10 @@
 
 namespace App\Repository\Eloquent;
 
-use App\Models\AccessoryType as ModelName;
-use App\Repository\AccessoryTypeRepositoryInterface;
+use App\Models\HumanPart as ModelName;
+use App\Repository\HumanPartRepositoryInterface;
 
-class AccessoryTypeRepository extends BaseRepository implements AccessoryTypeRepositoryInterface
+class HumanPartRepository extends BaseRepository implements HumanPartRepositoryInterface
 {
 
 	/**

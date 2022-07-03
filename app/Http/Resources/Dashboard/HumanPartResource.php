@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Mobile\Duration;
+namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Mobile\SubUserResource;
+use Illuminate\Support\Facades\Storage;
 
-class DurationLogResource extends JsonResource
+class HumanPartResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +17,7 @@ class DurationLogResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-            
-            'start'         => $this->start,
-
-            'sub_user'          => new SubUserResource (  $this->sub_user )  ,
-
+            'name'         => $this->name,
         ];        
     }
 }

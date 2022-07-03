@@ -27,11 +27,12 @@ class LessonController extends Controller
     }
     public function all(Request $request){
         try {
-            $model =  $this->ModelRepository->filterAll(
+            return $model =  $this->ModelRepository->filterAll(
                 $request->sub_user_id,
                 $request->lesson_type_id,
                 $request->hero_id,
-                $request->seen
+                $request->seen,
+                $request->age_group_id
                 ) ;
 
                 return new ModelCollection ( $model )  ;

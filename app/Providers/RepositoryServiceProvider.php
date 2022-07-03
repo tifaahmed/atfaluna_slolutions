@@ -103,8 +103,12 @@ namespace App\Providers;
     use App\Repository\Eloquent\SkinLanguageRepository;
     use App\Repository\Eloquent\SubUserSkinRepository;
     use App\Repository\Eloquent\AccessorySkinRepository;
-    use App\Repository\Eloquent\AccessoryTypeRepository;
-    use App\Repository\Eloquent\AccessoryPartRepository;
+    use App\Repository\Eloquent\BodySuitRepository;
+    use App\Repository\Eloquent\HumanPartRepository;
+
+    use App\Repository\Eloquent\DurationTimeRepository;
+    use App\Repository\DurationTimeRepositoryInterface;
+
     // Role  Permission
         use App\Repository\Eloquent\RolePermissionRepository\PermissionRepository;
         use App\Repository\Eloquent\RolePermissionRepository\RoleRepository;
@@ -215,8 +219,8 @@ namespace App\Providers;
     use App\Repository\SkinLanguageRepositoryInterface;
     use App\Repository\SubUserSkinRepositoryInterface;
     use App\Repository\AccessorySkinRepositoryInterface;
-    use App\Repository\AccessoryTypeRepositoryInterface;
-    use App\Repository\AccessoryPartRepositoryInterface;
+    use App\Repository\BodySuitRepositoryInterface;
+    use App\Repository\HumanPartRepositoryInterface;
 
     // Role  Permission   
     use App\Repository\RolePermissionInterface\PermissionRepositoryInterface;
@@ -359,8 +363,12 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(SubUserSkinRepositoryInterface::class,SubUserSkinRepository::class);
 
         $this->app->bind(AccessorySkinRepositoryInterface::class,AccessorySkinRepository::class);
-        $this->app->bind(AccessoryTypeRepositoryInterface::class,AccessoryTypeRepository::class);
-        $this->app->bind(AccessoryPartRepositoryInterface::class,AccessoryPartRepository::class);
+        $this->app->bind(BodySuitRepositoryInterface::class,BodySuitRepository::class);
+        
+        $this->app->bind(HumanPartRepositoryInterface::class,HumanPartRepository::class);
+
+        $this->app->bind(DurationTimeRepositoryInterface::class,DurationTimeRepository::class);
+
 
     
         // Role  Permission

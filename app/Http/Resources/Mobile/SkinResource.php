@@ -26,7 +26,6 @@ class SkinResource extends JsonResource
             
             'image'        => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
 
-            'price'         => $this->price,
 
             'original'      =>  $this->original,
             

@@ -15,6 +15,7 @@ class CreateAccessorySkinsTable extends Migration
     public function up()
     {
         Schema::create('accessory_skins', function (Blueprint $table) {
+            $table->increments('id');//[pk]
             $table->integer('accessory_id')->unsigned();
             $table->foreign('accessory_id')->references('id')->on('accessories');
             $table->integer('skin_id')->unsigned();

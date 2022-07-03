@@ -4,9 +4,9 @@ namespace App\Http\Resources\Dashboard\Collections;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Dashboard\AccessoryPartResource as ModelResource;
+use App\Http\Resources\Dashboard\HumanPartResource as ModelResource;
 
-class AccessoryPartCollection  extends ResourceCollection{
+class HumanPartCollection  extends ResourceCollection{
 
     public function toArray( $request ) {
         return $this -> collection -> map( fn( $model ) => new ModelResource ( $model ) );

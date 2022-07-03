@@ -15,8 +15,8 @@ class Duration_time extends Model
     protected $table = 'duration_times';
 
     protected $fillable = [
-        'time',//required , date
-        'sub_user_id',//unsigned
+        'time_count',//required , float
+        'sub_user_id',//required , unsigned
     ];
     // relations
     public function sub_user(){

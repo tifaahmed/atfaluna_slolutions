@@ -27,23 +27,45 @@ class AvatarRepository extends BaseRepository implements AvatarRepositoryInterfa
 	{
 		$this->model =  $model;
 	}
-	public function filterAll($gender)  
-    {
+	public function filter($sub_user_id,$gender,$free,$bought)  {
 		$model =   $this->model;
 		if ($gender) {
 			$model = $model->Gender($gender);
 		}
+		if($free == '1'){
+			$model = $model->Free();
+		}
+		if($free == '0'){
+			$model = $model->HasPrice();
+		}
+		if($bought == '1'){
+			$model = $model->whereHas('subUserAvatar', function (Builder $query) use($sub_user_id) {
+				if($sub_user_id){
+					$query->where('sub_user_id',$sub_user_id);
+				}
+			});
+		}
+		if($bought == '0'){
+			$model = $model->whereDoesntHave('subUserAvatar', function (Builder $query) use($sub_user_id) {
+				if($sub_user_id){
+					$query->where('sub_user_id',$sub_user_id);
+				}
+			});
+		}
+		return 	$model;
+	}
+
+	public function filterAll($sub_user_id,$gender,$free,$bought)  
+    {
+		$model = $this->filter($sub_user_id,$gender,$free,$bought)  ;
 		return $model->get()  ;
     }
-	public function filterPaginate($gender,int $itemsNumber)  
+	public function filterPaginate($sub_user_id,$gender,$free,$bought,int $itemsNumber)  
     {
-		$model =   $this->model;
-		if ($gender) {
-			$model = $model->Gender($gender);
-		}
+		$model = $this->filter($sub_user_id,$gender,$free,$bought)  ;
 		return $model->paginate($itemsNumber)->appends(request()->query());
-		
 	}
+
 		
 }
 

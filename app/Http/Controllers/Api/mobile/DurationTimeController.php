@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
 
 // Resources
-use App\Http\Resources\mobile\Collections\Duration\DurationTimeCollection as ModelCollection;
-use App\Http\Resources\Dasmobilehboard\Duration\DurationTimeResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\ControllerResources\DurationTimeController\DurationTimeCollection as ModelCollection;
+use App\Http\Resources\Mobile\ControllerResources\DurationTimeController\DurationTimeResource as ModelResource;
 
 // lInterfaces
 use App\Repository\DurationTimeRepositoryInterface as ModelInterface;
