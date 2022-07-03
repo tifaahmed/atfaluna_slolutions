@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Models\Accessory_language; // HasMany
-use App\Models\Sub_user_accessory; // HasMany
+use App\Models\Accessory_language;  // HasMany
 
-use App\Models\Activity;           // belongsToMany
-use App\Models\Lesson;           // belongsToMany
-use App\Models\Skin;           // belongsToMany
+use App\Models\BodySuit;            // belongsTo
+
+use App\Models\Sub_user_accessory;  // belongsToMany
+use App\Models\Activity;            // belongsToMany
+use App\Models\Lesson;              // belongsToMany
+use App\Models\Skin;                // belongsToMany
 
 class Accessory extends Model
 {
@@ -27,15 +29,23 @@ class Accessory extends Model
     ];
     //relation
 
+
+
         // HasMany
         public function accessory_languages(){
             return $this->HasMany(Accessory_language::class);
         }
-        public function Sub_user_accessory(){
-            return $this->HasMany(Sub_user_accessory::class);
+
+        // belongsTo
+        public function BodySuit(){
+            return $this->belongsTo(BodySuit::class,'body_suit_id');
         }
 
+
         // belongsToMany
+        public function SubUserAccessory(){
+            return $this->belongsToMany(Sub_user::class, 'sub_user_accessories', 'accessory_id', 'sub_user_id');
+        }
         public function AccessoryActivity(){
             return $this->belongsToMany(Activity::class, 'accessory_activities', 'accessory_id', 'activity_id');
         }

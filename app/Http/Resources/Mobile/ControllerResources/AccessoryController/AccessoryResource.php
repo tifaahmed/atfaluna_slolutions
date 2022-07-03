@@ -19,20 +19,26 @@ class AccessoryResource extends JsonResource
     {
         $basic = Basic::find(1);
         $row=$this->accessory_languages()->Localization()->RelatedLanguage($this->id)->first();
+
+
+        if (isset($request->sub_user_id) && $request->sub_user_id) {
+            $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
+            $sub_user_accessory = $this->SubUserAccessory()->where('sub_user_id',$request->sub_user_id)->first();
+        }
+
+
+
         $all=[];
         $all += [ 'id'     =>  $this->id ]  ;
         $all += [ 'name'     =>  $row ? $row->name:'' ]  ;
         $all += [ 'price'     =>  $this->price ]  ;
         $all += ['image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item))];
         
-        $taken = 0 ; 
-        if (isset($request->sub_user_id) && $request->sub_user_id) {
-            $sub_user       = Auth::user()->sub_user()->find($request->sub_user_id);
-            $Sub_user_accessory    = $sub_user->subUserAccessory()->where('accessory_id',$this->id)->first();
-            $taken =  $Sub_user_accessory ? 1 :0 ;
-        }
-        $all += [ 'taken'     =>  $taken ]  ;
 
+        $all += [ 'taken'     =>  $sub_user_accessory ? 1 :0 ]  ;
+        $all += [ 'can_affort_it'     =>  ( $sub_user->points > $this->price ) ? 1 : 0]  ;
+
+        
         return $all  ;      
     }
 }

@@ -79,10 +79,45 @@ class AvatarController extends Controller
     }
     public function attach(MobileAvatarApiRequest $request){
         try {
-            $model =   Auth::user()->sub_user()->find($request->sub_user_id);
-            $model->subUserAvatar()->where('sub_user_id',$request->sub_user_id)->update(['active'=> 0]);
-            $model->subUserAvatar()->syncWithoutDetaching([$request->avatar_id => ['active' =>  1]]);
-            
+            $avatar = $this->ModelRepository->findById($request->avatar_id);
+            $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
+            $sub_user->subUserAvatar()->update(['active'=> 0]);
+
+            $sub_user_avatar = $sub_user->subUserAvatar()->where('avatar_id',$request->avatar_id)->first();
+            if (!$sub_user_avatar) {
+                if ($sub_user->points > $avatar->price) {
+                    $sub_user->subUserAvatar()->syncWithoutDetaching($request->avatar_id);
+                    $sub_user->update(['points'=> $sub_user->points - $avatar->price]) ;
+                    return $this -> MakeResponseSuccessful( 
+                        ['Successful'],
+                        'Successful'               ,
+                        Response::HTTP_OK
+                    ) ;
+                }else{
+                    return $this -> MakeResponseSuccessful( 
+                        ['child does not have enough points'],
+                        'Errors'               ,
+                        Response::HTTP_BAD_REQUEST
+                    ) ;
+                }
+            }else{
+                return $this -> MakeResponseSuccessful( 
+                    ['child has bought this before'],
+                    'Errors'               ,
+                    Response::HTTP_BAD_REQUEST
+                ) ;
+            }
+
+
+
+
+
+
+
+
+
+
+
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
                 'Successful'               ,
