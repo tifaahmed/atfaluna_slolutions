@@ -21,9 +21,11 @@ class DurationTimeController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model = $this->ModelRepository->filterAll( $request->type, $request->sub_user_id);
+
+            return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -32,19 +34,4 @@ class DurationTimeController extends Controller
             );
         }
     }
-
-    public function collection(Request $request){
-        try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-    
-
-
 }

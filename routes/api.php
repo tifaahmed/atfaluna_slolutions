@@ -219,7 +219,6 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
         // duration_times
         Route::name('duration_time.')->prefix('/duration-time')->group( fn ( ) : array => [
             Route::get('/'              ,   'DurationTimeController@all'                 )->name('all'),
-            Route::get('/collection'    ,   'DurationTimeController@collection'          )->name('collection'),
         ]),
         //skill
         Route::name('skill.')->prefix('/skill')->group( fn ( ) : array => [
@@ -318,8 +317,8 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::get('/'              ,   'AccessoryController@all'                 )->name('all'),
             Route::get('/{id}/show'     ,   'AccessoryController@show'                )->name('show'),
             Route::get('/collection'    ,   'AccessoryController@collection'          )->name('collection'),
-            Route::post('/attach'        ,   'AccessoryController@attach'   )->name('attach'),
-            Route::post('/detach'        ,   'AccessoryController@detach'   )->name('detach'),
+            Route::post('/attach'       ,   'AccessoryController@attach'              )->name('attach'),
+            Route::post('/toggle'       ,   'AccessoryController@toggle'              )->name('toggle'),
         ]), 
         // Achievement
         Route::name('achievement.')->prefix('/achievement')->group( fn ( ) : array => [

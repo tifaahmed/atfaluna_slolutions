@@ -47,7 +47,7 @@ class LessonResource extends JsonResource
             'have_assigments' => $have_assigments ,
 
             'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
-
+            'lesson_accessories' =>  $this->AccessoryLesson()->get()->pluck('id')->toArray()
         ];        
     }
 }

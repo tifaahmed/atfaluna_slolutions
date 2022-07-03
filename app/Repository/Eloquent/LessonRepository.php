@@ -6,15 +6,10 @@ use App\Models\Lesson as ModelName;
 use App\Repository\LessonRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Quiz;
-use App\Models\Age_group;
-
-use \Illuminate\Database\Eloquent\Collection;
+// use App\Models\Age_group;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Pagination\LengthAwarePaginator;
 
-use URL;
 use Illuminate\Http\Response ;
 
 class LessonRepository extends BaseRepository  implements LessonRepositoryInterface

@@ -36,7 +36,7 @@ class ActivityResource extends JsonResource
         $all += [ 'points'     => $this->points ]  ;
         $all += [ 'achive_points'     =>  ( $sub_user_activity  && $sub_user_activity->pivot ) ? $sub_user_activity->pivot->points : 0  ]  ;
         $all += [ 'seen'     => $sub_user_activity ? 1 : 0 ]  ;
-
+        $all += [ 'activity_accessories' => $this->AccessoryActivity()->get()->pluck('id')->toArray() ]  ;
         return   $all ;
 
     }

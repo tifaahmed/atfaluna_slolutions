@@ -84,4 +84,22 @@ class AccessoryController extends Controller
             );
         }
     }
+    public function toggle(MobileAccessoryApiRequest $request){
+        $accessory = $this->ModelRepository->findById($request->accessory_id);
+        $sub_user_accessory = $accessory->SubUserAccessory()->where('sub_user_id',$request->sub_user_id)->withPivot('active')->first();
+        // if ($sub_user_accessory) {
+
+            return $accessory->BodySuit()->get();
+
+        // } else{
+        //     return $this -> MakeResponseSuccessful( 
+        //         ['child did not bought this before'],
+        //         'Errors',
+        //         Response::HTTP_BAD_REQUEST
+        //     ) ;
+        // }
+        
+    }
+
+    
 }
