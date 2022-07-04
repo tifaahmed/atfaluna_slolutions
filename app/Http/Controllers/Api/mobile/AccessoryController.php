@@ -89,7 +89,8 @@ class AccessoryController extends Controller
         $sub_user_accessory = $accessory->SubUserAccessory()->where('sub_user_id',$request->sub_user_id)->withPivot('active')->first();
         // if ($sub_user_accessory) {
 
-            return $accessory->BodySuit()->get();
+             $body_suit =  $accessory->BodySuit()->first();
+            return $body_suit =  $body_suit->bodySuit_humanParts()->get();
 
         // } else{
         //     return $this -> MakeResponseSuccessful( 

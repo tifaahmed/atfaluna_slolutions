@@ -5,7 +5,9 @@ namespace App\Http\Resources\Mobile\ControllerResources\subuserController;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Mobile\ControllerResources\subuserController\PlayTimeResource;
 use App\Http\Resources\Mobile\ControllerResources\subuserController\AgeGroupResource;
-use App\Http\Resources\Mobile\ControllerResources\subuserController\AvatarResource;
+
+use Illuminate\Support\Facades\Storage;
+use App\Models\Basic;
 
 use Carbon\Carbon;
 
@@ -19,6 +21,7 @@ class SubUserResource extends JsonResource
      */
     public function toArray($request)
     {
+        $basic = Basic::find(1);
 
         $SubUserSubscription = $this->SubUserSubscriptions()->first();
 
@@ -30,7 +33,10 @@ class SubUserResource extends JsonResource
         ) {
             $subscription_status = 1 ;
         }
+        $subUserAvatarActive = $this->subUserAvatarActive()->first();
+        $image = $subUserAvatarActive ?  $subUserAvatarActive->skins()->Original()->first()->image : null;
         
+
 
         return [
             'id'            => $this->id,
@@ -39,7 +45,7 @@ class SubUserResource extends JsonResource
             'gender'        => $this->gender,
             'points'        => $this->points,
 
-            'avatar'        => $this->subUserAvatarActive()->first()->skin()->Original()->first()->accessorySkins()   ,
+            'avatar'        =>  Storage::disk('public')->exists($image) ? asset(Storage::url($image))  : asset(Storage::url($basic->item)) ,
             'play_time'        =>  PlayTimeResource::collection($this->playTime)  ,
             'age_groups'         =>  AgeGroupResource::collection($this->subUserAgeGroup ) ,
             'active_age_group'  => $this->ActiveAgeGroup() ? $this->ActiveAgeGroup()->first()  : null ,

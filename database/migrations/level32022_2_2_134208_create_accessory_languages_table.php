@@ -17,7 +17,7 @@ class CreateAccessorylanguagesTable extends Migration
             $table->increments('id');//[pk]
             $table->string('name');//[note: "ex (  arabic or english or italian -...etc) ,'not null '"]
             $table->string('language');//[note: "ex ( ar-en-it-...etc) , 'not null'"]
-            $table->string('description');//[note: "ex ( ar-en-it-...etc) , 'not null'"]
+            $table->text('description');//[note: "ex ( ar-en-it-...etc) , 'not null'"]
             $table->integer('accessory_id')->unsigned();
             $table->foreign('accessory_id')->references('id')->on('accessories')->onDelete('cascade');
         });
