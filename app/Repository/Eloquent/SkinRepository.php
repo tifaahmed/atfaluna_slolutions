@@ -37,20 +37,6 @@ class SkinRepository extends BaseRepository implements SkinRepositoryInterface
 	// 		$result = $this->model->merge( $sub_user_skins );
 	// 	}
 
-	// 	if ($free) {
-	// 		$query =   $this->model;
-	// 		if($free == '1'){
-	// 			$query = $query->Free();
-	// 		}
-	// 		if($free == '0'){
-	// 			$query = $query->HasPrice();
-	// 		}
-	// 		$query = $query->get();
-	// 		$result = $result->merge( $query );	
-
-	// 	} if (!$result->count()) {
-	// 		return $result ;
-	// 	}
 	// 	else{
 	// 		return $this->all()  ;
 	// 	}	
@@ -66,17 +52,7 @@ class SkinRepository extends BaseRepository implements SkinRepositoryInterface
 	// 		$result = $this->model->merge( $sub_user_skins );
 	// 	}
 
-	// 	if ( $free) {
-	// 		$query =   $this->model;
-	// 		if($free == '1'){
-	// 			$query = $query->Free();
-	// 		}
-	// 		if($free == '0'){
-	// 			$query = $query->HasPrice();
-	// 		}
-	// 		$query = $query->get();
-	// 		$result = $result->merge( $query );		
-	// 	}
+
 	// 	if (!$result->count()) {
 	// 		return $result = $this->collection( $itemsNumber)  ;
 	// 	}else{
@@ -86,23 +62,6 @@ class SkinRepository extends BaseRepository implements SkinRepositoryInterface
 
     // }
 
-    // public function paginate($items, $perPage = 10, $page = null, $baseUrl = null, $options = [])
-	// {
-	// 	$page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-
-	// 	$items = $items instanceof Collection ? 
-	// 				$items : Collection::make($items);
-
-	// 	$lap = new LengthAwarePaginator($items->forPage($page, $perPage), 
-	// 					$items->count(),
-	// 					$perPage, $page, $options);
-
-	// 	if ($baseUrl) {
-	// 		$lap->setPath($baseUrl);
-	// 	}
-
-	// 	return $lap;
-	// }
 
 
     public function OnlyOneOriginal($skin_id)

@@ -28,22 +28,22 @@ class AvatarResource extends JsonResource
         $sub_user_avatar      = null;
         $can_affort_it = 0 ;
         if ($sub_user_id) {
-            $active_skin = $this->skins()->whereHas('accessorySkins', function (Builder $accessory_query) use($sub_user_id) {
-                $accessory_query->whereHas('Sub_user_accessory', function (Builder $sub_user_accessory_query) use($sub_user_id) {
-                    $sub_user_accessory_query->where('sub_user_id',$sub_user_id);
-                    $sub_user_accessory_query->where('active',1);
-                });
-            })->first();
 
+            // git sub_user active skin
+            $active_skin = $this->skins()->ActiveSkin($sub_user_id)->first();
+
+            // taken or not
             $sub_user_avatar = $this->subUserAvatar()->where('sub_user_id',$sub_user_id)->first();
 
+            // can_affort_it or not
             $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
             if ($sub_user->points > $this->price) {
                 $can_affort_it = 1 ;
             }
 
-
         }
+        
+        //git accessories of this avatar
         $accessories = null;
         $skin_ids = $this->skins()->pluck('id')->toArray();
         if ($skin_ids) {

@@ -44,7 +44,7 @@ class Accessory extends Model
 
         // belongsToMany
         public function SubUserAccessory(){
-            return $this->belongsToMany(Sub_user::class, 'sub_user_accessories', 'accessory_id', 'sub_user_id');
+            return $this->belongsToMany(Sub_user::class, 'sub_user_accessories', 'accessory_id', 'sub_user_id')->withPivot('active');
         }
         public function AccessoryActivity(){
             return $this->belongsToMany(Activity::class, 'accessory_activities', 'accessory_id', 'activity_id');

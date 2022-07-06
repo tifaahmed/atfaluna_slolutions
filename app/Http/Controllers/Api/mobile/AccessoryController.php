@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
+use App\Models\Accessory;            
+use App\Models\HumanPart;            
 
 use App\Http\Requests\Api\Accessory\MobileAccessoryApiRequest;
 
@@ -85,20 +88,37 @@ class AccessoryController extends Controller
         }
     }
     public function toggle(MobileAccessoryApiRequest $request){
-        $accessory = $this->ModelRepository->findById($request->accessory_id);
-        $sub_user_accessory = $accessory->SubUserAccessory()->where('sub_user_id',$request->sub_user_id)->withPivot('active')->first();
-        // if ($sub_user_accessory) {
+        $sub_user_id = $request->sub_user_id;
+        $accessory_id = $request->accessory_id;
+        // new accessory
+        $new_accessory = $this->ModelRepository->findById($request->accessory_id);
+        $new_body_suit =  $new_accessory->BodySuit()->first();
+        $new_human_parts =  $new_body_suit->bodySuit_humanParts()->get();
+        $new_human_parts_ids =  $new_human_parts->pluck('id')->toArray();
 
-            return $accessory->BodySuit()->get();
+        $new_accessory->SubUserAccessory()->where('sub_user_id',$sub_user_id)->update(['active'=> 1]);
 
-        // } else{
-        //     return $this -> MakeResponseSuccessful( 
-        //         ['child did not bought this before'],
-        //         'Errors',
-        //         Response::HTTP_BAD_REQUEST
-        //     ) ;
-        // }
-        
+        // old accessories
+        $old_accessories_need_unactive = Accessory::whereHas('SubUserAccessory', function (Builder $query) use($sub_user_id,$accessory_id) {
+            $query->where('sub_user_id',$sub_user_id);
+            $query->where('accessory_id','!=',$accessory_id);
+            $query->where('active',1);
+        })
+        ->whereHas('BodySuit', function (Builder $BodySuit_query) use($new_human_parts_ids)  {
+            $BodySuit_query->whereHas('bodySuit_humanParts', function (Builder $humanParts_query) use($new_human_parts_ids){
+                $humanParts_query->whereIn('human_part_id',$new_human_parts_ids);
+            });
+        })
+        ->get();
+
+        foreach ($old_accessories_need_unactive as $key => $value) {
+            $value->SubUserAccessory()->where('sub_user_id',$sub_user_id)->update(['active'=> 0]);
+        }
+        return $this -> MakeResponseSuccessful( 
+            ['Successful'],
+            'Successful'               ,
+            Response::HTTP_OK
+        ) ;
     }
 
     
