@@ -3,10 +3,10 @@
 namespace App\Http\Resources\Mobile\ControllerResources\UserController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Mobile\Collections\AvatarCollection;
 
-// use App\Http\Resources\Mobile\Collections\ControllerResources\UserController\AgeGroupCollection;
 use App\Http\Resources\Mobile\ControllerResources\UserController\AvatarResource;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Basic;
 
 use Carbon\Carbon;
 
@@ -20,6 +20,7 @@ class SubUserResource extends JsonResource
      */
     public function toArray($request)
     {
+        $basic = Basic::find(1);
 
         $SubUserSubscription = $this->SubUserSubscriptions()->first();
 
@@ -32,6 +33,12 @@ class SubUserResource extends JsonResource
             $subscription_status = 1 ;
         }
 
+        // user avatar
+        $subUserAvatarActive = $this->subUserActiveAvatar()->first();
+        $active_skin = $subUserAvatarActive ? $subUserAvatarActive->skins()->ActiveSkin($this->id)->first() : null;
+        $original_skin  = $subUserAvatarActive ?  $subUserAvatarActive->skins()->Original()->first() : null;
+        $skin = $active_skin ? $active_skin  : $original_skin;
+
         return [
             'id'            => $this->id,
             'name'          => $this->name,
@@ -42,17 +49,18 @@ class SubUserResource extends JsonResource
             // 'avatars'        => new AvatarCollection ($this->subUserAvatar)  ,
             // 'user'         => $this->user,
 
-            'avatar'        => new AvatarResource ($this->avatar)  ,
+            'avatar'        =>  
+            ($skin && $skin->image  && Storage::disk('public')->exists($skin->image) )
+            ? 
+            asset(Storage::url($skin->image))  
+            :
+            asset(Storage::url($basic->item)) ,
+            
             'active_age_group'  => $this->ActiveAgeGroup() ? $this->ActiveAgeGroup()->first()  : null ,
 
             // 'age_groups'         => new AgeGroupCollection  ($this->subUserAgeGroup ) ,
             // 'active_age_group'  => $this->ActiveAgeGroup() ? $this->ActiveAgeGroup()->first()  : null ,
             // 'active_subjects_from_active_age_group'  =>  $this->ActiveSubjectsFromActiveAgeGroup() ? $this->ActiveSubjectsFromActiveAgeGroup()->get() : []   ,
-
-
-            // 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            // 'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
             'subscription_status' =>    $subscription_status ,
             'subscription' =>    $SubUserSubscription ,

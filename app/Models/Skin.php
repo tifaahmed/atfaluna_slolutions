@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
 use App\Models\SkinLanguage;      // HasMany
 
@@ -30,7 +31,14 @@ class Skin extends Model
         public function scopeOriginal($query){
             return $query->where('original',1);
         }
-
+        public function scopeActiveSkin($query,$sub_user_id){
+            return $query->whereHas('accessorySkins', function (Builder $accessory_query) use($sub_user_id) {
+                $accessory_query->whereHas('SubUserAccessory', function (Builder $sub_user_accessory_query) use($sub_user_id) {
+                    $sub_user_accessory_query->where('sub_user_id',$sub_user_id);
+                    $sub_user_accessory_query->where('active',1);
+                });
+            });
+        }
     //relation
 
         // HasMany

@@ -32,20 +32,20 @@ class AvatarRepository extends BaseRepository implements AvatarRepositoryInterfa
 		if ($gender) {
 			$model = $model->Gender($gender);
 		}
+
 		if($free == '1'){
 			$model = $model->Free();
-		}
-		if($free == '0'){
+		}else if($free == '0'){
 			$model = $model->HasPrice();
 		}
+
 		if($bought == '1'){
 			$model = $model->whereHas('subUserAvatar', function (Builder $query) use($sub_user_id) {
 				if($sub_user_id){
 					$query->where('sub_user_id',$sub_user_id);
 				}
 			});
-		}
-		if($bought == '0'){
+		}else if($bought == '0'){
 			$model = $model->whereDoesntHave('subUserAvatar', function (Builder $query) use($sub_user_id) {
 				if($sub_user_id){
 					$query->where('sub_user_id',$sub_user_id);

@@ -20,9 +20,6 @@ class AgeGroupResource extends JsonResource
         $all=[];
         $all += [ 'id'     =>  $this->id ]  ;
         $all += [ 'name'     =>  $row ? $row->name:'' ]  ;
-        // $all += [ 'created_at'     =>  $this->created_at ?   $this->created_at->format('d/m/Y') : null ]  ;
-        // $all += [ 'updated_at'     =>  $this->updated_at ?   $this->updated_at->format('d/m/Y') : null ]  ;
-        // $all += [ 'deleted_at'     =>  $this->updated_at ?   $this->updated_at->format('d/m/Y') : null ]  ;
 
         if (isset($request->sub_user_id) && $request->sub_user_id) {
             $sub_user       = Auth::user()->sub_user()->find($request->sub_user_id);
