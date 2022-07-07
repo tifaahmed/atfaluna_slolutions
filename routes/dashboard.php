@@ -28,11 +28,11 @@ Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
 // ->middleware('App\Http\Middleware\IfOwnerMiddleware:App\Models\User')
 
 Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
-    // auth
+    // Auth
         Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
             Route::post( '/logout' ,  'authController@logout' )  -> name( 'logout' ) ,
         ]),
-    // user
+    // User
         Route::name('user.')->prefix('/user')->group( fn ( ) : array => [
             Route::get('/'                          ,   'UserController@all'                 )->name('all'),
             Route::post(''                          ,   'UserController@store'               )->name('store'),
@@ -41,7 +41,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'UserController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'UserController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'UserController@restore'             )->name('restore'),
-        
             Route::DELETE('premanently-delete/{id}' ,   'UserController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'UserController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'UserController@show_trash'          )->name('show_trash'),
@@ -54,7 +53,7 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::get('/collection'    ,'RolePermissionController\PermissionController@collection' )->name('collection'),
             Route::DELETE('/{id}'       ,'RolePermissionController\PermissionController@destroy'    )->name('destroy'),
         ]),
-    // role
+    // Role
         Route::name('role.')->prefix('/role')->group( fn ( ) : array => [
             Route::get('/'              ,'RolePermissionController\RoleController@all'              )->name('all'),
             Route::post(''              ,'RolePermissionController\RoleController@store'            )->name('store'),
@@ -62,7 +61,7 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::get('/{id}/show'     ,'RolePermissionController\RoleController@show'             )->name('show'),
             Route::DELETE('/{id}'       ,'RolePermissionController\RoleController@destroy'          )->name('destroy'),
         ]),
-    // role permission user relation
+    // Role permission user relation
         Route::name('assignRole.')->prefix('/assignRole')->group( fn ( ) : array => [
             Route::post(''                    ,'RolePermissionController\ModelHasRoleController@store'       )->name('store'),
             Route::post('/{id}'               ,'RolePermissionController\ModelHasRoleController@destroy'      )->name('destroy'),
@@ -103,7 +102,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'IntroductionController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'IntroductionController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'IntroductionController@restore'             )->name('restore'),
-
             Route::DELETE('premanently-delete/{id}' ,   'IntroductionController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'IntroductionController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'IntroductionController@show_trash'          )->name('show_trash'),
@@ -117,12 +115,11 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'IntroductionContentController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'IntroductionContentController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'IntroductionContentController@restore'             )->name('restore'),
-
             Route::DELETE('premanently-delete/{id}' ,   'IntroductionContentController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'IntroductionContentController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'IntroductionContentController@show_trash'          )->name('show_trash'),
         ]),
-    // about_us
+    // About_us
         Route::name('about_us.')->prefix('/about_us')->group( fn ( ) : array => [
             Route::get('/'                          ,   'AboutUsController@all'                 )    ->name('all'),
             Route::post(''                          ,   'AboutUsController@store'               )->name('store'),
@@ -131,12 +128,11 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'AboutUsController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'AboutUsController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'AboutUsController@restore'             )->name('restore'),
-
             Route::DELETE('premanently-delete/{id}' ,   'AboutUsController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'AboutUsController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'AboutUsController@show_trash'          )->name('show_trash'),
         ]),
-    // contact_us
+    // Contact_us
         Route::name('contact_us.')->prefix('/contact_us')->group( fn ( ) : array => [
             Route::get('/'                          ,   'ContactUsController@all'                 )->name('all'),
             Route::get('/{id}/show'                 ,   'ContactUsController@show'                )->name('show'),
@@ -145,7 +141,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'ContactUsController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'ContactUsController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'ContactUsController@restore'             )->name('restore'),
-
             Route::DELETE('premanently-delete/{id}' ,   'ContactUsController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'ContactUsController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'ContactUsController@show_trash'          )->name('show_trash'),
@@ -161,7 +156,7 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::post('/{id}/update'  ,   'QuestionTagController@update'     )  ->name('update'),
 
         ]),    
-        // store
+        // Store
         Route::name('store.')->prefix('/store')->group( fn ( ) : array => [
             Route::get('/'                          ,   'StoreController@all'                 )    ->name('all'),
             Route::post(''                          ,   'StoreController@store'               )->name('store'),
@@ -170,7 +165,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'StoreController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'StoreController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'StoreController@restore'             )->name('restore'),
-
             Route::DELETE('premanently-delete/{id}' ,   'StoreController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'StoreController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'StoreController@show_trash'          )->name('show_trash'),
@@ -184,12 +178,11 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'AvatarController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'AvatarController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'AvatarController@restore'             )->name('restore'),
-
             Route::DELETE('premanently-delete/{id}' ,   'AvatarController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'AvatarController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'AvatarController@show_trash'          )->name('show_trash'),
         ]),
-        // skill
+        // Skill
         Route::name('skill.')->prefix('/skill')->group( fn ( ) : array => [
             Route::get('/'                          ,   'SkillController@all'                 )    ->name('all'),
             Route::post(''                          ,   'SkillController@store'               )->name('store'),
@@ -198,12 +191,11 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'SkillController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'SkillController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'SkillController@restore'             )->name('restore'),
-
             Route::DELETE('premanently-delete/{id}' ,   'SkillController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'SkillController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'SkillController@show_trash'          )->name('show_trash'),
         ]),
-        // skillable
+        // Skillable
         Route::name('skillable.')->prefix('/skillable')->group( fn ( ) : array => [
             Route::get('/'                          ,   'SkillableController@all'                 )    ->name('all'),
             Route::post(''                          ,   'SkillableController@store'               )->name('store'),
@@ -212,12 +204,11 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'SkillableController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'SkillableController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'SkillableController@restore'             )->name('restore'),
-
             Route::DELETE('premanently-delete/{id}' ,   'SkillableController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'SkillableController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'SkillableController@show_trash'          )->name('show_trash'),
         ]),
-        // age_group
+        // Age_group
         Route::name('age-group.')->prefix('/age-group')->group( fn ( ) : array => [
             Route::get('/'                          ,   'AgeGroupController@all'                 )    ->name('all'),
             Route::post(''                          ,   'AgeGroupController@store'               )->name('store'),
@@ -226,7 +217,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'AgeGroupController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'AgeGroupController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'AgeGroupController@restore'             )->name('restore'),
-
             Route::DELETE('premanently-delete/{id}' ,   'AgeGroupController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'AgeGroupController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'AgeGroupController@show_trash'          )->name('show_trash'),
@@ -240,7 +230,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'CountryController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'CountryController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'CountryController@restore'             )->name('restore'),
-
                 Route::DELETE('premanently-delete/{id}' ,   'CountryController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'CountryController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'CountryController@show_trash'          )->name('show_trash'),
@@ -254,7 +243,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'GovernmentController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'GovernmentController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'GovernmentController@restore'             )->name('restore'),
-
                 Route::DELETE('premanently-delete/{id}' ,   'GovernmentController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'GovernmentController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'GovernmentController@show_trash'          )->name('show_trash'),
@@ -268,19 +256,18 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'CityController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'CityController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'CityController@restore'             )->name('restore'),
-
                 Route::DELETE('premanently-delete/{id}' ,   'CityController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'CityController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'CityController@show_trash'          )->name('show_trash'),
             ]),
-        // subscription
+        // Subscription
             Route::name('subscription.')->prefix('/subscription')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'SubscriptionController@all'                 )    ->name('all'),
                 Route::get('/{id}/show'                 ,   'SubscriptionController@show'                )->name('show'),
                 Route::get('/collection'                ,   'SubscriptionController@collection'          )->name('collection'),
                 Route::post('/{id}/update'              ,   'SubscriptionController@update'              )->name('update'),
     ]),
-        // accessory
+        // Accessory
             Route::name('accessory.')->prefix('/accessory')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'AccessoryController@all'                 )    ->name('all'),
                 Route::post(''                          ,   'AccessoryController@store'               )->name('store'),
@@ -289,12 +276,11 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'AccessoryController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'AccessoryController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'AccessoryController@restore'             )->name('restore'),
-
                 Route::DELETE('premanently-delete/{id}' ,   'AccessoryController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'AccessoryController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'AccessoryController@show_trash'          )->name('show_trash'),
             ]),
-        // age
+        // Age
             Route::name('age.')->prefix('/age')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'AgeController@all'                 )    ->name('all'),
                 Route::get('/{id}/show'                 ,   'AgeController@show'                )->name('show'),
@@ -306,7 +292,7 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::get('/collection'                ,   'BasicController@collection'          )  ->name('collection'),
                 Route::post('/{id}/update'              ,   'BasicController@update'              )  ->name('update'),
             ]),
-        // certificates
+        // Certificates
             Route::name('certificate.')->prefix('/certificate')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'CertificateController@all'                 )    ->name('all'),
                 Route::post(''                          ,   'CertificateController@store'               )->name('store'),
@@ -315,7 +301,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'CertificateController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'CertificateController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'CertificateController@restore'             )->name('restore'),
-
                 Route::DELETE('premanently-delete/{id}' ,   'CertificateController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'CertificateController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'CertificateController@show_trash'          )->name('show_trash'),
@@ -329,7 +314,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'AchievementController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'AchievementController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'AchievementController@restore'             )->name('restore'),
-
                 Route::DELETE('premanently-delete/{id}' ,   'AchievementController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'AchievementController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'AchievementController@show_trash'          )->name('show_trash'),
@@ -343,7 +327,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'AchievementImageController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'AchievementImageController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'AchievementImageController@restore'             )->name('restore'),
-
                 Route::DELETE('premanently-delete/{id}' ,   'AchievementImageController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'AchievementImageController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'AchievementImageController@show_trash'          )->name('show_trash'),
@@ -357,7 +340,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'QuizTypeController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'QuizTypeController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'QuizTypeController@restore'             )->name('restore'),
-
                 Route::DELETE('premanently-delete/{id}' ,   'QuizTypeController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'QuizTypeController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'QuizTypeController@show_trash'          )->name('show_trash'),
@@ -371,7 +353,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'LessonTypeController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'LessonTypeController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'LessonTypeController@restore'             )->name('restore'),
-
                 Route::DELETE('premanently-delete/{id}' ,   'LessonTypeController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'LessonTypeController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'LessonTypeController@show_trash'          )->name('show_trash'),
@@ -384,8 +365,7 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::get('/collection'                ,   'LessonController@collection'          )->name('collection'),
                 Route::DELETE('/{id}'                   ,   'LessonController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'LessonController@update'              )->name('update'),
-                Route::post('/{id}/restore'             ,   'LessonController@restore'             )->name('restore'),
-                
+                Route::post('/{id}/restore'             ,   'LessonController@restore'             )->name('restore'), 
                 Route::DELETE('premanently-delete/{id}' ,   'LessonController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'LessonController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'LessonController@show_trash'          )->name('show_trash'),
@@ -399,7 +379,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'McqAnswerController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'McqAnswerController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'McqAnswerController@restore'             )->name('restore'),
-
                 Route::DELETE('premanently-delete/{id}' ,   'McqAnswerController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'McqAnswerController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'McqAnswerController@show_trash'          )->name('show_trash'),
@@ -413,7 +392,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'McqQuestionController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'McqQuestionController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'McqQuestionController@restore'             )->name('restore'),
-                
                 Route::DELETE('premanently-delete/{id}' ,   'McqQuestionController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'McqQuestionController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'McqQuestionController@show_trash'          )->name('show_trash'),
@@ -427,7 +405,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'ActivityController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'ActivityController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'ActivityController@restore'             )->name('restore'),
-
                 Route::DELETE('premanently-delete/{id}' ,   'ActivityController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'ActivityController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'ActivityController@show_trash'          )->name('show_trash'),
@@ -441,7 +418,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'PackageController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'PackageController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'PackageController@restore'             )->name('restore'),
-                
                 Route::DELETE('premanently-delete/{id}' ,   'PackageController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'PackageController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'PackageController@show_trash'          )->name('show_trash'),
@@ -455,7 +431,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'PlayTimeController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'PlayTimeController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'PlayTimeController@restore'             )->name('restore'),
-                
                 Route::DELETE('premanently-delete/{id}' ,   'PlayTimeController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'PlayTimeController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'PlayTimeController@show_trash'          )->name('show_trash'),
@@ -469,7 +444,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'QuizController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'QuizController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'QuizController@restore'             )->name('restore'),
-                
                 Route::DELETE('premanently-delete/{id}' ,   'QuizController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'QuizController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'QuizController@show_trash'          )->name('show_trash'),
@@ -483,7 +457,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'SubUserLessonController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'SubUserLessonController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'SubUserLessonController@restore'             )->name('restore'),
-                
                 Route::DELETE('premanently-delete/{id}' ,   'SubUserLessonController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'SubUserLessonController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'SubUserLessonController@show_trash'          )->name('show_trash'),
@@ -497,7 +470,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'SubUserQuizController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'SubUserQuizController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'SubUserQuizController@restore'             )->name('restore'),
-                
                 Route::DELETE('premanently-delete/{id}' ,   'SubUserQuizController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'SubUserQuizController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'SubUserQuizController@show_trash'          )->name('show_trash'),
@@ -511,7 +483,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'SubUserController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'SubUserController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'SubUserController@restore'             )->name('restore'),
-                
                 Route::DELETE('premanently-delete/{id}' ,   'SubUserController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'SubUserController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'SubUserController@show_trash'          )->name('show_trash'),
@@ -525,7 +496,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'SubjectController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'SubjectController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'SubjectController@restore'             )->name('restore'),
-                
                 Route::DELETE('premanently-delete/{id}' ,   'SubjectController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'SubjectController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'SubjectController@show_trash'          )->name('show_trash'),
@@ -539,7 +509,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'SubSubjectController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'SubSubjectController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'SubSubjectController@restore'             )->name('restore'),
-                
                 Route::DELETE('premanently-delete/{id}' ,   'SubSubjectController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'SubSubjectController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'SubSubjectController@show_trash'          )->name('show_trash'),
@@ -553,7 +522,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'TrueFalseQuestionController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'TrueFalseQuestionController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'TrueFalseQuestionController@restore'             )->name('restore'),
-                
                 Route::DELETE('premanently-delete/{id}' ,   'TrueFalseQuestionController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'TrueFalseQuestionController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'TrueFalseQuestionController@show_trash'          )->name('show_trash'),
@@ -567,7 +535,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'UserPackageController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'UserPackageController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'UserPackageController@restore'             )->name('restore'),
-                
                 Route::DELETE('premanently-delete/{id}' ,   'UserPackageController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'UserPackageController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'UserPackageController@show_trash'          )->name('show_trash'),
@@ -581,12 +548,11 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'UserSubscriptionController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'UserSubscriptionController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'UserSubscriptionController@restore'             )->name('restore'),
-                
                 Route::DELETE('premanently-delete/{id}' ,   'UserSubscriptionController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'UserSubscriptionController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'UserSubscriptionController@show_trash'          )->name('show_trash'),
             ]),
-        //hero 
+        //Hero 
             Route::name('hero.')->prefix('/hero')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'HeroController@all'                 )    ->name('all'),
                 Route::post(''                          ,   'HeroController@store'               )->name('store'),
@@ -595,7 +561,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::DELETE('/{id}'                   ,   'HeroController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'HeroController@update'              )->name('update'),
                 Route::post('/{id}/restore'             ,   'HeroController@restore'             )->name('restore'),
-                
                 Route::DELETE('premanently-delete/{id}' ,   'HeroController@premanently_delete'  )->name('premanently_delete'),
                 Route::get('/collection-trash'          ,   'HeroController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'HeroController@show_trash'          )->name('show_trash'),
@@ -624,7 +589,7 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::get('/{id}/show'                 ,   'ConversationController@show'                )->name('show'),
                 Route::get('/collection'                ,   'ConversationController@collection'          )->name('collection'),
             ]),
-            // sounds
+        //Sounds
         Route::name('sounds.')->prefix('/sounds')->group( fn ( ) : array => [
             Route::get('/'                          ,   'SoundsController@all'                 )    ->name('all'),
             Route::post(''                          ,   'SoundsController@store'               )->name('store'),
@@ -633,12 +598,11 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'SoundsController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'SoundsController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'SoundsController@restore'             )->name('restore'),
-
             Route::DELETE('premanently-delete/{id}' ,   'SoundsController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'SoundsController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'SoundsController@show_trash'          )->name('show_trash'),
         ]),
-           // soundable
+        // Soundable
         Route::name('soundable.')->prefix('/soundable')->group( fn ( ) : array => [
             Route::get('/'                          ,   'SoundableController@all'                 )    ->name('all'),
             Route::post(''                          ,   'SoundableController@store'               )->name('store'),
@@ -647,7 +611,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'SoundableController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'SoundableController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'SoundableController@restore'             )->name('restore'),
-
             Route::DELETE('premanently-delete/{id}' ,   'SoundableController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'SoundableController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'SoundableController@show_trash'          )->name('show_trash'),
@@ -661,7 +624,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'SkinController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'SkinController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'SkinController@restore'             )->name('restore'),
-            
             Route::DELETE('premanently-delete/{id}' ,   'SkinController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'SkinController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'SkinController@show_trash'          )->name('show_trash'),
@@ -675,7 +637,6 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'AccessoryTypeController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'AccessoryTypeController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'AccessoryTypeController@restore'             )->name('restore'),
-            
             Route::DELETE('premanently-delete/{id}' ,   'AccessoryTypeController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'AccessoryTypeController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'AccessoryTypeController@show_trash'          )->name('show_trash'),
@@ -689,12 +650,11 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'AccessoryPartController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'AccessoryPartController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'AccessoryPartController@restore'             )->name('restore'),
-            
             Route::DELETE('premanently-delete/{id}' ,   'AccessoryPartController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'AccessoryPartController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'AccessoryPartController@show_trash'          )->name('show_trash'),
-
-   Route::name('body-suit.')->prefix('/body-suit')->group( fn ( ) : array => [
+        //BodySuit
+    Route::name('body-suit.')->prefix('/body-suit')->group( fn ( ) : array => [
             Route::get('/'                          ,   'BodySuitController@all'                 )->name('all'),
             Route::post(''                          ,   'BodySuitController@store'               )->name('store'),
             Route::get('/{id}/show'                 ,   'BodySuitController@show'                )->name('show'),
@@ -702,12 +662,11 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'BodySuitController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'BodySuitController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'BodySuitController@restore'             )->name('restore'),
-        
             Route::DELETE('premanently-delete/{id}' ,   'BodySuitController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'BodySuitController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'BodySuitController@show_trash'          )->name('show_trash'),
         ]),
-        //AccessoryPart
+        //HumanPart
         Route::name('human-part.')->prefix('/human-part')->group( fn ( ) : array => [
             Route::get('/'                          ,   'HumanPartController@all'                 )->name('all'),
             Route::post(''                          ,   'HumanPartController@store'               )->name('store'),
@@ -716,9 +675,10 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'HumanPartController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'HumanPartController@update'              )->name('update'),
             Route::post('/{id}/restore'             ,   'HumanPartController@restore'             )->name('restore'),
-        
             Route::DELETE('premanently-delete/{id}' ,   'HumanPartController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'HumanPartController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'HumanPartController@show_trash'          )->name('show_trash'),
         ]),
-    ]);
+    ]),
+]);
+// 

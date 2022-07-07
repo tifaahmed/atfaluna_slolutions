@@ -83,7 +83,6 @@ class PackageController extends Controller
         }
     }
     
-
     public function destroy($id) {
         try {
             return $this -> MakeResponseSuccessful( 
@@ -163,7 +162,6 @@ class PackageController extends Controller
                 );
             } 
     }
-    
     // lang create
             //  requested_languages : from data request (array)
             //  model : single row of the main table (collection)
