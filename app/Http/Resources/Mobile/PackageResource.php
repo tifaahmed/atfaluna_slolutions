@@ -24,13 +24,7 @@ class PackageResource extends JsonResource
             'price'         => $this->price,
             'points'        => $this->points,
             'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)),
-
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
-            
             'name'          => $row ? $row->name:'',
-            'languages'     => $this->Package_language,
         ];        
     }
 }
