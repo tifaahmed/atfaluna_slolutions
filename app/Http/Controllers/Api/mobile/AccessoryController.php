@@ -92,33 +92,56 @@ class AccessoryController extends Controller
         $accessory_id = $request->accessory_id;
         // new accessory
         $new_accessory = $this->ModelRepository->findById($request->accessory_id);
-        $new_body_suit =  $new_accessory->BodySuit()->first();
-        $new_human_parts =  $new_body_suit->bodySuit_humanParts()->get();
-        $new_human_parts_ids =  $new_human_parts->pluck('id')->toArray();
+        $sub_user_accessory = $new_accessory->SubUserAccessory()->where('sub_user_id',$sub_user_id)->first();
 
-        $new_accessory->SubUserAccessory()->where('sub_user_id',$sub_user_id)->update(['active'=> 1]);
 
-        // old accessories
-        $old_accessories_need_unactive = Accessory::whereHas('SubUserAccessory', function (Builder $query) use($sub_user_id,$accessory_id) {
-            $query->where('sub_user_id',$sub_user_id);
-            $query->where('accessory_id','!=',$accessory_id);
-            $query->where('active',1);
-        })
-        ->whereHas('BodySuit', function (Builder $BodySuit_query) use($new_human_parts_ids)  {
-            $BodySuit_query->whereHas('bodySuit_humanParts', function (Builder $humanParts_query) use($new_human_parts_ids){
-                $humanParts_query->whereIn('human_part_id',$new_human_parts_ids);
-            });
-        })
-        ->get();
+        if ($sub_user_accessory) {
+            if ($sub_user_accessory->pivot->active) {
+                $sub_user_accessory->pivot->update(['active'=> 0]);
+            }else{
 
-        foreach ($old_accessories_need_unactive as $key => $value) {
-            $value->SubUserAccessory()->where('sub_user_id',$sub_user_id)->update(['active'=> 0]);
+                $sub_user_accessory->pivot->update(['active'=> 1]);
+
+                
+                $new_body_suit =  $new_accessory->BodySuit()->first();
+                if ($new_body_suit) {
+                    $new_human_parts =  $new_body_suit->bodySuit_humanParts()->get();
+                    $new_human_parts_ids =  $new_human_parts->pluck('id')->toArray();
+
+                    // old accessories
+                    $old_accessories_need_unactive = Accessory::whereHas('SubUserAccessory', function (Builder $query) use($sub_user_id,$accessory_id) {
+                        $query->where('sub_user_id',$sub_user_id);
+                        $query->where('accessory_id','!=',$accessory_id);
+                        $query->where('active',1);
+                    })
+                    ->whereHas('BodySuit', function (Builder $BodySuit_query) use($new_human_parts_ids)  {
+                        $BodySuit_query->whereHas('bodySuit_humanParts', function (Builder $humanParts_query) use($new_human_parts_ids){
+                            $humanParts_query->whereIn('human_part_id',$new_human_parts_ids);
+                        });
+                    })
+                    ->get();
+        
+                    foreach ($old_accessories_need_unactive as $key => $value) {
+                        $value->SubUserAccessory()->where('sub_user_id',$sub_user_id)->update(['active'=> 0]);
+                    }
+        
+
+                }
+            }
+            return $this -> MakeResponseSuccessful( 
+                ['Successful'],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+            
+        }else{
+            return $this -> MakeResponseSuccessful( 
+                ['child did not bought this before'],
+                'Errors'               ,
+                Response::HTTP_BAD_REQUEST
+            ) ;
         }
-        return $this -> MakeResponseSuccessful( 
-            ['Successful'],
-            'Successful'               ,
-            Response::HTTP_OK
-        ) ;
+
     }
 
     

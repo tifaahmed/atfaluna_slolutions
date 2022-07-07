@@ -6,7 +6,7 @@ use App\Models\Lesson as ModelName;
 use App\Repository\LessonRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Quiz;
-// use App\Models\Age_group;
+use App\Models\Sub_user_certificate;
 
 use Illuminate\Database\Eloquent\Builder;
 
@@ -194,12 +194,12 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 
 		// run three time when to get lesson  points & Sub Subject & Subject
 		public function attachRegisterCertificate($sub_user,$points,$certificate_id)  : void{
-			$sub_user_certificate = $sub_user->subUserCertificate()->where('certificate_id',$certificate_id)->withPivot('points')->first();
+			$sub_user_certificate = $sub_user->subUserCertificate()->where('certificate_id',$certificate_id)->withPivot(['points','id'])->first();
 			// if is exist or not add the conection with points
 			if ($sub_user_certificate) {
 				// add new point to the old point 
-				$sub_user_certificate->pivot->points = $sub_user_certificate->pivot->points + $points;
-				$sub_user_certificate->pivot->save();
+				$ub_user_certificateModel = Sub_user_certificate::find($sub_user_certificate->pivot->id);
+				$ub_user_certificateModel->update(['points' => $sub_user_certificate->pivot->points + $points]); 
 			}else{
 				// add only the new point
 				$sub_user->subUserCertificate()->syncWithoutDetaching([$certificate_id => ['points' =>  $points]]);

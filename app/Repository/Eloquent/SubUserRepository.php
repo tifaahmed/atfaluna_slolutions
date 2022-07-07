@@ -50,7 +50,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	{
 		if($avatar_id){
 			$result = $this->findById($sub_user_id); 
-			$result->subUserAvatar()->where('sub_user_id',$sub_user_id)->update(['active'=> 0]);
+			$result->subUserAvatar()->update(['active'=> 0]);
 			$result->subUserAvatar()->syncWithoutDetaching([$avatar_id => ['active' =>  1]]);
 		}
 	}

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Sub_user;
 use App\Models\Certificate;
+use App\Models\Age_group;
 
 class Sub_user_certificate extends Model
 {
@@ -21,6 +22,25 @@ class Sub_user_certificate extends Model
         'points',
 
     ];
+    
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updating(function ($model) {
+            $sub_user = Sub_user::find(1);
+            $certificate = Certificate::find($model->certificate_id);
+            if ( 
+                $model->points  >=   $certificate->max_point  
+                && $certificate->certificatable_type == Age_group::class
+            ) {
+                $new_certificate =  Certificate::find($model->certificate_id + 1);
+                if ($new_certificate) {
+                    $sub_user->subUserCertificate()->syncWithoutDetaching([ $model->certificate_id + 1 ]);
+                }
+            }
+        });
+    }
     // relations
     public function certificate(){
         return $this->belongsTo(Certificate::class,'certificate_id');

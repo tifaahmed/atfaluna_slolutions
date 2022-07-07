@@ -48,6 +48,6 @@ class Avatar extends Model
 
         // belongsToMany
         public function subUserAvatar(){
-            return $this->belongsToMany(Sub_user::class, 'sub_user_avatars', 'avatar_id', 'sub_user_id');
+            return $this->belongsToMany(Sub_user::class, 'sub_user_avatars', 'avatar_id', 'sub_user_id')->withPivot('active');
         }
 }

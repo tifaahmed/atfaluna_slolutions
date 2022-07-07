@@ -16,9 +16,8 @@ class CreateUserPackagesTable extends Migration
         Schema::create('user_packages', function (Blueprint $table) {
             $table->increments('id');//[pk]
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('points');
-            $table->string('image');
             $table->integer('price');
             $table->timestamps();
             $table->softDeletes();

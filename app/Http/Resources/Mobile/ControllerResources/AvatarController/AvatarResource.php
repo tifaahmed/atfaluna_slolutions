@@ -60,6 +60,7 @@ class AvatarResource extends JsonResource
             'price'         =>  $this->price,
             'avatar_original_skin' => new SkinResource($original_skin) ,
             'avatar_active_skin'   => $active_skin ? new SkinResource($active_skin) : new SkinResource($original_skin),
+            'active'        => $sub_user_avatar ? $sub_user_avatar->pivot->active : 0 ,
             'taken'        => $sub_user_avatar ? 1 : 0 ,
             'avatar_accessories'         => $accessories ?  AccessoryResource::collection($accessories) : []  ,
             'can_affort_it' => $can_affort_it

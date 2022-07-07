@@ -16,7 +16,7 @@ use App\Http\Resources\Mobile\ControllerResources\subuserController\SubUserResou
 
 
 use Illuminate\Support\Facades\Auth;
-// lInterfaces
+// Interfaces
 use App\Repository\SubUserRepositoryInterface as ModelInterface;
 
 
@@ -72,7 +72,7 @@ class SubUserController extends Controller
             $sub_user = Auth::user()->sub_user()->create( $request->all() );
             // attach one age group and only one can be active
             $this->ModelRepository->attachAgeGroupByAge($sub_user->age,$sub_user->id) ;
-            $this->ModelRepository->attachAvatar($request->avatar_id,$sub_user->id) ;
+            $this->ModelRepository->attachAvatar($request->avatar_id,$request->id) ;
 
             return $this -> MakeResponseSuccessful( 
                 [new ModelResource ( $sub_user )  ],
@@ -91,6 +91,7 @@ class SubUserController extends Controller
     public function update(MobileStoreSubUserApiRequest $request ,$id) {
         try {
             $this->ModelRepository->update( $id,Request()->all()) ;
+            $this->ModelRepository->attachAvatar($request->avatar_id,$request->id) ;
             return $this->show($id);
 
         } catch (\Exception $e) {

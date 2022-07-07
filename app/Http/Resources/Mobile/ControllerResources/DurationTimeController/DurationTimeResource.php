@@ -18,7 +18,8 @@ class DurationTimeResource extends JsonResource
         return [
             'id'            => $this->id,
 
-            'time_count'         => $this->time_count,
+            'time_count'         => number_format((float)$this->time_count, 2, '.', '')   ,
+
             'day_of_week'         => $this->created_at ?  Carbon::parse($this->created_at)->dayOfWeek  : null,
             'day_number'         => $this->created_at ?   $this->created_at->format('d') : null,
             'day_name'         => $this->created_at ?   $this->created_at->format('D') : null,

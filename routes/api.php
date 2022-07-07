@@ -216,6 +216,12 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
 
     
     Route::group(['middleware' => ['auth:api','IfActiveUser','IfAuthChild','DurationTime']], fn ( ) : array => [
+        // Avatar
+        Route::name('avatar.')->prefix('/avatar')->group( fn ( ) : array => [
+            Route::get('/'              ,   'AvatarController@all'                 )->name('all'),
+            Route::get('/{id}/show'     ,   'AvatarController@show'                )->name('show'),
+            Route::get('/collection'    ,   'AvatarController@collection'          )->name('collection'),
+        ]),
         // duration_times
         Route::name('duration_time.')->prefix('/duration-time')->group( fn ( ) : array => [
             Route::get('/'              ,   'DurationTimeController@all'                 )->name('all'),
@@ -273,25 +279,11 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::get('/collection'                ,   'QuizAttemptController@collection'          )->name('collection'),
             Route::DELETE('/{id}'                   ,   'SubUserController@destroy'                 )->name('destroy'),
         ]),
-        // //McqQuestion
-        // Route::name('mcq-question.')->prefix('/mcq-question')->group( fn ( ) : array => [
-        //     Route::get('/'                          ,   'McqQuestionController@all'                 )->name('all'),
-        //     Route::get('/{id}/show'                 ,   'McqQuestionController@show'                )->name('show'),
-        //     Route::get('/collection'                ,   'McqQuestionController@collection'          )->name('collection'),
-        //     Route::post('/attach'                   ,   'McqQuestionController@attach'              )->name('attach'),
-        // ]),
-        // //True_false_question
-        // Route::name('true-false-question.')->prefix('/true-false-question')->group( fn ( ) : array => [
-        //     Route::get('/'                          ,   'TrueFalseQuestionController@all'                 )->name('all'),
-        //     Route::get('/{id}/show'                 ,   'TrueFalseQuestionController@show'                )->name('show'),
-        //     Route::get('/collection'                ,   'TrueFalseQuestionController@collection'          )->name('collection'),
-        //     Route::post('/attach'                    ,   'TrueFalseQuestionController@attach'              )->name('attach'),
-        // ]),
 
         // avatar
         Route::name('avatar.')->prefix('/avatar')->group( fn ( ) : array => [
             Route::post('/attach'            ,   'AvatarController@attach'              )->name('attach'),
-            Route::post('/detach'            ,   'AvatarController@detach'              )->name('detach'),
+            Route::post('/toggle'            ,   'AvatarController@toggle'              )->name('toggle'),
         ]),
 
         // age_group
@@ -306,12 +298,7 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
                 Route::post( '/logout' ,  'authController@logout' )  -> name( 'logout' ) ,
             ]),
-        // Avatar
-        Route::name('avatar.')->prefix('/avatar')->group( fn ( ) : array => [
-            Route::get('/'              ,   'AvatarController@all'                 )->name('all'),
-            Route::get('/{id}/show'     ,   'AvatarController@show'                )->name('show'),
-            Route::get('/collection'    ,   'AvatarController@collection'          )->name('collection'),
-        ]),
+
         // accessory
         Route::name('accessory.')->prefix('/accessory')->group( fn ( ) : array => [
             Route::get('/'              ,   'AccessoryController@all'                 )->name('all'),
