@@ -103,12 +103,24 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
                 Route::get('/{id}/show'                 ,   'McqAnswerController@show'                )->name('show'),
                 Route::get('/collection'                ,   'McqAnswerController@collection'          )->name('collection'),
             ]),
-        //McqQuestion
+        // McqQuestion
             Route::name('mcq-question.')->prefix('/mcq-question')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'McqQuestionController@all'                 )->name('all'),
                 Route::get('/{id}/show'                 ,   'McqQuestionController@show'                )->name('show'),
                 Route::get('/collection'                ,   'McqQuestionController@collection'          )->name('collection'),
-            ]),  
+            ]), 
+        // MatchAnswer
+            Route::name('match-answer.')->prefix('/match-answer')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'MatchAnswerController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'MatchAnswerController@show'                )->name('show'),
+                Route::get('/collection'                ,   'MatchAnswerController@collection'          )->name('collection'),
+            ]),
+        // MatchQuestion
+            Route::name('match-question.')->prefix('/match-question')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'MatchQuestionController@all'                 )->name('all'),
+                Route::get('/{id}/show'                 ,   'MatchQuestionController@show'                )->name('show'),
+                Route::get('/collection'                ,   'MatchQuestionController@collection'          )->name('collection'),
+            ]),   
         // language
             Route::name('language.')->prefix('/language')->group( fn ( ) : array => [
                 Route::get('/'              ,   'LanguageController@all'        )  ->name('all'),
@@ -351,10 +363,9 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
         //Package
         Route::name('package.')->prefix('/package')->group( fn ( ) : array => [
             Route::get('/'                          ,   'PackageController@all'                 )->name('all'),
-            Route::get('/{id}/show'                 ,   'PackageController@show'                )->name('show'),
             Route::get('/collection'                ,   'PackageController@collection'          )->name('collection'),
-            Route::post(''                          ,   'PackageController@store'               )->name('store'),
-            Route::DELETE('/{id}'                   ,   'PackageController@destroy'             )->name('destroy'),
+            Route::post('/attach'                   ,   'PackageController@attach'              )->name('attach'),
+            
         ]),
             //Friend
         Route::name('friend.')->prefix('/friend')->group( fn ( ) : array => [

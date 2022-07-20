@@ -109,6 +109,11 @@ namespace App\Providers;
     use App\Repository\Eloquent\DurationTimeRepository;
     use App\Repository\DurationTimeRepositoryInterface;
 
+    use App\Repository\Eloquent\MatchQuestionRepository;
+    use App\Repository\Eloquent\MatchQuestionLanguageRepository;
+
+    use App\Repository\Eloquent\MatchAnswerRepository;
+    use App\Repository\Eloquent\MatchAnswerLanguageRepository;
     // Role  Permission
         use App\Repository\Eloquent\RolePermissionRepository\PermissionRepository;
         use App\Repository\Eloquent\RolePermissionRepository\RoleRepository;
@@ -222,6 +227,11 @@ namespace App\Providers;
     use App\Repository\BodySuitRepositoryInterface;
     use App\Repository\HumanPartRepositoryInterface;
 
+    use App\Repository\MatchQuestionRepositoryInterface;
+    use App\Repository\MatchQuestionLanguageRepositoryInterface;
+
+    use App\Repository\MatchAnswerRepositoryInterface;
+    use App\Repository\MatchAnswerLanguageRepositoryInterface;
     // Role  Permission   
     use App\Repository\RolePermissionInterface\PermissionRepositoryInterface;
     use App\Repository\RolePermissionInterface\RoleRepositoryInterface;
@@ -288,6 +298,12 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(McqQuestionLanguageRepositoryInterface::class,McqQuestionLanguageRepository::class);
         $this->app->bind(McqAnswerRepositoryInterface::class,McqAnswerRepository::class);
         $this->app->bind(McqAnswerLanguageRepositoryInterface::class,McqAnswerLanguageRepository::class);
+
+         // Match
+        $this->app->bind(MatchQuestionRepositoryInterface::class,MatchQuestionRepository::class);
+        $this->app->bind(MatchQuestionLanguageRepositoryInterface::class,MatchQuestionLanguageRepository::class);
+        $this->app->bind(MatchAnswerRepositoryInterface::class,MatchAnswerRepository::class);
+        $this->app->bind(MatchAnswerLanguageRepositoryInterface::class,MatchAnswerLanguageRepository::class);
 
         // Subscription
         $this->app->bind(SubscriptionRepositoryInterface::class,SubscriptionRepository::class);
