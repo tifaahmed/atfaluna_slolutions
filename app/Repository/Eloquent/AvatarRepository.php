@@ -29,6 +29,11 @@ class AvatarRepository extends BaseRepository implements AvatarRepositoryInterfa
 	}
 	public function filter($sub_user_id,$gender,$free,$bought)  {
 		$model =   $this->model;
+		// to not git any row with no image original in skins table
+		$model = $model->whereHas('skins', function (Builder $query)  {
+			$query->where('original',1);
+		});
+
 		if ($gender) {
 			$model = $model->Gender($gender);
 		}

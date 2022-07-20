@@ -14,9 +14,10 @@ use App\Http\Requests\Api\SubUser\MobileStoreSubUserApiRequest ;
 use App\Http\Resources\Mobile\Collections\ControllerResources\subuserController\SubUserCollection as ModelCollection;
 use App\Http\Resources\Mobile\ControllerResources\subuserController\SubUserResource as ModelResource;
 
+use App\Models\Sub_user;
 
 use Illuminate\Support\Facades\Auth;
-// lInterfaces
+// Interfaces
 use App\Repository\SubUserRepositoryInterface as ModelInterface;
 
 
@@ -27,9 +28,13 @@ class SubUserController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-    public function all(){
+
+ 
+
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model = $this->ModelRepository->filterAll($request->sub_user_id,$request->closest);
+            return new ModelCollection (  $model ) ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -41,8 +46,11 @@ class SubUserController extends Controller
     public function collection(Request $request){
         // return $request->language;
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
-
+            $model =  $this->ModelRepository->filterPaginate(
+                $request->sub_user_id,
+                $request->closest,
+                $request->PerPage ? $request->PerPage : 10) ;
+            return new ModelCollection ( $model);
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -88,9 +96,13 @@ class SubUserController extends Controller
         }
     }
 
-    public function update(MobileStoreSubUserApiRequest $request ,$id) {
+    public function update(Request $request,$id) {
         try {
-            $this->ModelRepository->update( $id,Request()->all()) ;
+            // rid of empty fields
+            $array_filter = array_filter($request->all());
+
+            $this->ModelRepository->update( $id,$array_filter) ;
+            $this->ModelRepository->attachAvatar($request->avatar_id,$request->id) ;
             return $this->show($id);
 
         } catch (\Exception $e) {

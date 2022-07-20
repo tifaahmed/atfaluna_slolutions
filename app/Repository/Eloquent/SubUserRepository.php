@@ -22,15 +22,51 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	{
 		$this->model =  $model;
 	}
-//Accessory
-    public function attachAccessories($accessory_ids,$id)
+	public function filter($sub_user_id,$closest)  
+	{
+		$model =   $this->model;
+
+
+		if($sub_user_id && $closest){
+			
+			$sub_user = $this->findById($sub_user_id) ;
+
+			$model = $model->
+			where('latitude','!=',null)->
+			where('longitude','!=',null)->
+			where('id','!=',$sub_user_id)->
+			orderBy(function ($query) use ($sub_user) {
+				$query->selectRaw(
+					'ST_Distance_Sphere(point(`longitude`, `latitude`), point(?, ?)) AS distance_from_event',
+					[$sub_user->longitude, $sub_user->latitude]
+				);
+			});
+
+		}
+		return 	$model;
+
+	}
+	public function filterAll($sub_user_id,$closest) 
+	{
+		$model = $this->filter($sub_user_id,$closest)  ;
+		return $model->get();
+	} 
+	public function filterPaginate($sub_user_id,$closest,$itemsNumber)  
+    {
+		$model = $this->filter($sub_user_id,$closest)  ;
+		return $model->paginate($itemsNumber)->appends(request()->query());
+    }
+
+
+	//Accessory
+	public function attachAccessories($accessory_ids,$id)
 	{
 		if($accessory_ids){
 			$result = $this->findById($id); 
 			$result->subUserAccessory()->sync($accessory_ids);
 		}
 	}
-//Achievement
+	//Achievement
 	public function attachAchievements($achievement_ids,$id)
 	{
 		if($achievement_ids){
@@ -38,8 +74,8 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 			$result->subUserAchievement()->sync($achievement_ids);
 		}
 	}
-//Avatar
-    public function attachAvatars($avatar_ids,$id)
+	//Avatar
+	public function attachAvatars($avatar_ids,$id)
 	{
 		if($avatar_ids){
 			$result = $this->findById($id); 
@@ -50,11 +86,11 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	{
 		if($avatar_id){
 			$result = $this->findById($sub_user_id); 
-			$result->subUserAvatar()->where('sub_user_id',$sub_user_id)->update(['active'=> 0]);
+			$result->subUserAvatar()->update(['active'=> 0]);
 			$result->subUserAvatar()->syncWithoutDetaching([$avatar_id => ['active' =>  1]]);
 		}
 	}
-//Certificate
+	//Certificate
 	public function attachCertificates($certificate_ids,$id)
 	{
 		if($certificate_ids){
@@ -62,7 +98,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 			$result->subUserCertificate()->sync($certificate_ids);
 		}
 	}
-//Subject
+	//Subject
 	public function attachSubjects($subject_ids,$id)
 	{
 		if($subject_ids){
@@ -70,15 +106,15 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 			$sub_user->subUserSubject()->sync($subject_ids);
 		}
 	}
-//SubSubject
-public function attachSubSubjects($sub_subject_ids,$id)
-{
+	//SubSubject
+	public function attachSubSubjects($sub_subject_ids,$id)
+	{
 	if($sub_subject_ids){
 		$sub_user =   Auth::user()->sub_user()->find($id);
 		$sub_user->subUserSubSubject()->sync($sub_subject_ids);
 	}
-}
-//Quiz
+	}
+	//Quiz
 	public function attachQuizs($quiz_ids,$id)
 	{
 		if($quiz_ids){
@@ -86,7 +122,7 @@ public function attachSubSubjects($sub_subject_ids,$id)
 			$sub_user->subUserQuiz()->sync($quiz_ids);
 		}
 	}
-//Lesson
+	//Lesson
 	public function attachLessons($lesson_ids,$id)
 	{
 		if($lesson_ids){
@@ -94,14 +130,14 @@ public function attachSubSubjects($sub_subject_ids,$id)
 			$sub_user->subUserLesson()->sync($lesson_ids);
 		}
 	}
-//Activity
-public function attachActivities($activity_ids,$id)
-{
+	//Activity
+	public function attachActivities($activity_ids,$id)
+	{
 	if($activity_ids){
 		$result = Auth::user()->sub_user()->find($id); 
 		$result->subUserActivity()->sync($activity_ids);
 	}
-}
+	}
 	// $age_group_ids : array of age group id
 	// $id  : integer sub user id
 	// action :  attach age group to sub user

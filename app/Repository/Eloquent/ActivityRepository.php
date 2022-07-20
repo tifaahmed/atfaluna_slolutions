@@ -6,7 +6,7 @@ use App\Models\Activity as ModelName;
 use App\Repository\ActivityRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use URL;
-
+use App\Models\Sub_user_certificate;
 
 class ActivityRepository extends BaseRepository implements ActivityRepositoryInterface
 {
@@ -112,12 +112,16 @@ class ActivityRepository extends BaseRepository implements ActivityRepositoryInt
 		} 
 		// run three time when to get lesson  points & Sub Subject & Subject
 		public function attachRegisterCertificate($sub_user,$points,$certificate_id)  : void{
-			$sub_user_certificate = $sub_user->subUserCertificate()->where('certificate_id',$certificate_id)->withPivot('points')->first();
+			// i use model not conection to use boot on update
+			//  boot to add next age group
+			$sub_user_certificate = Sub_user_certificate::where('certificate_id',$certificate_id)
+														->where('sub_user_id',$sub_user->id)
+														->first();
+
 			// if is exist or not add the conection with points
 			if ($sub_user_certificate) {
 				// add new point to the old point 
-				$sub_user_certificate->pivot->points = $sub_user_certificate->pivot->points + $points;
-				$sub_user_certificate->pivot->save();
+				$sub_user_certificate->update(['points' => $sub_user_certificate->points + $points]); 
 			}else{
 				// add only the new point
 				$sub_user->subUserCertificate()->syncWithoutDetaching([$certificate_id => ['points' =>  $points]]);

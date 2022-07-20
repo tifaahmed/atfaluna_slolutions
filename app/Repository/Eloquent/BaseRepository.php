@@ -122,6 +122,16 @@ class BaseRepository implements EloquentRepositoryInterface
 	}
 
 	/**
+	 * firstOrCreate a model
+	 * @param  array $payload
+	 * @return Model
+	 */
+	public function firstOrCreate(array $payload): ?Model
+	{
+		$model = $this->model->firstOrCreate($payload);
+		return  $model->fresh();
+	}
+	/**
 	* update  existing model
 	* @param  int $modelId
 	* @param  array $payload

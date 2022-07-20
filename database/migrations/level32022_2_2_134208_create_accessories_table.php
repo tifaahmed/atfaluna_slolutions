@@ -20,7 +20,7 @@ class CreateAccessoriesTable extends Migration
             $table->enum('gender',['girl','boy','both']); //[note: 'boys or girls or both '] 
 
             $table->integer('body_suit_id')->unsigned();
-            $table->foreign('body_suit_id')->references('id')->on('body_suits');
+            $table->foreign('body_suit_id')->references('id')->on('body_suits')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();

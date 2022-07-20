@@ -33,11 +33,11 @@ class DurationTimeRepository extends BaseRepository implements DurationTimeRepos
 			});
 		}
 		if ($type == 'current-week') {
-			$model = $model->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+			$model = $model->whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::SATURDAY), Carbon::now()->endOfWeek()]);
 		}
 		else if ($type == 'last-week') {
 			$previous_week = strtotime("-1 week +1 day");
-			$start_week = strtotime("last sunday midnight",$previous_week);
+			$start_week = strtotime("last SATURDAY midnight",$previous_week);
 			$end_week = strtotime("next saturday",$start_week);
 			$start_week = date("Y-m-d",$start_week);
 			$end_week = date("Y-m-d",$end_week);

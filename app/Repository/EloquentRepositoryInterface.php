@@ -74,6 +74,14 @@ interface EloquentRepositoryInterface
 	public function create(array $payload): ?model;
 
 	/**
+	 * firstOrCreate a model
+	 * @param  array $payload
+	 * @return Model
+	 */
+	public function firstOrCreate(array $payload): ?model;
+
+
+	/**
 	* update  existing model
 	* @param  int $modelId
 	* @param  array $payload

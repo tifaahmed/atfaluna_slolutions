@@ -81,13 +81,14 @@ class AvatarController extends Controller
         try {
             $avatar = $this->ModelRepository->findById($request->avatar_id);
             $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
-            $sub_user->subUserAvatar()->update(['active'=> 0]);
 
             $sub_user_avatar = $sub_user->subUserAvatar()->where('avatar_id',$request->avatar_id)->first();
             if (!$sub_user_avatar) {
                 if ($sub_user->points > $avatar->price) {
-                    $sub_user->subUserAvatar()->syncWithoutDetaching($request->avatar_id);
+                    $sub_user->subUserAvatar()->update(['active'=> 0]);
+                    $sub_user->subUserAvatar()->syncWithoutDetaching( [ $request->avatar_id => ['active'=> 0] ]);
                     $sub_user->update(['points'=> $sub_user->points - $avatar->price]) ;
+
                     return $this -> MakeResponseSuccessful( 
                         ['Successful'],
                         'Successful'               ,
@@ -107,22 +108,6 @@ class AvatarController extends Controller
                     Response::HTTP_BAD_REQUEST
                 ) ;
             }
-
-
-
-
-
-
-
-
-
-
-
-            return $this -> MakeResponseSuccessful( 
-                ['Successful'],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -131,4 +116,29 @@ class AvatarController extends Controller
             );
         }
     }
+    public function toggle(MobileAvatarApiRequest $request){
+        $avatar = $this->ModelRepository->findById($request->avatar_id);
+        $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
+
+        $sub_user_avatar = $sub_user->subUserAvatar()->where('avatar_id',$request->avatar_id)->first();
+        if ($sub_user_avatar) {
+            // unactive all avatars of the user
+            $sub_user->subUserAvatar()->update(['active'=> 0]);
+            // active the avatar of the user
+            $sub_user_avatar->pivot->update(['active'=> 1]);
+            return $this -> MakeResponseSuccessful( 
+                ['Successful'],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        }else{
+            return $this -> MakeResponseSuccessful( 
+                ['child did not bought this before'],
+                'Errors'               ,
+                Response::HTTP_BAD_REQUEST
+            ) ;
+        }
+
+    }
+
 }

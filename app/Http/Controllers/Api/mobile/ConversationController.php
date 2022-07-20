@@ -15,17 +15,28 @@ use App\Http\Resources\Mobile\ConversationResource as ModelResource;
 
 // lInterfaces
 use App\Repository\ConversationRepositoryInterface as ModelInterface;
+use App\Repository\GroupChatRepositoryInterface as GroupChatInterface;
 
 class ConversationController extends Controller
 {
     private $Repository;
-    public function __construct(ModelInterface $Repository)
+    private $GroupChatRepository;
+
+    public function __construct(ModelInterface $Repository,GroupChatInterface $GroupChatRepository)
     {
         $this->ModelRepository = $Repository;
+        $this->GroupChatRepository = $GroupChatRepository;
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            return $request;
+            
+            return $model = $this->ModelRepository->filterAll( 
+                $request->sub_user_id,
+                $request->has_message,
+                $request->type,
+            );
+            return new ModelCollection ( $model  )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -34,24 +45,41 @@ class ConversationController extends Controller
             );
         }
     }
-
+    public function collection(Request $request){
+        try {
+            return $model = $this->ModelRepository->filterPaginate( 
+                $request->sub_user_id,
+                $request->has_message,
+                $request->type,
+                $request->PerPage ? $request->PerPage : 10
+            );
+            return new ModelCollection ( $model )  ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
     public function store(modelInsertRequest $request) {
         try {
-            if($request->type == 'single'){
 
-                $flag =  $this->ModelRepository->store($request->sub_user_id,$request->recevier_ids,$request->type) ;
-
-                if (!$flag ) {
-                    $conversation = $this->ModelRepository->create( Request()->all() );
-                    $conversation -> group_chats()->create(['recevier_id'=>$request->recevier_ids[0]]);
+            if ($request->type == 'single'  ) {
+                $checkExist =  $this->ModelRepository->checkExist($request->sub_user_id,$request->recevier_ids,$request->type);
+                    $model = $checkExist->count() ? $checkExist : null ;
+            }else{
+                $model = $this->ModelRepository->create( Request()->all() );
+                foreach ($request->recevier_ids as $key => $value) {
+                    $model -> group_chats()->create(['recevier_id'=>$request->recevier_ids[$key]]);
                 }
             }
 
-            // return $this -> MakeResponseSuccessful( 
-            //     [ $model ],
-            //     'Successful'               ,
-            //     Response::HTTP_OK
-            // ) ;
+            return $this -> MakeResponseSuccessful( 
+                [ $model ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -61,18 +89,7 @@ class ConversationController extends Controller
         }
     }
 
-    public function collection(Request $request){
-        try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
 
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
     
     public function destroy($id) {
         try {
