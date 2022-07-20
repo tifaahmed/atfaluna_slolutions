@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\User;
 use App\Models\Accessory;
+use App\Models\Package;
 use App\Models\Avatar;
 use App\Models\Certificate;
 use App\Models\Quiz;

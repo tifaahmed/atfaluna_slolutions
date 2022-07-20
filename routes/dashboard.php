@@ -396,6 +396,32 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::get('/collection-trash'          ,   'McqQuestionController@collection_trash'    )->name('collection_trash'),
                 Route::get('/{id}/show-trash'           ,   'McqQuestionController@show_trash'          )->name('show_trash'),
             ]),
+        // MatchAnswer
+            Route::name('match-answer.')->prefix('/match-answer')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'MatchAnswerController@all'                 )    ->name('all'),
+                Route::post(''                          ,   'MatchAnswerController@store'               )->name('store'),
+                Route::get('/{id}/show'                 ,   'MatchAnswerController@show'                )->name('show'),
+                Route::get('/collection'                ,   'MatchAnswerController@collection'          )->name('collection'),
+                Route::DELETE('/{id}'                   ,   'MatchAnswerController@destroy'             )->name('destroy'),
+                Route::post('/{id}/update'              ,   'MatchAnswerController@update'              )->name('update'),
+                Route::post('/{id}/restore'             ,   'MatchAnswerController@restore'             )->name('restore'),
+                Route::DELETE('premanently-delete/{id}' ,   'MatchAnswerController@premanently_delete'  )->name('premanently_delete'),
+                Route::get('/collection-trash'          ,   'MatchAnswerController@collection_trash'    )->name('collection_trash'),
+                Route::get('/{id}/show-trash'           ,   'MatchAnswerController@show_trash'          )->name('show_trash'),
+            ]),
+        //MatchQuestion
+            Route::name('match-question.')->prefix('/match-question')->group( fn ( ) : array => [
+                Route::get('/'                          ,   'MatchQuestionController@all'                 )    ->name('all'),
+                Route::post(''                          ,   'MatchQuestionController@store'               )->name('store'),
+                Route::get('/{id}/show'                 ,   'MatchQuestionController@show'                )->name('show'),
+                Route::get('/collection'                ,   'MatchQuestionController@collection'          )->name('collection'),
+                Route::DELETE('/{id}'                   ,   'MatchQuestionController@destroy'             )->name('destroy'),
+                Route::post('/{id}/update'              ,   'MatchQuestionController@update'              )->name('update'),
+                Route::post('/{id}/restore'             ,   'MatchQuestionController@restore'             )->name('restore'),
+                Route::DELETE('premanently-delete/{id}' ,   'MatchQuestionController@premanently_delete'  )->name('premanently_delete'),
+                Route::get('/collection-trash'          ,   'MatchQuestionController@collection_trash'    )->name('collection_trash'),
+                Route::get('/{id}/show-trash'           ,   'MatchQuestionController@show_trash'          )->name('show_trash'),
+            ]),
         // Activity
             Route::name('activity.')->prefix('/activity')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'ActivityController@all'                 )    ->name('all'),

@@ -25,10 +25,8 @@ class MobilePackageApiRequest extends FormRequest
     public function rules()
     {
         return [
-            
-            'image'                   =>  [  'required' ,'max:5000' ] ,
-            'price'                   =>  [ 'numeric','between:0,9999.99'] ,
-            'points'                  =>  [  'required' , 'integer' ] ,
+            'package_id'       =>  [ 'required' ,'integer' ,'exists:packages,id'] ,
+            'sub_user_id'        =>  [ 'required' ,'integer' ,'exists:sub_users,id',] ,
 
         ];
     }
