@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConversationTable extends Migration
+class CreateConversationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateConversationTable extends Migration
      */
     public function up()
     {
-        Schema::create('conversation', function (Blueprint $table) {
+        Schema::create('conversations', function (Blueprint $table) {
             $table->increments('id');//[pk]
             $table->string('title')->nullable();
             $table->boolean('read')->default('0'); //[note:'default(0)',note:'true or false']

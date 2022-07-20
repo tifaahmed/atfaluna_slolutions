@@ -12,22 +12,24 @@ class Conversation extends Model
     use HasFactory;
     public $guarded = ['id'];
 
-    protected $table = 'conversation';
+    protected $table = 'conversations';
 
     protected $fillable = [
         'title',//  string , nullable
         'read',//  boolean , defoult 0
         'sub_user_id',//unsigned  
         'type',// enum ,['single','group'] , defoult single
-
     ];
     // relations
     public function sub_user(){
         return $this->belongsTo(Sub_user::class,'sub_user_id');
     }
     // Groupchat
+    public function group_chat(){
+        return $this->hasOne(Group_chat::class,'conversation_id');
+    }
     public function group_chats(){
-        return $this->hasMany(Group_chat::class);
+        return $this->hasMany(Group_chat::class,'conversation_id');
     }
     // Massage
     public function massages(){

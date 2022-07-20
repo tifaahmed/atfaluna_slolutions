@@ -30,8 +30,6 @@ class CreateUsersTable extends Migration
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
 
             $table -> string        ( 'login_type') -> nullable( )              ;
-            $table -> string        ( 'latitude'  ) -> nullable( )              ;
-            $table -> string        ( 'longitude' ) -> nullable( )              ;
             $table -> integer         ( 'pin_code'  ) -> nullable( ) -> unique( ) ;
             $table -> string         ( 'fcm_token'  ) -> nullable( ) ;
             

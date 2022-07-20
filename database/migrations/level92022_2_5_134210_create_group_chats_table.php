@@ -16,7 +16,7 @@ class CreateGroupChatsTable extends Migration
         Schema::create('group_chats', function (Blueprint $table) {
             $table->increments('id');//[pk]
             $table->integer('conversation_id')->unsigned();
-            $table->foreign('conversation_id')->references('id')->on('conversation')->onDelete('cascade');
+            $table->foreign('conversation_id')->references('id')->on('conversations')->onDelete('cascade');
             $table->integer('recevier_id')->unsigned();
             $table->foreign('recevier_id')->references('id')->on('sub_users')->onDelete('cascade');
             $table->timestamps();

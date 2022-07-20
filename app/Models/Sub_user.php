@@ -39,6 +39,7 @@ class Sub_user extends Model
         'gender',// enum ,['girl','boy']
         'points',// integer
         'user_id',//unsigned  
+        'latitude','longitude',
     ];
     // relations
         public function user(){
@@ -60,9 +61,8 @@ class Sub_user extends Model
             return $this->belongsToMany(Activity::class, 'sub_user_activities', 'sub_user_id', 'activity_id');
         }
     //Lesson
-
         public function subUserLesson(){
-            return $this->belongsToMany(Lesson::class, 'sub_user_lessons', 'sub_user_id', 'lesson_id');
+            return $this->belongsToMany(Lesson::class, 'sub_user_lessons', 'sub_user_id', 'lesson_id')->withPivot('points');
         }
         public function subUserLessonModel(){
             return $this->hasMany(Sub_user_lesson::class);
@@ -73,7 +73,7 @@ class Sub_user extends Model
         }
     //Certificate
         public function subUserCertificate(){
-            return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_user_id', 'certificate_id');
+            return $this->belongsToMany(Certificate::class, 'sub_user_certificates', 'sub_user_id', 'certificate_id')->withPivot(['points','id']);
         }
     //Quiz
         public function subUserQuiz(){

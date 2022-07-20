@@ -20,6 +20,8 @@ class Sub_user_sub_subject extends Model
         'sub_subject_id',//integer , exist
         'points',// integer / default:0
     ];
+
+    
     // relations
         // belongsTo
         public function sub_subject(){

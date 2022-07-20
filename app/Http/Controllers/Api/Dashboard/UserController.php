@@ -19,7 +19,9 @@ use App\Repository\CountryRepositoryInterface   as CountryInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-
+use App\Models\Hero;
+use App\Models\Avatar;
+use App\Models\Massage_image;
 
 class UserController extends Controller
 {

@@ -52,7 +52,6 @@ class User extends Authenticatable {
         'token',
         'remember_token',
         'login_type',
-        'latitude','longitude',
         'pin_code',
         'active'
     ];

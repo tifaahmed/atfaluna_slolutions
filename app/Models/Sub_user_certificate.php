@@ -32,11 +32,13 @@ class Sub_user_certificate extends Model
             $certificate = Certificate::find($model->certificate_id);
             if ( 
                 $model->points  >=   $certificate->max_point  
-                && $certificate->certificatable_type == Age_group::class
-            ) {
-                $new_certificate =  Certificate::find($model->certificate_id + 1);
-                if ($new_certificate) {
-                    $sub_user->subUserCertificate()->syncWithoutDetaching([ $model->certificate_id + 1 ]);
+                && 
+                $certificate->certificatable_type == Age_group::class
+            ) 
+            {
+                $age_group = Age_group::find($certificate->certificatable_id + 1);
+                if ($age_group) {
+                    $sub_user->subUserAgeGroup()->syncWithoutDetaching([ $age_group->id]);
                 }
             }
         });

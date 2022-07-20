@@ -90,7 +90,7 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 			// calculate lesson point from percentage to number ( 00.0% to 0 )
 			$lesson_points = $this->calculateFromPercentageToPoints($lesson->points,$percentage); 
 
-			$sub_user_lesson =   $sub_user->subUserLesson()->where('lesson_id',$lesson_id)->withPivot('points')->first();
+			$sub_user_lesson =   $sub_user->subUserLesson()->where('lesson_id',$lesson_id)->first();
 
 			if ($lesson_points > 0) {
 
@@ -194,12 +194,16 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 
 		// run three time when to get lesson  points & Sub Subject & Subject
 		public function attachRegisterCertificate($sub_user,$points,$certificate_id)  : void{
-			$sub_user_certificate = $sub_user->subUserCertificate()->where('certificate_id',$certificate_id)->withPivot(['points','id'])->first();
+			// i use model not conection to use boot on update
+			//  boot to add next age group
+			$sub_user_certificate = Sub_user_certificate::where('certificate_id',$certificate_id)
+														->where('sub_user_id',$sub_user->id)
+														->first();
+
 			// if is exist or not add the conection with points
 			if ($sub_user_certificate) {
 				// add new point to the old point 
-				$ub_user_certificateModel = Sub_user_certificate::find($sub_user_certificate->pivot->id);
-				$ub_user_certificateModel->update(['points' => $sub_user_certificate->pivot->points + $points]); 
+				$sub_user_certificate->update(['points' => $sub_user_certificate->points + $points]); 
 			}else{
 				// add only the new point
 				$sub_user->subUserCertificate()->syncWithoutDetaching([$certificate_id => ['points' =>  $points]]);

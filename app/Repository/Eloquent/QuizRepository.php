@@ -212,12 +212,24 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
                 $sub_user->update(['points' => $sub_user->points + $quiz->points]);
             }
 	}
-	public function attachRegisterCertificate($sub_user,$points,$certificate_id)  {
-		$sub_user->subUserCertificate()->syncWithoutDetaching($certificate_id);
-		$sub_user_certificate_model= $sub_user->subUserCertificateModel()->where('certificate_id',$certificate_id)->first();
-		$sub_user_certificate_model->update(['points' => $sub_user_certificate_model->points + $points  ]);
+
+	
+	// run three time when to get lesson  points & Sub Subject & Subject
+	public function attachRegisterCertificate($sub_user,$points,$certificate_id)  : void{
+		// i use model not conection to use boot on update
+		//  boot to add next age group
+		$sub_user_certificate = Sub_user_certificate::where('certificate_id',$certificate_id)
+													->where('sub_user_id',$sub_user->id)
+													->first();
+
+		// if is exist or not add the conection with points
+		if ($sub_user_certificate) {
+			// add new point to the old point 
+			$sub_user_certificate->update(['points' => $sub_user_certificate->points + $points]); 
+		}else{
+			// add only the new point
+			$sub_user->subUserCertificate()->syncWithoutDetaching([$certificate_id => ['points' =>  $points]]);
+		}
 	}
-	
-	
 }
 

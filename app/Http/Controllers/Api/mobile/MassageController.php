@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
 
+use App\Models\Hero;
+use App\Models\Avatar;
+use App\Models\Massage_image;
+
 // Requests
 use App\Http\Requests\Api\Massage\MassageApiRequest as modelInsertRequest;
 
@@ -37,7 +41,18 @@ class MassageController extends Controller
 
     public function store(modelInsertRequest $request) {
         try {
-            $model = new ModelResource( $this->ModelRepository->create( Request()->all() ) );
+
+            if ($request->massagable_type == 'hero') {
+                $class = Hero::class;
+            }else if($request->massagable_type == 'image'){
+                $class = Massage_image::class;
+            }else if($request->massagable_type == 'avatar'){
+                $class = Avatar::class;
+            }
+            $all = [];
+            $all += Request()->all()   ;
+            $all['massagable_type'] =   $class ;
+            $model = new ModelResource( $this->ModelRepository->create( $all ) );
 
             return $this -> MakeResponseSuccessful( 
                 [ $model ],

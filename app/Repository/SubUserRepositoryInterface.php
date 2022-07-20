@@ -3,26 +3,30 @@
 namespace App\Repository;
 
 interface SubUserRepositoryInterface extends EloquentRepositoryInterface{
-                    //Accessory
+    public function filterAll($sub_user_id,$closest);
+    public function filterPaginate($sub_user_id,$closest,$itemsNumber);
+
+
+    //Accessory
     public function attachAccessories($accessory_ids,$id);
-                    //Achievement
+    //Achievement
     public function attachAchievements($achievement_ids,$id);
-                    //Avatar
+    //Avatar
     public function attachAvatars($avatar_ids,$id);
     public function attachAvatar($avatar_id,$id);
-                    //Certificate
+    //Certificate
     public function attachCertificates($certificate_ids,$id);
-                    //Subject
+    //Subject
     public function attachSubjects($subject_ids,$id);
-                    //Sub_Subject
+    //Sub_Subject
     public function attachSubSubjects($sub_subject_ids,$id);
-                    //Quiz
+    //Quiz
     public function attachQuizs($quiz_ids,$id);
-                    //Lesson
+    //Lesson
     public function attachLessons($lesson_ids,$id);
-                   //AgeGroup
+    //AgeGroup
     public function attachAgeGroups($age_group_ids,$id); 
-                   //Activity
+    //Activity
     public function attachActivities($activity_ids,$id);
 
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Mobile;
+namespace App\Http\Resources\Mobile\ControllerResources\FriendController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-use App\Http\Resources\Mobile\SubUserResource;
+use App\Http\Resources\Mobile\ControllerResources\FriendController\SubUserResource;
 
 class FriendResource extends JsonResource
 {
@@ -20,10 +20,6 @@ class FriendResource extends JsonResource
         return [
             'id'               => $this->id,
             'recevier'               => new SubUserResource($this->sub_user_recevier),
-            
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
 
         ];        
     }

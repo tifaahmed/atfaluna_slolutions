@@ -211,6 +211,10 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::get('/collection'    ,   'SubUserController@collection'              )->name('collection'),
             Route::post('/{id}/update'  ,   'SubUserController@update'                  )->name('update'),
         ]),
+        //Massage
+        Route::name('massage.')->prefix('/massage')->group( fn ( ) : array => [
+            Route::post(''              ,   'MassageController@store'                   )->name('store'),
+        ]),
     ]),
 
 
@@ -353,7 +357,6 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
         //Massage
         Route::name('massage.')->prefix('/massage')->group( fn ( ) : array => [
         Route::get('/'                          ,   'MassageController@all'                 )    ->name('all'),
-        Route::post(''                          ,   'MassageController@store'               )->name('store'),
         Route::get('/collection'                ,   'MassageController@collection'          )->name('collection'),
         ]),
         //Conversation
