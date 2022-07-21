@@ -57,30 +57,14 @@ class PackageController extends Controller
     try {
         $package = $this->ModelRepository->findById($request->package_id);
         $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
-        // $sub_user_package= $sub_user->subUserPackage()->where('package_id',$request->package_id)->first();
-        // if (!$sub_user_package) {
-            // if ($sub_user->points > $package->price) {
-                // $sub_user->subUserPackage()->syncWithoutDetaching($request->package_id);
-                $sub_user->update(['points'=> $sub_user->points - $package->points]) ;
-                return $this -> MakeResponseSuccessful( 
-                    ['Successful'],
-                    'Successful'               ,
-                    Response::HTTP_OK
-                ) ;
-            // }else{
-            //     return $this -> MakeResponseSuccessful( 
-            //         ['child does not have enough points'],
-            //         'Errors'               ,
-            //         Response::HTTP_BAD_REQUEST
-            //     ) ;
-            // }
-        // }else{
-        //     return $this -> MakeResponseSuccessful( 
-        //         ['child has bought this before'],
-        //         'Errors'               ,
-        //         Response::HTTP_BAD_REQUEST
-        //     ) ;
-        // }
+
+        $sub_user->update(['points'=> $sub_user->points + $package->points]) ;
+        return $this -> MakeResponseSuccessful( 
+            ['Successful'],
+            'Successful'               ,
+            Response::HTTP_OK
+        ) ;
+           
     } catch (\Exception $e) {
         return $this -> MakeResponseErrors(  
             [$e->getMessage()  ] ,
