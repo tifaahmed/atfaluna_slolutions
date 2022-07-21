@@ -30,6 +30,8 @@ class MatchQuestionApiRequest extends FormRequest
 
         $all += [ 'degree'          =>  [ 'required'] ]  ;
 
+        $all += [ 'question_tag_ids'  =>  [ 'sometimes' ,'array','exists:question_tags,id'] ]  ;
+
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.audio'   =>  [ 'sometimes' ,'max:5000','mimes:m4a,M4A,MP3,FLAC,ABR,MPEG-4,mp4'] ] ;
 
