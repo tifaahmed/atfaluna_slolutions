@@ -31,10 +31,12 @@ class Match_question extends Model
             public function match_answer(){
                 return $this->HasMany(Match_answer::class);
             }
-             // morphToMany    
+
+        // morphToMany    
             public function question_tags(){
                 return $this->morphToMany(QuestionTag::class, 'question_tagables');
             }  
+            
         // morphedByMany    
             public function Quizs(){
                 return $this->morphToMany(Quiz::class, 'quiz_questionables');

@@ -16,6 +16,7 @@ use App\Models\Notification;
 
 use App\Models\True_false_question;      // morphedByMany
 use App\Models\Mcq_question;             // morphedByMany
+use App\Models\Match_question;             // morphedByMany
 
 class Quiz extends Model
 {
@@ -29,7 +30,7 @@ class Quiz extends Model
         'minimum_requirements', // integer / default 0
         'quizable_id',//   required , integer , exists / ex  lesson_id , sub subject_id  , subject_id 
         'quizable_type',// required / ex Lesson , Sub_subject , Subject
-        'quiz_type_id'
+        'quiz_type_id' // required / ex 1-assignment , 2-quiz
     ];
 
     // relations
@@ -63,7 +64,9 @@ class Quiz extends Model
             public function true_false_questions(){
                 return $this->morphedByMany(True_false_question::class,'questionable','quiz_questionables');
             }
-
+            public function match_questions(){
+                return $this->morphedByMany(Match_question::class,'questionable','quiz_questionables');
+            }
 
 
 }

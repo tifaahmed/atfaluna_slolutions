@@ -43,28 +43,29 @@ class MatchQuestionController extends Controller
             );
         }
     }
-    public function store(modelInsertRequest $request) {
-        try {
-            $model = new ModelResource( $this->ModelRepository->create( Request()->all() ));
-            // attach
-            $this->ModelRepository->attachQuestionTags($request->question_tag_ids,$model->id);
+    // public function store(modelInsertRequest $request) {
+    //     return $request;
+    //     try {
+    //         $model = new ModelResource( $this->ModelRepository->create( Request()->all() ));
+    //         // attach
+    //         $this->ModelRepository->attachQuestionTags($request->question_tag_ids,$model->id);
 
-            // languages
-            $this -> store_array_languages($request->languages,$model) ;
+    //         // languages
+    //         $this -> store_array_languages($request->languages,$model) ;
 
-            return $this -> MakeResponseSuccessful( 
-                [ $model ],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_BAD_REQUEST
-            );
-        }
-    }
+    //         return $this -> MakeResponseSuccessful( 
+    //             [ $model ],
+    //             'Successful'               ,
+    //             Response::HTTP_OK
+    //         ) ;
+    //     } catch (\Exception $e) {
+    //         return $this -> MakeResponseErrors(  
+    //             [$e->getMessage()  ] ,
+    //             'Errors',
+    //             Response::HTTP_BAD_REQUEST
+    //         );
+    //     }
+    // }
 
     public function collection(Request $request){
         try {

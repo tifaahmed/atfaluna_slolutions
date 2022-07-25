@@ -34,6 +34,7 @@ class QuizUpdateApiRequest extends FormRequest
         // quiz_questions
         $all += [ 'mcq_question_ids'        =>  [ 'sometimes' ,'array','exists:mcq_questions,id'] ]  ;
         $all += [ 'true_false_question_ids' =>  [ 'sometimes' ,'array','exists:true_false_questions,id'] ]  ;
+        $all += [ 'match_questions_ids' =>  [ 'sometimes' ,'array','exists:match_questions,id'] ]  ;
 
         // quiz_types
         $all += [ 'quiz_type_id'        =>  [ 'required' ,'integer','exists:quiz_types,id'] ]  ;

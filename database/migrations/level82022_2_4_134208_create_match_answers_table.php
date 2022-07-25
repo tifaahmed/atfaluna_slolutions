@@ -16,7 +16,11 @@ class CreateMatchAnswersTable extends Migration
         Schema::create('match_answers', function (Blueprint $table) {
             $table->increments('id');//[pk]
             $table->string('image')->nullable();
+            $table->enum('possition',['top','bottom']);
+
             $table->integer('match_answer_id')->nullable();
+            $table->foreign('match_answer_id')->references('id')->on('match_answers');
+
             $table->integer('match_question_id')->unsigned();
             $table->foreign('match_question_id')->references('id')->on('match_questions');
             $table->timestamps();

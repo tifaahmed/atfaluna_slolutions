@@ -4,8 +4,9 @@ namespace App\Http\Resources\Mobile\MatchQuestion;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Resources\Mobile\Collections\MatchQuestion\MatchQuestionLanguagesCollection;
-use App\Http\Resources\Mobile\Collections\MatchAnswer\MatchAnswerCollection;
+// use App\Http\Resources\Mobile\Collections\MatchQuestion\MatchQuestionLanguagesCollection;
+// use App\Http\Resources\Mobile\Collections\MatchAnswer\MatchAnswerCollection;
+use App\Http\Resources\Mobile\MatchAnswer\MatchAnswerResource;
 
 class MatchQuestionResource extends JsonResource
 {
@@ -18,19 +19,20 @@ class MatchQuestionResource extends JsonResource
     public function toArray($request)
     {
         $row=$this->match_question_languages()->Localization()->RelatedLanguage($this->id)->first();
-
+        // return $this->match_answer()->orderBy('possition')->get();
         return [
-            'id'              => $this->id,
+            'type'       => ' MatchQuestion',
 
+            'id'              => $this->id,
             'degree'          => $this->degree, 
 
             'header'          => $row ? $row->header:'',
+            'audio'          => $row ? $row->audio:'',
 
-            'languages'       => new MatchQuestionLanguagesCollection ($this->match_question_languages),
 
-            'mcq_answers'     => new MatchAnswerCollection ($this->match_answer),
+            'match_answers'     =>  MatchAnswerResource::collection($this->match_answer()->orderBy('possition')->get() ),
 
-            'question_tags'   => $this->question_tags,
+            // 'question_tags'   => $this->question_tags,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

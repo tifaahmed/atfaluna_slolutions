@@ -20,21 +20,13 @@ class MatchAnswerResource extends JsonResource
         $row=$this->match_answer_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
-            'id'            => $this->id,
-            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
+            'id'             => $this->id,
+            'match_answer_id'=> $this->match_answer_id,
+            'image'          => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)),
+            'possition'      =>  $this->possition,
 
-            'title'          => $row ? $row->title:'',
-
-            // 'answer'        =>  $this->answer,
-            
-            'languages'     => new MatchAnswerLanguagesCollection ($this->match_answer_languages),
-
-            'match_question'       =>  $this->match_question   ,
-            
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
-
+            'title'         => $row ? $row->title : '',
+            'audio'         => ( $row && Storage::disk('public')->exists($row->audio)) ? asset(Storage::url($row->audio))  : null,
         ];        
     }
 }
