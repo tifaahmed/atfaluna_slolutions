@@ -51,8 +51,12 @@ class MatchAnswerController extends Controller
                 $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
                 $all += array( $file_one => $path );
             }
-
-            $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
+            if ($request->possition == 'top') {
+                 $all += array( 'match_answer_id' => null );
+            }else {
+                $all += array( 'match_answer_id' => $request->match_answer_id );
+            }
+            $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one,'match_answer_id')+$all ) );
 
             // // languages
             $this -> store_array_languages($request->languages,$model) ;

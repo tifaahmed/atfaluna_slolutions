@@ -19,11 +19,17 @@ class Match_answer extends Model
         'image',//nullable, max:5000
         'match_answer_id',//nullable 
         'match_question_id',//unsigned 
+        'possition' // 'top','bottom'
     ];
     // relations
     public function match_question(){
         return $this->belongsTo(Match_question::class,'match_question_id');
     }
+
+    public function match_answer(){
+        return $this->belongsTo(self::class, 'match_answer_id');
+    }
+    
     //relation
     public function match_answer_languages(){
         return $this->HasMany(Match_answer_language::class);

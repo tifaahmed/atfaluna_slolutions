@@ -1,16 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\Lesson;
+namespace App\Http\Resources\Dashboard\Skill;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Dashboard\LessonTypeResource;
+use App\Http\Resources\Dashboard\Skill\SkillLanguagesResource;
 
-use App\Http\Resources\Dashboard\Collections\Lesson\LessonLanguagesCollection;
-use App\Http\Resources\Dashboard\Collections\Quiz\QuizCollection;
-use App\Http\Resources\Dashboard\Collections\Skill\SkillCollection ;
-
-
-class LessonResource extends JsonResource
+class SkillResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -24,25 +19,8 @@ class LessonResource extends JsonResource
 
         return [
             'id'            => $this->id,
-            'points'        =>  $this->points,
-
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
-
-            'languages'     => new LessonLanguagesCollection ( $this->lesson_languages ),
             'name'          => $row ? $row->name:'',
-            
-            'sub_subject'   => $this->subSubject   ,
-            'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
-            'skill'         => $this->skill  ,
-
-
-            'skills'        => new SkillCollection($this->skills),
-
-            'quiz'       =>    $this->quiz    ,
-
-            
+            'languages'     => SkillLanguagesResource::collection ( $this->lesson_languages ),
         ];        
     }
 }

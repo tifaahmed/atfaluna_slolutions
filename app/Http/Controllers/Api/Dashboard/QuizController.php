@@ -49,6 +49,7 @@ class QuizController extends Controller
             // attach
             $this->ModelRepository->attachMcqQuestions($request->mcq_question_ids,$model->id);
             $this->ModelRepository->attachTrueFalseQuestions($request->true_false_question_ids,$model->id);
+            $this->ModelRepository->attachMatchQuestions($request->match_questions_ids,$model->id);
             
             // languages
             $this -> store_array_languages($request->languages,$model) ;

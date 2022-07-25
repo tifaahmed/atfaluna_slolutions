@@ -37,6 +37,14 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 			$result->true_false_questions()->syncWithoutDetaching($true_false_question_ids);
 		}
 	}
+	public function attachMatchQuestions($match_questions_ids,$id)
+	{
+		if($match_questions_ids){
+			$result = $this->findById($id); 
+			$result->match_questions()->syncWithoutDetaching($match_questions_ids);
+		}
+	}
+	
 	public function startQuiz(int $sub_user_id,int $quiz_id){
 
 		$sub_user =   Auth::user()->sub_user()->find($sub_user_id);
