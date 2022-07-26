@@ -27,7 +27,7 @@ class HeroUpdateApiRequest extends FormRequest
 
         $all=[];
         
-        $all += [ 'lesson_id'   =>  [ 'required' ,'integer','exists:lessons,id'] ] ;
+        $all += [ 'lesson_ids'         =>  [ 'sometimes' ,'array','exists:lessons,id'] ]  ;
 
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.title'   =>  [ 'required' ] ] ;
