@@ -53,6 +53,7 @@ class LessonController extends Controller
                 $request->lesson_type_id,
                 $request->hero_id, 
                 $request->seen,
+                $request->age_group_id,
                 $request->prepage ? $request->prepage : 10);
                 return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {

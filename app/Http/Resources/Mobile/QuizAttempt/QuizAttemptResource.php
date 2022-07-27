@@ -30,13 +30,15 @@ class QuizAttemptResource extends JsonResource
             $full_mark =  $full_mark + $question_attempt->questionable->degree;
         }
 
+        $question_attempts = $this->question_attempts()->latest()->get();
+
         return [
             'id'                => $this->id,
             'quiz_attempts_count '             => $foundIndex+1 ,
             'score'             => $this->score,
             'status'            => $this->status,
             'full_mark'            => $full_mark,
-            'question_attempts' => new QuestionAttemptCollection( $this->question_attempts ),
+            'question_attempts' => new QuestionAttemptCollection( $question_attempts ),
         ];        
     }
 }

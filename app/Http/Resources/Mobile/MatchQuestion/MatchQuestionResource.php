@@ -30,7 +30,8 @@ class MatchQuestionResource extends JsonResource
             'audio'          => $row ? $row->audio:'',
 
 
-            'match_answers'     =>  MatchAnswerResource::collection($this->match_answer()->orderBy('possition')->get() ),
+            'match_answers_top'     =>  MatchAnswerResource::collection($this->match_answer()->where('possition','top')->get() ),
+            'match_answers_bottom'     =>  MatchAnswerResource::collection($this->match_answer()->where('possition','bottom')->get() ),
 
             // 'question_tags'   => $this->question_tags,
 

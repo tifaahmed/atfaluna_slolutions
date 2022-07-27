@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Basic;
 
+use App\Http\Resources\Mobile\ControllerResources\AccessoryController\SkinResource;
+use App\Http\Resources\Mobile\ControllerResources\AccessoryController\ActivityResource;
+use App\Http\Resources\Mobile\ControllerResources\AccessoryController\LessonResource;
+
 class AccessoryResource extends JsonResource
 {
     /**
@@ -30,8 +34,6 @@ class AccessoryResource extends JsonResource
             $can_affort_it = ( $sub_user->points > $this->price ) ? 1 : 0 ;
         }
 
-
-
         $all=[];
         $all += [ 'id'     =>  $this->id ]  ;
         $all += [ 'name'     =>  $row ? $row->name:'' ]  ;
@@ -39,9 +41,12 @@ class AccessoryResource extends JsonResource
         $all += ['image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item))];
         
 
-        $all += [ 'taken'     => $taken ]  ;
-        $all += [ 'can_affort_it'     => $can_affort_it ]  ;
+        $all += [ 'taken'     => $taken ]  ; // user bought this before or not 
+        $all += [ 'can_affort_it'     => $can_affort_it ]  ; // user have enough points ot not
 
+        $all += [ 'accessory_skin'       => SkinResource::collection($this->AccessorySkin) ]  ; 
+        $all += [ 'accessory_activity'     => ActivityResource::collection($this->AccessoryActivity) ]  ; 
+        $all += [ 'accessory_lesson'     => LessonResource::collection($this->AccessoryLesson) ]  ; 
         
         return $all  ;      
     }
