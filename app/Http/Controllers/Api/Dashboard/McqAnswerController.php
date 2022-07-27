@@ -75,6 +75,32 @@ class McqAnswerController extends Controller
         }
     }
 
+    public function store(modelInsertRequest $request) {
+        $all = [ ];
+        $file_one = 'image';
+        if ($request->hasFile($file_one)) {            
+            $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+            $all += array( $file_one => $path );            
+        }
+        try {
+            $model = new ModelResource( $this->ModelRepository->create( Request()->except($file_one)+$all ) );
+
+            // languages
+            $this -> store_array_languages($request->languages,$model) ;
+
+            return $this -> MakeResponseSuccessful( 
+                [ $model ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
     public function premanently_delete($id) {
         try {
             $model = $this->ModelRepository->findTrashedById($id);

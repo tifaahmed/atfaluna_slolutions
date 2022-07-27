@@ -32,10 +32,10 @@ class MatchAnswerApiRequest extends FormRequest
         $all += [ 'match_question_id'         =>  [ 'required' ,'integer','exists:match_questions,id' , new MatchAnswer($this->possition)]  ] ;
         
 
-        $all += [ 'match_answer_id'         =>  [ 'required_if:possition,==,bottom','integer',
-            Rule::exists('match_answers','id')->where(function ($query) {
-                return $query->where('match_question_id', $this->match_question_id )->where('possition','top' );
-            }),                                                              
+        $all += [ 'match_answer_id'         =>  [ 'required_if:possition,==,bottom',
+            // Rule::exists('match_answers','id')->where(function ($query) {
+            //     return $query->where('match_question_id', $this->match_question_id )->where('possition','top' );
+            // }),                                                              
         ] ] ;
 
 
