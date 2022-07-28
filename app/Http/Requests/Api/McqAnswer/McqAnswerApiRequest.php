@@ -27,7 +27,7 @@ class McqAnswerApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
-        $all += [ 'image'           =>  [ 'required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ]  ;
+        $all += [ 'image'           =>  [ 'sometimes' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ]  ;
         $all += [ 'answer'          =>  [ 'required'] ]  ;
         $all += [ 'mcq_question_id'         =>  [ 'required' ,'integer','exists:mcq_questions,id'] ] ;
         foreach ($Languages as $key => $value) {

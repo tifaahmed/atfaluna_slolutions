@@ -25,9 +25,6 @@ class True_false_question extends Model
     ];
     //relation
         // HasMany
-            public function quiz(){
-                return $this->belongsTo(Quiz::class,'quiz_id');
-            }
             public function true_false_question_languages(){
                 return $this->HasMany(True_false_question_language::class);
             }
