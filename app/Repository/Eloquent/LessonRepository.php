@@ -41,7 +41,7 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 			$model = $model->whereHas('subSubject', function (Builder $sub_subject_query) use($age_group_id) {
 				$sub_subject_query->whereHas('subject', function (Builder $subject_query) use($age_group_id) {
 					$subject_query->whereHas('age_group', function (Builder $age_group_query) use($age_group_id) {
-						$age_group_query->where('age_group_id','!=',$age_group_id);
+						$age_group_query->where('age_group_id',$age_group_id);
 					});
 				});
 			});

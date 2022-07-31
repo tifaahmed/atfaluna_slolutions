@@ -8,8 +8,10 @@ use Illuminate\Http\Response ;
 
 
 // Resources
-use App\Http\Resources\Mobile\Collections\Quiz\QuizCollection as ModelCollection;
-use App\Http\Resources\Mobile\Quiz\QuizResource as ModelResource;
+use App\Http\Resources\Mobile\Collections\ControllerResources\QuizController\QuizCollection as ModelCollection;
+use App\Http\Resources\Mobile\ControllerResources\QuizController\QuizResource as ModelResource;
+
+
 use App\Http\Resources\Mobile\QuizAttempt\QuizAttemptResource ;
 use App\Http\Resources\Mobile\QuestionAttempt\QuestionAttemptResource ;
 
@@ -28,9 +30,13 @@ class QuizController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model = $this->ModelRepository->filterAll(
+                $request->quizable_id,
+                $request->quizable_type
+            );
+            return new ModelCollection ( $model  )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -41,9 +47,13 @@ class QuizController extends Controller
     }
 
     public function collection(Request $request){
-        // return $request->language;
+        $model = $this->ModelRepository->filterPaginate( 
+            $request->quizable_id,
+            $request->quizable_type,
+            $request->per_page ? $request->per_page : 10
+        );      
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
+            return new ModelCollection (  $model )  ;
 
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  

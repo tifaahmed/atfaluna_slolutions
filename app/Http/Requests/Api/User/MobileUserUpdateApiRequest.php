@@ -26,7 +26,7 @@ class MobileUserUpdateApiRequest extends FormRequest
         return [
                 'name'      =>  [  'required','max:50'] ,
                 'email'     =>  [  'required','unique:users,email,'.$this->id  ,'email'] ,
-                'phone'     =>  [  'required', 'integer' , 'unique:users,phone,'.$this->id  ,'max:15' ] ,
+                'phone'     =>  [  'required', 'unique:users,phone,'.$this->id  ,'max:15' ] ,
                 
                 'birthdate '=>  [  'date' ] ,
                 'country_id'=>  [  'required' , 'integer','exists:countries,id' ] ,
