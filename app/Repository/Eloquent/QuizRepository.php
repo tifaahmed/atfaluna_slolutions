@@ -5,6 +5,10 @@ namespace App\Repository\Eloquent;
 use App\Models\Quiz as ModelName;
 use App\Repository\QuizRepositoryInterface;
 use Auth;
+use App\Models\Lesson;
+use App\Models\Subject;
+use App\Models\Sub_subject;
+
 class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 {
 
@@ -21,6 +25,42 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 	{
 		$this->model =  $model;
 	}
+	public function filter($quizable_id,$quizable_type)  {
+		$model =   $this->model;
+		if($quizable_id){
+			$model = $model->where('quizable_id',$quizable_id);
+		}
+		if($quizable_type){
+			switch ($quizable_type) {
+				case "lesson":
+					$quizable_type =  Lesson::class;
+				  break;
+				case "subject":
+					$quizable_type =  Subject::class;
+				  break;
+				case "sub_subject":
+					$quizable_type =  Sub_subject::class;
+				  break;
+				default:
+				$quizable_type =  "";
+			}
+			$model = $model->where('quizable_type',$quizable_type);
+		}
+		
+		return 	$model;
+
+	}
+
+    public function filterAll($quizable_id,$quizable_type)  {
+		$model = $this->filter($quizable_id,$quizable_type)  ;
+		return $model->get();
+	}
+	public function filterPaginate($quizable_id,$quizable_type,$per_page) {
+		$model = $this->filter($quizable_id,$quizable_type)  ;
+		return $model->paginate($per_page)->appends(request()->query());
+	} 
+
+
 
     public function attachMcqQuestions($mcq_question_ids,$id)
 	{

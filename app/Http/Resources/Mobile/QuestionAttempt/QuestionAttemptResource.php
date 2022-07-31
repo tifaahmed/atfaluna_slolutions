@@ -26,7 +26,6 @@ class QuestionAttemptResource extends JsonResource
     {
         $all = [];
         $all += array('id'                => $this->id);
-        // $all += array('quiz_attempt_id'   => $this->quiz_attempt_id);
         $all += array('degree'            => $this->questionable->degree);
         $all += array('status'            => $this->status);
         $all += array('answer'            => $this->answer);
