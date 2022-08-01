@@ -13,10 +13,12 @@ use App\Http\Requests\Api\MatchQuestion\MatchQuestionApiRequest as modelInsertRe
 use App\Http\Requests\Api\MatchQuestion\MatchQuestionUpdateApiRequest as modelUpdateRequest;
 
 
+// // Resources
+// use App\Http\Resources\Dashboard\Collections\MatchQuestion\MatchQuestionCollection as ModelCollection;
+// use App\Http\Resources\Dashboard\MatchQuestion\MatchQuestionResource as ModelResource;
 // Resources
-use App\Http\Resources\Dashboard\Collections\MatchQuestion\MatchQuestionCollection as ModelCollection;
-use App\Http\Resources\Dashboard\MatchQuestion\MatchQuestionResource as ModelResource;
-
+use App\Http\Resources\Dashboard\Collections\ControllerResources\MatchController\MatchQuestionCollection as ModelCollection;
+use App\Http\Resources\Dashboard\ControllerResources\MatchController\MatchQuestionResource as ModelResource;
 // lInterfaces
 use App\Repository\MatchQuestionRepositoryInterface as ModelInterface;
 use App\Repository\MatchQuestionLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages

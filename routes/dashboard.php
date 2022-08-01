@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::get('/collection'                ,   'UserController@collection'          )->name('collection'),
             Route::DELETE('/{id}'                   ,   'UserController@destroy'             )->name('destroy'),
             Route::post('/{id}/update'              ,   'UserController@update'              )->name('update'),
-            Route::post('/{id}/restore'             ,   'UserController@restore'             )->name('restore'),
+            Route::get('/{id}/restore'             ,   'UserController@restore'             )->name('restore'),
             Route::DELETE('premanently-delete/{id}' ,   'UserController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'UserController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'UserController@show_trash'          )->name('show_trash'),
