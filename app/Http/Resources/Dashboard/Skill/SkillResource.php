@@ -15,12 +15,12 @@ class SkillResource extends JsonResource
      */
     public function toArray($request)
     {
-    $row=$this->lesson_languages()->Localization()->RelatedLanguage($this->id)->first();
+    $row=$this->skill_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'            => $this->id,
             'name'          => $row ? $row->name:'',
-            'languages'     => SkillLanguagesResource::collection ( $this->lesson_languages ),
+            'languages'     => SkillLanguagesResource::collection ( $this->skill_languages ),
         ];        
     }
 }

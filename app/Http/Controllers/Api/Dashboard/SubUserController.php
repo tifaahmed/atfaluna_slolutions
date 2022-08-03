@@ -67,7 +67,8 @@ class SubUserController extends Controller
 
     public function all(){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model = $this->ModelRepository->all();
+            return new ModelCollection ( $model  )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -79,7 +80,8 @@ class SubUserController extends Controller
 
     public function collection(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
+            $model = $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10);
+            return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

@@ -122,7 +122,8 @@ class QuizController extends Controller
             // attach
             $this->ModelRepository->attachMcqQuestions($request->mcq_question_ids,$id);
             $this->ModelRepository->attachTrueFalseQuestions($request->true_false_question_ids,$id);
-            
+            $this->ModelRepository->attachMatchQuestions($request->match_questions_ids,$model->id);
+
             // find new model row
             $model = new ModelResource( $this->ModelRepository->findById($id) );
 

@@ -11,6 +11,6 @@ interface QuizRepositoryInterface extends EloquentRepositoryInterface{
     public function answerQuestion(int $sub_user_id,int $quiz_id,int $question_attempt_id ,$answer);
     public function finishQuiz(int $sub_user_id,int $quiz_id);
 
-    public function filterAll($quizable_id,$quizable_type)  ;
-	public function filterPaginate($quizable_id,$quizable_type,int $per_page) ; 
+    public function filterAll($quizable_id,$quizable_type,$quiz_type_id,$sub_user_id)  ;
+	public function filterPaginate($quizable_id,$quizable_type,$quiz_type_id,$sub_user_id,int $per_page) ; 
 }

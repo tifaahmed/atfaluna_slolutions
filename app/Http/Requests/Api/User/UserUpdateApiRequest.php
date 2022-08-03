@@ -26,7 +26,7 @@ class UserUpdateApiRequest extends FormRequest
         return [
                 'name'      =>  [  'required','max:50'] ,
                 'email'     =>  [  'required','unique:users,email,'.$this->id  ,'email'] ,
-                'phone'     =>  [  'required', 'integer' ,'unique:users,phone,'.$this->id  ,'max:15' ] ,
+                'phone'     =>  [  'required' ,'unique:users,phone,'.$this->id  ,'max:15' ] ,
 
                 'password'  =>  [  'sometimes','min:8' , 'max:15' ],
                 'password_confirmation'  =>  [ 'exclude_unless:password,true', 'min:8' , 'max:15' ],

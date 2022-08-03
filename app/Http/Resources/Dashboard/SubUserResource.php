@@ -12,7 +12,6 @@ use App\Http\Resources\Dashboard\Collections\Lesson\LessonCollection;
 use App\Http\Resources\Dashboard\Collections\SubjectCollection;
 use App\Http\Resources\Dashboard\Collections\SubSubject\SubSubjectCollection;
 use App\Http\Resources\Dashboard\Collections\AgeGroupCollection;
-use App\Http\Resources\Dashboard\Collections\Achievement\AchievementCollection;
 
 class SubUserResource extends JsonResource
 {
@@ -33,21 +32,19 @@ class SubUserResource extends JsonResource
             'user'          =>  $this->user ,
         //Avatar
             'avatars'      => new AvatarCollection ($this->subUserAvatar)  ,
-        //Accessory
+        // //Accessory
             'accessories' => new AccessoryCollection ($this->subUserAccessory)  ,
-        //Subject
+        // //Subject
             'subjects'     => new SubjectCollection ($this->subUserSubject)  ,
-        //Sub_Subject
+        // //Sub_Subject
             'sub_subjects'  => new SubSubjectCollection ($this->subUserSubSubject)  ,
-        //Lesson
+        // //Lesson
             'lessons'      => new LessonCollection ($this->subUserLesson)  ,
-        //Quiz
+        // //Quiz
             'quizs'        => new QuizCollection ($this->subUserQuiz)  ,
-        //Certificate
-            'certificates'  => new CertificateCollection ($this->subUserCertificate)  ,
-        //Achievement
-            'achievements' => new AchievementCollection ($this->subUserAchievement)  ,            
-        //AgeGroup
+        // //Certificate
+            'certificates'  => new CertificateCollection ($this->subUserCertificate)  ,         
+        // //AgeGroup
             'sub_user_age_group'  => new AgeGroupCollection ($this->subUserAgeGroup)  ,
 
             'active_age_group'    => $this->ActiveAgeGroup() ? $this->ActiveAgeGroup()->first()  : null ,

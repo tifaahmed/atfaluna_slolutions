@@ -26,7 +26,7 @@ class UserRegisterApiRequest extends FormRequest
         return [
                 'name'      =>  [ 'required' ,'max:50'] ,
                 'email'     =>  [ 'required' , 'unique:users,email' ,'email'] ,
-                'phone'     =>  [ 'required' ,  'integer' ,'unique:users,phone' ,'max:15' ] ,
+                'phone'     =>  [ 'required' ,'unique:users,phone' ,'max:15' ] ,
 
                 'password'  =>  [ 'required' , 'confirmed' ,  'min:8' , 'max:15' ],
                 'password_confirmation'  =>  [ 'required' , 'min:8' , 'max:15' ],
