@@ -21,7 +21,7 @@ class Skill extends Model
     ];
     //relation
     public function skill_languages(){
-        return $this->HasMany(Skill_language::class);
+        return $this->HasMany(Skill_language::class,'skill_id');
     }
     public function skillable(){
         return $this->HasMany(Skillable::class);

@@ -34,7 +34,9 @@ class QuizController extends Controller
         try {
             $model = $this->ModelRepository->filterAll(
                 $request->quizable_id,
-                $request->quizable_type
+                $request->quizable_type,
+                $request->quiz_type_id,
+                $request->sub_user_id,
             );
             return new ModelCollection ( $model  )  ;
         } catch (\Exception $e) {
@@ -50,6 +52,8 @@ class QuizController extends Controller
         $model = $this->ModelRepository->filterPaginate( 
             $request->quizable_id,
             $request->quizable_type,
+            $request->quiz_type_id,
+            $request->sub_user_id,
             $request->per_page ? $request->per_page : 10
         );      
         try {

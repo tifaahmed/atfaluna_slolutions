@@ -22,6 +22,7 @@ class AvatarResource extends JsonResource
     public function toArray($request)
     {
         $original_skin = $this->skins()->Original()->first();
+        $not_original_skin = $this->skins()->NotOriginal()->get();
 
         $sub_user_id = $request->sub_user_id;
         $active_skin = null;
@@ -45,6 +46,7 @@ class AvatarResource extends JsonResource
         
         //git accessories of this avatar
         $accessories = null;
+        
         $skin_ids = $this->skins()->pluck('id')->toArray();
         if ($skin_ids) {
             $accessories = Accessory::whereHas('AccessorySkin', function (Builder $skin_query) use($skin_ids)  {
@@ -53,12 +55,14 @@ class AvatarResource extends JsonResource
         }
 
         
-        
         return [
             'id'            => $this->id,
             'type'          =>  $this->type,
             'price'         =>  $this->price,
-            'avatar_original_skin' => new SkinResource($original_skin) ,
+            
+            'avatar_original_skin'          => new SkinResource($original_skin) ,
+            'avatar_not_original_skin'      => SkinResource::collection($not_original_skin) ,
+
             'avatar_active_skin'   => $active_skin ? new SkinResource($active_skin) : new SkinResource($original_skin),
             'active'        => $sub_user_avatar ? $sub_user_avatar->pivot->active : 0 ,
             'taken'        => $sub_user_avatar ? 1 : 0 ,

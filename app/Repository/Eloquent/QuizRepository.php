@@ -25,7 +25,7 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 	{
 		$this->model =  $model;
 	}
-	public function filter($quizable_id,$quizable_type)  {
+	public function filter($quizable_id,$quizable_type,$quiz_type_id,$sub_user_id)   {
 		$model =   $this->model;
 		if($quizable_id){
 			$model = $model->where('quizable_id',$quizable_id);
@@ -46,18 +46,20 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 			}
 			$model = $model->where('quizable_type',$quizable_type);
 		}
-		
+		if($quiz_type_id){
+			$model = $model->where('quiz_type_id',$quiz_type_id);
+		}
 		return 	$model;
 
 	}
 
-    public function filterAll($quizable_id,$quizable_type)  {
-		$model = $this->filter($quizable_id,$quizable_type)  ;
+    public function  filterAll($quizable_id,$quizable_type,$quiz_type_id,$sub_user_id)  {
+		$model = $this->filter($quizable_id,$quizable_type,$quiz_type_id,$sub_user_id)  ;
 		return $model->get();
 	}
-	public function filterPaginate($quizable_id,$quizable_type,$per_page) {
-		$model = $this->filter($quizable_id,$quizable_type)  ;
-		return $model->paginate($per_page)->appends(request()->query());
+	public function filterPaginate($quizable_id,$quizable_type,$quiz_type_id,$sub_user_id,$per_page) {
+			$model = $this->filter($quizable_id,$quizable_type,$quiz_type_id,$sub_user_id)  ;
+			return $model->paginate($per_page)->appends(request()->query());
 	} 
 
 

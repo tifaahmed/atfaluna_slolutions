@@ -37,6 +37,7 @@ class AccessoryResource extends JsonResource
         $all=[];
         $all += [ 'id'     =>  $this->id ]  ;
         $all += [ 'name'     =>  $row ? $row->name:'' ]  ;
+        $all += [ 'description'     =>  $row ? $row->description:'' ]  ;
         $all += [ 'price'     =>  $this->price ]  ;
         $all += ['image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item))];
         

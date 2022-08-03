@@ -121,7 +121,7 @@ class AvatarController extends Controller
     
     public function update(modelUpdateRequest $request ,$id) {
         try {
-            $this->ModelRepository->update( $id,Request()->all) ;
+            $this->ModelRepository->update( $id,$request->all()) ;
             $model = new ModelResource( $this->ModelRepository->findById($id) );
             return $this -> MakeResponseSuccessful( 
                     [ $model],

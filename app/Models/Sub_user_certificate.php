@@ -28,7 +28,7 @@ class Sub_user_certificate extends Model
         parent::boot();
 
         static::updating(function ($model) {
-            $sub_user = Sub_user::find(1);
+            $sub_user = Sub_user::find($model->sub_user_id);
             $certificate = Certificate::find($model->certificate_id);
             if ( 
                 $model->points  >=   $certificate->max_point  

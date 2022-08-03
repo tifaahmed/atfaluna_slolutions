@@ -31,6 +31,9 @@ class Skin extends Model
         public function scopeOriginal($query){
             return $query->where('original',1);
         }
+        public function scopeNotOriginal($query){
+            return $query->where('original',0);
+        }
         public function scopeActiveSkin($query,$sub_user_id){
             return $query->whereHas('accessorySkins', function (Builder $accessory_query) use($sub_user_id) {
                 $accessory_query->whereHas('SubUserAccessory', function (Builder $sub_user_accessory_query) use($sub_user_id) {
