@@ -77,11 +77,10 @@ class SubUserController extends Controller
             );
         }
     }
-
     public function collection(Request $request){
         try {
-            $model = $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10);
-            return new ModelCollection ( $model )  ;
+            return  $model = $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10);
+            // return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -90,6 +89,7 @@ class SubUserController extends Controller
             );
         }
     }
+    
     
     public function destroy($id) {
         try {

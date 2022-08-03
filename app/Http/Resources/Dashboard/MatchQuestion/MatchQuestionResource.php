@@ -27,7 +27,7 @@ class MatchQuestionResource extends JsonResource
 
             'header'          => $row ? $row->header:'',
 
-            'mcq_answers'     => new MatchAnswerCollection ($this->match_answer),
+            'match_answers'     => new MatchAnswerCollection ($this->match_answer),
 
             'question_tags'   => $this->question_tags,
 
