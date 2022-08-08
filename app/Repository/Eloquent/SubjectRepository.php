@@ -7,8 +7,10 @@ use App\Repository\SubjectRepositoryInterface;
 use App\Models\Quiz;             // morphedByMany
 use Illuminate\Http\Response ;
 use App\Models\Certificate;             // morphedByMany
+use App\Models\Sub_user;             // morphedByMany
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 
 class SubjectRepository extends BaseRepository implements SubjectRepositoryInterface
 {
@@ -26,41 +28,31 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
 	{
 		$this->model =  $model;
 	}
+	public function filter($sub_user_id,$age_group_id)  {
+		$model =   $this->model;
+
+		if($sub_user_id){
+			$model = $model->whereHas('subUserSubject', function (Builder $query) use($sub_user_id) {
+				$query->where('sub_user_id',$sub_user_id)->where('active',1);
+			});
+		}
+
+		if($age_group_id){
+			$model = $model->where('age_group_id',$age_group_id);
+		}
+
+		return 	$model;
+	}
 
 	public function filterPaginate($sub_user_id,$age_group_id, int $itemsNumber)  
     {
-		if($sub_user_id && $age_group_id == null){
-			$sub_user = Auth::user()->sub_user()->find($sub_user_id);
-			$active_subjects_query = $sub_user->ActiveSubjectsFromActiveAgeGroup();
-			if ($active_subjects_query) {
-				return $this->queryPaginate($active_subjects_query,$itemsNumber);
-			}else{
-				return abort( Response::HTTP_NOT_FOUND , 'there is no active_subjects for this child');
-			}
-		}else if($sub_user_id == null && $age_group_id){
-			$result = $this->model->where('age_group_id',$age_group_id);
-			return $this->queryPaginate($result,$itemsNumber);
-		}else{
-			return $this->collection( $itemsNumber)  ;
-		}
+		$model = $this->filter($sub_user_id,$age_group_id)  ;
+		return $model->paginate($itemsNumber)->appends(request()->query());
     }
 	public function filterAll($sub_user_id,$age_group_id)  
     {
-		if($sub_user_id && $age_group_id == null){
-			$sub_user = Auth::user()->sub_user()->find($sub_user_id);
-			$result = $sub_user->ActiveSubjectsFromActiveAgeGroup();
-			if ($result) {
-				return $result->get();
-			}else{
-				return abort( Response::HTTP_NOT_FOUND , 'there is no active_subjects for this child');
-			}
-		}else if($sub_user_id == null && $age_group_id){
-			$result = $this->model->where('age_group_id',$age_group_id)->get();
-			return $result;
-		}
-		else{
-			return $this->all()  ;
-		}
+		$model = $this->filter($sub_user_id,$age_group_id)  ;
+		return $model->get();
 	}
 
 	public function attachQuiz($quiz_id,$id)  

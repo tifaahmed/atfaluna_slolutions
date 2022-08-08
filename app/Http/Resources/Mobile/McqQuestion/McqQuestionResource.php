@@ -24,10 +24,10 @@ class McqQuestionResource extends JsonResource
             'type'       => ' McqQuestion',
 
             'id'                  => $this->id,
-            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)),
+            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
             
-            'video'             => $row && Storage::disk('public')->exists($row->video) ? asset(Storage::url($row->video)) : asset(Storage::url($basic->item)),
-            'audio'             => $row && Storage::disk('public')->exists($row->audio) ? asset(Storage::url($row->audio)) : asset(Storage::url($basic->item)),
+            'video'             => $row && Storage::disk('public')->exists($row->video) ? asset(Storage::url($row->video)) : null,
+            'audio'             => $row && Storage::disk('public')->exists($row->audio) ? asset(Storage::url($row->audio)) : null,
             'title'             => $row ? $row->title : null,
             'header'            => $row ? $row->header : null,
             'language'          => $row ? $row->language : null,

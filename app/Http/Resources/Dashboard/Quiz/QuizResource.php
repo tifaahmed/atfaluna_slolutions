@@ -7,8 +7,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Dashboard\SubjectResource;
 
 use App\Http\Resources\Dashboard\Collections\Quiz\QuizLanguagesCollection;
-use App\Http\Resources\Dashboard\Collections\McqQuestion\McqQuestionCollection;
-use App\Http\Resources\Dashboard\Collections\TrueFalseQuestion\TrueFalseQuestionCollection;
+
+use App\Http\Resources\Dashboard\McqQuestion\McqQuestionResource;
+use App\Http\Resources\Dashboard\TrueFalseQuestion\TrueFalseQuestionResource;
+use App\Http\Resources\Dashboard\MatchQuestion\MatchQuestionResource;
 
 class QuizResource extends JsonResource
 {
@@ -34,10 +36,11 @@ class QuizResource extends JsonResource
             'name'          => $row ? $row->name:'',
 
             
-            'quizable'       =>  $this->quizable  ,
+            // 'quizable'       =>  $this->quizable  ,
 
-            'mcq_questions'          => new McqQuestionCollection ($this->mcq_questions)  ,
-            'true_false_questions'   => new TrueFalseQuestionCollection ($this->true_false_questions)  ,
+            'mcq_questions'          =>  McqQuestionResource::collection ($this->mcq_questions)  ,
+            'true_false_questions'   =>  TrueFalseQuestionResource::collection ($this->true_false_questions)  ,
+            'match_questions'   =>  MatchQuestionResource::collection ($this->match_questions)  ,
         ];        
     }
 }

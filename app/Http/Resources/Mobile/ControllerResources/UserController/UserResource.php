@@ -32,6 +32,7 @@ class UserResource extends JsonResource
             'avatar'         => Storage::disk('public')->exists($this->avatar) ? asset(Storage::url($this->avatar))  : asset(Storage::url($basic->item)),
             'birthdate'        => $this->birthdate,
             'active'         => $this->active,
+            'pin_code'         => $this->pin_code,
 
             // date
                 // 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,

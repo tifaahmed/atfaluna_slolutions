@@ -8,6 +8,7 @@ use Auth;
 use App\Models\Lesson;
 use App\Models\Subject;
 use App\Models\Sub_subject;
+use App\Models\Sub_user_certificate;
 
 class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 {
