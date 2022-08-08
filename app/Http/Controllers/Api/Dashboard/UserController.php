@@ -55,7 +55,8 @@ class UserController extends Controller
 
         $file_one = 'avatar';
         if ($request->hasFile($file_one)) {            
-            $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+            $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+            $all += array( $file_one => $path );
         }
 
         $all += array( 'token' => Hash::make( Str::random(60) )  );
@@ -101,7 +102,8 @@ class UserController extends Controller
             $all = [ ];
             $file_one = 'avatar';
             if ($request->hasFile($file_one)) {
-                $all += $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+                $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
+                $all += array( $file_one => $path );
                 $old_modal = $this->ModelRepository->findById($id); 
                 $this->HelperDelete($old_modal->image );
             }

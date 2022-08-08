@@ -38,7 +38,15 @@ class Sub_user_certificate extends Model
             {
                 $age_group = Age_group::find($certificate->certificatable_id + 1);
                 if ($age_group) {
-                    $sub_user->subUserAgeGroup()->syncWithoutDetaching([ $age_group->id]);
+
+                    $sub_user_age_group = $sub_user->subUserAgeGroup()->where('age_group_id',$age_group->id)->first();
+                    if (!$sub_user_age_group) {
+                        $sub_user->subUserAgeGroup()->syncWithoutDetaching([ $age_group->id]);
+                        $subject_ids = $age_group->subjects()->get()->pluck('id')->toArray();
+                        foreach ($subject_ids as $key => $subject_id) {
+                            $sub_user->subUserSubject()->syncWithoutDetaching( [ $subject_id => ['active' => 1] ]);
+                        }
+                    }
                 }
             }
         });

@@ -33,7 +33,7 @@ class UserUpdateApiRequest extends FormRequest
 
                 'avatar'    =>  [ 'sometimes',  'max:5000'] ,
 
-                'birthdate '=>  [  'date' ] ,
+                'birthdate '=>  [  'date' , 'date_format:Y/d/m'] ,
                 'country_id'=>  [  'required' , 'integer','exists:countries,id' ] ,
         ];
     }

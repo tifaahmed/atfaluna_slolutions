@@ -35,7 +35,8 @@ class SubjectResource extends JsonResource
             'sub_subjects'       =>  SubSubjectResource::collection($this->sub_subjects),
 
             'quiz'               =>   new QuizResource ( $this->quiz )   ,
-            'certificate'        =>   new CertificateResource ( $this->certificate )   ,
+
+            'certificate'        =>   null   , // new CertificateResource ( $this->certificate ) 
             
             
         ];        

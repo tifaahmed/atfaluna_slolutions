@@ -16,7 +16,9 @@ use App\Models\Notification;
 
 use App\Models\Certificate;      //morphOne
 use App\Models\Quiz;             //morphMany    
-use App\Models\Skillable;      //morphMany
+use App\Models\Skillable;        //morphMany
+
+use App\Models\Sub_user;         //belongsToMany
 
 class Subject extends Model
 {
@@ -32,6 +34,13 @@ class Subject extends Model
     ];
 
     // relations
+
+
+        //belongsToMany
+            public function subUserSubject(){
+                return $this->belongsToMany(Sub_user::class, 'sub_user_subjects', 'subject_id', 'sub_user_id')->withPivot(['active','points']);
+            }
+            
 
         // belongsTo
             public function age_group(){
@@ -59,12 +68,12 @@ class Subject extends Model
                 return $this->morphOne(Quiz::class, 'quizable');
             }
         // morphOne
-        public function notification(){
-            return $this->morphOne(Notification::class, 'notificable');
-        }
-        public function skills(){
-            return $this->morphToMany(Skill::class, 'skillable');
-        }
+            public function notification(){
+                return $this->morphOne(Notification::class, 'notificable');
+            }
+            public function skills(){
+                return $this->morphToMany(Skill::class, 'skillable');
+            }
         
 
 }

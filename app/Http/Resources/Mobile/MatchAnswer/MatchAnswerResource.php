@@ -22,7 +22,7 @@ class MatchAnswerResource extends JsonResource
         return [
             'id'             => $this->id,
             'match_answer_id'=> $this->match_answer_id,
-            'image'          => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)),
+            'image'          => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
             'possition'      =>  $this->possition,
 
             'title'         => $row ? $row->title : '',

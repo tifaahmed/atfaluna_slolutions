@@ -22,7 +22,9 @@ class UserResource extends JsonResource
             'name'           => $this->name,
             'email'          => $this->email,
             'phone'          => $this->phone,
-            // 'avatar'         => Storage::disk('public')->exists($this->avatar) ? Storage::url($this->avatar)  : null,
+            'avatar'         => Storage::disk('public')->exists($this->avatar) ? asset(Storage::url($this->avatar))  : null,
+            'pin_code'         => $this->pin_code,
+            'active'         => $this->active,
 
             'birthdate'        => $this->birthdate,
             // 'sub_user'          => $this->sub_user,
