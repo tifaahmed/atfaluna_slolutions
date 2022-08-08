@@ -31,7 +31,7 @@ class McqAnswerApiRequest extends FormRequest
         $all += [ 'answer'          =>  [ 'required'] ]  ;
         $all += [ 'mcq_question_id'         =>  [ 'required' ,'integer','exists:mcq_questions,id'] ] ;
         foreach ($Languages as $key => $value) {
-            $all += [ 'languages.'.$key.'.title'   =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.title'   =>  [ 'sometimes' ] ] ;
             $all += [ 'languages.'.$key.'.audio'   =>  [ 'sometimes' ,'max:5000','mimes:m4a,M4A,MP3,FLAC,ABR,MPEG-4,mp4'] ] ;
             $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
         }

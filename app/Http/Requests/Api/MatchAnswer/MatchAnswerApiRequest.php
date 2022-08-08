@@ -41,11 +41,11 @@ class MatchAnswerApiRequest extends FormRequest
 
 
         
-        $all += [ 'image'           =>  [ 'required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ]  ;
+        $all += [ 'image'           =>  [ 'sometimes' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ]  ;
         $all += [ 'possition'          =>  [ 'required' ,  Rule::in(['top','bottom']),] ]  ;
 
         foreach ($Languages as $key => $value) {
-            $all += [ 'languages.'.$key.'.title'   =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.title'   =>  [ 'sometimes' ] ] ;
             $all += [ 'languages.'.$key.'.audio'   =>  [ 'sometimes' ,'max:5000','mimes:m4a,M4A,MP3,FLAC,ABR,MPEG-4,mp4'] ] ;
             $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
         }
