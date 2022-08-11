@@ -4,6 +4,9 @@ namespace App\Http\Resources\Mobile\ControllerResources\SubjectController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Database\Eloquent\Builder;
+
 // Resource
 use App\Http\Resources\Mobile\ControllerResources\SubjectController\QuizResource;
 use App\Http\Resources\Mobile\ControllerResources\SubjectController\CertificateResource;
@@ -23,6 +26,11 @@ class SubjectResource extends JsonResource
         $row=$this->subject_languages()->Localization()->RelatedLanguage($this->id)->first();
         $basic = Basic::find(1);
 
+        
+        $quiz_questionable = $this->quiz()->whereHas('quiz_questionable', function (Builder $query) {
+        })->count();
+
+
         return [
             'id'                 => $this->id,
             'image'              => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  :  asset(Storage::url($basic->item)),
@@ -34,7 +42,7 @@ class SubjectResource extends JsonResource
 
             'sub_subjects'       =>  SubSubjectResource::collection($this->sub_subjects),
 
-            'quiz'               =>   new QuizResource ( $this->quiz )   ,
+            'quiz'               =>   new QuizResource ( $quiz_questionable ? $this->quiz : null)   ,
 
             'certificate'        =>   null   , // new CertificateResource ( $this->certificate ) 
             

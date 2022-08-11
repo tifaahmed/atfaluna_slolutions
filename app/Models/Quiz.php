@@ -37,7 +37,7 @@ class Quiz extends Model
 
         // morphTo
             public function quizable(){
-                return $this->morphTo();
+                return $this->morphTo('quizable');
             }
         // morphOne
         public function notification(){

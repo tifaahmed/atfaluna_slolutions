@@ -15,13 +15,18 @@ class CreateSubUserActivitiesTable extends Migration
     {
         Schema::create('sub_user_activities', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->integer('points')->default('0');//[note: "ex ( 5 - 6)"] // get from success
+
             $table->integer('sub_user_id')->unsigned();
             $table->foreign('sub_user_id')->references('id')->on('sub_users')->onDelete('cascade');
+
             $table->integer('activity_id')->unsigned();
             $table->foreign('activity_id')->references('id')->on('activities')->onDelete('cascade'); 
-            $table->timestamps();
-            $table->softDeletes();
+
+
+            $table->integer('points')->default('0');//[note: "ex ( 5 - 6)"] // get from success
+            $table->longText('game_data')->nullable();// json data 
+
+            $table->timestamp('updated_at');
         });
     }
     /**

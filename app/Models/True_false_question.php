@@ -23,6 +23,21 @@ class True_false_question extends Model
         'level', // enum     / 'hard','medium','easy' default:easy
         'answer',// boolean  / default:0
     ];
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($model) {
+            Quiz_questionable::
+            where('questionable_id',$model->id )->
+            where('questionable_type',True_false_question::class)->
+            delete();
+            QuestionAttempt::
+            where('questionable_id',$model->id )->
+            where('questionable_type',True_false_question::class)->
+            delete();
+        });
+    }
     //relation
         // HasMany
             public function true_false_question_languages(){

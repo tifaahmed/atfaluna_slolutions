@@ -59,11 +59,11 @@ class Sub_user extends Model
         }
     //Activity
         public function subUserActivity(){
-            return $this->belongsToMany(Activity::class, 'sub_user_activities', 'sub_user_id', 'activity_id');
+            return $this->belongsToMany(Activity::class, 'sub_user_activities', 'sub_user_id', 'activity_id')->withPivot(['points','game_data']);
         }
     //Lesson
         public function subUserLesson(){
-            return $this->belongsToMany(Lesson::class, 'sub_user_lessons', 'sub_user_id', 'lesson_id')->withPivot('points');
+            return $this->belongsToMany(Lesson::class, 'sub_user_lessons', 'sub_user_id', 'lesson_id')->withPivot(['points','game_data']);
         }
         public function subUserLessonModel(){
             return $this->hasMany(Sub_user_lesson::class);

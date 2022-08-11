@@ -68,19 +68,24 @@ class ActivityController extends Controller
 
     // relation
     public function attach(MobileActivityApiRequest $request){
-        try {
-            $this->ModelRepository->handleActivity($request->sub_user_id,$request->activity_id,$request->percentage) ;
+        // try {
+            $this->ModelRepository->handleActivity(
+                $request->sub_user_id,
+                $request->activity_id,
+                $request->percentage,
+                $request->game_data
+                ) ;
             return $this -> MakeResponseSuccessful( 
                 ['Successful'],
                 'Successful'               ,
                 Response::HTTP_OK
             ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
+        // } catch (\Exception $e) {
+        //     return $this -> MakeResponseErrors(  
+        //         [$e->getMessage()  ] ,
+        //         'Errors',
+        //         Response::HTTP_NOT_FOUND
+        //     );
+        // }
     }
 }
