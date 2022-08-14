@@ -38,8 +38,6 @@ class SubUserController extends Controller
             $this->ModelRepository->attachCertificates($request->certificate_ids,$model->id);
                                 //Accessory
             $this->ModelRepository->attachAccessories($request->accessory_ids,$model->id);
-                                //Achievement
-            $this->ModelRepository->attachAchievements($request->achievement_ids,$model->id);
                                 //Subject
             $this->ModelRepository->attachSubjects($request->subject_ids,$model->id);
                                 //SubSubjects
@@ -147,8 +145,6 @@ class SubUserController extends Controller
             $this->ModelRepository->attachCertificates($request->certificate_ids,$id);
                         //Accessory
             $this->ModelRepository->attachAccessories($request->accessory_ids,$id);
-                        //Achievement
-            $this->ModelRepository->attachAchievements($request->achievement_ids,$id);
                         //Subject
             $this->ModelRepository->attachSubjects($request->subject_ids,$id);
                         //SubSubjects

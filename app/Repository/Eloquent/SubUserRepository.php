@@ -66,14 +66,6 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 			$result->subUserAccessory()->sync($accessory_ids);
 		}
 	}
-	//Achievement
-	public function attachAchievements($achievement_ids,$id)
-	{
-		if($achievement_ids){
-			$result = Auth::user()->sub_user()->find($id); 
-			$result->subUserAchievement()->sync($achievement_ids);
-		}
-	}
 	//Avatar
 	public function attachAvatars($avatar_ids,$id)
 	{
@@ -103,7 +95,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	{
 		if($subject_ids){
 			$sub_user =   Auth::user()->sub_user()->find($id);
-			$sub_user->subUserSubject()->sync($subject_ids);
+			$sub_user->subUserSubject()->sync([$subject_ids => ['active' =>  1]]);
 		}
 	}
 	//SubSubject

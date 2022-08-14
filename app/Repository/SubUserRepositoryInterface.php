@@ -6,11 +6,8 @@ interface SubUserRepositoryInterface extends EloquentRepositoryInterface{
     public function filterAll($sub_user_id,$closest);
     public function filterPaginate($sub_user_id,$closest,$itemsNumber);
 
-
     //Accessory
     public function attachAccessories($accessory_ids,$id);
-    //Achievement
-    public function attachAchievements($achievement_ids,$id);
     //Avatar
     public function attachAvatars($avatar_ids,$id);
     public function attachAvatar($avatar_id,$id);
