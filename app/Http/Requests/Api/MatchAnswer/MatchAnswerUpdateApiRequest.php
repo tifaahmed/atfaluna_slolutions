@@ -29,7 +29,7 @@ class MatchAnswerUpdateApiRequest extends FormRequest
         $all += [ 'image'           =>  [ 'sometimes' ,'max:50000'] ]  ;
         $all += [ 'match_question_id'         =>  [ 'required' ,'integer','exists:match_questions,id'] ] ;
         foreach ($Languages as $key => $value) {
-            $all += [ 'languages.'.$key.'.title'   =>  [ 'required' ] ] ;
+            $all += [ 'languages.'.$key.'.title'   =>  [ 'sometimes' ] ] ;
             $all += [ 'languages.'.$key.'.audio'   =>  [ 'sometimes' ,'max:5000'] ] ;
             $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
         }
