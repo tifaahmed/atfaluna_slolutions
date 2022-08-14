@@ -22,9 +22,19 @@ class QuizResource extends JsonResource
         $basic = Basic::find(1); //logo
         $sub_user_quizzes = isset($request->sub_user_id) ? $this->sub_user_quizzes->where('sub_user_id',$request->sub_user_id) : null ;
         
+        $count  = 0 ;
+        foreach ($this->quiz_questionable as $key => $value) {
+            if ($value->morph_to) {
+                $count = $count + $value->morph_to->degree;
+            }
+        }   
 
         $all=[];
         $all += [ 'id'     =>  $this->id ]  ;
+        
+        $all += [ 'sub_user_quizzes'     =>  $sub_user_quizzes ? new SubUserQuizCollection($sub_user_quizzes) : [] ]  ;
+        $all += [ 'seen'     =>  ($sub_user_quizzes && $sub_user_quizzes->count()) > 0 ? 1 : 0 ]  ;
+
         if ($sub_user_quizzes && $sub_user_quizzes->count() <= 0) {
             $all += [ 'image'     => ($row && $row->image_one && Storage::disk('public')->exists($row->image_one) )? asset(Storage::url($row->image_one))  : asset(Storage::url($basic->item))  ]  ;
         }else{
@@ -32,9 +42,10 @@ class QuizResource extends JsonResource
         }
         $all += [ 'name'     =>  $row ? $row->name:'' ]  ;
         $all += [ 'points'     =>  $this->points ]  ;
+
         $all += [ 'minimum_requirements'     =>  $this->minimum_requirements ]  ;
-        $all += [ 'sub_user_quizzes'     =>  $sub_user_quizzes ? new SubUserQuizCollection($sub_user_quizzes) : [] ]  ;
-        $all += [ 'seen'     =>  ($sub_user_quizzes && $sub_user_quizzes->count()) > 0 ? 1 : 0 ]  ;
+        $all += [ 'full_mark'     =>  $count ]  ;
+
 
         return $all; 
     }

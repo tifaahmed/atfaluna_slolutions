@@ -85,7 +85,12 @@ class LessonController extends Controller
     // relation
     public function attach(MobileLessonApiRequest $request){
         try {
-            $this->ModelRepository->handleLessson($request->sub_user_id,$request->lesson_id,$request->percentage) ;
+            $this->ModelRepository->handleLessson(
+                $request->sub_user_id,
+                $request->lesson_id,
+                $request->percentage,
+                $request->game_data
+            ) ;
             return $this -> MakeResponseSuccessful( 
                 [ 'Successful' ],
                 'Successful'    ,

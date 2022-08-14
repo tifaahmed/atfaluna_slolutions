@@ -24,6 +24,16 @@ class SubSubjectResource extends JsonResource
         $basic = Basic::find(1); //logo
         $sub_user_sub_subject = isset($request->sub_user_id) ? $this->sub_user_sub_subject->where('sub_user_id',$request->sub_user_id) : null ;
 
+        $have_assigments = 0;
+        $have_quizs = 0;
+        if ( $this->quiz &&  $this->quiz->where('quiz_type_id',1)->count() > 0 ) {
+            $have_assigments = 1 ;
+        }
+        if($this->quiz && $this->quiz->where('quiz_type_id',2)->count() > 0 ){
+            $have_quizs = 1 ;
+        }
+
+
         return [
             'id'            => $this->id,
 
@@ -35,6 +45,9 @@ class SubSubjectResource extends JsonResource
 
             'lessons'       => new LessonCollection ($this->lessons),
             'quiz'          => new QuizResource ($this->quiz)   ,
+
+            'have_quizs' => $have_quizs ,
+            'have_assigments' => $have_assigments ,
 
             'seen'          =>  ($sub_user_sub_subject && $sub_user_sub_subject->count()) > 0 ? 1 : 0,
             'sound'               =>  ( $row && $row->sound->count() &&   Storage::disk('public')->exists($row->sound[0]->record) ) ? asset(Storage::url($row->sound[0]->record))  :  null ,

@@ -59,7 +59,7 @@ class Lesson extends Model
                 return $this->HasMany(Activity::class);
             }
             public function subUserLesson(){
-                return $this->belongsToMany(Sub_user::class, 'sub_user_lessons', 'lesson_id', 'sub_user_id');
+                return $this->belongsToMany(Sub_user::class, 'sub_user_lessons', 'lesson_id', 'sub_user_id')->withPivot(['points','game_data']);
             }
 
         // morphMany    

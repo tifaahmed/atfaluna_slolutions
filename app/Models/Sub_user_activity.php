@@ -15,12 +15,11 @@ class Sub_user_activity extends Pivot
 
     protected $table = 'sub_user_activities';
 
-    public $timestamps = false;
-
     protected $fillable = [
-        'sub_user_id',//unsigned
-        'activity_id',//unsigned
-        'points',
+        'sub_user_id',  // integer , unsigned
+        'activity_id',  // integer , unsigned
+        'points',       // integer , default 0 
+        'game_data'     // longText, json
     ];
     // relations
     public function activity(){

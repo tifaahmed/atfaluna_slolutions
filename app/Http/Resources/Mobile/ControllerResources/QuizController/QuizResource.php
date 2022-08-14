@@ -30,9 +30,17 @@ class QuizResource extends JsonResource
                             : 
                             null ;
         
+        $count  = 0 ;
+        foreach ($this->quiz_questionable as $key => $value) {
+            if ($value->morph_to) {
+                $count = $count + $value->morph_to->degree;
+            }
+        }             
 
         $all=[];
         $all += [ 'id'     =>  $this->id ]  ;
+        $all += [ 'seen'     =>  ($sub_user_quizzes && $sub_user_quizzes->count()) > 0 ? 1 : 0 ]  ;
+        $all += [ 'sub_user_quizzes'     =>   new SubUserQuizResource($sub_user_quizzes)  ]  ;
 
         if ($sub_user_quizzes && $sub_user_quizzes->pass) {
             $all += [ 'image'     => ($row && $row->image_one && Storage::disk('public')->exists($row->image_one) )? asset(Storage::url($row->image_one))  : asset(Storage::url($basic->item))  ]  ;
@@ -44,9 +52,8 @@ class QuizResource extends JsonResource
         $all += [ 'points'     =>  $this->points ]  ;
 
         $all += [ 'minimum_requirements'     =>  $this->minimum_requirements ]  ;
+        $all += [ 'full_mark'     =>  $count ]  ;
 
-        $all += [ 'sub_user_quizzes'     =>   new SubUserQuizResource($sub_user_quizzes)  ]  ;
-        $all += [ 'seen'     =>  ($sub_user_quizzes && $sub_user_quizzes->count()) > 0 ? 1 : 0 ]  ;
 
         return $all; 
     }

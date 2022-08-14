@@ -25,6 +25,22 @@ class Mcq_question extends Model
         'degree',//default 0 
         'level',//'hard','medium','easy'  default easy
     ];
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($model) {
+            Quiz_questionable::
+            where('questionable_id',$model->id )->
+            where('questionable_type',Mcq_question::class)->
+            delete();
+            QuestionAttempt::
+            where('questionable_id',$model->id )->
+            where('questionable_type',Mcq_question::class)->
+            delete();
+        });
+    }
+
     // relation
 
         // HasMany

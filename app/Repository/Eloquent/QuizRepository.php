@@ -9,6 +9,7 @@ use App\Models\Lesson;
 use App\Models\Subject;
 use App\Models\Sub_subject;
 use App\Models\Sub_user_certificate;
+use Illuminate\Database\Eloquent\Builder;
 
 class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 {
@@ -28,6 +29,11 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 	}
 	public function filter($quizable_id,$quizable_type,$quiz_type_id,$sub_user_id)   {
 		$model =   $this->model;
+
+		$model = $this->model->whereHas('quiz_questionable', function (Builder $query) {
+        });
+
+
 		if($quizable_id){
 			$model = $model->where('quizable_id',$quizable_id);
 		}
@@ -50,6 +56,9 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 		if($quiz_type_id){
 			$model = $model->where('quiz_type_id',$quiz_type_id);
 		}
+
+		
+
 		return 	$model;
 
 	}

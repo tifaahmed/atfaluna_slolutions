@@ -13,12 +13,12 @@ class Sub_user_lesson extends Model
     public $guarded = ['id'];
 
     protected $table = 'sub_user_lessons';
-    public $timestamps = false;
 
     protected $fillable = [
-        'sub_user_id',
-        'lesson_id',
-        'points'
+        'sub_user_id',  //unsigned
+        'lesson_id',    //unsigned
+        'points',       // integer , default 0 
+        'game_data'     // longText, json
     ];
     // relations
     public function lesson(){

@@ -37,7 +37,7 @@ class Activity extends Model
 
         // belongsToMany
         public function subUserActivity(){
-            return $this->belongsToMany(Sub_user::class, 'sub_user_activities', 'activity_id', 'sub_user_id');
+            return $this->belongsToMany(Sub_user::class, 'sub_user_activities', 'activity_id', 'sub_user_id')->withPivot(['points','game_data']);
         }
         public function AccessoryActivity(){
             return $this->belongsToMany(Accessory::class, 'accessory_activities', 'activity_id', 'accessory_id');
