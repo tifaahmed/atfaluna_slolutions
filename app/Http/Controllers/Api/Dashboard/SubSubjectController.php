@@ -245,8 +245,11 @@ class SubSubjectController extends Controller
                     $this->ModelRepositoryLanguage->create( $all ) ;
                 }
                 $new_lang_row  = $this->ModelRepositoryLanguage->findById($language_model->id) ;
-                // attach sound
-                $this->ModelRepositoryLanguage->attachSoundas($all['sound_id'],$new_lang_row->id);
+                if( isset($all['sound_id'] ) ){
+
+                    // attach sound
+                    $this->ModelRepositoryLanguage->attachSoundas($all['sound_id'],$new_lang_row->id);
+                }
 
             }
         // lang update
