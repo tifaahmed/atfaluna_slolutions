@@ -90,7 +90,7 @@ class SubUserController extends Controller
         }
     }
     
-    
+
     public function destroy($id) {
         try {
             return $this -> MakeResponseSuccessful( 
