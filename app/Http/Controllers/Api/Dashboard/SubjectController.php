@@ -208,8 +208,10 @@ class SubjectController extends Controller
                         $all += array( $key => $value );
                 }
                 $created_lang = $this->ModelRepositoryLanguage->create( $all ) ;
-                // attach sound
-                $this->ModelRepositoryLanguage->attachSoundas($all['sound_id'],$created_lang->id);
+                if( isset($all['sound_id'] ) ){
+                    // attach sound
+                    $this->ModelRepositoryLanguage->attachSoundas($all['sound_id'],$created_lang->id);
+                }
 
             }
         // lang create
@@ -250,8 +252,11 @@ class SubjectController extends Controller
                     $this->ModelRepositoryLanguage->create( $all ) ;
                 }
                 $new_lang_row  = $this->ModelRepositoryLanguage->findById($language_model->id) ;
-                // attach sound
-                $this->ModelRepositoryLanguage->attachSoundas($all['sound_id'],$new_lang_row->id);
+                if( isset($all['sound_id'] ) ){
+
+                    // attach sound
+                    $this->ModelRepositoryLanguage->attachSoundas($all['sound_id'],$new_lang_row->id);
+                }
 
             }
         // lang update
