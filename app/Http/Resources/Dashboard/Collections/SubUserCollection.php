@@ -5,6 +5,7 @@ namespace App\Http\Resources\Dashboard\Collections;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 use App\Http\Resources\Dashboard\SubUserResource as ModelResource;
+// use App\Http\Resources\Dashboard\ControllerResources\SubUserController\SubUserResource as ModelResource;
 
 class SubUserCollection extends ResourceCollection{
 
