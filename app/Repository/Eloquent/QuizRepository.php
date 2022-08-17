@@ -78,7 +78,7 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 	{
 		if($mcq_question_ids){
 			$result = $this->findById($id); 
-			$result->mcq_questions()->syncWithoutDetaching($mcq_question_ids);
+			$result->mcq_questions()->sync($mcq_question_ids);
 	
 		}
 	}
@@ -86,14 +86,14 @@ class QuizRepository extends BaseRepository implements QuizRepositoryInterface
 	{
 		if($true_false_question_ids){
 			$result = $this->findById($id); 
-			$result->true_false_questions()->syncWithoutDetaching($true_false_question_ids);
+			$result->true_false_questions()->sync($true_false_question_ids);
 		}
 	}
 	public function attachMatchQuestions($match_questions_ids,$id)
 	{
 		if($match_questions_ids){
 			$result = $this->findById($id); 
-			$result->match_questions()->syncWithoutDetaching($match_questions_ids);
+			$result->match_questions()->sync($match_questions_ids);
 		}
 	}
 	

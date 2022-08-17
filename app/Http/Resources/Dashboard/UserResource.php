@@ -5,7 +5,7 @@ namespace App\Http\Resources\Dashboard;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Dashboard\CountryResource;
-use App\Http\Resources\Dashboard\Collections\SubUserCollection;
+use App\Http\Resources\Dashboard\SubUserResource;
 
 class UserResource extends JsonResource
 {
@@ -28,7 +28,7 @@ class UserResource extends JsonResource
 
             'birthdate'        => $this->birthdate,
             // 'sub_user'          => $this->sub_user,
-            // 'sub_user'        => new SubUserCollection  ($this->sub_user),
+            // 'sub_user'        =>   SubUserResource::collection  ($this->sub_user),
 
             // 'country'          => new CountryResource ( $this->country ),
             'country_id'       => $this->country_id,

@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 
 // Requests
 use App\Http\Requests\Api\PlayTime\PlayTimeApiRequest as modelInsertRequest;
+use App\Http\Requests\Api\PlayTime\PlayTimeStoreArrayApiRequest as modelInsertArrayRequest;
 
 // Resources
 use App\Http\Resources\Dashboard\Collections\PlayTimeCollection as ModelCollection;
@@ -36,6 +37,18 @@ class PlayTimeController extends Controller
             );
         }
     }
+    public function attatchArray(modelInsertArrayRequest $request) {
+        try {
+            $sub_user_play_times =  $this->ModelRepository->attatchByArray( $request->all() ) ;
+            return new ModelCollection ( $sub_user_play_times  )  ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    } 
     public function store(modelInsertRequest $request) {
         try {
             $modal = new ModelResource( $this->ModelRepository->create( Request()->all() ));

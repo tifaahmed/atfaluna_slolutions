@@ -42,7 +42,7 @@ class SubUserApiRequest extends FormRequest
             'lesson_ids' =>  [ 'sometimes','array','exists:lessons,id' ] ,
             'quiz_ids' =>  [ 'sometimes','array','exists:quizzes,id' ] ,
             'age_group_ids' =>  [ 'sometimes','array','exists:age_groups,id' ] ,
-            'accessory_ids' =>  [ 'sometimes','array','exists:accessorys,id' ] ,
+            'accessory_ids' =>  [ 'sometimes','array','exists:accessories,id' ] ,
             'achievement_ids' =>  [ 'sometimes','array','exists:achievements,id' ] ,
 
         ];

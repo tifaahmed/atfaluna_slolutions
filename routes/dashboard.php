@@ -437,6 +437,7 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
         //PlayTime
             Route::name('play-time.')->prefix('/play-time')->group( fn ( ) : array => [
                 Route::get('/'                          ,   'PlayTimeController@all'                 )    ->name('all'),
+                Route::post('/attatch-array'             ,   'PlayTimeController@attatchArray'        )->name('attatchArray'),
                 Route::post(''                          ,   'PlayTimeController@store'               )->name('store'),
                 Route::get('/{id}/show'                 ,   'PlayTimeController@show'                )->name('show'),
                 Route::get('/collection'                ,   'PlayTimeController@collection'          )->name('collection'),
