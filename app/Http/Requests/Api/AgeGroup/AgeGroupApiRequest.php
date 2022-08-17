@@ -36,4 +36,5 @@ class AgeGroupApiRequest extends FormRequest
         }
         return $all;
     }
+
 }

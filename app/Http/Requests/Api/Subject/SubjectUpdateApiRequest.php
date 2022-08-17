@@ -53,7 +53,7 @@ class SubjectUpdateApiRequest extends FormRequest
             $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name'] ] ;
             
             // sound
-            $all += [ 'languages.'.$key.'.sound_id'  =>  [ 'required' ,'integer','exists:sounds,id'] ]  ;
+            $all += [ 'languages.'.$key.'.sound_id'  =>  [ 'sometimes' ,'integer','exists:sounds,id'] ]  ;
         }
 
         // notification 
