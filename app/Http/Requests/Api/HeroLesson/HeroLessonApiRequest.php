@@ -24,7 +24,7 @@ class HeroLessonApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'heros_id'      =>  [ 'required' ,'integer'] ,
+            'hero_ids'      =>  [ 'required' ,'integer'] ,
             'lesson_id'         =>  [ 'required' ,'integer'] ,
         ];
     }

@@ -113,7 +113,10 @@ class HeroController extends Controller
     public function update(modelUpdateRequest $request ,$id) {
         try {
             $this->ModelRepository->update( $id,Request()->all()) ;
+
             $model = new ModelResource( $this->ModelRepository->findById($id) ); 
+            $this->ModelRepository->attachLessons($request->lesson_ids,$model->id);
+
             //  request languages
             $this -> update_array_languages($request->languages,$model) ;
 
