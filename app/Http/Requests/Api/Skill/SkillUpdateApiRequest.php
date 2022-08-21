@@ -5,7 +5,7 @@ namespace App\Http\Requests\Api\Skill;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Language;
 
-class SkillApiRequest extends FormRequest
+class SkillUpdateApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,7 +32,7 @@ class SkillApiRequest extends FormRequest
 
                 $all += [ 'languages.'.$key.'.image_one'        =>  [ 'required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ] ;
                 $all += [ 'languages.'.$key.'.image_two'        =>  [ 'required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ] ;
-                $all += [ 'languages.'.$key.'.name'         =>  [ 'required' , 'unique:skill_languages,name' ] ] ;
+                $all += [ 'languages.'.$key.'.name'         =>  [ 'required' , 'unique:skill_languages,name,'.$this->id ] ] ;
                 $all += [ 'languages.'.$key.'.description'   =>  [ 'required' ] ] ;
                 $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name'] ] ;
             }

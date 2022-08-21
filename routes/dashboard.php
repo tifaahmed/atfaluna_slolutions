@@ -553,55 +553,55 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
                 Route::get('/{id}/show-trash'           ,   'UserPackageController@show_trash'          )->name('show_trash'),
             ]),
         //User_subscription
-            Route::name('user-subscription.')->prefix('/user-subscription')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'UserSubscriptionController@all'                 )    ->name('all'),
-                Route::post(''                          ,   'UserSubscriptionController@store'               )->name('store'),
-                Route::get('/{id}/show'                 ,   'UserSubscriptionController@show'                )->name('show'),
-                Route::get('/collection'                ,   'UserSubscriptionController@collection'          )->name('collection'),
-                Route::DELETE('/{id}'                   ,   'UserSubscriptionController@destroy'             )->name('destroy'),
-                Route::post('/{id}/update'              ,   'UserSubscriptionController@update'              )->name('update'),
-                Route::get('/{id}/restore'             ,   'UserSubscriptionController@restore'             )->name('restore'),
-                Route::DELETE('premanently-delete/{id}' ,   'UserSubscriptionController@premanently_delete'  )->name('premanently_delete'),
-                Route::get('/collection-trash'          ,   'UserSubscriptionController@collection_trash'    )->name('collection_trash'),
-                Route::get('/{id}/show-trash'           ,   'UserSubscriptionController@show_trash'          )->name('show_trash'),
-            ]),
+        Route::name('user-subscription.')->prefix('/user-subscription')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'UserSubscriptionController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'UserSubscriptionController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'UserSubscriptionController@show'                )->name('show'),
+            Route::get('/collection'                ,   'UserSubscriptionController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'UserSubscriptionController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'UserSubscriptionController@update'              )->name('update'),
+            Route::get('/{id}/restore'             ,   'UserSubscriptionController@restore'             )->name('restore'),
+            Route::DELETE('premanently-delete/{id}' ,   'UserSubscriptionController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'UserSubscriptionController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'UserSubscriptionController@show_trash'          )->name('show_trash'),
+        ]),
         //Hero 
-            Route::name('hero.')->prefix('/hero')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'HeroController@all'                 )    ->name('all'),
-                Route::post(''                          ,   'HeroController@store'               )->name('store'),
-                Route::get('/{id}/show'                 ,   'HeroController@show'                )->name('show'),
-                Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
-                Route::DELETE('/{id}'                   ,   'HeroController@destroy'             )->name('destroy'),
-                Route::post('/{id}/update'              ,   'HeroController@update'              )->name('update'),
-                Route::get('/{id}/restore'             ,   'HeroController@restore'             )->name('restore'),
-                Route::DELETE('premanently-delete/{id}' ,   'HeroController@premanently_delete'  )->name('premanently_delete'),
-                Route::get('/collection-trash'          ,   'HeroController@collection_trash'    )->name('collection_trash'),
-                Route::get('/{id}/show-trash'           ,   'HeroController@show_trash'          )->name('show_trash'),
-            ]),
+        Route::name('hero.')->prefix('/hero')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'HeroController@all'                 )    ->name('all'),
+            Route::post(''                          ,   'HeroController@store'               )->name('store'),
+            Route::get('/{id}/show'                 ,   'HeroController@show'                )->name('show'),
+            Route::get('/collection'                ,   'HeroController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'HeroController@destroy'             )->name('destroy'),
+            Route::post('/{id}/update'              ,   'HeroController@update'              )->name('update'),
+            Route::get('/{id}/restore'             ,   'HeroController@restore'             )->name('restore'),
+            Route::DELETE('premanently-delete/{id}' ,   'HeroController@premanently_delete'  )->name('premanently_delete'),
+            Route::get('/collection-trash'          ,   'HeroController@collection_trash'    )->name('collection_trash'),
+            Route::get('/{id}/show-trash'           ,   'HeroController@show_trash'          )->name('show_trash'),
+        ]),
          //Friend
-            Route::name('friend.')->prefix('/friend')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'FriendController@all'                 )    ->name('all'),
-                Route::get('/{id}/show'                 ,   'FriendController@show'                )->name('show'),
-                Route::get('/collection'                ,   'FriendController@collection'          )->name('collection'),
-                Route::DELETE('/{id}'                   ,   'FriendController@destroy'             )->name('destroy'),
-            ]),
+        Route::name('friend.')->prefix('/friend')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'FriendController@all'                 )    ->name('all'),
+            Route::get('/{id}/show'                 ,   'FriendController@show'                )->name('show'),
+            Route::get('/collection'                ,   'FriendController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'FriendController@destroy'             )->name('destroy'),
+        ]),
         //Group_chat
-            Route::name('group_chat.')->prefix('/group_chat')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'GroupChatController@all'                 )    ->name('all'),
-                Route::get('/{id}/show'                 ,   'GroupChatController@show'                )->name('show'),
-                Route::get('/collection'                ,   'GroupChatController@collection'          )->name('collection'),
-                Route::DELETE('/{id}'                   ,   'GroupChatController@destroy'             )->name('destroy'),
-            ]),
+        Route::name('group_chat.')->prefix('/group_chat')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'GroupChatController@all'                 )    ->name('all'),
+            Route::get('/{id}/show'                 ,   'GroupChatController@show'                )->name('show'),
+            Route::get('/collection'                ,   'GroupChatController@collection'          )->name('collection'),
+            Route::DELETE('/{id}'                   ,   'GroupChatController@destroy'             )->name('destroy'),
+        ]),
         //Massage
-            Route::name('massage.')->prefix('/massage')->group( fn ( ) : array => [
-                Route::get('/collection'                ,   'MassageController@collection'          )->name('collection'),
-            ]),
+        Route::name('massage.')->prefix('/massage')->group( fn ( ) : array => [
+            Route::get('/collection'                ,   'MassageController@collection'          )->name('collection'),
+        ]),
         //Conversation
-            Route::name('conversation.')->prefix('/conversation')->group( fn ( ) : array => [
-                Route::get('/'                          ,   'ConversationController@all'                 )    ->name('all'),
-                Route::get('/{id}/show'                 ,   'ConversationController@show'                )->name('show'),
-                Route::get('/collection'                ,   'ConversationController@collection'          )->name('collection'),
-            ]),
+        Route::name('conversation.')->prefix('/conversation')->group( fn ( ) : array => [
+            Route::get('/'                          ,   'ConversationController@all'                 )    ->name('all'),
+            Route::get('/{id}/show'                 ,   'ConversationController@show'                )->name('show'),
+            Route::get('/collection'                ,   'ConversationController@collection'          )->name('collection'),
+        ]),
         //Sounds
         Route::name('sounds.')->prefix('/sounds')->group( fn ( ) : array => [
             Route::get('/'                          ,   'SoundsController@all'                 )    ->name('all'),
@@ -666,8 +666,9 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('premanently-delete/{id}' ,   'AccessoryPartController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'AccessoryPartController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'AccessoryPartController@show_trash'          )->name('show_trash'),
+        ]),
         //BodySuit
-    Route::name('body-suit.')->prefix('/body-suit')->group( fn ( ) : array => [
+        Route::name('body-suit.')->prefix('/body-suit')->group( fn ( ) : array => [
             Route::get('/'                          ,   'BodySuitController@all'                 )->name('all'),
             Route::post(''                          ,   'BodySuitController@store'               )->name('store'),
             Route::get('/{id}/show'                 ,   'BodySuitController@show'                )->name('show'),
@@ -691,7 +692,7 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
             Route::DELETE('premanently-delete/{id}' ,   'HumanPartController@premanently_delete'  )->name('premanently_delete'),
             Route::get('/collection-trash'          ,   'HumanPartController@collection_trash'    )->name('collection_trash'),
             Route::get('/{id}/show-trash'           ,   'HumanPartController@show_trash'          )->name('show_trash'),
-        ]),
-    ]),
+        ])
+    
 ]);
 // 

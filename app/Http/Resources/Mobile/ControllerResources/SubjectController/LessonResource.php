@@ -41,7 +41,7 @@ class LessonResource extends JsonResource
                 ->
                 get()->pluck('id')->toArray() 
             :
-                null;
+                [];
 
 
 

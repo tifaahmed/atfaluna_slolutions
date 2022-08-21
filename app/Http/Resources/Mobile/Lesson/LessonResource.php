@@ -8,7 +8,8 @@ use App\Http\Resources\Mobile\SubjectResource;
 use App\Http\Resources\Mobile\LessonTypeResource;
 use App\Http\Resources\Dashboard\Collections\Quiz\QuizCollection;
 use App\Models\Basic;
-
+use App\Models\Accessory;
+use Illuminate\Database\Eloquent\Builder;
 
 class LessonResource extends JsonResource
 {
@@ -22,6 +23,31 @@ class LessonResource extends JsonResource
     {
         $row=$this->lesson_languages()->Localization()->RelatedLanguage($this->id)->first();
         $basic = Basic::find(1);
+
+        $sub_user_lesson = isset($request->sub_user_id) ? $this->subUserLesson()->where('sub_user_id',$request->sub_user_id)->first() : null ;
+        
+        $sub_user_id = $request->sub_user_id ;
+        $sub_user_accessories = 
+            isset($request->sub_user_id) 
+            ?
+                Accessory::
+                whereHas('SubUserAccessory', function (Builder $query)   use($sub_user_id) {
+                    $query->where('sub_user_id',$sub_user_id);
+                })
+                ->
+                whereHas('AccessoryLesson', function (Builder $query)   use($sub_user_id) {
+                    $query->where('lesson_id',$this->id);
+                })
+                ->
+                get()->pluck('id')->toArray() 
+            :
+                [];
+
+
+        $have_activities = 0;
+        if($this->activities && $this->activities->count() > 0 ){
+            $have_activities = 1 ;
+        }
 
         return [
             'id'            => $this->id,
@@ -38,7 +64,10 @@ class LessonResource extends JsonResource
 
             'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
             // 'sub_subject'   => $this->subSubject   ,
-            'quiz'       =>   new QuizCollection ($this->quiz)   ,
+            'quiz'       =>   []   ,
+            'have_activities' =>$have_activities,
+            'sub_user_accessories' => $sub_user_accessories ,
+            'game_data'          => $sub_user_lesson ? $sub_user_lesson->pivot->game_data : null,
 
         ];        
     }

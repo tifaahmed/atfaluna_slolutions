@@ -12,7 +12,7 @@ class loginApiRequest extends FormRequest {
        }
     public function rules( ) {
         return [
-            'email'    => [ 'required_without:phone' , 'email:rfc' , 'exists:users,email' ] ,
+            'email'    => [ 'required_without:phone' , 'email:rfc'  ] ,
             // 'phone'    => [ 'required_without:email' , 'string'    , 'exists:users,phone' ] ,
             'password' => [ 'required'],
             // 'fcm_token'   => [ 'required'] ,

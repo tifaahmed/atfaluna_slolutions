@@ -113,7 +113,7 @@ public function show($id) {
     }
 }
 
-public function update(modelInsertRequest $request ,$id) {
+public function update(modelUpdateRequest $request ,$id) {
     try {
         $this->ModelRepository->update( $id,Request()->all()) ;
         $model = new ModelResource( $this->ModelRepository->findById($id) ); 
