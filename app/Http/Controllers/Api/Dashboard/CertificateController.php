@@ -166,7 +166,7 @@ class CertificateController extends Controller
                 $all += array( $file_three => $path );
             }
             
-            $this->ModelRepository->update( $id,Request()->except($file_one,$file_two,)+$all) ;
+            $this->ModelRepository->update( $id,Request()->except($file_one,$file_two,$file_three)+$all) ;
             $model = new ModelResource( $this->ModelRepository->findById($id) );
 
             //  request languages
