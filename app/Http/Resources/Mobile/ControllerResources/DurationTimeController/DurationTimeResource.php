@@ -37,6 +37,9 @@ class DurationTimeResource extends JsonResource
             case "4":
                 $day_of_week = 5;
                 break;  
+            case "5":
+                $day_of_week = 6;
+                break;     
             default:
             $day_of_week = 0;
         };

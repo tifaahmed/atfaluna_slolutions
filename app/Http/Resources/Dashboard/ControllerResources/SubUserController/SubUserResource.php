@@ -24,12 +24,7 @@ class SubUserResource extends JsonResource
             'points'        => $this->points,
             'user'          =>  $this->user ,
 
-            'play_time'  =>  PlayTimeResource::collection($this->playTime)  ,
-
-
-            'active_age_group'    => $this->ActiveAgeGroup() ? $this->ActiveAgeGroup()->first()  : null ,
-
-            'active_subjects_from_active_age_group'  =>  $this->ActiveSubjectsFromActiveAgeGroup() ? $this->ActiveSubjectsFromActiveAgeGroup()->get() : []   ,
+            'play_time'  =>  PlayTimeResource::collection($this->playTime()->orderBy('id')->get())  ,
 
             'created_at'            => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'            => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

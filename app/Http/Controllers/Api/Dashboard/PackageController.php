@@ -147,8 +147,14 @@ class PackageController extends Controller
                 $path = $this->HelperHandleFile($this->folder_name,$request->file($file_one),$file_one)  ;
                 $all += array( $file_one => $path );
             }
+
+            // languages
+
             $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
             $model = new ModelResource( $this->ModelRepository->findById($id) );
+
+            $this -> update_array_languages($request->languages,$model) ;
+
                 return $this -> MakeResponseSuccessful( 
                         [ $model],
                         'Successful'               ,
@@ -163,66 +169,66 @@ class PackageController extends Controller
             } 
     }
     // lang create
-            //  requested_languages : from data request (array)
-            //  model : single row of the main table (collection)
-            //  handle languages  & store languages
-            public function store_array_languages($requested_languages,$model) {
-                if (is_array($requested_languages) ) {
-                    foreach ($requested_languages as $key => $language_sigle_row) {
-                        // insert relation_id_name with relation_id to the associative arrsy  ; 
-                        $language_array = $this->handleLanguageData($language_sigle_row,$this->related_language,$model->id);
-                        $this ->storeLanguage(  $language_array  );
-                    }
+        //  requested_languages : from data request (array)
+        //  model : single row of the main table (collection)
+        //  handle languages  & store languages
+        public function store_array_languages($requested_languages,$model) {
+            if (is_array($requested_languages) ) {
+                foreach ($requested_languages as $key => $language_sigle_row) {
+                    // insert relation_id_name with relation_id to the associative arrsy  ; 
+                    $language_array = $this->handleLanguageData($language_sigle_row,$this->related_language,$model->id);
+                    $this ->storeLanguage(  $language_array  );
                 }
             }
-            //  language_array : single associative array ready to enter table; 
-            //  add new files && create data
-            public function storeLanguage($language_array ) {
-                $all = [ ];
-                foreach ($language_array as $key => $value) {
-                        $all += array( $key => $value );
+        }
+        //  language_array : single associative array ready to enter table; 
+        //  add new files && create data
+        public function storeLanguage($language_array ) {
+            $all = [ ];
+            foreach ($language_array as $key => $value) {
+                    $all += array( $key => $value );
+            }
+            $this->ModelRepositoryLanguage->create( $all ) ;
+        }
+    // lang create
+
+    // lang update
+        //  requested_languages : from data request (array)
+        //  model : single row of the main table (collection)
+        //  handle languages  & update languages
+        public function update_array_languages($requested_languages,$model) {
+            if (is_array($requested_languages) ) {// for safty
+                foreach ($requested_languages as $key => $language_sigle_row) {
+                    // handle single array ; 
+                        $language_array = $this->handleLanguageData($language_sigle_row,$this->related_language,$model->id);
+                    // language_array : single array ready to enter table; 
+                    // model : single row of a main table (collection)
+                    // update single row of lang table ; 
+                        $this ->updateLanguage($model,$language_array);
                 }
+            }
+        }
+        //  model : single row of a main table (collection)
+        //  language_array : single associative array ready to enter table; 
+        //  delete old files & add new one && update data
+        public function updateLanguage($model,$language_array ) {
+            // get all row of language table
+                $language_models  =  $model->package_languages()->get() ;
+            // get single row of language table
+                $language_model  = $language_models->where('language',$language_array['language'])->first() ;
+            $all = [ ];
+            foreach ($language_array as $key => $value) {
+                    $all += array( $key => $value );
+            }
+            // for safty
+            if($language_model ){
+                $this->ModelRepositoryLanguage->update( $language_model->id,$all ) ;
+            }else{
                 $this->ModelRepositoryLanguage->create( $all ) ;
             }
-        // lang create
-
-        // lang update
-            //  requested_languages : from data request (array)
-            //  model : single row of the main table (collection)
-            //  handle languages  & update languages
-            public function update_array_languages($requested_languages,$model) {
-                if (is_array($requested_languages) ) {// for safty
-                    foreach ($requested_languages as $key => $language_sigle_row) {
-                        // handle single array ; 
-                            $language_array = $this->handleLanguageData($language_sigle_row,$this->related_language,$model->id);
-                        // language_array : single array ready to enter table; 
-                        // model : single row of a main table (collection)
-                        // update single row of lang table ; 
-                            $this ->updateLanguage($model,$language_array);
-                    }
-                }
-            }
-            //  model : single row of a main table (collection)
-            //  language_array : single associative array ready to enter table; 
-            //  delete old files & add new one && update data
-            public function updateLanguage($model,$language_array ) {
-                // get all row of language table
-                    $language_models  =  $model->package_languages()->get() ;
-                // get single row of language table
-                    $language_model  = $language_models->where('language',$language_array['language'])->first() ;
-                $all = [ ];
-                foreach ($language_array as $key => $value) {
-                        $all += array( $key => $value );
-                }
-                // for safty
-                if($language_model ){
-                    $this->ModelRepositoryLanguage->update( $language_model->id,$all ) ;
-                }else{
-                    $this->ModelRepositoryLanguage->create( $all ) ;
-                }
-                
-            }
-        // lang update
+            
+        }
+    // lang update
     // trash
         public function collection_trash(Request $request){
             try {

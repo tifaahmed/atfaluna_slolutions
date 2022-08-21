@@ -8,6 +8,8 @@ use App\Http\Resources\Mobile\ControllerResources\HeroController\LessonTypeResou
 // use App\Http\Resources\Mobile\Collections\ControllerResources\HeroController\QuizCollection;
 
 use App\Models\Basic;
+use App\Models\Accessory;
+use Illuminate\Database\Eloquent\Builder;
 
 class LessonResource extends JsonResource
 {
@@ -22,6 +24,30 @@ class LessonResource extends JsonResource
         $row=$this->lesson_languages()->Localization()->RelatedLanguage($this->id)->first();
         $basic = Basic::find(1);
 
+        $sub_user_lesson = isset($request->sub_user_id) ? $this->subUserLesson()->where('sub_user_id',$request->sub_user_id)->first() : null ;
+
+        $sub_user_id = $request->sub_user_id ;
+        $sub_user_accessories = 
+            isset($request->sub_user_id) 
+            ?
+                Accessory::
+                whereHas('SubUserAccessory', function (Builder $query)   use($sub_user_id) {
+                    $query->where('sub_user_id',$sub_user_id);
+                })
+                ->
+                whereHas('AccessoryLesson', function (Builder $query)   use($sub_user_id) {
+                    $query->where('lesson_id',$this->id);
+                })
+                ->
+                get()->pluck('id')->toArray() 
+            :
+                [];
+
+
+        $have_activities = 0;
+        if($this->activities && $this->activities->count() > 0 ){
+            $have_activities = 1 ;
+        }
         return [
             'id'            => $this->id,
             'name'          => $row ? $row->name:'',
@@ -31,12 +57,10 @@ class LessonResource extends JsonResource
 
             'points'        =>  $this->points,
 
-            // 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            // 'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
-
             'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
-            // 'quiz'       =>   new QuizCollection ($this->quiz)   ,
+            'have_activities' =>$have_activities,
+            'sub_user_accessories' => $sub_user_accessories ,
+            'game_data'          => $sub_user_lesson ? $sub_user_lesson->pivot->game_data : null,
 
         ];        
     }

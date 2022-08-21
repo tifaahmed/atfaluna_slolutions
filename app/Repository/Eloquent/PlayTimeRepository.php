@@ -5,6 +5,7 @@ namespace App\Repository\Eloquent;
 use App\Models\Play_time as ModelName;
 use App\Repository\PlayTimeRepositoryInterface;
 use Auth;
+use App\Models\Sub_user;
 class PlayTimeRepository extends BaseRepository implements PlayTimeRepositoryInterface
 {
 
@@ -24,7 +25,8 @@ class PlayTimeRepository extends BaseRepository implements PlayTimeRepositoryInt
 	public function filterAll($sub_user_id)  
     {
 		if($sub_user_id){
-			$sub_user       = Auth::user()->sub_user()->find($sub_user_id);
+			$sub_user       = Sub_user::find($sub_user_id);
+			
 			$result   		= $sub_user->playTime()->get();
 			return $result;
 		}else{
@@ -34,7 +36,7 @@ class PlayTimeRepository extends BaseRepository implements PlayTimeRepositoryInt
 	public function filterPaginate($sub_user_id,$perPage) 
     {
 		if($sub_user_id){
-			$sub_user       = Auth::user()->sub_user()->find($sub_user_id);
+			$sub_user       = Sub_user::find($sub_user_id);
 			$result   = $sub_user->playTime();
 			return $this->queryPaginate($result,$perPage);
 
@@ -45,7 +47,8 @@ class PlayTimeRepository extends BaseRepository implements PlayTimeRepositoryInt
 
 	public function attatchByArray($array) {
 		$relation_name = 'sub_user_id';
-		$sub_user       = Auth::user()->sub_user()->find($array[$relation_name]);
+		$sub_user       = Sub_user::find($array[$relation_name]);
+
 		$result   = $sub_user->playTime()->get();
 		if ($result->count()) {
 			$this->updateByArray($array,$result,$relation_name) ;
