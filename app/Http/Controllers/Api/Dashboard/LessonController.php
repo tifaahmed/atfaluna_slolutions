@@ -33,9 +33,17 @@ class LessonController extends Controller
         $this->related_language = 'lesson_id';
         $this->notification_image_name = 'image_one';
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model =  $this->ModelRepository->filterAll(
+                $request->sub_user_id,
+                $request->lesson_type_id,
+                $request->hero_id,
+                $request->seen,
+                $request->age_group_id
+                ) ;
+
+                return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -45,14 +53,17 @@ class LessonController extends Controller
         }
     }
 
+
     public function collection(Request $request){
         try {
-            $model =  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10)   ;
-            if ( is_array($model) ) {
-                return new ModelCollection (  $model )  ;
-            }else{
-                return $model ;
-            }
+            $model = $this->ModelRepository->filterPaginate(
+                $request->sub_user_id,
+                $request->lesson_type_id,
+                $request->hero_id, 
+                $request->seen,
+                $request->age_group_id,
+                $request->prepage ? $request->prepage : 10);
+                return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
