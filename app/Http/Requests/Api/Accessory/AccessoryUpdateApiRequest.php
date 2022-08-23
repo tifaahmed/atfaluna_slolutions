@@ -28,19 +28,34 @@ class AccessoryUpdateApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
+
+        // accessories
         $all += [ 'image'           =>  [ 'required' ,'max:50000'] ]  ;
         $all += [ 'price'           =>  [ 'required' ,'numeric','between:0,9999.99'] ]  ;
-        $all += [ 'type'           =>  [ 'required' ] ]  ;
-        $all += ['gender'=>[
-            'required',
-                Rule::in(['girl','boy','both']),
-            ]] ;
+        $all += [ 'gender'          =>  [ 'required', Rule::in(['girl','boy','both']), ]] ;
 
-            foreach ($Languages as $key => $value) {
+        // body_suits (one)
+        $all += [ 'body_suit_id'    =>  [ 'required' ,'integer' ,'exists:body_suits,id'] ]  ;
+
+        // activities (m)
+        $all += [ 'activity_ids'    =>  [ 'required' ,'array' ,'exists:activities,id'] ]  ;
+
+        // lessons (m)
+        $all += [ 'lesson_ids'    =>  [ 'required' ,'array' ,'exists:lessons,id'] ]  ;
+
+        // skins (m)
+        $all += [ 'skin_ids'    =>  [ 'required' ,'array' , 'exists:skins,id' ] ] ;
+
+        // $all += [ 'skin_ids'    =>  [ 'required' ,'array' , Rule::exists('skins', 'id')->where('original', 0) ] ] ;
+        // accessory_languages
+        foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
             $all += [ 'languages.'.$key.'.description'   =>  [ 'required' ] ] ;
-            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+            
+            // language
+            $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name' ,Rule::in([$value->name]) ] ] ;
         }
         return $all;
     }
+
 }

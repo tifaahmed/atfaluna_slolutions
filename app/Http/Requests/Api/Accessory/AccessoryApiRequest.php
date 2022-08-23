@@ -44,14 +44,16 @@ class AccessoryApiRequest extends FormRequest
         $all += [ 'lesson_ids'    =>  [ 'required' ,'array' ,'exists:lessons,id'] ]  ;
 
         // skins (m)
-        $all += [ 'skin_ids'    =>  [ 'required' ,'array' , Rule::exists('skins', 'id')->where('original', 0) ] ] ;
+        $all += [ 'skin_ids'    =>  [ 'required' ,'array' , 'exists:skins,id' ] ] ;
+
+        // $all += [ 'skin_ids'    =>  [ 'required' ,'array' , Rule::exists('skins', 'id')->where('original', 0) ] ] ;
         // accessory_languages
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
             $all += [ 'languages.'.$key.'.description'   =>  [ 'required' ] ] ;
             
             // language
-            $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;
+            $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name' ,Rule::in([$value->name]) ] ] ;
         }
         return $all;
     }

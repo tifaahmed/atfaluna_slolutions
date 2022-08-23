@@ -4,6 +4,8 @@ namespace App\Http\Requests\Api\Lesson;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Language;
+use Illuminate\Validation\Rule;
+
 class LessonApiRequest extends FormRequest
 {
     /**
@@ -23,7 +25,7 @@ class LessonApiRequest extends FormRequest
      */
     public function rules()
     {
-        $Languages=Language::get();
+        $Languages=Language::latest()->get();
         $all=[];
 
         // sub_subjects
@@ -49,7 +51,7 @@ class LessonApiRequest extends FormRequest
             $all += [ 'languages.'.$key.'.image_two'   =>  [ 'required' , 'max:50000' ,'mimes:jpg,jpeg,webp,bmp,png' ] ] ;
             
             // language
-            $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name'] ] ;
+            $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name' ,Rule::in([$value->name]) ] ] ;
         }
 
         // notification 
@@ -57,7 +59,7 @@ class LessonApiRequest extends FormRequest
         foreach ($Languages as $key => $value) {
             $all += [ 'notification.'.$key.'.title'          =>  [ 'required_if:notificate,1' , 'max:255' ] ]  ;
             $all += [ 'notification.'.$key.'.subject'        =>  [ 'required_if:notificate,1' , 'max:255' ] ]  ;
-            $all += [ 'notification.'.$key.'.lang'           =>  [ 'required_if:notificate,1' , 'max:2' , 'exists:languages,name' ] ]  ;
+            $all += [ 'notification.'.$key.'.lang'           =>  [ 'required_if:notificate,1' , 'max:2' , 'exists:languages,name'  ] ]  ;
         }
         
         return $all;

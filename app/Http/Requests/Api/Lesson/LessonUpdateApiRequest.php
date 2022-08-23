@@ -4,6 +4,7 @@ namespace App\Http\Requests\Api\Lesson;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Language;
+use Illuminate\Validation\Rule;
 class LessonUpdateApiRequest extends FormRequest
 {
     /**
@@ -50,7 +51,7 @@ class LessonUpdateApiRequest extends FormRequest
             $all += [ 'languages.'.$key.'.image_two'   =>  [ 'sometimes'  , 'max:50000' ,'mimes:jpg,jpeg,webp,bmp,png' ] ] ;      
             
             // language
-            $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name'] ] ;
+            $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name' ,Rule::in([$value->name]) ] ] ;
         }
         
         // notification 
