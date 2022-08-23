@@ -4,6 +4,9 @@ namespace App\Http\Resources\Dashboard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Dashboard\SkinResource;
+use App\Http\Resources\Dashboard\Activity\ActivityResource;
+use App\Http\Resources\Dashboard\Lesson\LessonResource;
 
 class AccessoryResource extends JsonResource
 {
@@ -35,7 +38,13 @@ class AccessoryResource extends JsonResource
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            
+        'accessory_skin'       => SkinResource::collection($this->AccessorySkin) , 
 
-        ];        
+        'accessory_activity'     => ActivityResource::collection($this->AccessoryActivity) ,
+
+        'accessory_lesson'     => LessonResource::collection($this->AccessoryLesson)  ,
+
+        ];   
     }
 }
