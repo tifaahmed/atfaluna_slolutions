@@ -28,8 +28,6 @@ class AccessoryResource extends JsonResource
 
             'gender'        =>  $this->gender,
             
-            'type'         =>  $this->type,
-
             'description'   => $row ? $row->description:'' ,
 
             'languages'     => $this->accessory_languages,
