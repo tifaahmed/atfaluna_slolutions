@@ -5,6 +5,7 @@ namespace App\Http\Resources\Dashboard\Quiz;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 use App\Http\Resources\Dashboard\SubjectResource;
+use App\Http\Resources\Dashboard\QuizTypeResource;
 
 use App\Http\Resources\Dashboard\Collections\Quiz\QuizLanguagesCollection;
 
@@ -36,7 +37,7 @@ class QuizResource extends JsonResource
             'name'          => $row ? $row->name:'',
 
             
-            // 'quizable'       =>  $this->quizable  ,
+            'quiz_type'   => new QuizTypeResource (  $this->quiz_type )  ,
 
             'mcq_questions'          =>  McqQuestionResource::collection ($this->mcq_questions)  ,
             'true_false_questions'   =>  TrueFalseQuestionResource::collection ($this->true_false_questions)  ,
