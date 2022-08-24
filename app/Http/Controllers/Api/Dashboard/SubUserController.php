@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Api\SubUser\SubUserApiRequest as modelInsertRequest;
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\SubUserCollection as ModelCollection;
-use App\Http\Resources\Dashboard\SubUserResource as ModelResource;
+// use App\Http\Resources\Dashboard\Collections\SubUserCollection as ModelCollection;
+// use App\Http\Resources\Dashboard\SubUserResource as ModelResource;
+use App\Http\Resources\Dashboard\Collections\ControllerResources\SubUserCollection\SubUserCollection as ModelCollection;
+use App\Http\Resources\Dashboard\ControllerResources\SubUserController\SubUserResource as ModelResource;
 
 // lInterfaces
 use App\Repository\SubUserRepositoryInterface as ModelInterface;
@@ -65,8 +67,7 @@ class SubUserController extends Controller
 
     public function all(){
         try {
-            return $model = $this->ModelRepository->all();
-            // return new ModelCollection ( $model  )  ;
+            return new ModelCollection (  $this->ModelRepository->all() )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
