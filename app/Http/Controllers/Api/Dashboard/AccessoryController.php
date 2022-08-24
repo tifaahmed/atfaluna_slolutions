@@ -134,6 +134,7 @@ use Illuminate\Support\Str;
                 }
                 $this->ModelRepository->update( $id,Request()->except($file_one)+$all) ;
                 $model =  $this->ModelRepository->findById($id);
+                $this -> update_array_languages($request->languages,$model) ;
 
                 // attach (1) accessory to (m) Activities (sync)
                 $this->ModelRepository->attachActivities($request->activity_ids,$model->id);
@@ -156,7 +157,27 @@ use Illuminate\Support\Str;
                 );
             } 
         }
+        // public function update(modelUpdateRequest $request ,$id) {
+        //     try {
+        //         $this->ModelRepository->update( $id,Request()->all()) ;
+        //         $model = new ModelResource( $this->ModelRepository->findById($id) ); 
         
+        //         //  request languages
+        //         $this -> update_array_languages($request->languages,$model) ;
+    
+        //         return $this -> MakeResponseSuccessful( 
+        //                 [ $model],
+        //                 'Successful'               ,
+        //                 Response::HTTP_OK
+        //         ) ;
+        //     } catch (\Exception $e) {
+        //         return $this -> MakeResponseErrors(  
+        //             [$e->getMessage()  ] ,
+        //             'Errors',
+        //             Response::HTTP_NOT_FOUND
+        //         );
+        //     } 
+        // }
        // lang create
             //  requested_languages : from data request (array)
             //  model : single row of the main table (collection)
