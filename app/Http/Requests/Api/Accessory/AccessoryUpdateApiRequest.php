@@ -53,8 +53,9 @@ class AccessoryUpdateApiRequest extends FormRequest
             $all += [ 'languages.'.$key.'.description'   =>  [ 'required' ] ] ;
             
             // language
-            $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name' ,Rule::in([$value->name]) ] ] ;
+            $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name'  ] ] ;
         }
+        
         return $all;
     }
 
