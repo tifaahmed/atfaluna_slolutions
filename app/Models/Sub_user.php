@@ -97,7 +97,7 @@ class Sub_user extends Model
         }
         //Subject
         public function subUserSubject(){
-            return $this->belongsToMany(Subject::class, 'sub_user_subjects', 'sub_user_id', 'subject_id');
+            return $this->belongsToMany(Subject::class, 'sub_user_subjects', 'sub_user_id', 'subject_id')->withPivot(['active','id']);
         }
         public function subUserSubjectModel(){
             return $this->hasMany(Sub_user_subject::class);
