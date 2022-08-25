@@ -5,7 +5,6 @@ namespace App\Repository\Eloquent;
 use App\Models\Sub_user as ModelName;
 use App\Repository\SubUserRepositoryInterface;
 use App\Models\Age ;
-use Illuminate\Support\Facades\Auth;
 class SubUserRepository extends BaseRepository implements SubUserRepositoryInterface
 {
 
@@ -100,7 +99,6 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
                 $array +=[$value => [ 'active' =>  1 ] ];
 			}
 			$sub_user->subUserSubject()->sync($array);
-
 		}
 	}
 	//SubSubject
@@ -131,7 +129,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	public function attachActivities($activity_ids,$id)
 	{
 	if($activity_ids){
-		$result = Auth::user()->sub_user()->find($id); 
+		$result = $this->findById($id); 
 		$result->subUserActivity()->sync($activity_ids);
 	}
 	}

@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Api\SubUser\SubUserApiRequest as modelInsertRequest;
 
 // Resources
-// use App\Http\Resources\Dashboard\Collections\SubUserCollection as ModelCollection;
-// use App\Http\Resources\Dashboard\SubUserResource as ModelResource;
-use App\Http\Resources\Dashboard\Collections\ControllerResources\SubUserCollection\SubUserCollection as ModelCollection;
-use App\Http\Resources\Dashboard\ControllerResources\SubUserController\SubUserResource as ModelResource;
+use App\Http\Resources\Dashboard\Collections\SubUserCollection as ModelCollection;
+use App\Http\Resources\Dashboard\SubUserResource as ModelResource;
+// use App\Http\Resources\Dashboard\Collections\ControllerResources\SubUserCollection\SubUserCollection as ModelCollection;
+// use App\Http\Resources\Dashboard\ControllerResources\SubUserController\SubUserResource as ModelResource;
 
 // lInterfaces
 use App\Repository\SubUserRepositoryInterface as ModelInterface;
@@ -140,6 +140,7 @@ class SubUserController extends Controller
     
     public function update(modelInsertRequest $request ,$id) {
         try {
+            $this->ModelRepository->update( $id,Request()->all()) ;
                         //Avatar
             $this->ModelRepository->attachAvatars($request->avatar_ids,$id);
                         //Certificate
