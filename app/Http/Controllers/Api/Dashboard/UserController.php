@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Http\Requests\Api\User\UserRegisterApiRequest;
+use App\Http\Requests\Api\User\UserStoreApiRequest;
 use App\Http\Requests\Api\User\UserUpdateApiRequest;
 
 use Illuminate\Http\Response ;
@@ -49,7 +49,7 @@ class UserController extends Controller
             );
         }
     }
-    public function store(UserRegisterApiRequest $request ) {
+    public function store(UserStoreApiRequest $request ) {
 
         $all = [ ];
 
@@ -64,7 +64,7 @@ class UserController extends Controller
         $all += array( 'password' => Hash::make($request->password) );
         $modal = $this->ModelRepository->create( Request()->except($file_one,'password','password_confirmation')+$all);
 
-        $this->ModelRepository->attachRole($request->roleIdes ,$modal->id);
+        $this->ModelRepository->attachRole($request->role_id ,$modal->id);
 
         return $this -> MakeResponseSuccessful( 
             ['UserModel'  => $modal]  ,
@@ -119,7 +119,8 @@ class UserController extends Controller
             
             $modal = $this->ModelRepository->update( $id,Request()->except($file_one,$password,'country_id')+$all) ;
 
-            $this->ModelRepository->attachRole($request->role_ids ,$id);
+
+            $this->ModelRepository->attachRole($request->role_id ,$id);
 
             return $this -> MakeResponseSuccessful( 
                 [ $modal],

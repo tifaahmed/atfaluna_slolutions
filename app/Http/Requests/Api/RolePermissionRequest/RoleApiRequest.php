@@ -25,8 +25,8 @@ class RoleApiRequest extends FormRequest
     {
         return [
                 'name'              =>  [ 'required','max:255' ,'unique:roles,name' ] ,
-                'description'       =>  [  'max:255'] ,
-                'guard_name'        =>  [ 'required' , 'max:255'] ,
+                // 'description'       =>  [  'max:255'] ,
+                // 'guard_name'        =>  [ 'required' , 'max:255'] ,
         ];
     }
 }

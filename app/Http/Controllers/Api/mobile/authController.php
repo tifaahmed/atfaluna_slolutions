@@ -85,6 +85,7 @@ class authController extends Controller {
             $all += array( 'active' => 1 );
 
             $user  = User::create($all);
+            $user->assignRole('parent');
 
         }
 
@@ -105,6 +106,7 @@ class authController extends Controller {
             'remember_token' => Hash::make( Str::random(60) )  ,
             'token' => Hash::make( Str::random(60) )  ,
         ]);
+        $user->assignRole('parent');
 
         
         return $this ->loginRespons($request->fcm_token,$user->email,$user->id);

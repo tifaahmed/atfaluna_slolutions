@@ -34,7 +34,6 @@ class UserSeeder extends Seeder
             'country_id' =>  Country::first()->id,
         ]);
         $admin->assignRole('admin');
-        $admin->assignRole('super-admin');
 
     }
 }

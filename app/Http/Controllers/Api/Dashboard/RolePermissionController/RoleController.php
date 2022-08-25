@@ -11,7 +11,7 @@ use Illuminate\Http\Response ;
 use App\Http\Resources\Dashboard\Collections\RolePermissionCollection\RoleCollection;
 use App\Http\Resources\Dashboard\RolePermissionResource\RoleResource;
 
-use App\Repository\RolePermissionInterface\RoleRepositoryInterface as ModelInterface;
+use App\Repository\RoleRepositoryInterface as ModelInterface;
 
 
 class RoleController extends Controller
@@ -36,7 +36,7 @@ class RoleController extends Controller
 
         
     }
-    public function store( RoleApiRequest $request ) {
+    public function store(RoleApiRequest $request ) {
         return $this -> MakeResponseSuccessful( 
             [ $this->RoleRepository->create( Request()->all() ) ],
             'Successful',

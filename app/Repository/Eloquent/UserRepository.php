@@ -25,11 +25,16 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 	}
 
 
-    public function attachRole($role_ids,$id){
-        if($role_ids){
-            $result = $this->findById($id); 
-            $result->UserRole()->detach();
-            $result->assignRole($role_ids);
+    public function attachRole($role_id,$id){
+        if($role_id){
+            $user = $this->findById($id); 
+            // $user->UserRole()->detach();
+            $user->roles()->detach();
+
+
+            $role = Role::findOrFail($role_id);
+            $user->assignRole($role->name);
+
             // Role::whereIn('id',$role_ids)->get() ;
             // $role = Role::findOrFail($row['id']);
             // if($role->RolePermission){

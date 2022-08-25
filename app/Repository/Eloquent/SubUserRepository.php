@@ -86,7 +86,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	public function attachCertificates($certificate_ids,$id)
 	{
 		if($certificate_ids){
-			$result = Auth::user()->sub_user()->find($id); 
+			$result = $this->findById($id); 
 			$result->subUserCertificate()->sync($certificate_ids);
 		}
 	}
@@ -94,15 +94,20 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	public function attachSubjects($subject_ids,$id)
 	{
 		if($subject_ids){
-			$sub_user =   Auth::user()->sub_user()->find($id);
-			$sub_user->subUserSubject()->sync([$subject_ids => ['active' =>  1]]);
+			 $sub_user =   $this->findById($id); 
+			 $array = [];
+			foreach ($subject_ids as $key => $value) {
+                $array +=[$value => [ 'active' =>  1 ] ];
+			}
+			$sub_user->subUserSubject()->sync($array);
+
 		}
 	}
 	//SubSubject
 	public function attachSubSubjects($sub_subject_ids,$id)
 	{
 	if($sub_subject_ids){
-		$sub_user =   Auth::user()->sub_user()->find($id);
+		$sub_user =   $this->findById($id); 
 		$sub_user->subUserSubSubject()->sync($sub_subject_ids);
 	}
 	}
@@ -110,7 +115,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	public function attachQuizs($quiz_ids,$id)
 	{
 		if($quiz_ids){
-			$sub_user =   Auth::user()->sub_user()->find($id);
+			$sub_user =   $this->findById($id); 
 			$sub_user->subUserQuiz()->sync($quiz_ids);
 		}
 	}
@@ -118,7 +123,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	public function attachLessons($lesson_ids,$id)
 	{
 		if($lesson_ids){
-			$sub_user =   Auth::user()->sub_user()->find($id);
+			$sub_user =   $this->findById($id); 
 			$sub_user->subUserLesson()->sync($lesson_ids);
 		}
 	}
@@ -137,7 +142,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	public function attachAgeGroups($age_group_ids,$id)
 	{
 		if($age_group_ids){
-			$sub_user =   Auth::user()->sub_user()->find($id);
+			$sub_user =   $this->findById($id); 
 			$sub_user->subUserAgeGroup()->syncWithoutDetaching($age_group_ids);
 		}
 	}
@@ -158,14 +163,14 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	public function UnactiveAllAgeGroups($id)
 	{
 		if ($id) {
-			$sub_user =   Auth::user()->sub_user()->find($id);
+			$sub_user =   $this->findById($id); 
 			$sub_user->subUserAgeGroup()->update(['active'=> 0]);
 		}
 	}
 	public function activeAgeGroup($age_group_id,$id)
 	{
 		if ($age_group_id) {
-			$sub_user =   Auth::user()->sub_user()->find($id);
+			$sub_user =   $this->findById($id); 
 			$sub_user->subUserAgeGroup()->where('age_group_id',$age_group_id)->update(['active'=> 1]);		
 		}
 	}
