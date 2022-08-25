@@ -27,7 +27,7 @@ Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
 
 // ->middleware('App\Http\Middleware\IfOwnerMiddleware:App\Models\User')
 
-Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
+Route::group(['middleware' => ['auth:api','role:admin']], fn ( ) : array => [
     // Auth
         Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
             Route::post( '/logout' ,  'authController@logout' )  -> name( 'logout' ) ,
@@ -56,10 +56,10 @@ Route::group(['middleware' => ['auth:api']], fn ( ) : array => [
     // Role
         Route::name('role.')->prefix('/role')->group( fn ( ) : array => [
             Route::get('/'              ,'RolePermissionController\RoleController@all'              )->name('all'),
-            Route::post(''              ,'RolePermissionController\RoleController@store'            )->name('store'),
+            // Route::post(''              ,'RolePermissionController\RoleController@store'            )->name('store'),
             Route::get('/collection'    ,'RolePermissionController\RoleController@collection'       )->name('collection'),
             Route::get('/{id}/show'     ,'RolePermissionController\RoleController@show'             )->name('show'),
-            Route::DELETE('/{id}'       ,'RolePermissionController\RoleController@destroy'          )->name('destroy'),
+            // Route::DELETE('/{id}'       ,'RolePermissionController\RoleController@destroy'          )->name('destroy'),
         ]),
     // Role permission user relation
         Route::name('assignRole.')->prefix('/assignRole')->group( fn ( ) : array => [

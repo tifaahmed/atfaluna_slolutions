@@ -70,7 +70,8 @@ class Kernel extends HttpKernel
         'IfSubscription' => \App\Http\Middleware\IfSubscriptionMiddleware::class,
         'IfActiveUser' => \App\Http\Middleware\IfActiveUserMiddleware::class,
         'DurationTime' => \App\Http\Middleware\DurationTimeMiddleware::class,
-        
+        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+
         
     ];
 }

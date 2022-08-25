@@ -115,8 +115,10 @@ namespace App\Providers;
     use App\Repository\Eloquent\MatchAnswerRepository;
     use App\Repository\Eloquent\MatchAnswerLanguageRepository;
     // Role  Permission
+        use App\Repository\Eloquent\RoleRepository;
+
         use App\Repository\Eloquent\RolePermissionRepository\PermissionRepository;
-        use App\Repository\Eloquent\RolePermissionRepository\RoleRepository;
+        // use App\Repository\Eloquent\RolePermissionRepository\RoleRepository;
         use App\Repository\Eloquent\RolePermissionRepository\ModelHasPermissionRepository;
         use App\Repository\Eloquent\RolePermissionRepository\ModelHasRoleRepository;
         use App\Repository\Eloquent\RolePermissionRepository\RoleHasPermissionRepository;
@@ -233,8 +235,10 @@ namespace App\Providers;
     use App\Repository\MatchAnswerRepositoryInterface;
     use App\Repository\MatchAnswerLanguageRepositoryInterface;
     // Role  Permission   
+    use App\Repository\RoleRepositoryInterface;
+
     use App\Repository\RolePermissionInterface\PermissionRepositoryInterface;
-    use App\Repository\RolePermissionInterface\RoleRepositoryInterface;
+    // use App\Repository\RolePermissionInterface\RoleRepositoryInterface;
     use App\Repository\RolePermissionInterface\ModelHasPermissionRepositoryInterface;
     use App\Repository\RolePermissionInterface\ModelHasRoleRepositoryInterface;
     use App\Repository\RolePermissionInterface\RoleHasPermissionRepositoryInterface;

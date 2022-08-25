@@ -21,7 +21,7 @@ class RegisterApiRequest extends FormRequest {
             'avatar'    =>  [ 'sometimes', 'mimes:jpg,jpeg,png' , 'max:5000'] ,
             'fcm_token' => [ 'sometimes'] ,
 
-            'birthdate'=>  [  'required','date' ] ,
+            'birthdate '=>  [  'date' , 'date_format:Y/d/m'] ,
             'country_id'=>  [  'required' , 'integer','exists:countries,id' ] ,
         ];
     }

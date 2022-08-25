@@ -93,8 +93,12 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	public function attachSubjects($subject_ids,$id)
 	{
 		if($subject_ids){
-			$sub_user =   $this->findById($id); 
-			$sub_user->subUserSubject()->sync([$subject_ids => ['active' =>  1]]);
+			 $sub_user =   $this->findById($id); 
+			 $array = [];
+			foreach ($subject_ids as $key => $value) {
+                $array +=[$value => [ 'active' =>  1 ] ];
+			}
+			$sub_user->subUserSubject()->sync($array);
 		}
 	}
 	//SubSubject
@@ -157,7 +161,7 @@ class SubUserRepository extends BaseRepository implements SubUserRepositoryInter
 	public function UnactiveAllAgeGroups($id)
 	{
 		if ($id) {
-			$sub_user =  $this->findById($id); 
+			$sub_user =   $this->findById($id); 
 			$sub_user->subUserAgeGroup()->update(['active'=> 0]);
 		}
 	}

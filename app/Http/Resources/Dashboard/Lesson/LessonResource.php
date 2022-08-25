@@ -30,7 +30,7 @@ class LessonResource extends JsonResource
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
-            'languages'     => new LessonLanguagesCollection ( $this->lesson_languages ),
+            'languages'     => new LessonLanguagesCollection ( $this->lesson_languages()->orderBy('language')->get() ),
             'name'          => $row ? $row->name:'',
             
             'sub_subject'   => $this->subSubject   ,
