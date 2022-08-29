@@ -46,9 +46,9 @@ class LessonUpdateApiRequest extends FormRequest
         // lesson_languages
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.name'        =>  [ 'required'  , 'max:255'] ] ;
-            $all += [ 'languages.'.$key.'.url'         =>  [ 'sometimes'  , 'max:100000','mimes:zip,mp4'] ] ;
-            $all += [ 'languages.'.$key.'.image_one'   =>  [ 'sometimes'  , 'max:50000' ,'mimes:jpg,jpeg,webp,bmp,png' ] ] ;
-            $all += [ 'languages.'.$key.'.image_two'   =>  [ 'sometimes'  , 'max:50000' ,'mimes:jpg,jpeg,webp,bmp,png' ] ] ;      
+            $all += [ 'languages.'.$key.'.url'         =>  [ 'required'  , 'max:100000','mimes:zip,mp4'] ] ;
+            $all += [ 'languages.'.$key.'.image_one'   =>  [ 'required'  , 'max:50000' ,'mimes:jpg,jpeg,webp,bmp,png' ] ] ;
+            $all += [ 'languages.'.$key.'.image_two'   =>  [ 'required'  , 'max:50000' ,'mimes:jpg,jpeg,webp,bmp,png' ] ] ;      
             
             // language
             $all += [ 'languages.'.$key.'.language'     =>  [ 'required' , 'max:2' ,'exists:languages,name' ,Rule::in([$value->name]) ] ] ;

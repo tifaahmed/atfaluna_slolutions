@@ -27,7 +27,7 @@ class PackageUpdateApiRequest extends FormRequest
 
         $all=[];
         $all += [ 'points'           =>  [ 'required' ,'integer'] ]  ;
-        $all += [ 'image'            =>  [ 'sometimes' ,'max:50000'] ]  ;
+        $all += [ 'image'            =>  [ 'required' ,'max:50000'] ]  ;
         $all += [ 'price'           =>  [ 'required' ,'integer'  ] ] ;
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;

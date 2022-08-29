@@ -28,8 +28,8 @@ class UserUpdateApiRequest extends FormRequest
                 'email'     =>  [  'required','unique:users,email,'.$this->id  ,'email'] ,
                 'phone'     =>  [  'required' ,'unique:users,phone,'.$this->id  ,'max:15' ] ,
 
-                'password'  =>  [  'sometimes','min:8' , 'max:15' ],
-                'password_confirmation'  =>  [ 'exclude_unless:password,true', 'min:8' , 'max:15' ],
+                'password'  =>  [  'required','min:8' , 'max:15' ],
+                'password_confirmation'  =>  [ 'required','exclude_unless:password,true', 'min:8' , 'max:15' ],
 
                 'avatar'    =>  [ 'sometimes',  'max:5000'] ,
 

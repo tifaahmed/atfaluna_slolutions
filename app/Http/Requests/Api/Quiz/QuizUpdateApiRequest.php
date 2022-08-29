@@ -28,8 +28,8 @@ class QuizUpdateApiRequest extends FormRequest
         $Languages=Language::get();
         $all=[];
         // quizzes
-        $all += [ 'points'                      =>  [ 'required' ,'integer'] ]  ; // default 0
-        $all += [ 'minimum_requirements'        =>  [ 'required' ,'integer'] ]  ; // default 0
+        $all += [ 'points'                      =>  [ 'sometimes' ,'integer'] ]  ; // default 0
+        $all += [ 'minimum_requirements'        =>  [ 'sometimes' ,'integer'] ]  ; // default 0
         
         // quiz_questions
         $all += [ 'mcq_question_ids'        =>  [ 'sometimes' ,'array','exists:mcq_questions,id'] ]  ;
