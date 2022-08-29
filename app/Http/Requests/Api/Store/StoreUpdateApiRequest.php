@@ -27,8 +27,8 @@ class StoreUpdateApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
-        $all += [ 'image'           =>  [ 'sometimes' ,'max:5000'] ]  ;
-        $all += [ 'url'             =>  [ 'sometimes' ,'max:100000' ,'unique:stores,url,'.$this->id] ]  ;
+        $all += [ 'image'           =>  [ 'required' ,'max:5000'] ]  ;
+        $all += [ 'url'             =>  [ 'required' ,'max:100000' ,'unique:stores,url,'.$this->id] ]  ;
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.name'   =>  [ 'required' ] ] ;
             $all += [ 'languages.'.$key.'.language'   =>  [ 'required' ,'exists:languages,name'] ] ;

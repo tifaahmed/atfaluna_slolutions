@@ -28,7 +28,7 @@ class ActivityUpdateApiRequest extends FormRequest
         
         $all=[];
 
-        $all += [ 'points'          =>  [ 'integer' ] ]  ; //default:0
+        $all += [ 'points'          =>  [ 'sometimes' ,'integer'] ]  ; //default:0
         $all += [ 'lesson_id'  =>  [ 'required' ,'integer','exists:lessons,id'] ]  ;
 
         foreach ($Languages as $key => $value) {
