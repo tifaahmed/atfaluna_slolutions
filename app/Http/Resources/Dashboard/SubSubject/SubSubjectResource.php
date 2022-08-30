@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Dashboard\Collections\SubSubject\SubSubjectLanguagesCollection;
 use App\Http\Resources\Dashboard\Collections\Lesson\LessonCollection;
 use App\Http\Resources\Dashboard\Collections\Skill\SkillCollection ;
+use App\Http\Resources\Dashboard\SoundsResource ;
 
 use App\Http\Resources\Dashboard\Quiz\QuizResource;
 
@@ -36,6 +37,9 @@ class SubSubjectResource extends JsonResource
             'lessons'       => new LessonCollection ($this->lessons),
             'quiz'          =>   new QuizResource ($this->quiz)   ,
             'skills'        => new SkillCollection($this->skills),
+            // 'sounds'       => new SoundsResource ($this->sounds),
+            'sound'         =>  SoundsResource::collection($this->sound),
+
 
 
         ];        

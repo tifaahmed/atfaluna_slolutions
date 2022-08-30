@@ -290,6 +290,7 @@ Route::group(['middleware' => ['auth:api','role:admin']], fn ( ) : array => [
         // Basic
             Route::name('basic.')->prefix('/basic')->group( fn ( ) : array => [
                 Route::get('/collection'                ,   'BasicController@collection'          )  ->name('collection'),
+                Route::get('/{id}/show'                 ,   'BasicController@show'                )->name('show'),
                 Route::post('/{id}/update'              ,   'BasicController@update'              )  ->name('update'),
             ]),
         // Certificates

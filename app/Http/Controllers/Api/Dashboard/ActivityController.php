@@ -31,9 +31,10 @@ class ActivityController extends Controller
         $this->folder_name = 'activity/'.Str::random(10).time();
         $this->related_language = 'activity_id';
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model = $this->ModelRepository->filterAll($request->lesson_id);
+            return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -45,8 +46,8 @@ class ActivityController extends Controller
 
     public function collection(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
-
+            $model = $this->ModelRepository->filterPaginate( $request->lesson_id , $request->PerPage ? $request->PerPage : 10 );
+            return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

@@ -28,9 +28,34 @@ class AvatarController extends Controller
         $this->ModelRepository = $Repository;
         $this->folder_name = 'avatar/'.Str::random(10).time();;
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model = $this->ModelRepository->filterAll(
+                $request->sub_user_id,
+                $request->gender,
+                $request->free,
+                $request->bought
+            );
+            return new ModelCollection (  $model  );
+
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
+    public function collection(Request $request){
+        try {
+            $model =  $this->ModelRepository->filterPaginate(
+                $request->sub_user_id,
+                $request->gender,
+                $request->free,
+                $request->bought,
+                $request->PerPage ? $request->PerPage : 10
+            ) ;             
+            return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -56,20 +81,6 @@ class AvatarController extends Controller
             );
         }
     }
-
-
-    public function collection(Request $request){
-        try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-    
 
     public function destroy($id) {
         try {
