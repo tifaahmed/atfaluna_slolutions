@@ -66,7 +66,7 @@ class LessonResource extends JsonResource
             // 'sub_subject'   => $this->subSubject   ,
             'quiz'       =>   []   ,
             'have_activities' =>$have_activities,
-            'sub_user_accessories' => $sub_user_accessories ,
+            'sub_user_accessories' => json_encode($sub_user_accessories) ,
             'game_data'          => $sub_user_lesson ? $sub_user_lesson->pivot->game_data : null,
 
         ];        

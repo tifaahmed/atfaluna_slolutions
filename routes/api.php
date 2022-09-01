@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
     //  IfSubscription  : if auth user  Subscription  not ended yet 
     //  IfPlayTime      : if child not in play time
 
-Route::group(['middleware' => ['LocalizationMiddleware' , 'role:parent']], fn ( ) : array => [
+Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
 
 
     Route::group(['middleware' => []], fn ( ) : array => [

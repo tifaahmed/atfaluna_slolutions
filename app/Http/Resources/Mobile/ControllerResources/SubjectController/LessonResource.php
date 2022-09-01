@@ -76,8 +76,8 @@ class LessonResource extends JsonResource
             'have_assigments' => $have_assigments ,
 
             'lesson_type'   => new LessonTypeResource (  $this->lesson_type )  ,
-            'lesson_accessories' =>  $this->AccessoryLesson()->get()->pluck('id')->toArray(),
-            'sub_user_accessories' => $sub_user_accessories 
+            'lesson_accessories' =>  json_encode($this->AccessoryLesson()->get()->pluck('id')->toArray()),
+            'sub_user_accessories' =>  json_encode($sub_user_accessories )
 
             
         ];        
