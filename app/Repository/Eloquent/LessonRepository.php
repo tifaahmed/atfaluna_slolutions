@@ -7,6 +7,8 @@ use App\Repository\LessonRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Quiz;
 use App\Models\Sub_user_certificate;
+use App\Models\Sub_user_lesson;
+
 use App\Models\Sub_user;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -108,25 +110,25 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 			// if first time 
 			if ( !$sub_user_lesson ) {
 				$Register_lesson_points = $lesson_points; // subUserLessons table
-				$Register_subject_certificate_points = $subject_subUser_certificate->pivot->points + $lesson_points;
-				$Register_ageAroup_certificate_points = $age_group_subUser_certificate->pivot->points + $lesson_points;
+				$Register_subject_certificate_points =  $lesson_points;
+				$Register_ageAroup_certificate_points =  $lesson_points;
 				$Register_childPoints_points =  $lesson_points;// subUser table
 			}
 			//  child get higher points 
 			else if ($lesson_points > $sub_user_lesson->pivot->points){
 				$deffrence_lesson_points = $lesson_points - $sub_user_lesson->pivot->points;
 
-				$Register_lesson_points =  $sub_user_lesson->pivot->points + $deffrence_lesson_points;  // subUserLessons table
-				$Register_subject_certificate_points = $subject_subUser_certificate->pivot->points + $deffrence_lesson_points;
-				$Register_ageAroup_certificate_points = $age_group_subUser_certificate->pivot->points + $deffrence_lesson_points;
+				$Register_lesson_points =   $deffrence_lesson_points;  // subUserLessons table
+				$Register_subject_certificate_points =  $deffrence_lesson_points;
+				$Register_ageAroup_certificate_points =  $deffrence_lesson_points;
 				$Register_childPoints_points =  $deffrence_lesson_points; // subUser table
 			}
 			//  child get less points 
 			// result do not get any points
 			else if ($lesson_points <= $sub_user_lesson->pivot->points){
-				$Register_lesson_points = $sub_user_lesson->pivot->points ; // subUserLessons table
-				$Register_subject_certificate_points = $subject_subUser_certificate->pivot->points ;
-				$Register_ageAroup_certificate_points = $age_group_subUser_certificate->pivot->points;
+				$Register_lesson_points = 0 ; // subUserLessons table
+				$Register_subject_certificate_points = 0 ;
+				$Register_ageAroup_certificate_points = 0;
 				$Register_childPoints_points = 0 ; // subUser table
 			}
 
@@ -225,7 +227,10 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 				$sub_user_certificate->update(['points' => $sub_user_certificate->points + $points]); 
 			}else{
 				// add only the new point
-				$sub_user->subUserCertificate()->syncWithoutDetaching([$certificate_id => ['points' =>  $points]]);
+				Sub_user_certificate::create([ 
+					'certificate_id' => $certificate_id ,'sub_user_id' => $sub_user->id ,
+					'points' =>  $points
+				]);
 			}
 		}
 
@@ -233,9 +238,25 @@ class LessonRepository extends BaseRepository  implements LessonRepositoryInterf
 		public function gaveChildPoints($sub_user,$points) : void {
 			$points > 0 ? $sub_user->update(['points' => $sub_user->points + $points]) : null;
 		} 
+
 		// run one time only when child watch single lesson 
 		public function attachRegisterLessson($sub_user,$lesson_id,$points,$game_data) : void{
-			$sub_user->subUserLesson()->syncWithoutDetaching( [ $lesson_id => ['points' =>  $points,'game_data' =>  $game_data] ]);
+			$sub_user_lesson = Sub_user_lesson::where('lesson_id',$lesson_id)
+											->where('sub_user_id',$sub_user->id)
+											->first();
+			// if is exist or not add the conection with points
+			if ($sub_user_lesson) {
+				// add new point to the old point 
+				$points > 0 ? $sub_user_lesson()->update([
+					 'points' => $sub_user_lesson->points + $points,'game_data' =>  $game_data
+				]) : null;
+			}else{
+				// add only the new point
+				Sub_user_lesson::create( [ 
+					'lesson_id' => $lesson_id , 'sub_user_id' =>$sub_user->id ,
+					 'points' =>  $points,'game_data' =>  $game_data 
+				]);
+			}
 		}
 		// run one time only when child watch all lesson of the Sub Subject
 		public function attachRegisterSubSubject($sub_user,$sub_subject_id,$points){

@@ -27,12 +27,19 @@ class AvatarRepository extends BaseRepository implements AvatarRepositoryInterfa
 	{
 		$this->model =  $model;
 	}
-	public function filter($sub_user_id,$gender,$free,$bought)  {
+	public function filter($sub_user_id,$gender,$free,$bought,$have_original_skin)  {
 		$model =   $this->model;
-		// to not git any row with no image original in skins table
-		$model = $model->whereHas('skins', function (Builder $query)  {
-			$query->where('original',1);
-		});
+		if ($have_original_skin == '1') {
+			// to not git any row with no image original in skins table
+			$model = $model->whereHas('skins', function (Builder $query)  {
+				$query->where('original',1);
+			});
+		}else if($have_original_skin == '0'){
+			// to not git any row with no image original in skins table
+			$model = $model->whereHas('skins', function (Builder $query)  {
+				$query->where('original','!=',1);
+			});
+		}
 
 		if ($gender) {
 			$model = $model->Gender($gender);
@@ -60,14 +67,14 @@ class AvatarRepository extends BaseRepository implements AvatarRepositoryInterfa
 		return 	$model;
 	}
 
-	public function filterAll($sub_user_id,$gender,$free,$bought)  
+	public function filterAll($sub_user_id,$gender,$free,$bought,$have_original_skin)  
     {
-		$model = $this->filter($sub_user_id,$gender,$free,$bought)  ;
+		$model = $this->filter($sub_user_id,$gender,$free,$bought,$have_original_skin)  ;
 		return $model->get()  ;
     }
-	public function filterPaginate($sub_user_id,$gender,$free,$bought,int $itemsNumber)  
+	public function filterPaginate($sub_user_id,$gender,$free,$bought,$have_original_skin,int $itemsNumber)  
     {
-		$model = $this->filter($sub_user_id,$gender,$free,$bought)  ;
+		$model = $this->filter($sub_user_id,$gender,$free,$bought,$have_original_skin)  ;
 		return $model->paginate($itemsNumber)->appends(request()->query());
 	}
 

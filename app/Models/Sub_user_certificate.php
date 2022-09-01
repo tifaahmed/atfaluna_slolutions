@@ -36,7 +36,10 @@ class Sub_user_certificate extends Model
                 $certificate->certificatable_type == Age_group::class
             ) 
             {
-                $age_group = Age_group::find($certificate->certificatable_id + 1);
+                // next row
+                $age_group_id = Age_group::where('id', '>', $certificate->certificatable_id)->min('id');
+                $age_group = Certificate::find($age_group_id);
+
                 if ($age_group) {
 
                     $sub_user_age_group = $sub_user->subUserAgeGroup()->where('age_group_id',$age_group->id)->first();

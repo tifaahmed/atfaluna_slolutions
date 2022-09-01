@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\Accessory;
+use App\Models\Sub_user;
 
 class AvatarResource extends JsonResource
 {
@@ -37,23 +38,34 @@ class AvatarResource extends JsonResource
             $sub_user_avatar = $this->subUserAvatar()->where('sub_user_id',$sub_user_id)->first();
 
             // can_affort_it or not
-            $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
+            $sub_user =   Sub_user::find($request->sub_user_id);
             if ($sub_user->points > $this->price) {
                 $can_affort_it = 1 ;
             }
 
         }
         
-        //git accessories of this avatar
-        $accessories = null;
+        //git accessories of the Skins of the avatar
         
-        $skin_ids = $this->skins()->pluck('id')->toArray();
-        if ($skin_ids) {
-            $accessories = Accessory::whereHas('AccessorySkin', function (Builder $skin_query) use($skin_ids)  {
-                $skin_query->whereIn('skin_id',$skin_ids);
-            })->get();
-        }
+        $accessory_skin = Accessory::whereHas('AccessorySkin', function (Builder $skin_query)  {
+            $skin_ids = $this->skins()->pluck('id')->toArray();
 
+            $skin_query->whereIn('skin_id',$skin_ids);
+        })->get();
+
+        //git accessories of the sub_user of the Skins of the avatar
+
+        $sub_user_accessories_skin = Accessory::whereHas('SubUserAccessory', function (Builder $skin_query) use($sub_user_id) {
+            $skin_query->where('sub_user_id',$sub_user_id);
+
+        })
+        ->whereHas('AccessorySkin', function (Builder $skin_query)  {
+            $skin_ids = $this->skins()->pluck('id')->toArray();
+
+            $skin_query->whereIn('skin_id',$skin_ids);
+        })->get();
+
+        
         
         return [
             'id'            => $this->id,
@@ -66,7 +78,8 @@ class AvatarResource extends JsonResource
             'avatar_active_skin'   => $active_skin ? new SkinResource($active_skin) : new SkinResource($original_skin),
             'active'        => $sub_user_avatar ? $sub_user_avatar->pivot->active : 0 ,
             'taken'        => $sub_user_avatar ? 1 : 0 ,
-            'avatar_accessories'         => $accessories ?  AccessoryResource::collection($accessories) : []  ,
+            'avatar_accessories'         =>   AccessoryResource::collection($accessory_skin)  ,
+            'sub_user_accessories_skin'         =>   AccessoryResource::collection($sub_user_accessories_skin)   ,
             'can_affort_it' => $can_affort_it
         ];        
     }
