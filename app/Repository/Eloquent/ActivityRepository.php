@@ -7,6 +7,8 @@ use App\Repository\ActivityRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use URL;
 use App\Models\Sub_user_certificate;
+use App\Models\Sub_user_activity;
+use App\Models\Sub_user;
 
 class ActivityRepository extends BaseRepository implements ActivityRepositoryInterface
 {
@@ -43,7 +45,7 @@ class ActivityRepository extends BaseRepository implements ActivityRepositoryInt
 	// handleActivity
 		public function handleActivity($sub_user_id,$activity_id,$percentage,$game_data)  {
 
-			$sub_user =   Auth::user()->sub_user()->find($sub_user_id);
+			$sub_user 	=   Sub_user::find($sub_user_id);
 
 			$activity		=   $this			->findById($activity_id) ;
 			$lesson   		= 	$activity		->lesson()->first(); 
@@ -75,27 +77,27 @@ class ActivityRepository extends BaseRepository implements ActivityRepositoryInt
 			
 			// if first time 
 			if ( !$sub_user_activity ) {
-				$Register_activitie_points = $activity_points;
-				$Register_subject_certificate_points = $subject_subUser_certificate->pivot->points + $activity_points;
-				$Register_ageAroup_certificate_points = $age_group_subUser_certificate->pivot->points + $activity_points;
-				$Register_childPoints_points = $sub_user->points + $activity_points;
+				$Register_activitie_points = 			 $activity_points;
+				$Register_subject_certificate_points = 	 $activity_points;
+				$Register_ageAroup_certificate_points =  $activity_points;
+				$Register_childPoints_points =			 $activity_points;
 			}
 			//  child get higher points 
 			else if ($activity_points > $sub_user_activity->pivot->points){
 				$deffrence_activity_points = $activity_points - $sub_user_activity->pivot->points;
 
-				$Register_activitie_points =  $sub_user_activity->pivot->points + $deffrence_activity_points; 
-				$Register_subject_certificate_points = $subject_subUser_certificate->pivot->points + $deffrence_activity_points;
-				$Register_ageAroup_certificate_points = $age_group_subUser_certificate->pivot->points + $deffrence_activity_points;
-				$Register_childPoints_points = $sub_user->points + $deffrence_activity_points;
+				$Register_activitie_points =  			 $deffrence_activity_points; 
+				$Register_subject_certificate_points = 	 $deffrence_activity_points;
+				$Register_ageAroup_certificate_points =  $deffrence_activity_points;
+				$Register_childPoints_points =			 $deffrence_activity_points;
 			}
 			//  child get less points 
 			// result do not get any points
 			else if ($activity_points <= $sub_user_activity->pivot->points){
-				$Register_activitie_points = $sub_user_activity->pivot->points ;
-				$Register_subject_certificate_points = $subject_subUser_certificate->pivot->points ;
-				$Register_ageAroup_certificate_points = $age_group_subUser_certificate->pivot->points;
-				$Register_childPoints_points = $sub_user->points ;
+				$Register_activitie_points = 			0 ;
+				$Register_subject_certificate_points = 	0 ;
+				$Register_ageAroup_certificate_points = 0;
+				$Register_childPoints_points = 			0 ;
 			}
 
 			// add row in subUserActivities table // attach & register points
@@ -118,14 +120,34 @@ class ActivityRepository extends BaseRepository implements ActivityRepositoryInt
 			$one_persent = $full_points /100;
 			return $one_persent * $percentage;
 		}
-		// run one time only when child watch single lesson 
+
+ 
+
+		// run when child watch single activity 
 		public function attachRegisterActivity($sub_user,$activity_id,$points,$game_data) : void{
-			$sub_user->subUserActivity()->syncWithoutDetaching( [ $activity_id => ['points' =>  $points,'game_data' =>  $game_data] ]);
+			$sub_user_activity = Sub_user_activity::where('activity_id',$activity_id)
+											->where('sub_user_id',$sub_user->id)
+											->first();
+			// if is exist or not add the conection with points
+			if ($sub_user_activity) {
+				// add new point to the old point 
+				$points > 0 ? $sub_user_activity->update([
+					 'points' => $sub_user_activity->points + $points,'game_data' =>  $game_data
+				]) : null;
+			}else{
+				// add only the new point
+				Sub_user_activity::create( [ 
+					'activity_id' => $activity_id , 'sub_user_id' =>$sub_user->id ,
+					 'points' =>  $points,'game_data' =>  $game_data 
+				]);
+			}
 		}
+
 		// run one time when to get activity  points  
 		public function gaveChildPoints($sub_user,$points) : void {
-			$sub_user->update(['points' =>  $points]);
+			$points > 0 ? $sub_user->update(['points' => $sub_user->points + $points]) : null;
 		} 
+
 		// run three time when to get lesson  points & Sub Subject & Subject
 		public function attachRegisterCertificate($sub_user,$points,$certificate_id)  : void{
 			// i use model not conection to use boot on update
@@ -135,8 +157,17 @@ class ActivityRepository extends BaseRepository implements ActivityRepositoryInt
 														->first();
 
 			// if is exist or not add the conection with points
-			// add new point to the old point 
-			$sub_user_certificate->update(['points' => $points]); 
+			if ($sub_user_certificate) {
+				// add new point to the old point 
+				$sub_user_certificate->update(['points' => $sub_user_certificate->points + $points]); 
+			}else{
+				// add only the new point
+				Sub_user_certificate::create([ 
+					'certificate_id' => $certificate_id ,'sub_user_id' => $sub_user->id ,
+					'points' =>  $points
+				]);
+			}
+
 		}
 	// handleActivity
 	

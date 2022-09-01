@@ -30,8 +30,8 @@ class PlayTimeStoreArrayApiRequest extends FormRequest
         for ($i = 0; $i <= 6; $i++) {
             $all += [ 'day.'.$i     =>  [ 'required' ,Rule::in([1,2,3,4,5,6,0]), ] ] ;
             $all += [ 'status.'.$i  =>  [ 'required' , 'boolean' ] ] ;
-            $all += [ 'start.'.$i   =>  [ 'required' , 'date_format:H:i:s' , 'after_or_equal:09:00:00'] ] ;
-            $all += [ 'end.'.$i     =>  [ 'required' , 'date_format:H:i:s' , 'before_or_equal:21:00:00', 'after_or_equal:start.'.$i ] ] ;
+            $all += [ 'start.'.$i   =>  [ 'required' , 'date_format:H:i:s' ] ] ;
+            $all += [ 'end.'.$i     =>  [ 'required' , 'date_format:H:i:s' ] ] ;
         }
         return $all;
 

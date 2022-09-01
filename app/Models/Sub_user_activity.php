@@ -14,6 +14,7 @@ class Sub_user_activity extends Pivot
     public $guarded = ['id'];
 
     protected $table = 'sub_user_activities';
+    public $timestamps = false;
 
     protected $fillable = [
         'sub_user_id',  // integer , unsigned

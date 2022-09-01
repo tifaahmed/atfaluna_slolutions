@@ -13,6 +13,7 @@ class Sub_user_lesson extends Model
     public $guarded = ['id'];
 
     protected $table = 'sub_user_lessons';
+    public $timestamps = false;
 
     protected $fillable = [
         'sub_user_id',  //unsigned
