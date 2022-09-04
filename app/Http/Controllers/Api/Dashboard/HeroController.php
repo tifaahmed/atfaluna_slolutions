@@ -30,22 +30,9 @@ class HeroController extends Controller
         $this->folder_name = 'hero';
         $this->related_language = 'hero_id';
     }
-    public function all(Request $request){
+    public function all(){
         try {
-            $model =  $this->ModelRepository->filterAll($request->sub_user_id) ;
-            return new ModelCollection (  $model )  ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
-    public function collection(Request $request){
-        try {
-            $model = $this->ModelRepository->filterPaginate( $request->sub_user_id , $request->PerPage ? $request->PerPage : 10)  ;
-            return new ModelCollection (  $model )  ;
+            return new ModelCollection (  $this->ModelRepository->all() )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -77,6 +64,19 @@ class HeroController extends Controller
         }
     }
 
+    public function collection(Request $request){
+        try {
+            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
+
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
+    
     public function destroy($id) {
         try {
             return $this -> MakeResponseSuccessful( 

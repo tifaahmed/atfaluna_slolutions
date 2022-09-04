@@ -29,8 +29,6 @@ class Accessory extends Model
     ];
     //relation
 
-
-
         // HasMany
         public function accessory_languages(){
             return $this->HasMany(Accessory_language::class);
@@ -40,7 +38,6 @@ class Accessory extends Model
         public function BodySuit(){
             return $this->belongsTo(BodySuit::class,'body_suit_id');
         }
-
 
         // belongsToMany
         public function SubUserAccessory(){

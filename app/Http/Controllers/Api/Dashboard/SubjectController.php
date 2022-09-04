@@ -31,9 +31,10 @@ class SubjectController extends Controller
         $this->related_language = 'subject_id';
         $this->notification_image_name = 'image';
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model =  $this->ModelRepository->filterAll($request->sub_user_id,$request->age_group_id) ;
+            return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -44,10 +45,9 @@ class SubjectController extends Controller
     }
 
     public function collection(Request $request){
-        // return $request->language;
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
-
+            $model =  $this->ModelRepository->filterPaginate($request->sub_user_id,$request->age_group_id,$request->PerPage ? $request->PerPage : 10) ;
+                return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
