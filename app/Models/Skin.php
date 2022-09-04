@@ -22,7 +22,6 @@ class Skin extends Model
 
     protected $fillable = [
         'image',//required, max:5000
-        'price',//unsignedDecimal
         'original',
         'avatar_id',
 

@@ -24,10 +24,9 @@ class AvatarUpdateApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'type'=>[
-                'required',
-                Rule::in(['boy', 'girl','both']),
-            ],
+            'type'             =>  ['required', Rule::in(['boy', 'girl' , 'both'])],
+            'price'            =>  [ 'required' ,'numeric','between:0,9999.99']  ,
+            'name'            =>   [ 'required'] 
 
         ];
     }
