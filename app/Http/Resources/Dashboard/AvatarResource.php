@@ -18,9 +18,10 @@ class AvatarResource extends JsonResource
     {
         return [
             'id'           => $this->id,
+            'name'         =>  $this->name,
             'type'         =>  $this->type,
-            'price'         =>  $this->price,
-            'skins'         =>  SkinResource::collection($this->skins),
+            'price'        =>  $this->price,
+            'skins'        =>  SkinResource::collection($this->skins),
 
             'created_at'   => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'   => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

@@ -29,7 +29,6 @@ class SkinUpdateApiRequest extends FormRequest
 
         $all=[];
         $all += [ 'image'            =>  [ 'required' ,'max:50000'] ]  ;
-        $all += [ 'price'            =>  [ 'required' ,'numeric','between:0,9999.99'] ]  ;
         $all += [ 'original'         =>  [ 'required'  , 'boolean'] ]  ;
         $all += [ 'avatar_id'        =>  [ 'required' ,'integer','exists:avatars,id'] ]  ;
 

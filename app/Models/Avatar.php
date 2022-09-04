@@ -19,6 +19,7 @@ class Avatar extends Model
 
     protected $fillable = [
         'type',// enum ,['girl','boy','both']
+        'name',//
         'price',//unsignedDecimal
     ];
     // scope
