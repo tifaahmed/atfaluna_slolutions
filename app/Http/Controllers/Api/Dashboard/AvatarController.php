@@ -34,7 +34,8 @@ class AvatarController extends Controller
                 $request->sub_user_id,
                 $request->gender,
                 $request->free,
-                $request->bought
+                $request->bought,
+                $request->have_original_skin
             );
             return new ModelCollection (  $model  );
 
@@ -53,6 +54,7 @@ class AvatarController extends Controller
                 $request->gender,
                 $request->free,
                 $request->bought,
+                $request->have_original_skin,
                 $request->PerPage ? $request->PerPage : 10
             ) ;             
             return new ModelCollection ( $model )  ;
