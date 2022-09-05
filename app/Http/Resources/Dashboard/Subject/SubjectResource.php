@@ -39,7 +39,7 @@ class SubjectResource extends JsonResource
 
             'age_group'     => $this->age_group,
 
-            'sub_subjects'        => new SubSubjectCollection  ($this->sub_subjects),
+            'sub_subjects'  => new SubSubjectCollection  ($this->sub_subjects),
 
             'certification' => new CertificateResource (  $this->certificate )  ,
 
