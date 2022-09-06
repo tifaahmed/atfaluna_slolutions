@@ -31,7 +31,7 @@ class AboutUsUpdateApiRequest extends FormRequest
             'image_four'    =>  ['required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ,
             'title'         =>  ['required']  ,
             'subject'       =>  ['required']  ,
-            'language'      =>  ['required'   , 'unique:about_us,language' ,'exists:languages,name']  ,
+            'language'      =>  ['required'   , 'exists:languages,name']  ,
 
         ];
     }

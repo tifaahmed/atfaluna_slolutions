@@ -27,7 +27,7 @@ class AboutUsApiRequest extends FormRequest
         return [
             'image_one'     =>  ['required','max:50000','mimes:jpg,jpeg,webp,bmp,png'] ,
             'image_two'     =>  ['required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png' ],
-            'image_three'   =>  [ 'required','max:50000','mimes:jpg,jpeg,webp,bmp,png']  ,
+            'image_three'   =>  ['required','max:50000','mimes:jpg,jpeg,webp,bmp,png']  ,
             'image_four'    =>  ['required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ,
             'title'         =>  ['required']  ,
             'subject'       =>  ['required']  ,
