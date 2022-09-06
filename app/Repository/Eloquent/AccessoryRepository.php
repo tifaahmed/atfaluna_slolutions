@@ -46,4 +46,22 @@ class AccessoryRepository extends BaseRepository implements AccessoryRepositoryI
 			return 'success';
 		}
 	}
+	public function filter($gender)  {
+		$model =   $this->model;
+		if ($gender) {
+			$model = $model->Gender($gender);
+		}
+		return 	$model;
+	}
+
+	public function filterAll($gender)  
+    {
+		$model = $this->filter($gender)  ;
+		return $model->get()  ;
+    }
+	public function filterPaginate($gender,int $itemsNumber)  
+    {
+		$model = $this->filter($gender)  ;
+		return $model->paginate($itemsNumber)->appends(request()->query());
+	}
 }

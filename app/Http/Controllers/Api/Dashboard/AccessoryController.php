@@ -31,9 +31,10 @@ use Illuminate\Support\Str;
             $this->folder_name = 'accessory/'.Str::random(10).time();;
             $this->related_language = 'accessory_id';
         }
-        public function all(){
+        public function all(Request $request){
             try {
-                return $modal = new ModelCollection (  $this->ModelRepository->all() )  ;
+                $model = $this->ModelRepository->filterAll($request->gender);
+                return new ModelCollection ( $model )  ;
             } catch (\Exception $e) {
                 return $this -> MakeResponseErrors(  
                     [$e->getMessage()  ] ,
@@ -42,7 +43,19 @@ use Illuminate\Support\Str;
                 );
             }
         }
-
+    
+        public function collection(Request $request){
+            try {
+                $model = $this->ModelRepository->filterPaginate( $request->gender , $request->PerPage ? $request->PerPage : 10 );
+                return new ModelCollection ( $model )  ;
+            } catch (\Exception $e) {
+                return $this -> MakeResponseErrors(  
+                    [$e->getMessage()  ] ,
+                    'Errors',
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+        }
         public function store(modelInsertRequest $request) {
             try {
                 $all = [ ];
@@ -74,18 +87,6 @@ use Illuminate\Support\Str;
                     [$e->getMessage()  ] ,
                     'Errors',
                     Response::HTTP_BAD_REQUEST
-                );
-            }
-        }
-        public function collection(Request $request){
-            try {
-                return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
-
-            } catch (\Exception $e) {
-                return $this -> MakeResponseErrors(  
-                    [$e->getMessage()  ] ,
-                    'Errors',
-                    Response::HTTP_NOT_FOUND
                 );
             }
         }
