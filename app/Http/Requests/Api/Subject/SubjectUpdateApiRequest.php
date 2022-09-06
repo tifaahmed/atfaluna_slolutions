@@ -43,7 +43,7 @@ class SubjectUpdateApiRequest extends FormRequest
 
         // subject      
         $all += [ 'image'           =>  [ 'required' ,'max:5000','mimes:jpg,jpeg,webp,bmp,png' ] ] ;
-        $all += [ 'points'          =>  [ 'required' ,'integer' ] ]  ;
+        $all += [ 'points'          =>  [ 'sometimes' ,'integer' ] ]  ;
 
         // subject_languages
         foreach ($Languages as $key => $value) {

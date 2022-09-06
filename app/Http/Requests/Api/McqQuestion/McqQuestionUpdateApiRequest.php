@@ -26,7 +26,7 @@ class McqQuestionUpdateApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
-        $all += [ 'image'           =>  [ 'sometimes' ,'max:50000'] ]  ;
+        $all += [ 'image'           =>  [ 'required' ,'max:50000'] ]  ;
         $all += [ 'question_tag_ids'  =>  [ 'sometimes' ,'array','exists:question_tags,id'] ]  ;
 
         foreach ($Languages as $key => $value) {
