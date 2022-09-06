@@ -26,9 +26,10 @@ class AccessoryController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-    public function all(){
+    public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            $model = $this->ModelRepository->filterAll($request->gender);
+            return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -37,11 +38,11 @@ class AccessoryController extends Controller
             );
         }
     }
-    public function collection(Request $request){
-        // return $request->language;
-        try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
 
+    public function collection(Request $request){
+        try {
+            $model = $this->ModelRepository->filterPaginate( $request->gender , $request->PerPage ? $request->PerPage : 10 );
+            return new ModelCollection ( $model )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

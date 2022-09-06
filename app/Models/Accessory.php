@@ -28,7 +28,12 @@ class Accessory extends Model
         'body_suit_id'
     ];
     //relation
-
+// scope
+        public function scopeGender($query,$gender){
+            if($gender){
+                return $query->where('gender', $gender);
+            }
+        }
         // HasMany
         public function accessory_languages(){
             return $this->HasMany(Accessory_language::class);
