@@ -31,8 +31,8 @@ class AvatarResource extends JsonResource
         $can_affort_it = 0 ;
         if ($sub_user_id) {
 
-            // git sub_user active skin
-            $active_skin = $this->skins()->ActiveSkin($sub_user_id)->first();
+
+            $active_skin = $this->skins()->ActiveSkin($sub_user_id)->get();
 
             // taken or not
             $sub_user_avatar = $this->subUserAvatar()->where('sub_user_id',$sub_user_id)->first();
@@ -70,12 +70,12 @@ class AvatarResource extends JsonResource
         return [
             'id'            => $this->id,
             'type'          =>  $this->type,
-            'price'         =>  $this->price,
+            'price'         =>  $this->price ? $this->price : 0,
             
             'avatar_original_skin'          => new SkinResource($original_skin) ,
             'avatar_not_original_skin'      => SkinResource::collection($not_original_skin) ,
 
-            'avatar_active_skin'   => $active_skin ? new SkinResource($active_skin) : new SkinResource($original_skin),
+            'avatar_active_skin'   => $active_skin,
             'active'        => $sub_user_avatar ? $sub_user_avatar->pivot->active : 0 ,
             'taken'        => $sub_user_avatar ? 1 : 0 ,
             'avatar_accessories'         =>   AccessoryResource::collection($accessory_skin)  ,

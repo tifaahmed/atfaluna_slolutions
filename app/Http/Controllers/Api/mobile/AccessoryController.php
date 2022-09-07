@@ -87,6 +87,8 @@ class AccessoryController extends Controller
             );
         }
     }
+
+
     public function toggle(MobileAccessoryApiRequest $request){
         $sub_user_id = $request->sub_user_id;
         $accessory_id = $request->accessory_id;
@@ -99,7 +101,6 @@ class AccessoryController extends Controller
             if ($sub_user_accessory->pivot->active) {
                 $sub_user_accessory->pivot->update(['active'=> 0]);
             }else{
-
                 $sub_user_accessory->pivot->update(['active'=> 1]);
 
                 
@@ -115,9 +116,11 @@ class AccessoryController extends Controller
                         $query->where('active',1);
                     })
                     ->whereHas('BodySuit', function (Builder $BodySuit_query) use($new_human_parts_ids)  {
+
                         $BodySuit_query->whereHas('bodySuit_humanParts', function (Builder $humanParts_query) use($new_human_parts_ids){
                             $humanParts_query->whereIn('human_part_id',$new_human_parts_ids);
                         });
+                        
                     })
                     ->get();
         
