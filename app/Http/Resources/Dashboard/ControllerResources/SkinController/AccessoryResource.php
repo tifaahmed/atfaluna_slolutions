@@ -4,8 +4,6 @@ namespace App\Http\Resources\Dashboard\ControllerResources\SkinController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Resources\Dashboard\ControllerResources\SkinController\ActivityResource;
-use App\Http\Resources\Dashboard\ControllerResources\SkinController\LessonResource;
 
 class AccessoryResource extends JsonResource
 {

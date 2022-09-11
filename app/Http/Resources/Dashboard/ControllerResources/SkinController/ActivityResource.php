@@ -5,8 +5,6 @@ namespace App\Http\Resources\Dashboard\ControllerResources\SkinController;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
-
-
 class ActivityResource extends JsonResource
 {
     /**
@@ -23,6 +21,7 @@ class ActivityResource extends JsonResource
             'id'            => $this->id,    
 
             'name'          => $row ? $row->name:'',
+    
             'image'        => $row && $row->image_two &&  Storage::disk('public')->exists($row->image_two)   ?   asset(Storage::url($row->image_two)) :null ,  
 
             'points'        => $this->points ,

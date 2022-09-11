@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\ControllerResources\SubjectController;
+namespace App\Http\Resources\Dashboard\ControllerResources\SubSubjectController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
-class SubSubjectResource extends JsonResource
+class SubjectResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,18 +15,18 @@ class SubSubjectResource extends JsonResource
      */
     public function toArray($request)
     {
-        $row=$this->subSubject_languages()->Localization()->RelatedLanguage($this->id)->first();
+        $row = $this->subject_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'            => $this->id,
 
+            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
+            
             'name'          => $row ? $row->name:'',
 
             'points'        => $this->points,
-            
-            'image_two'     => $row && $row->image_two &&  Storage::disk('public')->exists($row->image_two)   ?   asset(Storage::url($row->image_two)) :null ,  
 
         ];        
     }
 }
-//
+

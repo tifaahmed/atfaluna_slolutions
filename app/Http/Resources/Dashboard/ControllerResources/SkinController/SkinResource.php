@@ -6,8 +6,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Dashboard\SkinLanguageResource ;
 use App\Http\Resources\Dashboard\ControllerResources\SkinController\AccessoryResource;
-
-// use App\Http\Resources\Dashboard\Collections\AccessoryCollection;
 class SkinResource extends JsonResource
 {
     /**

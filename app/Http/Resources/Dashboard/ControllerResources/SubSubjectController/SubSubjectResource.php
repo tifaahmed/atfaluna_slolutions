@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\SubSubject;
+namespace App\Http\Resources\Dashboard\ControllerResources\SubSubjectController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Dashboard\Collections\SubSubject\SubSubjectLanguagesCollection;
-use App\Http\Resources\Dashboard\Collections\Lesson\LessonCollection;
-use App\Http\Resources\Dashboard\Collections\Skill\SkillCollection ;
-use App\Http\Resources\Dashboard\SoundsResource;
-
-use App\Http\Resources\Dashboard\Quiz\QuizResource;
+use App\Http\Resources\Dashboard\ControllerResources\SubSubjectController\LessonResource;
+use App\Http\Resources\Dashboard\ControllerResources\SubSubjectController\QuizResource;
+use App\Http\Resources\Dashboard\ControllerResources\SubSubjectController\SkillResource;
+use App\Http\Resources\Dashboard\ControllerResources\SubSubjectController\SubjectResource;
 
 class SubSubjectResource extends JsonResource
 {
@@ -25,15 +23,21 @@ class SubSubjectResource extends JsonResource
 
         return [
             'id'            => $this->id,
+
             'name'          => $row ? $row->name:'',
+
             'points'        => $this->points,
         
             'languages'     => new SubSubjectLanguagesCollection ( $this->subSubject_languages ),
-            'subject'       => $this->subject   ,
-            'lessons'       => new LessonCollection ($this->lessons),
-            'quiz'          =>   new QuizResource ($this->quiz)   ,
-            'skills'        => new SkillCollection($this->skills),
-            // 'sound'          => SoundsResource::collection($this->sound),
+
+            'lessons'  => LessonResource::collection($this->lessons),
+
+            'skills'   => SkillResource::collection($this->skills),
+
+            'quiz'     =>   new QuizResource ($this->quiz)   ,
+
+            'subject'  =>   new SubjectResource ($this->subject)   ,
+
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
