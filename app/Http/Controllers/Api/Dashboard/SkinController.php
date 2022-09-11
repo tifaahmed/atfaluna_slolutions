@@ -12,13 +12,15 @@ use Illuminate\Support\Str;
 use App\Http\Requests\Api\Skin\SkinApiRequest as modelInsertRequest;
 use App\Http\Requests\Api\Skin\SkinUpdateApiRequest as modelUpdateRequest;
 
-// Resources
-use App\Http\Resources\Dashboard\Collections\SkinCollection as ModelCollection;
-use App\Http\Resources\Dashboard\SkinResource as ModelResource;
-
 // lInterfaces
 use App\Repository\SkinRepositoryInterface as ModelInterface;
 use App\Repository\SkinLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages
+
+ // Resources
+    // use App\Http\Resources\Dashboard\Collections\AccessoryCollection as ModelCollection;
+    use App\Http\Resources\Dashboard\Collections\ControllerResources\SkinController\SkinCollection as ModelCollection;
+    use App\Http\Resources\Dashboard\ControllerResources\SkinController\SkinResource as ModelResource;
+
 
 class SkinController extends Controller
 {

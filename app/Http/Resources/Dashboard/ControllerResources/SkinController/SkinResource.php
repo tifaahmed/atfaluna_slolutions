@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Resources\Dashboard;
+namespace App\Http\Resources\Dashboard\ControllerResources\SkinController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-// use App\Http\Resources\Dashboard\AvatarResource;
 use App\Http\Resources\Dashboard\SkinLanguageResource ;
-use App\Http\Resources\Dashboard\AccessoryResource;
+use App\Http\Resources\Dashboard\ControllerResources\SkinController\AccessoryResource;
 
 // use App\Http\Resources\Dashboard\Collections\AccessoryCollection;
-
 class SkinResource extends JsonResource
 {
     /**
@@ -31,15 +29,10 @@ class SkinResource extends JsonResource
 
             'original'      =>  $this->original,
 
-            // 'languages'     => $this->skin_languages,
-
-            // 'accessory_skin'  => AccessoryResource::collection($this->accessorySkins) , 
+            'accessory_skin'  => AccessoryResource::collection($this->accessorySkins) , 
 
             'languages'     => SkinLanguageResource::collection( $this->skin_languages ),
 
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
 
         ];        
     }

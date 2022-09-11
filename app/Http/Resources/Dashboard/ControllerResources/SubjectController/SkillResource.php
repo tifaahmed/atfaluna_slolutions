@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\Skill;
+namespace App\Http\Resources\Dashboard\ControllerResources\SubjectController;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -22,7 +22,6 @@ class SkillResource extends JsonResource
             'id'            => $this->id,
             'name'          => $row ? $row->name:'',
             'image_two'     => $row && $row->image_two &&  Storage::disk('public')->exists($row->image_two)   ?   asset(Storage::url($row->image_two)) :null ,  
-            'languages'     => SkillLanguagesResource::collection ( $this->skill_languages ),
         ];        
     }
 }

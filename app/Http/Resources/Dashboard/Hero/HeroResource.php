@@ -4,6 +4,8 @@ namespace App\Http\Resources\Dashboard\Hero;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Dashboard\Collections\Lesson\LessonCollection;
+use App\Http\Resources\Dashboard\Lesson\LessonResource;
+use Illuminate\Support\Facades\Storage;
 
 use App\Http\Resources\Dashboard\Collections\Hero\HeroLanguagesCollection;
 
@@ -29,8 +31,9 @@ class HeroResource extends JsonResource
             'languages'     => new HeroLanguagesCollection ( $this->hero_languages ),
 
             'title'          => $row ? $row->title:'',
-            
-            'lessons'        => new LessonCollection ($this->herolesson)  ,
+
+            // 'lessons'        => new LessonCollection ($this->herolesson)  ,
+            'hero_lesson'     => LessonResource::collection($this->herolesson)  ,
 
         ];        
     }
