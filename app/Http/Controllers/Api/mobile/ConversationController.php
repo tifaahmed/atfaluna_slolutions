@@ -66,8 +66,14 @@ class ConversationController extends Controller
         try {
 
             if ($request->type == 'single'  ) {
-                $checkExist =  $this->ModelRepository->checkExist($request->sub_user_id,$request->recevier_ids,$request->type);
+                 $checkExist =  $this->ModelRepository->checkExist($request->sub_user_id,$request->recevier_ids,$request->type);
                     $model = $checkExist->count() ? $checkExist : null ;
+                    if ( !$checkExist->count() ) {
+                        $model =  $this->ModelRepository->create( Request()->all() )  ;
+                        $model -> group_chats()->create(['recevier_id'=>$request->recevier_ids[0]]);
+                    }
+                    
+
             }else{
                 $model = $this->ModelRepository->create( Request()->all() );
                 foreach ($request->recevier_ids as $key => $value) {

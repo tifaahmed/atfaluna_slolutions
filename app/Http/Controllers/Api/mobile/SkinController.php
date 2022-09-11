@@ -31,7 +31,7 @@ class SkinController extends Controller
     
     public function all(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
+            return new ModelCollection (  $this->ModelRepository->filterAll($request->original) )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -43,7 +43,7 @@ class SkinController extends Controller
 
     public function collection(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
+            return new ModelCollection (  $this->ModelRepository->filterPaginate($request->original,$request->PerPage ? $request->PerPage : 10) )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,

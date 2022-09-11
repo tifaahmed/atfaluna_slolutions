@@ -27,40 +27,27 @@ class SkinRepository extends BaseRepository implements SkinRepositoryInterface
 	{
 		$this->model =  $model;
 	}
-	// public function filterAll($free,$sub_user_id)  
-    // {
-	// 	$result = null ;
-
-	// 	if ($sub_user_id) {
-	// 		$sub_user       = Auth::user()->sub_user()->find($sub_user_id);
-	// 		$sub_user_skins =  $sub_user->subUserSkin()->get();	
-	// 		$result = $this->model->merge( $sub_user_skins );
-	// 	}
-
-	// 	else{
-	// 		return $this->all()  ;
-	// 	}	
-    // }
-	// public function filterPaginate($free,$sub_user_id,int $itemsNumber)  
-    // {
-		
-	// 	$result = new Collection() ;
-
-	// 	if ($sub_user_id) {
-	// 		$sub_user       = Auth::user()->sub_user()->find($sub_user_id);
-	// 		$sub_user_skins =  $sub_user->subUserSkin()->get();	
-	// 		$result = $this->model->merge( $sub_user_skins );
-	// 	}
 
 
-	// 	if (!$result->count()) {
-	// 		return $result = $this->collection( $itemsNumber)  ;
-	// 	}else{
-	// 		return $this->paginate($result,$itemsNumber,null,URL::full());
-	// 	}
-		
-
-    // }
+	public function filter($original)  {
+		$model =   $this->model;
+		if($original){
+			$model = $model->Original() ;
+		}else if ($original == '0' ){
+			$model = $model->NotOriginal() ;
+		}
+		return 	$model;
+	}
+	public function filterAll($original)  
+    {
+		$model = $this->filter($original)  ;
+		return $model->get();
+	}
+	public function filterPaginate($original,$itemsNumber)  
+    {
+		$model = $this->filter($original)  ;
+		return $model->paginate($itemsNumber)->appends(request()->query());
+    }
 
 
 

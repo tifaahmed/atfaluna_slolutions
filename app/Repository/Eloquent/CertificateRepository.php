@@ -49,8 +49,7 @@ class CertificateRepository extends BaseRepository implements CertificateReposit
 					}
 				}
 			);
-		}
-		if ($type == 'subject') {
+		}else if ($type == 'subject') {
 			$model = $model->whereHasMorph(
 				'certificatable',
 				Subject::class,
@@ -61,8 +60,10 @@ class CertificateRepository extends BaseRepository implements CertificateReposit
 					}
 				}
 			);
+		}else if ($type == 'empty') {
+			$model = $model->where('certificatable_id',null);
 		}
-		return 	$model;
+			return 	$model;
 	}
 
 	
