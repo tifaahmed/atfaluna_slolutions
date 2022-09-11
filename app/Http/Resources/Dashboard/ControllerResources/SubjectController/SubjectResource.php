@@ -10,6 +10,7 @@ use App\Http\Resources\Dashboard\ControllerResources\SubjectController\Certifica
 use App\Http\Resources\Dashboard\ControllerResources\SubjectController\QuizResource;
 use App\Http\Resources\Dashboard\ControllerResources\SubjectController\SubSubjectResource;
 use App\Http\Resources\Dashboard\ControllerResources\SubjectController\SkillResource;
+use App\Http\Resources\Dashboard\ControllerResources\SubjectController\AgeGroupResource;
 
 
 class SubjectResource extends JsonResource
@@ -31,7 +32,8 @@ class SubjectResource extends JsonResource
             'name'          => $row ? $row->name:'',
             'languages'     => SubjectLanguagesResource::collection( $this->subject_languages),
 
-            'age_group'     => $this->age_group,
+            // 'age_group'     => $this->age_group,
+            'age_group'          =>   new AgeGroupResource ( $this->age_group )   ,
 
             'certificate'          =>   new CertificateResource ( $this->certificate )   ,
 
