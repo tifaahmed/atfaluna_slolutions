@@ -12,8 +12,10 @@ use App\Http\Requests\Api\Subject\SubjectApiRequest as modelInsertRequest;
 use App\Http\Requests\Api\Subject\SubjectUpdateApiRequest as modelUpdateRequest;
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\SubjectCollection as ModelCollection;
-use App\Http\Resources\Dashboard\Subject\SubjectResource as ModelResource;
+// use App\Http\Resources\Dashboard\Collections\SubjectCollection as ModelCollection;
+// use App\Http\Resources\Dashboard\Subject\SubjectResource as ModelResource;
+use App\Http\Resources\Dashboard\Collections\ControllerResources\SubjectController\SubjectCollection as ModelCollection;
+use App\Http\Resources\Dashboard\ControllerResources\SubjectController\SubjectResource as ModelResource;
 
 // lInterfaces
 use App\Repository\SubjectRepositoryInterface as ModelInterface;

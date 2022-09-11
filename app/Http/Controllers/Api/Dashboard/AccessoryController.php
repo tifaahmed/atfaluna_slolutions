@@ -12,8 +12,9 @@ use Illuminate\Support\Str;
     use App\Http\Requests\Api\Accessory\AccessoryUpdateApiRequest as modelUpdateRequest;
 
     // Resources
-    use App\Http\Resources\Dashboard\Collections\AccessoryCollection as ModelCollection;
-    use App\Http\Resources\Dashboard\AccessoryResource as ModelResource;
+    // use App\Http\Resources\Dashboard\Collections\AccessoryCollection as ModelCollection;
+    use App\Http\Resources\Dashboard\Collections\ControllerResources\AccessoryController\AccessoryCollection as ModelCollection;
+    use App\Http\Resources\Dashboard\ControllerResources\AccessoryController\AccessoryResource as ModelResource;
 
 
     // lInterfaces
@@ -33,7 +34,7 @@ use Illuminate\Support\Str;
         }
         public function all(Request $request){
             try {
-                $model = $this->ModelRepository->filterAll($request->gender);
+                $model = $this->ModelRepository->filterAll($request->gender );
                 return new ModelCollection ( $model )  ;
             } catch (\Exception $e) {
                 return $this -> MakeResponseErrors(  
@@ -56,6 +57,7 @@ use Illuminate\Support\Str;
                 );
             }
         }
+
         public function store(modelInsertRequest $request) {
             try {
                 $all = [ ];

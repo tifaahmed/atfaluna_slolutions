@@ -28,15 +28,14 @@ class QuizResource extends JsonResource
         return [
             'id'            => $this->id,
             'points'        => $this->points,
-
+            'minimum_requirements'        => $this->minimum_requirements,
+            'name'          => $row ? $row->name:'',
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
             'languages'     => new QuizLanguagesCollection  ($this->quiz_languages) ,
-            'name'          => $row ? $row->name:'',
 
-            
             'quiz_type'   => new QuizTypeResource (  $this->quiz_type )  ,
 
             'mcq_questions'          =>  McqQuestionResource::collection ($this->mcq_questions)  ,

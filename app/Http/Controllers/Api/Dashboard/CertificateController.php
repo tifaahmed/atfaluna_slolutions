@@ -13,8 +13,10 @@ use App\Http\Requests\Api\Certificate\CertificateApiRequest as modelInsertReques
 use App\Http\Requests\Api\Certificate\CertificateUpdateApiRequest as modelUpdateRequest;
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\CertificateCollection as ModelCollection;
-use App\Http\Resources\Dashboard\CertificateResource as ModelResource;
+// use App\Http\Resources\Dashboard\Collections\CertificateCollection as ModelCollection;
+// use App\Http\Resources\Dashboard\CertificateResource as ModelResource;
+use App\Http\Resources\Dashboard\Collections\ControllerResources\CertificateController\CertificateCollection as ModelCollection;
+use App\Http\Resources\Dashboard\ControllerResources\CertificateController\CertificateResource as ModelResource;
 
 // lInterfaces
 use App\Repository\CertificateRepositoryInterface as ModelInterface;
