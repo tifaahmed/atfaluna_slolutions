@@ -18,10 +18,15 @@ class SubUserResource extends JsonResource
     {
         return [
             'id'            => $this->id,
+
             'name'          => $this->name,
+
             'age'           => $this->age,
+
             'gender'        => $this->gender,
+
             'points'        => $this->points,
+            
             'user'          =>  $this->user ,
 
             'play_time'  =>  PlayTimeResource::collection($this->playTime()->orderBy('id')->get())  ,

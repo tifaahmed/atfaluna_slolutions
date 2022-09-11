@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\ControllerResources\SubjectController;
+namespace App\Http\Resources\Dashboard\ControllerResources\SubSubjectController;
 
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SkillResource extends JsonResource
+class QuizResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,14 +14,11 @@ class SkillResource extends JsonResource
      */
     public function toArray($request)
     {
-    $row=$this->skill_languages()->Localization()->RelatedLanguage($this->id)->first();
+        $row=$this->quiz_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'            => $this->id,
-
             'name'          => $row ? $row->name:'',
-            
-            'image_two'     => $row && $row->image_two &&  Storage::disk('public')->exists($row->image_two)   ?   asset(Storage::url($row->image_two)) :null ,  
         ];        
     }
 }

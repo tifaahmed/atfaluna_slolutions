@@ -12,9 +12,10 @@ use App\Http\Requests\Api\Hero\HeroApiRequest as modelInsertRequest;
 use App\Http\Requests\Api\Hero\HeroUpdateApiRequest as modelUpdateRequest;
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\Hero\HeroCollection as ModelCollection;
-use App\Http\Resources\Dashboard\Hero\HeroResource as ModelResource;
-
+// use App\Http\Resources\Dashboard\Collections\Hero\HeroCollection as ModelCollection;
+// use App\Http\Resources\Dashboard\Hero\HeroResource as ModelResource;
+use App\Http\Resources\Dashboard\Collections\ControllerResources\HeroController\HeroCollection as ModelCollection;
+use App\Http\Resources\Dashboard\ControllerResources\HeroController\HeroResource as ModelResource;
 // lInterfaces
 use App\Repository\HeroRepositoryInterface as ModelInterface;
 use App\Repository\HeroLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages

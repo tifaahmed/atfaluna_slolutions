@@ -10,8 +10,6 @@ use App\Http\Resources\Dashboard\ControllerResources\SubjectController\Certifica
 use App\Http\Resources\Dashboard\ControllerResources\SubjectController\QuizResource;
 use App\Http\Resources\Dashboard\ControllerResources\SubjectController\SubSubjectResource;
 use App\Http\Resources\Dashboard\ControllerResources\SubjectController\SkillResource;
-// use App\Http\Resources\Dashboard\Collections\SubSubject\SubSubjectCollection;
-use App\Http\Resources\Dashboard\Collections\ControllerResources\SubjectController\SkillCollection ;
 
 
 class SubjectResource extends JsonResource
@@ -39,13 +37,9 @@ class SubjectResource extends JsonResource
 
             'sub_subjects'  => SubSubjectResource::collection($this->sub_subjects),
 
-            'skills'     => $this->skills,
+            'skills'   => SkillResource::collection($this->skills),
 
             'quiz'          =>   new QuizResource ( $this->quiz )   ,
-
-            // 'quiz'  => QuizResource::collection($this->quiz),
-
-            // 'quiz'     => $this->quiz,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\ControllerResources\SkinController;
+namespace App\Http\Resources\Dashboard\ControllerResources\SubSubjectController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;

@@ -12,9 +12,10 @@ use App\Http\Requests\Api\Lesson\LessonApiRequest as modelInsertRequest;
 use App\Http\Requests\Api\Lesson\LessonUpdateApiRequest as modelUpdateRequest;
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\Lesson\LessonCollection as ModelCollection;
-use App\Http\Resources\Dashboard\Lesson\LessonResource as ModelResource;
-
+// use App\Http\Resources\Dashboard\Collections\Lesson\LessonCollection as ModelCollection;
+// use App\Http\Resources\Dashboard\Lesson\LessonResource as ModelResource;
+use App\Http\Resources\Dashboard\Collections\ControllerResources\LessonController\LessonCollection as ModelCollection;
+use App\Http\Resources\Dashboard\ControllerResources\LessonController\LessonResource as ModelResource;
 // lInterfaces
 use App\Repository\LessonRepositoryInterface as ModelInterface;
 use App\Repository\LessonLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages

@@ -13,8 +13,10 @@ use App\Http\Requests\Api\Avatar\AvatarApiRequest as modelInsertRequest;
 use App\Http\Requests\Api\Avatar\AvatarUpdateApiRequest as modelUpdateRequest;
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\AvatarCollection as ModelCollection;
-use App\Http\Resources\Dashboard\AvatarResource as ModelResource;
+// use App\Http\Resources\Dashboard\Collections\AvatarCollection as ModelCollection;
+// use App\Http\Resources\Dashboard\AvatarResource as ModelResource;
+use App\Http\Resources\Dashboard\Collections\ControllerResources\AvatarController\AvatarCollection as ModelCollection;
+use App\Http\Resources\Dashboard\ControllerResources\AvatarController\AvatarResource as ModelResource;
 
 // lInterfaces
 use App\Repository\AvatarRepositoryInterface as ModelInterface;
