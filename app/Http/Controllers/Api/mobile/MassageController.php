@@ -27,27 +27,22 @@ class MassageController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-    public function all(){
-        try {
-            return new ModelCollection (  $this->ModelRepository->all() )  ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [$e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
 
-    public function store(modelInsertRequest $request) {
-        try {
 
-            if ($request->massagable_type == 'hero') {
-                $class = Hero::class;
-            }else if($request->massagable_type == 'image'){
-                $class = Massage_image::class;
-            }else if($request->massagable_type == 'avatar'){
-                $class = Avatar::class;
+    public function store(Request $request) {
+        try {
+            switch ($request->massagable_type) {
+                case 'hero':
+                    $class = Hero::class;
+                    break;
+                case 'image':
+                    $class = Massage_image::class;
+                    break;
+                case 'avatar':
+                    $class = Avatar::class;
+                    break;
+                default:
+                    $class = '';
             }
             $all = [];
             $all += Request()->all()   ;
@@ -67,10 +62,26 @@ class MassageController extends Controller
             );
         }
     }
-
+    public function all(Request $request){
+        try {
+            return new ModelCollection (  
+                $this->ModelRepository->filterAll($request->conversation_id) 
+            )  ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
     public function collection(Request $request){
         try {
-            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
+            return new ModelCollection (  
+                $this->ModelRepository->filterPaginate( 
+                    $request->conversation_id,
+                    $request->PerPage ? $request->PerPage : 10) 
+            )  ;
 
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  

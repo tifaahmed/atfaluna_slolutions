@@ -16,8 +16,8 @@ class CreateMassagesTable extends Migration
         Schema::create('massages', function (Blueprint $table) {
             $table->increments('id');//[pk]
             $table->string('text'); //[note: "not null"]
-            $table->integer('massagable_id'); //[note: 'morphs_id (avatar_id , hero_id ,massage_image_id)']
-            $table->string('massagable_type'); //[note: 'morphs_type (avatar_model , hero_model , massage_image_model)']
+            $table->integer('massagable_id')->nullable(); //[note: 'morphs_id (avatar_id , hero_id ,massage_image_id)']
+            $table->string('massagable_type')->nullable(); //[note: 'morphs_type (avatar_model , hero_model , massage_image_model)']
             $table->integer('conversation_id')->unsigned();
             $table->foreign('conversation_id')->references('id')->on('conversations')->onDelete('cascade');
             $table->integer('sub_user_id')->unsigned();

@@ -104,21 +104,7 @@ class CertificateController extends Controller
         }
     }
 
-    public function destroy($id) {
-        try {
-            return $this -> MakeResponseSuccessful( 
-                [$this->ModelRepository->deleteById($id)] ,
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        } catch (\Exception $e) {
-            return $this -> MakeResponseErrors(  
-                [ $e->getMessage()  ] ,
-                'Errors',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
+
 
     public function premanently_delete($id) {
         try {
@@ -257,48 +243,6 @@ class CertificateController extends Controller
                 
             }
         // lang update
-    // trash
-        public function collection_trash(Request $request){
-            try {
-                return new ModelCollection (  $this->ModelRepository->collection_trash( $request->PerPage ? $request->PerPage : 10 ) ) ;
-            } catch (\Exception $e) {
-                return $this -> MakeResponseErrors(  
-                    [$e->getMessage()  ] ,
-                    'Errors',
-                    Response::HTTP_NOT_FOUND
-                );
-            }
-        }
-        public function show_trash($id) {
-            try {
-                return $this -> MakeResponseSuccessful( 
-                    [new ModelResource ( $this->ModelRepository->findTrashedById($id) )  ],
-                    'Successful',
-                    Response::HTTP_OK
-                ) ;
-            } catch (\Exception $e) {
-                return $this -> MakeResponseErrors(  
-                    [$e->getMessage()  ] ,
-                    'Errors',
-                    Response::HTTP_NOT_FOUND
-                );
-            }
-        }
-        public function restore($id) {
-            try {
-                return $this -> MakeResponseSuccessful( 
-                    [ $this->ModelRepository->restorById($id)  ],
-                    'Successful',
-                    Response::HTTP_OK
-                ) ;
-            } catch (\Exception $e) {
-                return $this -> MakeResponseErrors(  
-                    [$e->getMessage()  ] ,
-                    'Errors',
-                    Response::HTTP_NOT_FOUND
-                );
-            }
-        }
-    // trash
+
 
 }

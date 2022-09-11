@@ -29,18 +29,25 @@ class MassageApiRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->massagable_type == 'hero') {
-            $class = Hero::class;
-        }else if($this->massagable_type == 'image'){
-            $class = Massage_image::class;
-        }else if($this->massagable_type == 'avatar'){
-            $class = Avatar::class;
+        switch ($this->massagable_type) {
+            case 'hero':
+                $class = Hero::class;
+                break;
+            case 'image':
+                $class = Massage_image::class;
+                break;
+            case 'avatar':
+                $class = Avatar::class;
+                break;
+            default:
+             $class = '';
         }
+
 
         return [
             'massagable_type'       =>  [ Rule::in(['hero', 'image','avatar']) ] ,
             'text'                  =>  [ 'max:250' ] ,
-            'massagable_id'         =>  [ 'integer' , 'exists:'.$class.',id' ] ,
+            'massagable_id'         =>  [ 'required_unless:massagable_type,null' ,'integer' , 'exists:'.$class.',id' ] ,
             'sub_user_id'           =>  [ 'required' ,'integer' , 'exists:sub_users,id'] ,
             'conversation_id'       =>  [ 'required' ,'integer' , 'exists:conversations,id' , new ConversationMember($this->sub_user_id) ] ,
         ];
