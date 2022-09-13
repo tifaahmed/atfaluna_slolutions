@@ -30,7 +30,7 @@ class AccessoryUpdateApiRequest extends FormRequest
         $all=[];
 
         // accessories
-        $all += [ 'image'           =>  [ 'required' ,'max:50000'] ]  ;
+        $all += [ 'image'           =>  [ 'sometimes' ,'max:50000' , 'mimes:jpg,jpeg,webp,bmp,png' ] ]  ;
         $all += [ 'price'           =>  [ 'required' ,'numeric','between:0,9999.99'] ]  ;
         $all += [ 'gender'          =>  [ 'required', Rule::in(['girl','boy','both']), ]] ;
 

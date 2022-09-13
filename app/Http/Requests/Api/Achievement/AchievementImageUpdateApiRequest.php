@@ -24,8 +24,8 @@ class AchievementImageUpdateApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'image_one'        =>   [ 'required' ,'max:5000'] ,
-            'image_two'        =>   [ 'required' ,'max:5000'] ,
+            'image_one'        =>   [ 'sometimes' ,'max:5000'] ,
+            'image_two'        =>   [ 'sometimes' ,'max:5000'] ,
             'points'           =>   [ 'sometimes' ,'integer'],
             'achievement_id'   =>   [ 'required' ,'integer','exists:achievements,id']  ,
         ];

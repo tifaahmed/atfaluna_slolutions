@@ -112,12 +112,12 @@ class UserController extends Controller
             if($request->password){
                 $all += array( $password => Hash::make($request->password) );
             }
-            $country= 'country_id';
-            if($request->country){
-                $all += array( $country => $request->$country );
-            }
+            // $country= 'country_id';
+            // if($request->country){
+            //     $all += array( $country => $request->$country );
+            // }
             
-            $modal = $this->ModelRepository->update( $id,Request()->except($file_one,$password,'country_id')+$all) ;
+            $modal = $this->ModelRepository->update( $id,Request()->except($file_one,$password)+$all) ;
 
 
             $this->ModelRepository->attachRole($request->role_id ,$id);

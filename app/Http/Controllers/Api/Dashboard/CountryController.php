@@ -13,9 +13,11 @@ use App\Http\Requests\Api\Country\CountryApiRequest as modelInsertRequest;
 use App\Http\Requests\Api\Country\CountryUpdateApiRequest as modelUpdateRequest;
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\CountryCollection as ModelCollection;
-use App\Http\Resources\Dashboard\CountryResource as ModelResource;
+// use App\Http\Resources\Dashboard\Collections\CountryCollection as ModelCollection;
+// use App\Http\Resources\Dashboard\CountryResource as ModelResource;
 
+use App\Http\Resources\Dashboard\Collections\ControllerResources\CountryController\CountryCollection as ModelCollection;
+use App\Http\Resources\Dashboard\ControllerResources\CountryController\CountryResource as ModelResource;
 // lInterfaces
 use App\Repository\CountryRepositoryInterface as ModelInterface;
 

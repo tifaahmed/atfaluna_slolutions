@@ -12,9 +12,10 @@ use App\Http\Requests\Api\Quiz\QuizStoreApiRequest  as modelInsertRequest;
 use App\Http\Requests\Api\Quiz\QuizUpdateApiRequest as modelUpdateRequest;
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\Quiz\QuizCollection as ModelCollection;
-use App\Http\Resources\Dashboard\Quiz\QuizResource as ModelResource;
-
+// use App\Http\Resources\Dashboard\Collections\Quiz\QuizCollection as ModelCollection;
+// use App\Http\Resources\Dashboard\Quiz\QuizResource as ModelResource;
+use App\Http\Resources\Dashboard\Collections\ControllerResources\QuizController\QuizCollection as ModelCollection;
+use App\Http\Resources\Dashboard\ControllerResources\QuizController\QuizResource as ModelResource;
 // lInterfaces
 use App\Repository\QuizRepositoryInterface as ModelInterface;
 use App\Repository\QuizLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages

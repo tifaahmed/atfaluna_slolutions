@@ -25,10 +25,10 @@ class AboutUsUpdateApiRequest extends FormRequest
     {
 
         return [
-            'image_one'     =>  ['required','max:50000','mimes:jpg,jpeg,webp,bmp,png'] ,
-            'image_two'     =>  ['required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png' ],
-            'image_three'   =>  [ 'required','max:50000','mimes:jpg,jpeg,webp,bmp,png']  ,
-            'image_four'    =>  ['required' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ,
+            'image_one'     =>  ['sometimes','max:50000','mimes:jpg,jpeg,webp,bmp,png'] ,
+            'image_two'     =>  ['sometimes' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'],
+            'image_three'   =>  ['sometimes','max:50000','mimes:jpg,jpeg,webp,bmp,png']  ,
+            'image_four'    =>  ['sometimes' ,'max:50000','mimes:jpg,jpeg,webp,bmp,png'] ,
             'title'         =>  ['required']  ,
             'subject'       =>  ['required']  ,
             'language'      =>  ['required'   , 'exists:languages,name']  ,
