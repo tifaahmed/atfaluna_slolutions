@@ -28,7 +28,7 @@ class SkinUpdateApiRequest extends FormRequest
         $Languages=Language::get();
 
         $all=[];
-        $all += [ 'image'            =>  [ 'required' ,'max:50000'] ]  ;
+        $all += [ 'image'            =>  [ 'sometimes' ,'max:50000'] ]  ;
         $all += [ 'original'         =>  [ 'required'  , 'boolean'] ]  ;
         $all += [ 'avatar_id'        =>  [ 'required' ,'integer','exists:avatars,id'] ]  ;
 

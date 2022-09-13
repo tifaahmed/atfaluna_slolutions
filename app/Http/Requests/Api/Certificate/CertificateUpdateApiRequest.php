@@ -28,9 +28,9 @@ class CertificateUpdateApiRequest extends FormRequest
 
         $all=[];
 
-        $all += [ 'image_one'   =>  [ 'required' ,'max:50000' ] ] ;
-        $all += [ 'image_two'   =>  [ 'required' ,'max:50000'] ] ;
-        $all += [ 'image_three' =>  [ 'required' ,'max:50000'] ] ;
+        $all += [ 'image_one'   =>  [ 'sometimes' ,'max:50000' ] ] ;
+        $all += [ 'image_two'   =>  [ 'sometimes' ,'max:50000'] ] ;
+        $all += [ 'image_three' =>  [ 'sometimes' ,'max:50000'] ] ;
         $all += [ 'min_point'   =>  [ 'sometimes' ,'integer'  ,  'min:1'   ] ] ;
         $all += [ 'max_point'   =>  [ 'sometimes' ,'integer'  , 'gt:min_point' ] ];
 

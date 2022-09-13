@@ -42,7 +42,7 @@ class SubjectUpdateApiRequest extends FormRequest
         $all += [ 'age_group_id'    =>  [ 'required' ,'integer','exists:age_groups,id'] ] ;
 
         // subject      
-        $all += [ 'image'           =>  [ 'required' ,'max:5000','mimes:jpg,jpeg,webp,bmp,png' ] ] ;
+        $all += [ 'image'           =>  [ 'sometimes' ,'max:5000','mimes:jpg,jpeg,webp,bmp,png' ] ] ;
         $all += [ 'points'          =>  [ 'sometimes' ,'integer' ] ]  ;
 
         // subject_languages

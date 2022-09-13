@@ -25,7 +25,7 @@ class SoundsUpdateApiRequest extends FormRequest
 
         return [
             'name'          =>  ['required']  ,
-            'record'        =>  ['required','max:100000']  ,
+            'record'        =>  ['sometimes','max:100000']  ,
             'language'      =>  ['required' ,'max:2','exists:languages,name']  ,
         ];
     }
