@@ -6,6 +6,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Dashboard\SkinLanguageResource ;
 use App\Http\Resources\Dashboard\ControllerResources\SkinController\AccessoryResource;
+use App\Http\Resources\Dashboard\ControllerResources\SkinController\AvatarResource;
+
 class SkinResource extends JsonResource
 {
     /**
@@ -28,6 +30,9 @@ class SkinResource extends JsonResource
             'original'      =>  $this->original,
 
             'accessory_skin'  => AccessoryResource::collection($this->accessorySkins) , 
+
+            // 'avatar'        =>  AvatarResource::collection($this->avatar),
+            'avatar'   => new AvatarResource (  $this->avatar )  ,
 
             'languages'     => SkinLanguageResource::collection( $this->skin_languages ),
 

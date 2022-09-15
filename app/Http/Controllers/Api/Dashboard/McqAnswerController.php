@@ -14,9 +14,10 @@ use App\Http\Requests\Api\McqAnswer\McqAnswerUpdateApiRequest as modelUpdateRequ
 
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\McqAnswer\McqAnswerCollection as ModelCollection;
-use App\Http\Resources\Dashboard\McqAnswer\McqAnswerResource as ModelResource;
-
+// use App\Http\Resources\Dashboard\Collections\McqAnswer\McqAnswerCollection as ModelCollection;
+// use App\Http\Resources\Dashboard\McqAnswer\McqAnswerResource as ModelResource;
+use App\Http\Resources\Dashboard\Collections\ControllerResources\McqAnswer\McqAnswerCollection as ModelCollection;
+use App\Http\Resources\Dashboard\ControllerResources\McqAnswerController\McqAnswerResource as ModelResource;
 // lInterfaces
 use App\Repository\McqAnswerRepositoryInterface as ModelInterface;
 use App\Repository\McqAnswerLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages

@@ -14,8 +14,10 @@ use App\Http\Requests\Api\MatchAnswer\MatchAnswerUpdateApiRequest as modelUpdate
 
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\MatchAnswer\MatchAnswerCollection as ModelCollection;
-use App\Http\Resources\Dashboard\MatchAnswer\MatchAnswerResource as ModelResource;
+// use App\Http\Resources\Dashboard\Collections\MatchAnswer\MatchAnswerCollection as ModelCollection;
+// use App\Http\Resources\Dashboard\MatchAnswer\MatchAnswerResource as ModelResource;
+use App\Http\Resources\Dashboard\Collections\ControllerResources\MatchAnswerController\MatchAnswerCollection as ModelCollection;
+use App\Http\Resources\Dashboard\ControllerResources\MatchAnswerController\MatchAnswerResource as ModelResource;
 
 // lInterfaces
 use App\Repository\MatchAnswerRepositoryInterface as ModelInterface;

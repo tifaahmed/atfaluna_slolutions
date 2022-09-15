@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\ControllerResources\MatchController;
+namespace App\Http\Resources\Dashboard\ControllerResources\McqQuestionController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
-class MatchAnswerResource extends JsonResource
+class McqAnswerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,15 +15,16 @@ class MatchAnswerResource extends JsonResource
      */
     public function toArray($request)
     {
-        $row=$this->match_answer_languages()->Localization()->RelatedLanguage($this->id)->first();
+        $row=$this->mcq_answer_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
             'id'            => $this->id,
-
             'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
-
+            'answer'        =>  $this->answer,
             'title'          => $row ? $row->title:'',
+
 
         ];        
     }
 }
+//

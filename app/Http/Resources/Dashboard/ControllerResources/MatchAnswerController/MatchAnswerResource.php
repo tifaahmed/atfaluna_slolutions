@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\MatchAnswer;
+namespace App\Http\Resources\Dashboard\ControllerResources\MatchAnswerController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-// use App\Http\Resources\Dashboard\McqQuestion\McqQuestionResource;
-use App\Http\Resources\Dashboard\Collections\MatchAnswer\MatchAnswerLanguagesCollection;
+use App\Http\Resources\Dashboard\Collections\ControllerResources\MatchAnswerController\MatchAnswerLanguagesCollection;
+
+use App\Http\Resources\Dashboard\ControllerResources\MatchAnswerController\MatchQuestionResource;
 
 class MatchAnswerResource extends JsonResource
 {
@@ -22,20 +23,20 @@ class MatchAnswerResource extends JsonResource
         return [
 
             'id'            => $this->id,
-            
-            'title'          => $row ? $row->title:'',
 
-            'possition'        =>  $this->possition,
+            'title'         => $row ? $row->title:'',
 
-            // 'match_answer_id'   =>  $this->match_answer_id,
+            'possition'     => $this->possition,
+
+            'match_answer_id'         =>  $this->match_answer_id ,
 
             'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
 
             'languages'     => new MatchAnswerLanguagesCollection ($this->match_answer_languages),
 
-            'match_question'       =>  $this->match_question   ,
+            // 'match_answer'      =>  $this->match_answer  ,
 
-            'match_answer'         =>  $this->match_answer  ,
+            'match_question'    => new MatchQuestionResource ($this->match_question),
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

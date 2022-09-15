@@ -31,7 +31,7 @@ class SubjectUpdateApiRequest extends FormRequest
         $all=[];
 
         // quiz
-        $all += [ 'quiz_id'  =>  [ 'required' ,'integer','exists:quizzes,id'] ]  ;
+        $all += [ 'quiz_id'  =>  [ 'sometimes' ,'integer','exists:quizzes,id'] ]  ;
 
         // certificate
         $all += [ 'certificate_id'  =>  [ 'required' ,'integer',Rule::exists('certificates', 'id')->where('certificatable_id',null)] ]  ;
