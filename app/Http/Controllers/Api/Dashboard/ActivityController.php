@@ -12,9 +12,10 @@ use App\Http\Requests\Api\Activity\ActivityApiRequest as modelInsertRequest;
 use App\Http\Requests\Api\Activity\ActivityUpdateApiRequest as modelUpdateRequest;
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\Activity\ActivityCollection as ModelCollection;
-use App\Http\Resources\Dashboard\Activity\ActivityResource as ModelResource;
-
+// use App\Http\Resources\Dashboard\Collections\Activity\ActivityCollection as ModelCollection;
+// use App\Http\Resources\Dashboard\Activity\ActivityResource as ModelResource;
+use App\Http\Resources\Dashboard\Collections\ControllerResources\ActivityController\ActivityCollection as ModelCollection;
+use App\Http\Resources\Dashboard\ControllerResources\ActivityController\ActivityResource as ModelResource;
 // lInterfaces
 use App\Repository\ActivityRepositoryInterface as ModelInterface;
 use App\Repository\ActivityLanguageRepositoryInterface as ModelInterfaceLanguage; //Languages

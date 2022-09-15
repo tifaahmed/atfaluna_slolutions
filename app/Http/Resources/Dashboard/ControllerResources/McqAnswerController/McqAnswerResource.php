@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Resources\Dashboard\MatchAnswer;
+namespace App\Http\Resources\Dashboard\ControllerResources\McqAnswerController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
-// use App\Http\Resources\Dashboard\McqQuestion\McqQuestionResource;
-use App\Http\Resources\Dashboard\Collections\MatchAnswer\MatchAnswerLanguagesCollection;
+use App\Http\Resources\Dashboard\Collections\McqAnswer\McqAnswerLanguagesCollection;
+use App\Http\Resources\Dashboard\ControllerResources\McqAnswerController\McqQuestionResource;
 
-class MatchAnswerResource extends JsonResource
+class McqAnswerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,25 +17,18 @@ class MatchAnswerResource extends JsonResource
      */
     public function toArray($request)
     {
-        $row=$this->match_answer_languages()->Localization()->RelatedLanguage($this->id)->first();
+        $row=$this->mcq_answer_languages()->Localization()->RelatedLanguage($this->id)->first();
 
         return [
-
             'id'            => $this->id,
-            
+            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
+            'answer'        =>  $this->answer,
+
             'title'          => $row ? $row->title:'',
 
-            'possition'        =>  $this->possition,
+            'languages'     => new McqAnswerLanguagesCollection ($this->mcq_answer_languages),
 
-            // 'match_answer_id'   =>  $this->match_answer_id,
-
-            'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
-
-            'languages'     => new MatchAnswerLanguagesCollection ($this->match_answer_languages),
-
-            'match_question'       =>  $this->match_question   ,
-
-            'match_answer'         =>  $this->match_answer  ,
+            'mcq_question'    => new McqQuestionResource ($this->mcq_question),
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

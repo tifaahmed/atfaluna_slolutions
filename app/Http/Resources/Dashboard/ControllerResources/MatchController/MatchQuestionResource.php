@@ -27,11 +27,11 @@ class MatchQuestionResource extends JsonResource
 
             'header'          => $row ? $row->header:'',
 
+            'question_tags'   => $this->question_tags,
+
             'languages'       => new MatchQuestionLanguagesCollection ($this->match_question_languages),
 
             'match_answers'     => new MatchAnswerCollection ($this->match_answer),
-
-            'question_tags'   => $this->question_tags,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

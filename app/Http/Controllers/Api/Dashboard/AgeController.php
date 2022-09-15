@@ -13,9 +13,10 @@ use App\Http\Requests\Api\Age\AgeApiRequest as modelInsertRequest;
 use App\Http\Requests\Api\Age\AgeUpdateApiRequest as modelUpdateRequest;
 
 // Resources
-use App\Http\Resources\Dashboard\Collections\AgeCollection as ModelCollection;
-use App\Http\Resources\Dashboard\AgeResource as ModelResource;
-
+// use App\Http\Resources\Dashboard\Collections\AgeCollection as ModelCollection;
+// use App\Http\Resources\Dashboard\AgeResource as ModelResource;
+use App\Http\Resources\Dashboard\Collections\ControllerResources\AgeController\AgeCollection as ModelCollection;
+use App\Http\Resources\Dashboard\ControllerResources\AgeController\AgeResource as ModelResource;
 // lInterfaces
 use App\Repository\AgeRepositoryInterface as ModelInterface;
 
