@@ -23,7 +23,7 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         $basic = Basic::find(1);
-
+        // $government = $this->government->
         return [
             'id'             => $this->id,
             'name'           => $this->name,
@@ -43,7 +43,9 @@ class UserResource extends JsonResource
                 'UserRoles'         => $this->UserRole,
                 'UserPermissions'   => $this->UserPermission,
                 'sub_user'          => new SubUserCollection ( $this->sub_user ),
-                'country'           => new CountryResource ( $this->country ),
+
+                // government
+                // 'country'           => new CountryResource (  ),
         ];
     }
 }

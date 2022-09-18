@@ -72,14 +72,19 @@ class AvatarResource extends JsonResource
             'type'          =>  $this->type,
             'price'         =>  $this->price ? $this->price : 0,
             
-            'avatar_original_skin'          => new SkinResource($original_skin) ,
-            'avatar_not_original_skin'      => SkinResource::collection($not_original_skin) ,
 
-            'avatar_active_skin'   => $active_skin,
-            'active'        => $sub_user_avatar ? $sub_user_avatar->pivot->active : 0 ,
+            'skins'      => SkinResource::collection($this->skins),
+
+
+            // 'avatar_original_skin'          => new SkinResource($original_skin) ,
+            // 'avatar_not_original_skin'      => SkinResource::collection($not_original_skin) ,
+
+            // 'avatar_active_skin'   => $active_skin,
+
+            // 'active'        => $sub_user_avatar ? $sub_user_avatar->pivot->active : 0 ,
             'taken'        => $sub_user_avatar ? 1 : 0 ,
-            'avatar_accessories'         =>   AccessoryResource::collection($accessory_skin)  ,
-            'sub_user_accessories_skin'         =>   AccessoryResource::collection($sub_user_accessories_skin)   ,
+            // 'avatar_accessories'         =>   AccessoryResource::collection($accessory_skin)  ,
+            // 'sub_user_accessories_skin'         =>   AccessoryResource::collection($sub_user_accessories_skin)   ,
             'can_affort_it' => $can_affort_it
         ];        
     }

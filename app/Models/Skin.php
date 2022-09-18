@@ -64,7 +64,7 @@ class Skin extends Model
 
         // belongsToMany
         public function accessorySkins(){
-            return $this->belongsToMany(Accessory::class, 'accessory_skins', 'skin_id', 'accessory_id');
+            return $this->belongsToMany(Accessory::class, 'accessory_skins', 'skin_id', 'accessory_id')->withPivot('active');
         }
 
 

@@ -21,6 +21,7 @@ class MassageResource extends JsonResource
     { 
         $all = [];
         $all += array('id'                => $this->id);
+        
         $all += array('text'              => $this->text);
         $all += array('sub_user_id'       => $this->sub_user_id);
 
@@ -38,8 +39,11 @@ class MassageResource extends JsonResource
                 $image = '';
         }
         
+        $all += array('read'       => $this->subUserMessageRead);
+
         $all += array('image' =>  Storage::disk('public')->exists($image) ? asset(Storage::url($image))  : null,    );
 
+        $all += array('created_at'       => $this->created_at ?   $this->created_at->format('d/m/Y h:m') : null);
 
         return $all;
     }

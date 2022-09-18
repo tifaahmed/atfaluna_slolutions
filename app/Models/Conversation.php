@@ -16,7 +16,6 @@ class Conversation extends Model
 
     protected $fillable = [
         'title',//  string , nullable
-        'read',//  boolean , defoult 0
         'sub_user_id',//unsigned  
         'type',// enum ,['single','group'] , defoult single
     ];
@@ -25,9 +24,6 @@ class Conversation extends Model
         return $this->belongsTo(Sub_user::class,'sub_user_id');
     }
     // Groupchat
-    public function group_chat(){
-        return $this->hasOne(Group_chat::class,'conversation_id');
-    }
     public function group_chats(){
         return $this->hasMany(Group_chat::class,'conversation_id');
     }

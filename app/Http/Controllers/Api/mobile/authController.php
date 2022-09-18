@@ -33,30 +33,25 @@ class authController extends Controller {
     }
 
     public function login( loginApiRequest $request ) {
+        $user = User::where( 'email' , $request -> get( 'email' ) ) -> first( ) ;
 
-        if(!auth('api')->check()){
-            if ( $request -> get( 'email' , false ) ) {
-                $user = User::where( 'email' , $request -> get( 'email' ) ) -> first( ) ;
-
-            
-            }
-            if ( ! Hash::check( $request -> password , $user -> password ) ) {
-                return $this -> MakeResponseErrors( 
-                    [ 'message' => 'InvalidCredentials' ],  
-                    'InvalidCredentials' ,
-                    Response::HTTP_UNAUTHORIZED
-                ) ; 
-            }
-
-            return $this ->loginRespons($request->fcm_token,$user->email,$user->id);
-
-        }else{
+        if (auth('api')->check()) {
             return $this -> MakeResponseErrors( 
                 [ 'message' => 'loggin in before' ],  
                 'InvalidCredentials' ,
                 Response::HTTP_UNAUTHORIZED
             ) ; 
-        } 
+        }
+
+        if($user &&  Hash::check( $request->password,$user->password )){
+            return $this ->loginRespons($request->fcm_token,$user->email,$user->id);
+        }
+                
+        return $this -> MakeResponseErrors( 
+            [ 'message' => 'InvalidCredentials' ],  
+            'InvalidCredentials' ,
+            Response::HTTP_UNAUTHORIZED
+        ) ; 
 
     }
     public function loginSocial( Request $request ) {
@@ -188,11 +183,12 @@ class authController extends Controller {
         Auth::user()->active ? null : Auth::user()->sendActiveEmailNotification();
 
         $sub_users = Auth::user()->sub_user()->get();
-
-        // if not first time &  child_number  more than  tokens (revoke tokens)
-        if ( Auth::user()->tokens()->count() > $sub_users->count() ){
-            // Auth::user()->tokens()->latest('created_at')->first()->revoke();
-            Auth::user()->tokens()->first('created_at')->revoke();
+        // if  child_number  more than  tokens (delete tokens)
+        if ( Auth::user()->tokens()->count() >= $sub_users->count() ){
+            DB::table('oauth_access_tokens')
+            ->Where('name',$email)
+            ->orderBy('created_at')
+            ->delete();
         }    
 
 
