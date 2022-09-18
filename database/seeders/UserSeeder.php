@@ -11,7 +11,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
 use App\Models\User;
-use App\Models\Country;
+use App\Models\City;
 
 class UserSeeder extends Seeder
 {
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'token' => Hash::make('123456'),
             'birthdate' => '2022-02-14 15:30:36',
-            'country_id' =>  Country::first()->id,
+            // 'city_id' =>  City::first() ? City::first()->id : null,
         ]);
         $admin->assignRole('admin');
 

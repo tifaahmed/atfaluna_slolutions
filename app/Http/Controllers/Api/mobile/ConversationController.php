@@ -29,8 +29,6 @@ class ConversationController extends Controller
     }
     public function all(Request $request){
         try {
-            return $request;
-            
             return $model = $this->ModelRepository->filterAll( 
                 $request->sub_user_id,
                 $request->has_message,
@@ -47,7 +45,7 @@ class ConversationController extends Controller
     }
     public function collection(Request $request){
         try {
-            return $model = $this->ModelRepository->filterPaginate( 
+            $model = $this->ModelRepository->filterPaginate( 
                 $request->sub_user_id,
                 $request->has_message,
                 $request->type,
@@ -117,8 +115,12 @@ class ConversationController extends Controller
 
     public function show($id) {
         try {
+            $model = $this->ModelRepository->findById($id) ; 
+
+            // $model->massages()->where('')
+
             return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $this->ModelRepository->findById($id) )  ],
+                [new ModelResource ( $model)  ],
                 'Successful',
                 Response::HTTP_OK
             ) ;

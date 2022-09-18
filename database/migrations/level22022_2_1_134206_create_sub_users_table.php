@@ -21,9 +21,6 @@ class CreateSubUsersTable extends Migration
             $table->enum('gender',['girl','boy']);
             $table->integer('points')->default(0); 
 
-            $table -> string        ( 'latitude',50  ) -> nullable( )              ;
-            $table -> string        ( 'longitude',50 ) -> nullable( )              ;
-            
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             

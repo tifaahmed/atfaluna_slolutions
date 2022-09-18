@@ -55,6 +55,6 @@ class Accessory extends Model
             return $this->belongsToMany(Lesson::class, 'accessory_lessons', 'accessory_id', 'lesson_id');
         }
         public function AccessorySkin(){
-            return $this->belongsToMany(Skin::class, 'accessory_skins', 'accessory_id', 'skin_id');
+            return $this->belongsToMany(Skin::class, 'accessory_skins', 'accessory_id', 'skin_id')->withPivot('active');
         }
 }

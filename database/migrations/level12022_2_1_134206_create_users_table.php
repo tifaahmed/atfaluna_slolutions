@@ -26,8 +26,8 @@ class CreateUsersTable extends Migration
             $table -> boolean       ( 'active'   ) -> default (0)              ;
             $table -> boolean       ( 'online'   ) -> default (0)              ;
 
-            $table->integer('country_id') -> nullable( )->unsigned();
-            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
+            $table->integer('city_id') -> nullable( )->unsigned();
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
 
             $table -> string        ( 'login_type') -> nullable( )              ;
             $table -> integer         ( 'pin_code'  ) -> nullable( ) -> unique( ) ;

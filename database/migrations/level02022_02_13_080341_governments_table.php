@@ -18,6 +18,10 @@ class GovernmentsTable extends Migration
             $table->string('name')->unique();
             $table->integer('country_id')->unsigned();
             $table->foreign('country_id')->references('id')->on('countries');
+            
+            $table -> string        ( 'latitude',50  ) -> nullable( )              ;
+            $table -> string        ( 'longitude',50 ) -> nullable( )              ;
+            
             $table->softDeletes();
             $table->timestamps();
         });

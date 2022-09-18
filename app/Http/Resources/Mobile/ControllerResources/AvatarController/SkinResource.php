@@ -5,6 +5,7 @@ namespace App\Http\Resources\Mobile\ControllerResources\AvatarController;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Basic;
+use App\Http\Resources\Mobile\ControllerResources\AvatarController\AccessoryResource;
 
 class SkinResource extends JsonResource
 {
@@ -22,8 +23,8 @@ class SkinResource extends JsonResource
             'id'            => $this->id,
             
             'image'        => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)) ,
-
-            
+            'original'      =>  $this->original,
+            'accessories'      =>  AccessoryResource::collection($this->accessorySkins),
         ];        
     }
 }
