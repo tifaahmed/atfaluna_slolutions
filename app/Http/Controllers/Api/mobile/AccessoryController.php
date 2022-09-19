@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response ;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
-use App\Models\Accessory;            
-use App\Models\HumanPart;            
+use App\Models\Sub_user_avatar_accessory;            
 
 use App\Http\Requests\Api\Accessory\MobileAccessoryApiRequest;
 
@@ -51,7 +50,8 @@ class AccessoryController extends Controller
             );
         }
     }
-        // relation
+
+    // buy Accessory
     public function attach(MobileAccessoryApiRequest $request){
         try {
             $accessory = $this->ModelRepository->findById($request->accessory_id);
@@ -91,60 +91,73 @@ class AccessoryController extends Controller
 
 
     public function toggle(MobileAccessoryApiRequest $request){
-        $sub_user_id = $request->sub_user_id;
-        $accessory_id = $request->accessory_id;
+
+        $sub_user =   Auth::user()->sub_user()->find($request->sub_user_id);
+        // first relation between (sub_user & Avatar) 1 row
+        $sub_user_avatar = $sub_user->subUserAvatar()->where('avatar_id',$request->avatar_id)->first();
+        // second relation between (sub_user & Accessory)m rows
+        $sub_user_accessory_pivot_ids = $sub_user->subUserAccessory()
+                            ->whereIn('accessory_id',$request->accessory_ids)
+                            ->get()->pluck('pivot')->pluck('id');
+        // third relation between (sub_user & Avatar) 1 row & (sub_user & Accessory) m rows
+        $sub_user_avatar->pivot->sub_user_avatar_accessory()->sync(
+            $sub_user_accessory_pivot_ids
+        );
+
+
         // new accessory
-        $new_accessory = $this->ModelRepository->findById($request->accessory_id);
-        $sub_user_accessory = $new_accessory->SubUserAccessory()->where('sub_user_id',$sub_user_id)->first();
+        // $new_accessory = $this->ModelRepository->findById($request->accessory_id);
+
+        // $sub_user_accessory = $new_accessory->sub_user_skin_accessory()->where('sub_user_id',$sub_user_id)->first();
 
 
-        if ($sub_user_accessory) {
-            if ($sub_user_accessory->pivot->active) {
-                $sub_user_accessory->pivot->update(['active'=> 0]);
-            }else{
-                $sub_user_accessory->pivot->update(['active'=> 1]);
+        // if ($sub_user_accessory) {
+        //     if ($sub_user_accessory->pivot->active) {
+        //         $sub_user_accessory->pivot->update(['active'=> 0]);
+        //     }else{
+        //         $sub_user_accessory->pivot->update(['active'=> 1]);
 
                 
-                $new_body_suit =  $new_accessory->BodySuit()->first();
-                if ($new_body_suit) {
-                    $new_human_parts =  $new_body_suit->bodySuit_humanParts()->get();
-                    $new_human_parts_ids =  $new_human_parts->pluck('id')->toArray();
+        //         $new_body_suit =  $new_accessory->BodySuit()->first();
+        //         if ($new_body_suit) {
+        //             $new_human_parts =  $new_body_suit->bodySuit_humanParts()->get();
+        //             $new_human_parts_ids =  $new_human_parts->pluck('id')->toArray();
 
-                    // old accessories
-                    $old_accessories_need_unactive = Accessory::whereHas('SubUserAccessory', function (Builder $query) use($sub_user_id,$accessory_id) {
-                        $query->where('sub_user_id',$sub_user_id);
-                        $query->where('accessory_id','!=',$accessory_id);
-                        $query->where('active',1);
-                    })
-                    ->whereHas('BodySuit', function (Builder $BodySuit_query) use($new_human_parts_ids)  {
+        //             // old accessories
+        //             $old_accessories_need_unactive = Accessory::whereHas('SubUserAccessory', function (Builder $query) use($sub_user_id,$accessory_id) {
+        //                 $query->where('sub_user_id',$sub_user_id);
+        //                 $query->where('accessory_id','!=',$accessory_id);
+        //                 $query->where('active',1);
+        //             })
+        //             ->whereHas('BodySuit', function (Builder $BodySuit_query) use($new_human_parts_ids)  {
 
-                        $BodySuit_query->whereHas('bodySuit_humanParts', function (Builder $humanParts_query) use($new_human_parts_ids){
-                            $humanParts_query->whereIn('human_part_id',$new_human_parts_ids);
-                        });
+        //                 $BodySuit_query->whereHas('bodySuit_humanParts', function (Builder $humanParts_query) use($new_human_parts_ids){
+        //                     $humanParts_query->whereIn('human_part_id',$new_human_parts_ids);
+        //                 });
                         
-                    })
-                    ->get();
+        //             })
+        //             ->get();
         
-                    foreach ($old_accessories_need_unactive as $key => $value) {
-                        $value->SubUserAccessory()->where('sub_user_id',$sub_user_id)->update(['active'=> 0]);
-                    }
+        //             foreach ($old_accessories_need_unactive as $key => $value) {
+        //                 $value->SubUserAccessory()->where('sub_user_id',$sub_user_id)->update(['active'=> 0]);
+        //             }
         
 
-                }
-            }
-            return $this -> MakeResponseSuccessful( 
-                ['Successful'],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
+        //         }
+        //     }
+        return $this -> MakeResponseSuccessful( 
+            ['Successful'],
+            'Successful'               ,
+            Response::HTTP_OK
+        ) ;
             
-        }else{
-            return $this -> MakeResponseSuccessful( 
-                ['child did not bought this before'],
-                'Errors'               ,
-                Response::HTTP_BAD_REQUEST
-            ) ;
-        }
+        // }else{
+        //     return $this -> MakeResponseSuccessful( 
+        //         ['child did not bought this before'],
+        //         'Errors'               ,
+        //         Response::HTTP_BAD_REQUEST
+        //     ) ;
+        // }
 
     }
 
