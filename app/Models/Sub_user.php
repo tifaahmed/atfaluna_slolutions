@@ -25,6 +25,8 @@ use App\Models\Sub_user_lesson;
 use App\Models\Sub_user_sub_subject;
 use App\Models\Sub_user_subject;
 use App\Models\Duration_time;
+use App\Models\Sub_user_avatar;
+use App\Models\Sub_user_accessory;
 
 
 class Sub_user extends Model
@@ -47,12 +49,15 @@ class Sub_user extends Model
             return $this->belongsTo(User::class,'user_id');
         }
     //Accessory
-        public function subUserAccessory(){
-            return $this->belongsToMany(Accessory::class, 'sub_user_accessories', 'sub_user_id', 'accessory_id');
+        public function subUserAccessory(){ // which Accessory  bought by SubUser
+            return $this->belongsToMany(Accessory::class, 'sub_user_accessories', 'sub_user_id', 'accessory_id')
+            ->using(Sub_user_accessory::class)->withPivot('id');
         }
+                
     //Avatar
         public function subUserAvatar(){
-            return $this->belongsToMany(Avatar::class, 'sub_user_avatars', 'sub_user_id', 'avatar_id')->withPivot('active');
+            return $this->belongsToMany(Avatar::class, 'sub_user_avatars', 'sub_user_id', 'avatar_id')
+            ->using(Sub_user_avatar::class)->withPivot('id','active');
         }
         public function subUserActiveAvatar(){
             return $this->subUserAvatar()->wherePivot('active',1);

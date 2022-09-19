@@ -25,6 +25,8 @@ class SkinResource extends JsonResource
             'image'        => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item)) ,
             'original'      =>  $this->original,
             'accessories'      =>  AccessoryResource::collection($this->accessorySkins),
+            'accessory_ids'      =>  $this->accessorySkins->pluck('id')->toArray() ,
+
         ];        
     }
 }
