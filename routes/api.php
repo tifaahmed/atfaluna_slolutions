@@ -379,7 +379,7 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'ConversationController@destroy'             )->name('destroy'),
         ]),
     ]),
-
+// 'IfPlayTime' to open playtime 
     Route::group(['middleware' => ['auth:api','IfActiveUser','IfAuthChild','DurationTime','IfSubscription','IfPlayTime']], fn ( ) : array => [
         //Subject
         Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
