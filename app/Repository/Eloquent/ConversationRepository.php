@@ -56,7 +56,7 @@ class ConversationRepository extends BaseRepository implements ConversationRepos
 			return ModelName::
 			where('sub_user_id',$sub_user_id)->
 			where('type',$type)->
-			whereHas('group_chat', function (Builder $query) use($recevier_ids) {
+			whereHas('group_chats', function (Builder $query) use($recevier_ids) {
 				$query->whereIn('recevier_id',$recevier_ids);
 			})->
 			get();
