@@ -13,11 +13,11 @@ Route::group(['middleware' => ['LocalizationMiddleware'  ]], fn ( ) : array => [
     Route::group(['middleware' => []], fn ( ) : array => [
         // auth
         Route::name( 'auth.') -> prefix( 'auth' ,'guest','guest:api') -> group( fn ( ) => [
-            Route::post( '/login' ,   'authController@login'  ) -> name( 'login' ) ,
-            Route::post( '/login-social' ,   'authController@loginSocial'  ) -> name( 'loginSocial' ) ,
-            Route::post( '/register' ,  'authController@register' )  -> name( 'register' ) ,    
+            Route::post( '/login'           ,   'authController@login'          ) -> name( 'login' ) ,
+            Route::post( '/login-social'    ,   'authController@loginSocial'    ) -> name( 'loginSocial' ) ,
+            Route::post( '/register'        ,  'authController@register'        )  -> name( 'register' ) ,    
             Route::post( '/forget-password' ,  'authController@forget_password' )  -> name( 'forget_password' ) ,  
-            Route::post( '/check-pin-code' ,  'authController@check_pin_code' )  -> name( 'check_pin_code' ) ,  
+            Route::post( '/check-pin-code'  ,  'authController@check_pin_code'  )  -> name( 'check_pin_code' ) ,  
         ]),
         // language
             Route::name('language.')->prefix('/language')->group( fn ( ) : array => [
@@ -214,6 +214,9 @@ Route::group(['middleware' => ['LocalizationMiddleware'  ]], fn ( ) : array => [
             Route::get('/show'                 ,   'UserController@show'                )->name('show'),
             Route::post('/update'              ,   'UserController@update'              )->name('update'),
             Route::post('/apdate-password'     ,   'UserController@apdatePassword'      )->name('apdate_password'),
+            Route::post('/apdate-password'     ,   'UserController@apdatePassword'      )->name('apdate_password'),
+            Route::post('/premanently-delete'  ,   'UserController@premanently_delete'  )->name('premanently_delete'),
+
         ]), 
         //Sub_user
         Route::name('sub-user.')->prefix('/sub-user')->group( fn ( ) : array => [
