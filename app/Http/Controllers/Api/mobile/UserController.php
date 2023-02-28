@@ -81,5 +81,21 @@ class UserController extends Controller
             );
         }     
     }
-
+    public function premanently_delete() {
+        try {
+            $this->ModelRepository->deleteById(Auth::user()->id);
+            $model =  $this->ModelRepository->PremanentlyDeleteById(Auth::user()->id);
+            return $this -> MakeResponseSuccessful( 
+                [$model] ,
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [ $e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
 }
