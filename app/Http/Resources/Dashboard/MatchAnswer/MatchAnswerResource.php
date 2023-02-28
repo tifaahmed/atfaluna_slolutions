@@ -27,16 +27,14 @@ class MatchAnswerResource extends JsonResource
 
             'possition'        =>  $this->possition,
 
-            // 'match_answer_id'   =>  $this->match_answer_id,
-
+            'match_answer_id'   =>  $this->match_answer_id,
+            
             'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
 
             'languages'     => new MatchAnswerLanguagesCollection ($this->match_answer_languages),
 
             'match_question'       =>  $this->match_question   ,
-
             'match_answer'         =>  $this->match_answer  ,
-
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
             'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,

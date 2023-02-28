@@ -20,13 +20,12 @@ class AccessoryResource extends JsonResource
         $active = 0 ;
         $bought = 0 ;
         if ($request->sub_user_id) {
-            
-            $sub_user_accessory = $this->SubUserAccessory()
+            $sub_user_active_accessory = $this->SubUserAccessory()
             ->where('sub_user_id',$request->sub_user_id)
             ->first();
-            $active =  ($sub_user_accessory && $sub_user_accessory->pivot->sub_user_avatar_accessory->count() ) ? 1 : 0 ;
-
-            $bought = $sub_user_accessory? 1 : 0 ;
+            $active =  ($sub_user_active_accessory && $sub_user_active_accessory->pivot->active) ? 1 : 0 ;
+            $bought = $sub_user_active_accessory? 1 : 0 ;
+            
         }
 
         $all=[];
@@ -34,8 +33,7 @@ class AccessoryResource extends JsonResource
         $all += ['image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : asset(Storage::url($basic->item))];
         $all += [ 'active'     => $active]  ;
         $all += [ 'bought'     =>  $bought]  ;
-
-
+        
         return $all  ;      
     }
 }

@@ -25,6 +25,7 @@ class HeroResource extends JsonResource
 
             'languages'     => new HeroLanguagesCollection ( $this->hero_languages ),
 
+            // 'lessons'        => new LessonCollection ($this->herolesson)  ,
             'hero_lesson'     => LessonResource::collection($this->herolesson)  ,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,

@@ -39,13 +39,13 @@ class CertificateSeeder extends Seeder
             $certificate->certificate_languages()->create( [
                 'title_one' => ' شهادة',
                 'title_two' => 'عربي',
-                'description' => 'للحصول على الشهادة يجب ان تحصل على % 50',
+                'subject' => 'للحصول على الشهادة يجب ان تحصل على % 50',
                 'language' => 'ar',
             ]);
             $certificate->certificate_languages()->create( [
                 'title_one' => ' شهادة',
                 'title_two' => 'عربي',
-                'description' => 'للحصول على الشهادة يجب ان تحصل على % 50',
+                'subject' => 'للحصول على الشهادة يجب ان تحصل على % 50',
                 'language' => 'en',
             ]);
         }

@@ -31,18 +31,13 @@ class ConversationMember implements Rule
      */
     public function passes($attribute, $value)
     {
+
         $conversation = Conversation::find($value);
 
-        if ($conversation) {
+        $group_chats_recevier = $conversation->group_chats()->where('recevier_id',$this->sub_user_id)->first();
+        $conversation_sender = $conversation->where('sub_user_id',$this->sub_user_id)->first();
 
-            $group_chats_recevier = $conversation->group_chats()->where('recevier_id',$this->sub_user_id)->first();
-            $conversation_sender = $conversation->where('sub_user_id',$this->sub_user_id)->first();
-    
-            return ( $conversation_sender || $group_chats_recevier ) ? 1 : 0 ;
-        }else{
-            return  0 ;
-        }
-        
+        return ( $conversation_sender || $group_chats_recevier ) ? 1 : 0 ;
         
 
     }

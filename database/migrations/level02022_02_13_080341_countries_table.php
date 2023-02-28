@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAvatarsTable extends Migration
+class CountriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class CreateAvatarsTable extends Migration
      */
     public function up()
     {
-        Schema::create('avatars', function (Blueprint $table) {
+        Schema::create('countries', function (Blueprint $table) {
             $table->increments('id');//[pk]
-            $table->enum('type',['girl','boy','both']); //[note: 'boys or girls or both '] 
-            $table->unsignedDecimal('price', 8, 2)->default(0);
-            $table->timestamps();
+            $table->string('name')->unique();
+            $table->string('image')->nullable();
+            $table->string('code')->unique(); //->notnull()
+            $table->string('language',2)->default('ar');//[note: "ex ( ar-en-it-...etc)"]
             $table->softDeletes();
+            $table->timestamps();
         });
     }
-    
+
     /**
      * Reverse the migrations.
      *
@@ -29,7 +31,6 @@ class CreateAvatarsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('avatars');
+        Schema::dropIfExists('countries');
     }
-
 }

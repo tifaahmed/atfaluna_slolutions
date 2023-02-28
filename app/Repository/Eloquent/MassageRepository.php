@@ -22,25 +22,6 @@ class MassageRepository extends BaseRepository implements MassageRepositoryInter
 		$this->model =  $model;
 	}
 
-	public function filter($conversation_id)  {
-		$model =   $this->model;
-		if($conversation_id){
-			$model = $model->where('conversation_id',$conversation_id) ;
-		}
-		return 	$model;
 	}
-	public function filterAll($conversation_id)  
-    {
-		$model = $this->filter($conversation_id)  ;
-		return $model->get();
-	}
-	public function filterPaginate($conversation_id,$itemsNumber)  
-    {
-		$model = $this->filter($conversation_id)  ;
-		return $model->paginate($itemsNumber)->appends(request()->query());
-    }
-
-
-}
 
 

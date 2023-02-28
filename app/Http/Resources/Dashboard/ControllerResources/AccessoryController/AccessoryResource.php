@@ -35,7 +35,12 @@ class AccessoryResource extends JsonResource
 
             'languages'     => $this->accessory_languages,
 
-            'BodySuit'        =>  $this->BodySuit   ,       
+            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
+            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            'deleted_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+
+            'BodySuit'        =>  $this->BodySuit   ,
+            
 
         'accessory_skin'       => SkinResource::collection($this->AccessorySkin) , 
 

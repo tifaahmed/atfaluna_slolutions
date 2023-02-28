@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Models\Accessory_language;          // HasMany
-use App\Models\Sub_user_avatar_accessory;     // HasMany
+use App\Models\Accessory_language;  // HasMany
 
 use App\Models\BodySuit;            // belongsTo
 
@@ -39,14 +38,6 @@ class Accessory extends Model
         public function accessory_languages(){
             return $this->HasMany(Accessory_language::class);
         }
-        public function sub_user_avatar_accessory()
-        {
-            return $this->hasManyThrough(
-                Sub_user_avatar_accessory::class,
-                Sub_user_accessory::class,
-                'accessory_id',
-                'sub_user_accessory_id');
-        }
 
         // belongsTo
         public function BodySuit(){
@@ -54,22 +45,16 @@ class Accessory extends Model
         }
 
         // belongsToMany
-        public function SubUserAccessory(){ // which Accessory  bought by SubUser
-            return $this->belongsToMany(Sub_user::class, 'sub_user_accessories', 'accessory_id', 'sub_user_id')
-            ->using(Sub_user_accessory::class)->withPivot('id');
+        public function SubUserAccessory(){
+            return $this->belongsToMany(Sub_user::class, 'sub_user_accessories', 'accessory_id', 'sub_user_id')->withPivot('active');
         }
-        
-
-
-
-        public function AccessoryActivity(){ // which Accessory  belong to  activity
+        public function AccessoryActivity(){
             return $this->belongsToMany(Activity::class, 'accessory_activities', 'accessory_id', 'activity_id');
         }
-        public function AccessoryLesson(){// which Accessory  belong to  lesson
+        public function AccessoryLesson(){
             return $this->belongsToMany(Lesson::class, 'accessory_lessons', 'accessory_id', 'lesson_id');
         }
-
-        public function AccessorySkin(){ //which Accessory  belong to  skin
+        public function AccessorySkin(){
             return $this->belongsToMany(Skin::class, 'accessory_skins', 'accessory_id', 'skin_id');
         }
 }

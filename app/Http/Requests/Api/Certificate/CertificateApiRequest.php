@@ -30,8 +30,8 @@ class CertificateApiRequest extends FormRequest
         $all += [ 'image_one'   =>  [ 'required' ,'max:50000' ] ] ;
         $all += [ 'image_two'   =>  [ 'required' ,'max:50000'] ] ;
         $all += [ 'image_three' =>  [ 'required' ,'max:50000'] ] ;
-        $all += [ 'min_point'   =>  [ 'sometimes' ,'integer'  ,  'min:1'   ] ] ;
-        $all += [ 'max_point'   =>  [ 'sometimes' ,'integer'  , 'gt:min_point' ] ];
+        $all += [ 'min_point'   =>  [ 'integer'  ,  'min:1'   ] ] ;
+        $all += [ 'max_point'   =>  [ 'integer'  , 'gt:min_point' ] ];
 
         foreach ($Languages as $key => $value) {
             $all += [ 'languages.'.$key.'.title_one'    =>  [ 'required' ] ] ;

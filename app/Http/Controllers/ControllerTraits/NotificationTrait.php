@@ -10,9 +10,8 @@ use Kutia\Larafirebase\Facades\Larafirebase;
 use Illuminate\Http\JsonResponse ;
 use App\Models\User;
 use App\Models\Basic;
-use Illuminate\Support\Facades\Storage;
 
-use Illuminate\Support\Facades\Auth;
+
 trait NotificationTrait {
 
     // * @param  array $notification
@@ -38,22 +37,5 @@ trait NotificationTrait {
 		}
 		$user = new User;
 		$user->sendNewItemNotification($notification_data);
-    }
-
-	public function TraitChatNotification($image,$text,$conversation_id,$sub_user_id){
-		$user = Auth::user();
-
-		$image =  Storage::disk('public')->exists($image) ? asset(Storage::url($image))  : null;
-
-
-		$conversationData['priority']   	 = 'high';
-		$conversationData['sub_user_id']     = $sub_user_id;
-		$conversationData['user_id']     = $user->id;
-		$conversationData['conversation_id'] = $conversation_id;
-		$conversationData['text']   		 = $text;
-		$conversationData['image']   		 = $image;
-		
-		$user = new User;
-		return $user->sendChatNotification($conversationData);
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Requests\Api\Subject;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Language;
-use Illuminate\Validation\Rule;
 
 class SubjectUpdateApiRequest extends FormRequest
 {
@@ -34,7 +33,7 @@ class SubjectUpdateApiRequest extends FormRequest
         $all += [ 'quiz_id'  =>  [ 'sometimes' ,'integer','exists:quizzes,id'] ]  ;
 
         // certificate
-        $all += [ 'certificate_id'  =>  [ 'required' ,'integer',Rule::exists('certificates', 'id')->where('certificatable_id',null)] ]  ;
+        $all += [ 'certificate_id'  =>  [ 'required' ,'integer','exists:certificates,id'] ]  ;
 
         // skill
         $all += [ 'skill_ids'  =>  [ 'sometimes' ,'array','exists:skills,id'] ]  ;

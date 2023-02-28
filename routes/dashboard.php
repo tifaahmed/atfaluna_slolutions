@@ -299,12 +299,12 @@ Route::group(['middleware' => ['auth:api','role:admin']], fn ( ) : array => [
                 Route::post(''                          ,   'CertificateController@store'               )->name('store'),
                 Route::get('/{id}/show'                 ,   'CertificateController@show'                )->name('show'),
                 Route::get('/collection'                ,   'CertificateController@collection'          )->name('collection'),
-                // Route::DELETE('/{id}'                   ,   'CertificateController@destroy'             )->name('destroy'),
+                Route::DELETE('/{id}'                   ,   'CertificateController@destroy'             )->name('destroy'),
                 Route::post('/{id}/update'              ,   'CertificateController@update'              )->name('update'),
-                // Route::get('/{id}/restore'             ,   'CertificateController@restore'             )->name('restore'),
-                // Route::DELETE('premanently-delete/{id}' ,   'CertificateController@premanently_delete'  )->name('premanently_delete'),
-                // Route::get('/collection-trash'          ,   'CertificateController@collection_trash'    )->name('collection_trash'),
-                // Route::get('/{id}/show-trash'           ,   'CertificateController@show_trash'          )->name('show_trash'),
+                Route::get('/{id}/restore'             ,   'CertificateController@restore'             )->name('restore'),
+                Route::DELETE('premanently-delete/{id}' ,   'CertificateController@premanently_delete'  )->name('premanently_delete'),
+                Route::get('/collection-trash'          ,   'CertificateController@collection_trash'    )->name('collection_trash'),
+                Route::get('/{id}/show-trash'           ,   'CertificateController@show_trash'          )->name('show_trash'),
             ]),
         // Achievement
             Route::name('achievement.')->prefix('/achievement')->group( fn ( ) : array => [

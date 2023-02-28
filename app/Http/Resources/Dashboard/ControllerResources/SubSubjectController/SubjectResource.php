@@ -19,11 +19,8 @@ class SubjectResource extends JsonResource
 
         return [
             'id'            => $this->id,
-
             'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
-            
             'name'          => $row ? $row->name:'',
-
             'points'        => $this->points,
 
         ];        

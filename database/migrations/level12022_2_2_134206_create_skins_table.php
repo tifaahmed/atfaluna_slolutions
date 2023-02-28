@@ -16,6 +16,7 @@ class CreateSkinsTable extends Migration
         Schema::create('skins', function (Blueprint $table) {
             $table->increments('id');//[pk]
             $table->string('image');
+            $table->unsignedDecimal('price') -> default (0); //[not null]
             $table->boolean('original') -> default (0) ;
 
             $table->integer('avatar_id')->unsigned();

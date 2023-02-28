@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Dashboard\ControllerResources\AccessoryController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Dashboard\LessonTypeResource;
 use Illuminate\Support\Facades\Storage;
 
 

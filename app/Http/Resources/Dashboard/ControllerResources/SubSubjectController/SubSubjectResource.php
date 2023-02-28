@@ -4,6 +4,11 @@ namespace App\Http\Resources\Dashboard\ControllerResources\SubSubjectController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Dashboard\Collections\SubSubject\SubSubjectLanguagesCollection;
+
+
+use App\Http\Resources\Dashboard\Collections\ControllerResources\SubSubjectController\LessonCollection;
+use App\Http\Resources\Dashboard\Collections\ControllerResources\SubSubjectController\SkillCollection;
+
 use App\Http\Resources\Dashboard\ControllerResources\SubSubjectController\LessonResource;
 use App\Http\Resources\Dashboard\ControllerResources\SubSubjectController\QuizResource;
 use App\Http\Resources\Dashboard\ControllerResources\SubSubjectController\SkillResource;
@@ -23,9 +28,7 @@ class SubSubjectResource extends JsonResource
 
         return [
             'id'            => $this->id,
-
             'name'          => $row ? $row->name:'',
-
             'points'        => $this->points,
         
             'languages'     => new SubSubjectLanguagesCollection ( $this->subSubject_languages ),
@@ -34,9 +37,9 @@ class SubSubjectResource extends JsonResource
 
             'skills'   => SkillResource::collection($this->skills),
 
-            'quiz'     =>   new QuizResource ($this->quiz)   ,
+            'quiz'          =>   new QuizResource ($this->quiz)   ,
 
-            'subject'  =>   new SubjectResource ($this->subject)   ,
+            'subject'          =>   new SubjectResource ($this->subject)   ,
 
             'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
             'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,

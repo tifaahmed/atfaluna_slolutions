@@ -15,14 +15,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Role;
 use App\Models\Sub_user;
 use App\Models\User_package;
-use App\Models\City;
+use App\Models\Country;
 
 // Notification
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\NewItemNotification;
 use App\Notifications\ActiveEmailNotification;
-use App\Notifications\ChatNotification;
 
 use DB ;
 use Carbon\Carbon;
@@ -49,7 +48,7 @@ class User extends Authenticatable {
         'avatar', //null
         'birthdate', //null
         'phone', //unique
-        'city_id', //unsigned
+        'country_id', //unsigned
         'token',
         'remember_token',
         'login_type',
@@ -78,81 +77,46 @@ class User extends Authenticatable {
             $model->pin_code = rand(111111,999999);
         });
     }
+    public function sendPasswordResetNotification($token)
+    {
+        $url = asset('api/auth/reset-password?token='.$token);
 
-    // Notification
+        $data = [] ;
+        $data += ['url' => $url];
+        $data += ['pin_code' => $this->pin_code];
 
-        public function sendPasswordResetNotification($token)
-        {
-            $url = asset('api/auth/reset-password?token='.$token);
+        $this->notify(new ResetPasswordNotification($data));
+    }
+    public function sendActiveEmailNotification()
+    {
+        $data = ['pin_code' => $this->pin_code];
 
-            $data = [] ;
-            $data += ['url' => $url];
-            $data += ['pin_code' => $this->pin_code];
+        $this->notify(new ActiveEmailNotification($data));
+        
+    }
 
-            $this->notify(new ResetPasswordNotification($data));
-        }
-
-        public function sendActiveEmailNotification()
-        {
-            $data = ['pin_code' => $this->pin_code];
-
-            $this->notify(new ActiveEmailNotification($data));
-            
-        }
-
-        public function sendNewItemNotification($notification_data)
-        {
-            $all_parents =  User::role('parent')->get();
-            foreach ($all_parents as $key => $user) {
-                    if ($user->city) {
-                        $user_country_lang = $user->city->government->country->first()->language;
-                    }else{
-                        $user_country_lang = 'ar';
-                    }
-
-                    for ($i=0; $i < count($notification_data) ; $i++) { 
-                        $check_lang =  array_search($user_country_lang,$notification_data[$i],true) ;
-                        if ($check_lang) {
-                            foreach ($user->tokens as $key => $token) {
-                                if ($token->fcm_token) {
-                                    $notification_data[$i]['fcm_token']    =  $token->fcm_token;
-                                    $user->notify(new NewItemNotification($notification_data[$i]));
-                                }
-                            }
+    public function sendNewItemNotification($notification_data)
+    {
+        $all_users = $this->all();
+        foreach ($all_users as $key => $user) {
+            $user_country_lang = $user->country()->first()->language;
+            for ($i=0; $i < count($notification_data) ; $i++) { 
+                $check_lang =  array_search($user_country_lang,$notification_data[$i],true) ;
+                if ($check_lang) {
+                    foreach ($user->tokens as $key => $token) {
+                        if ($token->fcm_token) {
+                            $notification_data[$i]['fcm_token']    =  $token->fcm_token;
+                            $user->notify(new NewItemNotification($notification_data[$i]));
                         }
                     }
-                
-            }
-        }
-        public function sendChatNotification($conversationData)
-        {
-            
-            $user = $this->find($conversationData['user_id']);
-
-            $data = ['priority' => $conversationData['priority']];
-            $data = ['sub_user_id' => $conversationData['sub_user_id']];
-            $data = ['user_id' => $conversationData['user_id']];
-            $data = ['conversation_id' => $conversationData['conversation_id']];
-            $data = ['text' => $conversationData['text']];
-            $data = ['image' => $conversationData['image']];
-
-            foreach ($user->tokens as $key => $token) {
-                if ($token->fcm_token) {
-                    $data = ['fcm_token' => $token->fcm_token];
-                    $user->notify(new ChatNotification($data));
                 }
             }
-
         }
-        
-    //Notifications
-
+    }
     //relations
-
-        public function city(){
-            return $this->belongsTo(City::class ,'city_id');
+        public function country(){
+            return $this->belongsTo(Country::class);
         }
-
         public function UserPermission(){
             return $this->belongsToMany(Permission::class, 'model_has_permissions', 'model_id', 'permission_id');
         }

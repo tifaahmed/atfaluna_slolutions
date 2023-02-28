@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Sounds;
+namespace App\Http\Requests\Api\RolePermissionRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
-class SoundsUpdateApiRequest extends FormRequest
+
+class PermissionApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +23,10 @@ class SoundsUpdateApiRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
-            'name'          =>  ['required']  ,
-            'record'        =>  ['sometimes','max:100000', 'mimes:mp3,wav']  ,
-            'language'      =>  ['required' ,'max:2','exists:languages,name']  ,
+                'name'              =>  [ 'required','max:255' ,'unique:permissions,name' ] ,
+                'description'       =>  [   'max:255'] ,
+                // 'guard_name'        =>  [ 'required' , 'max:255'] ,
         ];
     }
 }

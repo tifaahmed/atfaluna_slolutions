@@ -29,6 +29,8 @@ class ConversationController extends Controller
     }
     public function all(Request $request){
         try {
+            return $request;
+            
             return $model = $this->ModelRepository->filterAll( 
                 $request->sub_user_id,
                 $request->has_message,
@@ -45,7 +47,7 @@ class ConversationController extends Controller
     }
     public function collection(Request $request){
         try {
-            $model = $this->ModelRepository->filterPaginate( 
+            return $model = $this->ModelRepository->filterPaginate( 
                 $request->sub_user_id,
                 $request->has_message,
                 $request->type,
@@ -64,14 +66,8 @@ class ConversationController extends Controller
         try {
 
             if ($request->type == 'single'  ) {
-                 $checkExist =  $this->ModelRepository->checkExist($request->sub_user_id,$request->recevier_ids,$request->type);
+                $checkExist =  $this->ModelRepository->checkExist($request->sub_user_id,$request->recevier_ids,$request->type);
                     $model = $checkExist->count() ? $checkExist : null ;
-                    if ( !$checkExist->count() ) {
-                        $model =  $this->ModelRepository->create( Request()->all() )  ;
-                        $model -> group_chats()->create(['recevier_id'=>$request->recevier_ids[0]]);
-                    }
-                    
-
             }else{
                 $model = $this->ModelRepository->create( Request()->all() );
                 foreach ($request->recevier_ids as $key => $value) {
@@ -115,12 +111,8 @@ class ConversationController extends Controller
 
     public function show($id) {
         try {
-            $model = $this->ModelRepository->findById($id) ; 
-
-            // $model->massages()->where('')
-
             return $this -> MakeResponseSuccessful( 
-                [new ModelResource ( $model)  ],
+                [new ModelResource ( $this->ModelRepository->findById($id) )  ],
                 'Successful',
                 Response::HTTP_OK
             ) ;

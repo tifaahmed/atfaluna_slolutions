@@ -27,62 +27,9 @@ class MassageController extends Controller
     {
         $this->ModelRepository = $Repository;
     }
-
-
-    public function store(Request $request) {
-        // try {
-
-
-            switch ($request->massagable_type) {
-                case 'hero':
-                    $class = Hero::class;
-                    $image = Hero::find($request->massagable_id)->hero_languages()->Localization()->first()->image;
-                    break;
-                case 'image':
-                    $class = Massage_image::class;
-                    $image = Massage_image::find($request->massagable_id)->image ;
-                    break;
-                case 'avatar':
-                    $class = Avatar::class;
-                    $image = Avatar::find($request->massagable_id)->skins()->Original()->first()->image ;
-
-                    break;
-                default:
-                $class = '';
-                $image = '';
-            }
-
-            // notifications
-            // return $this ->TraitChatNotification($image,$request->text,$request->conversation_id,$request->sub_user_id);
-            $all = [];
-            $all += Request()->all()   ;
-            $all['massagable_type'] =   $class ;
-            $model =  $this->ModelRepository->create( $all ) ;
-
-            $model->subUserMessageRead()->syncWithoutDetaching([$request->sub_user_id => [ 'read' =>  1 ]]);
-            $group_chats = $model->conversation->group_chats;
-            foreach ($group_chats as $key => $value) {
-                $model->subUserMessageRead()->syncWithoutDetaching([$value->recevier_id => [ 'read' =>  0 ]]);
-            }
-
-            return $this -> MakeResponseSuccessful( 
-                [ new ModelResource( $model ) ],
-                'Successful'               ,
-                Response::HTTP_OK
-            ) ;
-        // } catch (\Exception $e) {
-        //     return $this -> MakeResponseErrors(  
-        //         [$e->getMessage()  ] ,
-        //         'Errors',
-        //         Response::HTTP_BAD_REQUEST
-        //     );
-        // }
-    }
-    public function all(Request $request){
+    public function all(){
         try {
-            return new ModelCollection (  
-                $this->ModelRepository->filterAll($request->conversation_id) 
-            )  ;
+            return new ModelCollection (  $this->ModelRepository->all() )  ;
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  
                 [$e->getMessage()  ] ,
@@ -91,13 +38,39 @@ class MassageController extends Controller
             );
         }
     }
+
+    public function store(modelInsertRequest $request) {
+        try {
+
+            if ($request->massagable_type == 'hero') {
+                $class = Hero::class;
+            }else if($request->massagable_type == 'image'){
+                $class = Massage_image::class;
+            }else if($request->massagable_type == 'avatar'){
+                $class = Avatar::class;
+            }
+            $all = [];
+            $all += Request()->all()   ;
+            $all['massagable_type'] =   $class ;
+            $model = new ModelResource( $this->ModelRepository->create( $all ) );
+
+            return $this -> MakeResponseSuccessful( 
+                [ $model ],
+                'Successful'               ,
+                Response::HTTP_OK
+            ) ;
+        } catch (\Exception $e) {
+            return $this -> MakeResponseErrors(  
+                [$e->getMessage()  ] ,
+                'Errors',
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
     public function collection(Request $request){
         try {
-            return new ModelCollection (  
-                $this->ModelRepository->filterPaginate( 
-                    $request->conversation_id,
-                    $request->PerPage ? $request->PerPage : 10) 
-            )  ;
+            return new ModelCollection (  $this->ModelRepository->collection( $request->PerPage ? $request->PerPage : 10) )  ;
 
         } catch (\Exception $e) {
             return $this -> MakeResponseErrors(  

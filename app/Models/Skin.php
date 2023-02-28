@@ -34,19 +34,20 @@ class Skin extends Model
             return $query->where('original',0);
         }
         public function scopeActiveSkin($query,$sub_user_id){
-
+            
             $accessory_ids = Accessory::whereHas('SubUserAccessory', function (Builder $sub_user_accessory_query) use($sub_user_id) {
                 $sub_user_accessory_query->where('sub_user_id',$sub_user_id);
-            })->whereHas('sub_user_avatar_accessory')      
-            ->pluck('id')->toArray();
+                $sub_user_accessory_query->where('active',1);
+            })->pluck('id')->toArray();
 
-            // // git sub_user active skin
+            // git sub_user active skin
             foreach ($accessory_ids as $key => $value) {
                 $query = $query->whereHas('accessorySkins', function (Builder $accessory_query) use($value) {
                     $accessory_query->where('accessory_id',$value);
                 });
             }
             return $query;
+
         }
     //relation
 
@@ -63,7 +64,7 @@ class Skin extends Model
 
         // belongsToMany
         public function accessorySkins(){
-            return $this->belongsToMany(Accessory::class, 'accessory_skins', 'skin_id', 'accessory_id')->withPivot('active');
+            return $this->belongsToMany(Accessory::class, 'accessory_skins', 'skin_id', 'accessory_id');
         }
 
 

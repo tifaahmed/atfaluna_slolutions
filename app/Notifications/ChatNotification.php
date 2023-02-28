@@ -2,15 +2,15 @@
 
 namespace App\Notifications;
 
-// use Illuminate\Bus\Queueable;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ChatNotification extends Notification 
+class ChatNotification extends Notification implements ShouldQueue
 {
-    // use Queueable;
+    use Queueable;
     
     private $conversationData;
     public $connection = 'redis';
@@ -23,7 +23,7 @@ class ChatNotification extends Notification
     public function __construct($conversationData)
     {
         $this->conversationData = $conversationData;
-        // $this->afterCommit();
+        $this->afterCommit();
 
     }
 
@@ -38,16 +38,16 @@ class ChatNotification extends Notification
         return [
             // 'mail',
             'database',
-            // 'broadcast'
+            'broadcast'
         ];
     }
-    // public function viaQueues()
-    // {
-    //     return [
-    //         'database' => 'mail-queue',
-    //         // 'broadcast' => 'slack-queue',
-    //     ];
-    // }
+    public function viaQueues()
+    {
+        return [
+            'database' => 'mail-queue',
+            'broadcast' => 'slack-queue',
+        ];
+    }
     
     /**
      * Get the mail representation of the notification.
@@ -55,23 +55,16 @@ class ChatNotification extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    // public function toMail($notifiable)
-    // {
-
-    //     return (new MailMessage)                    
-    //         ->name($this->conversationData['name'])
-    //         ->line($this->conversationData['body'])
-    //         ->action($this->conversationData['conversationMsg'], $this->conversationData['conversationUrl'])
-    //         ->line($this->conversationData['thanks']);            
-    // }
-    public function toDatabase($notifiable)
+    public function toMail($notifiable)
     {
-        
-        return
-        [
-            $this->conversationData,
-        ];
+
+        return (new MailMessage)                    
+            ->name($this->conversationData['name'])
+            ->line($this->conversationData['body'])
+            ->action($this->conversationData['conversationMsg'], $this->conversationData['conversationUrl'])
+            ->line($this->conversationData['thanks']);            
     }
+
     /**
      * Get the array representation of the notification.
      *
