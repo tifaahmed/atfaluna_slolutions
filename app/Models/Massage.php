@@ -26,11 +26,6 @@ class Massage extends Model
     public function conversation(){
         return $this->belongsTo(Conversation::class,'conversation_id');
     }
-        
-    public function subUserMessageRead(){
-        return $this->belongsToMany(Sub_user::class, 'sub_user_messages', 'massage_id', 'sub_user_id')->withPivot('read');
-    }
-
     public function sub_user(){
         return $this->belongsTo(Sub_user::class,'sub_user_id');
     }

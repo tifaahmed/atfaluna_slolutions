@@ -18,9 +18,7 @@ class CertificateResource extends JsonResource
 
         return [
             'id'               => $this->id,
-
             'image_three'      =>  Storage::disk('public')->exists($this->image_three) ? asset(Storage::url($this->image_three))  : null,
-            
             'title_two'        => $row ? $row->title_two:'',
 
         ];        

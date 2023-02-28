@@ -27,57 +27,60 @@ class authController extends Controller {
  
 
     public function login( loginApiRequest $request ) {
-        if ( isset($request->fcm_token) && $request->fcm_token ) {
-            \DB::table('oauth_access_tokens')
-            ->Where('fcm_token',$fcm_token)
-            ->delete();
+        if ( $request -> get( 'email' , false ) ) {
+            $user = User::where( 'email' , $request -> get( 'email' ) ) -> first( ) ;
+        }
+        if ( ! Hash::check( $request -> password , $user -> password ) ) {
+            return $this -> MakeResponseErrors( [ 'InvalidCredentials' ] , 'InvalidCredentials' , Response::HTTP_UNAUTHORIZED ) ;
         }
 
-        if (auth('api')->check()) {
-            return $this -> MakeResponseErrors( 
-                [ 'message' => 'loggin in before' ],  
-                'InvalidCredentials' ,
-                Response::HTTP_UNAUTHORIZED
+        if ( Auth()->attempt(['email' => $user->email, 'password' => $request->password],$request->_token) ){
+            if ( isset($request->fcm_token) && $request->fcm_token ) {
+                Auth::user()->update([ 'fcm_token' => $request->fcm_token ])  ;  
+            }
+            return $this -> MakeResponseSuccessful( 
+                [
+                    'user'  =>   new UserResource ( Auth::user()   )   , 
+                    'Token' => Auth::user() -> getToken( ) 
+                ],  
+                'Successful' ,
+                Response::HTTP_OK
             ) ; 
         }
 
-        $user = User::where( 'email' , $request -> get( 'email' ) ) -> first( ) ;
-
-        
-        if($user &&  Hash::check( $request->password,$user->password )){
-            if ( Auth()->attempt(['email' => $user->email, 'password' => $request->password],$request->_token) ){
-
-                if ( Auth::user()->tokens()->count() >= 3 ){
-                    DB::table('oauth_access_tokens')
-                    ->Where('name',$email)
-                    ->orderBy('created_at')
-                    ->delete();
-                }   
-
-                return $this -> MakeResponseSuccessful( 
-                    [
-                        'user'  =>   new UserResource ( Auth::user()   )   , 
-                        'Token' => Auth::user() -> getToken( ) 
-                    ],  
-                    'Successful' ,
-                    Response::HTTP_OK
-                ) ; 
-            }
-        }
-
-        return $this -> MakeResponseErrors( [ 'InvalidCredentials' ] , 'InvalidCredentials' , Response::HTTP_UNAUTHORIZED ) ;
-        
-
-
-
     }
 
+    public function register( RegisterApiRequest $request ) {
 
+        $user  = User::create([
+            'password' => Hash::make($request->password),
+            'name' => $request -> get( 'name' ),
+            'email' => $request -> get( 'email' ),
+            'phone' => $request -> get( 'phone' ),
+            'fcm_token' => $request -> get( 'fcm_token' ),
+
+            'remember_token' => Hash::make( Str::random(60) )  ,
+            'token' => Hash::make( Str::random(60) )  ,
+            // 'remember_token' =>  'token' => Auth::user() -> getToken( ) 
+        ]);
+        if ( Auth::attempt(['email' => $user->email, 'password' => $request->password],$request->token) ){
+            return $this -> MakeResponseSuccessful( 
+                [
+                    'user'  =>   new UserResource ( Auth::user()   )   , 
+                    'Token' => Auth::user() -> getToken( ) 
+                ],  
+                'Successful' ,
+                Response::HTTP_OK
+            ) ; 
+        }
+    }
 
 
     public function logout( Request $request ) {
         $tokenRepository = app(TokenRepository::class);
         $tokenRepository->revokeAccessToken($tokenId);
+
+        // Auth::guard('sanctum')->logout();
         Auth::user()->token()->revoke();
         return $this -> MakeResponseSuccessful( 
             ['user logout Successful'],

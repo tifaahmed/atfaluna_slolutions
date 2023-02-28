@@ -20,7 +20,6 @@ class AgeGroupResource extends JsonResource
             'id'            => $this->id,
             
             'name'          => $row ? $row->name:'',
-            
         ];        
     }
 }

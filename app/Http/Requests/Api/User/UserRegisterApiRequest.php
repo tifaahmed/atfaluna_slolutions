@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserStoreApiRequest extends FormRequest
+class UserRegisterApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,11 +33,8 @@ class UserStoreApiRequest extends FormRequest
 
                 'avatar'    =>  [ 'sometimes', 'mimes:jpg,jpeg,png' , 'max:5000'] ,
 
-                'birthdate '=>  [  'date' , 'date_format:Y/d/m'] ,
+                'birthdate'=>  [  'date' ] ,
                 'country_id'=>  [  'required' , 'integer','exists:countries,id' ] ,
-
-                'role_id'=>  [  'required'  , 'integer','exists:roles,id' ] ,
-                
         ];
     }
 }

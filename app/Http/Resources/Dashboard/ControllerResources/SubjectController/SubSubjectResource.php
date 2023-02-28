@@ -4,6 +4,12 @@ namespace App\Http\Resources\Dashboard\ControllerResources\SubjectController;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Dashboard\Collections\SubSubject\SubSubjectLanguagesCollection;
+use App\Http\Resources\Dashboard\Collections\Lesson\LessonCollection;
+use App\Http\Resources\Dashboard\Collections\Skill\SkillCollection ;
+use App\Http\Resources\Dashboard\SoundsResource;
+
+use App\Http\Resources\Dashboard\Quiz\QuizResource;
 
 class SubSubjectResource extends JsonResource
 {
@@ -19,11 +25,8 @@ class SubSubjectResource extends JsonResource
 
         return [
             'id'            => $this->id,
-
             'name'          => $row ? $row->name:'',
-
             'points'        => $this->points,
-            
             'image_two'     => $row && $row->image_two &&  Storage::disk('public')->exists($row->image_two)   ?   asset(Storage::url($row->image_two)) :null ,  
 
         ];        

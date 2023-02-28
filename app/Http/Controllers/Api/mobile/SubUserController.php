@@ -29,6 +29,7 @@ class SubUserController extends Controller
         $this->ModelRepository = $Repository;
     }
 
+ 
 
     public function all(Request $request){
         try {

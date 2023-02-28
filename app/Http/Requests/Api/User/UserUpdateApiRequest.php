@@ -28,13 +28,13 @@ class UserUpdateApiRequest extends FormRequest
                 'email'     =>  [  'required','unique:users,email,'.$this->id  ,'email'] ,
                 'phone'     =>  [  'required' ,'unique:users,phone,'.$this->id  ,'max:15' ] ,
 
-                'password'  =>  [  'required','min:8' , 'max:15' ],
-                'password_confirmation'  =>  [ 'required','exclude_unless:password,true', 'min:8' , 'max:15' ],
+                'password'  =>  [  'sometimes','min:8' , 'max:15' ],
+                'password_confirmation'  =>  [ 'exclude_unless:password,true', 'min:8' , 'max:15' ],
 
                 'avatar'    =>  [ 'sometimes',  'max:5000'] ,
 
                 'birthdate '=>  [  'date' , 'date_format:Y/d/m'] ,
-                'city_id'=>  [  'sometimes' , 'integer','exists:cities,id' ] ,
+                'country_id'=>  [  'required' , 'integer','exists:countries,id' ] ,
         ];
     }
 }

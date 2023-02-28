@@ -30,8 +30,8 @@ class UserResource extends JsonResource
             // 'sub_user'          => $this->sub_user,
             // 'sub_user'        =>   SubUserResource::collection  ($this->sub_user),
 
-            'country'          => new CountryResource ( $this->country ),
-            // 'country_id'       => $this->country_id,
+            // 'country'          => new CountryResource ( $this->country ),
+            'country_id'       => $this->country_id,
 
             'UserRoles'      => $this->UserRole,
             'UserPermissions'=> $this->UserPermission,

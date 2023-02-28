@@ -31,7 +31,6 @@ class SkinResource extends JsonResource
 
             'accessory_skin'  => AccessoryResource::collection($this->accessorySkins) , 
 
-            // 'avatar'        =>  AvatarResource::collection($this->avatar),
             'avatar'   => new AvatarResource (  $this->avatar )  ,
 
             'languages'     => SkinLanguageResource::collection( $this->skin_languages ),

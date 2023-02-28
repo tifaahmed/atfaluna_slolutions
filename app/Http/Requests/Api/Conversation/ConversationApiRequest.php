@@ -30,11 +30,12 @@ class ConversationApiRequest extends FormRequest
 
         if ($this->type == 'single') {
             $all += [ 'recevier_ids'       =>  [ 'required' ,'array','exists:sub_users,id','not_in:'.$this->sub_user_id,'max:1']]  ;
-        }else if ($this->type == 'group') {
-            foreach ($this->recevier_ids as $key => $value) {
-                $all += [ 'recevier_ids.'.$key         =>  [ 'required' ,'integer','exists:sub_users,id','not_in:'.$this->sub_user_id]]  ;
-            }
         }
+
+        foreach ($this->recevier_ids as $key => $value) {
+            $all += [ 'recevier_ids.'.$key         =>  [ 'required' ,'integer','exists:sub_users,id','not_in:'.$this->sub_user_id]]  ;
+        }
+
             // 'type'=>[
             //     'nullable',
             //         Rule::in(['single', 'group']),

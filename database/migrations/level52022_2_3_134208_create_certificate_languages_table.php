@@ -13,7 +13,7 @@ class CreateCertificatelanguagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('certificate_languages', function (Blueprint $table) {
+        Schema::create('description', function (Blueprint $table) {
             $table->increments('id');//[pk]
             $table->string('title_one');//[note: "ex (  arabic or english or italian  -...etc) ,'not null'"]
             $table->string('title_two');//[note: "ex (  arabic or english or italian -...etc) , 'not null'"]

@@ -4,6 +4,7 @@ namespace App\Http\Resources\Dashboard\ControllerResources\LessonController;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Dashboard\Skill\SkillLanguagesResource;
 
 class SkillResource extends JsonResource
 {

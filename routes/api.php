@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
     //  IfSubscription  : if auth user  Subscription  not ended yet 
     //  IfPlayTime      : if child not in play time
 
-Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
+Route::group(['middleware' => ['LocalizationMiddleware'  ]], fn ( ) : array => [
 
 
     Route::group(['middleware' => []], fn ( ) : array => [
@@ -313,6 +313,7 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
         //auth
             Route::name( 'auth.') -> prefix( 'auth' ) -> group( fn ( ) => [
                 Route::post( '/logout' ,  'authController@logout' )  -> name( 'logout' ) ,
+                Route::DELETE('premanently-delete' ,   'authController@premanently_delete'  )->name('premanently_delete')
             ]),
 
         // accessory
@@ -379,8 +380,8 @@ Route::group(['middleware' => ['LocalizationMiddleware']], fn ( ) : array => [
             Route::DELETE('/{id}'                   ,   'ConversationController@destroy'             )->name('destroy'),
         ]),
     ]),
-// 'IfPlayTime' to open playtime 
-    Route::group(['middleware' => ['auth:api','IfActiveUser','IfAuthChild','DurationTime','IfSubscription','IfPlayTime']], fn ( ) : array => [
+
+    Route::group(['middleware' => ['auth:api','IfActiveUser','IfAuthChild','DurationTime','IfSubscription']], fn ( ) : array => [
         //Subject
         Route::name('subject.')->prefix('/subject')->group( fn ( ) : array => [
             Route::get('/'                          ,   'SubjectController@all'                 )->name('all'),

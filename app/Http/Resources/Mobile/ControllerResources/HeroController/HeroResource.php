@@ -32,6 +32,7 @@ class HeroResource extends JsonResource
             }	
             $lessson_ids = $result->pluck('id')->toArray();
     
+    
             $herolesson =  $this->herolesson->whereIn('id',$lessson_ids);
         }else {
             $herolesson = $this->herolesson;
@@ -42,6 +43,10 @@ class HeroResource extends JsonResource
             'title'         => $row ? $row->title:'',
             'image'         =>( $row && $row->image && Storage::disk('public')->exists($row->image) )? asset(Storage::url($row->image))  : asset(Storage::url($basic->item)),
             'description'   => $row ? $row->description:'',
+
+            // 'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
+            // 'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            // 'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
 
             'lessons'        => new LessonCollection ($herolesson)  ,
 

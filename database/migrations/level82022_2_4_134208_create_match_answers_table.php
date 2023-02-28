@@ -18,7 +18,7 @@ class CreateMatchAnswersTable extends Migration
             $table->string('image')->nullable();
             $table->enum('possition',['top','bottom']);
 
-            $table->integer('match_answer_id')->nullable()->unsigned();
+            $table->integer('match_answer_id')->nullable();
             $table->foreign('match_answer_id')->references('id')->on('match_answers');
 
             $table->integer('match_question_id')->unsigned();

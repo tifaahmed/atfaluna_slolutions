@@ -19,9 +19,7 @@ class SkillResource extends JsonResource
 
         return [
             'id'            => $this->id,
-
             'name'          => $row ? $row->name:'',
-            
             'image_two'     => $row && $row->image_two &&  Storage::disk('public')->exists($row->image_two)   ?   asset(Storage::url($row->image_two)) :null ,  
         ];        
     }

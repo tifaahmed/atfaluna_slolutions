@@ -29,23 +29,24 @@ class SubjectResource extends JsonResource
             'image'         => Storage::disk('public')->exists($this->image) ? asset(Storage::url($this->image))  : null,
             'points'        => $this->points,
 
+            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
+            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
+            'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
+
             'languages'     =>  SubjectLanguagesResource::collection( $this->subject_languages),
 
             'name'          => $row ? $row->name:'',
 
             'age_group'     => $this->age_group,
 
-            'sub_subjects'  => new SubSubjectCollection  ($this->sub_subjects),
+            'sub_subjects'        => new SubSubjectCollection  ($this->sub_subjects),
 
             'certification' => new CertificateResource (  $this->certificate )  ,
 
             'quiz'          =>   new QuizResource ( $this->quiz )   ,
-
-            'skills'        => new SkillCollection($this->skills),
             
-            'created_at'    => $this->created_at ?   $this->created_at->format('d/m/Y') : null,
-            'updated_at'    => $this->updated_at ?   $this->updated_at->format('d/m/Y') : null,
-            'deleted_at'    => $this->deleted_at ?   $this->deleted_at->format('d/m/Y') : null,
+            'skills'        => new SkillCollection($this->skills),
+
         ];        
     }
 }
